@@ -1,24 +1,39 @@
 package entity;
 
+import javax.persistence.*;
 import java.util.Date;
 import java.util.Objects;
 
+@Entity
+@Table(name = "other_costs", schema = "projectcar")
 public class OtherCosts {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
+
+    @Column(name = "nameOtherCost", nullable = false, length = 100)
     private String nameOtherCost;
+
+    @Column(name = "dateCost", nullable = false)
     private Date dateCost;
+
+    @Column(name = "cost")
     private double cost;
-    private int FK_cars;
+
+    @ManyToOne
+    @JoinColumn(name = "FK_cars")
+    private Car car;
 
     public OtherCosts() {
     }
 
-    public OtherCosts(int id, String nameOtherCost, Date dateCost, double cost, int FK_cars) {
-        this.id = id;
+    public OtherCosts(String nameOtherCost, Date dateCost, double cost, Car car) {
         this.nameOtherCost = nameOtherCost;
         this.dateCost = dateCost;
         this.cost = cost;
-        this.FK_cars = FK_cars;
+        this.car = car;
     }
 
     public int getId() {
@@ -53,12 +68,12 @@ public class OtherCosts {
         this.cost = cost;
     }
 
-    public int getFK_cars() {
-        return FK_cars;
+    public Car getCar() {
+        return car;
     }
 
-    public void setFK_cars(int FK_cars) {
-        this.FK_cars = FK_cars;
+    public void setCar(Car car) {
+        this.car = car;
     }
 
     @Override
@@ -68,14 +83,14 @@ public class OtherCosts {
         OtherCosts that = (OtherCosts) o;
         return id == that.id &&
                 Double.compare(that.cost, cost) == 0 &&
-                FK_cars == that.FK_cars &&
                 Objects.equals(nameOtherCost, that.nameOtherCost) &&
-                Objects.equals(dateCost, that.dateCost);
+                Objects.equals(dateCost, that.dateCost) &&
+                Objects.equals(car, that.car);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nameOtherCost, dateCost, cost, FK_cars);
+        return Objects.hash(id, nameOtherCost, dateCost, cost, car);
     }
 
     @Override
@@ -85,7 +100,7 @@ public class OtherCosts {
                 ", nameOtherCost='" + nameOtherCost + '\'' +
                 ", dateCost=" + dateCost +
                 ", cost=" + cost +
-                ", FK_cars=" + FK_cars +
+                ", car=" + car +
                 '}';
     }
 }

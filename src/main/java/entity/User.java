@@ -1,28 +1,51 @@
 package entity;
 
+import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
+@Entity
+@Table(name = "users", schema = "projectcar")
 public class User {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
+
+    @Column(name = "login", nullable = false, length = 100)
     private String login;
+
+    @Column(name = "login", nullable = false, length = 100)
     private String password;
+
+    @Column(name = "login", nullable = false, length = 100)
     private String email;
+
+    @Column(name = "login", nullable = false, length = 100)
     private String firstName;
+
+    @Column(name = "login", nullable = false, length = 100)
     private String secondName;
+
+    @Column(name = "birthday")
     private Date birthday;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private List<Car> cars;
 
     public User() {
     }
 
-    public User(int id, String login, String password, String email, String firstName, String secondName, Date birthday) {
-        this.id = id;
+    public User(String login, String password, String email, String firstName, String secondName, Date birthday, List<Car> cars) {
         this.login = login;
         this.password = password;
         this.email = email;
         this.firstName = firstName;
         this.secondName = secondName;
         this.birthday = birthday;
+        this.cars = cars;
     }
 
     public int getId() {
@@ -81,6 +104,14 @@ public class User {
         this.birthday = birthday;
     }
 
+    public List<Car> getCars() {
+        return cars;
+    }
+
+    public void setCars(List<Car> cars) {
+        this.cars = cars;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -92,12 +123,13 @@ public class User {
                 Objects.equals(email, user.email) &&
                 Objects.equals(firstName, user.firstName) &&
                 Objects.equals(secondName, user.secondName) &&
-                Objects.equals(birthday, user.birthday);
+                Objects.equals(birthday, user.birthday) &&
+                Objects.equals(cars, user.cars);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, login, password, email, firstName, secondName, birthday);
+        return Objects.hash(id, login, password, email, firstName, secondName, birthday, cars);
     }
 
     @Override
@@ -110,6 +142,7 @@ public class User {
                 ", firstName='" + firstName + '\'' +
                 ", secondName='" + secondName + '\'' +
                 ", birthday=" + birthday +
+                ", cars=" + cars +
                 '}';
     }
 }

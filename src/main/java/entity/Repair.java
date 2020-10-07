@@ -1,25 +1,42 @@
 package entity;
 
+import javax.persistence.*;
 import java.util.Objects;
 
+@Entity
+@Table(name = "repairs", schema = "projectcar")
 public class Repair {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
+
+    @Column(name = "nameRepair", nullable = false, length = 100)
     private String nameRepair;
+
+    @Column(name = "beginMileage")
     private int beginMileage;
+
+    @Column(name = "endMileage")
     private int endMileage;
+
+    @Column(name = "costsRepair")
     private double costsRepair;
-    private int FK_cars;
+
+    @ManyToOne
+    @JoinColumn(name = "FK_cars")
+    private Car car;
 
     public Repair() {
     }
 
-    public Repair(int id, String nameRepair, int beginMileage, int endMileage, double costsRepair, int FK_cars) {
-        this.id = id;
+    public Repair(String nameRepair, int beginMileage, int endMileage, double costsRepair, Car car) {
         this.nameRepair = nameRepair;
         this.beginMileage = beginMileage;
         this.endMileage = endMileage;
         this.costsRepair = costsRepair;
-        this.FK_cars = FK_cars;
+        this.car = car;
     }
 
     public int getId() {
@@ -62,12 +79,12 @@ public class Repair {
         this.costsRepair = costsRepair;
     }
 
-    public int getFK_cars() {
-        return FK_cars;
+    public Car getCar() {
+        return car;
     }
 
-    public void setFK_cars(int FK_cars) {
-        this.FK_cars = FK_cars;
+    public void setCar(Car car) {
+        this.car = car;
     }
 
     @Override
@@ -79,13 +96,13 @@ public class Repair {
                 beginMileage == repair.beginMileage &&
                 endMileage == repair.endMileage &&
                 Double.compare(repair.costsRepair, costsRepair) == 0 &&
-                FK_cars == repair.FK_cars &&
-                Objects.equals(nameRepair, repair.nameRepair);
+                Objects.equals(nameRepair, repair.nameRepair) &&
+                Objects.equals(car, repair.car);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nameRepair, beginMileage, endMileage, costsRepair, FK_cars);
+        return Objects.hash(id, nameRepair, beginMileage, endMileage, costsRepair, car);
     }
 
     @Override
@@ -96,7 +113,7 @@ public class Repair {
                 ", beginMileage=" + beginMileage +
                 ", endMileage=" + endMileage +
                 ", costsRepair=" + costsRepair +
-                ", FK_cars=" + FK_cars +
+                ", car=" + car +
                 '}';
     }
 }

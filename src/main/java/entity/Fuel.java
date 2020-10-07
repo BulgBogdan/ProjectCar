@@ -1,63 +1,38 @@
 package entity;
 
+import javax.persistence.*;
 import java.util.Objects;
 
+@Entity
+@Table(name = "fuel", schema = "projectcar")
 public class Fuel {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
+
+    @Column(name = "literCost")
     private double literCost;
+
+    @Column(name = "literValue")
     private double lietrValue;
+
+    @Column(name = "summ")
     private double summ;
-    private int FK_cars;
+
+    @ManyToOne
+    @JoinColumn(name = "FK_cars")
+    private Car car;
 
     public Fuel() {
     }
 
-    public Fuel(int id, double literCost, double lietrValue, double summ, int FK_cars) {
-        this.id = id;
+    public Fuel(double literCost, double lietrValue, double summ, Car car) {
         this.literCost = literCost;
         this.lietrValue = lietrValue;
         this.summ = summ;
-        this.FK_cars = FK_cars;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public double getLiterCost() {
-        return literCost;
-    }
-
-    public void setLiterCost(double literCost) {
-        this.literCost = literCost;
-    }
-
-    public double getLietrValue() {
-        return lietrValue;
-    }
-
-    public void setLietrValue(double lietrValue) {
-        this.lietrValue = lietrValue;
-    }
-
-    public double getSumm() {
-        return summ;
-    }
-
-    public void setSumm(double summ) {
-        this.summ = summ;
-    }
-
-    public int getFK_cars() {
-        return FK_cars;
-    }
-
-    public void setFK_cars(int FK_cars) {
-        this.FK_cars = FK_cars;
+        this.car = car;
     }
 
     @Override
@@ -69,12 +44,12 @@ public class Fuel {
                 Double.compare(fuel.literCost, literCost) == 0 &&
                 Double.compare(fuel.lietrValue, lietrValue) == 0 &&
                 Double.compare(fuel.summ, summ) == 0 &&
-                FK_cars == fuel.FK_cars;
+                Objects.equals(car, fuel.car);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, literCost, lietrValue, summ, FK_cars);
+        return Objects.hash(id, literCost, lietrValue, summ, car);
     }
 
     @Override
@@ -84,7 +59,7 @@ public class Fuel {
                 ", literCost=" + literCost +
                 ", lietrValue=" + lietrValue +
                 ", summ=" + summ +
-                ", FK_cars=" + FK_cars +
+                ", car=" + car +
                 '}';
     }
 }

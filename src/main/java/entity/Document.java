@@ -1,24 +1,39 @@
 package entity;
 
+import javax.persistence.*;
 import java.util.Date;
 import java.util.Objects;
 
+@Entity
+@Table(name = "documents", schema = "projectcar")
 public class Document {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
+
+    @Column(name = "nameDocument", nullable = false, length = 100)
     private String nameDocument;
+
+    @Column(name = "beginDate", nullable = false)
     private Date beginDate;
+
+    @Column(name = "endDate", nullable = false)
     private Date endDate;
-    private int FK_cars;
+
+    @ManyToOne
+    @JoinColumn(name = "FK_cars")
+    private Car car;
 
     public Document() {
     }
 
-    public Document(int id, String nameDocument, Date beginDate, Date endDate, int FK_cars) {
-        this.id = id;
+    public Document(String nameDocument, Date beginDate, Date endDate, Car car) {
         this.nameDocument = nameDocument;
         this.beginDate = beginDate;
         this.endDate = endDate;
-        this.FK_cars = FK_cars;
+        this.car = car;
     }
 
     public int getId() {
@@ -53,12 +68,12 @@ public class Document {
         this.endDate = endDate;
     }
 
-    public int getFK_cars() {
-        return FK_cars;
+    public Car getCar() {
+        return car;
     }
 
-    public void setFK_cars(int FK_cars) {
-        this.FK_cars = FK_cars;
+    public void setCar(Car car) {
+        this.car = car;
     }
 
     @Override
@@ -67,15 +82,15 @@ public class Document {
         if (o == null || getClass() != o.getClass()) return false;
         Document document = (Document) o;
         return id == document.id &&
-                FK_cars == document.FK_cars &&
                 Objects.equals(nameDocument, document.nameDocument) &&
                 Objects.equals(beginDate, document.beginDate) &&
-                Objects.equals(endDate, document.endDate);
+                Objects.equals(endDate, document.endDate) &&
+                Objects.equals(car, document.car);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nameDocument, beginDate, endDate, FK_cars);
+        return Objects.hash(id, nameDocument, beginDate, endDate, car);
     }
 
     @Override
@@ -85,7 +100,7 @@ public class Document {
                 ", nameDocument='" + nameDocument + '\'' +
                 ", beginDate=" + beginDate +
                 ", endDate=" + endDate +
-                ", FK_cars=" + FK_cars +
+                ", car=" + car +
                 '}';
     }
 }
