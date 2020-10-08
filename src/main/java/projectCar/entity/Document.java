@@ -1,4 +1,4 @@
-package entity;
+package projectCar.entity;
 
 import javax.persistence.*;
 import java.util.Date;

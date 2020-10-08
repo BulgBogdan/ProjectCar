@@ -1,4 +1,4 @@
-package util;
+package projectCar.util;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
