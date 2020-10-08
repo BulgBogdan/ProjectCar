@@ -1,5 +1,6 @@
 package projectCar.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,14 +13,16 @@ import java.util.List;
 
 @Controller
 public class CarController {
+
+    @Autowired
     private IUserService userService = new UserServiceImpl();
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public ModelAndView index(){
         List<User> users = userService.getAll();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("index");
-        modelAndView.addObject("user", users);
+        modelAndView.addObject("userList", users);
 
         return modelAndView;
     }

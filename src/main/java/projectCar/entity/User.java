@@ -17,16 +17,16 @@ public class User {
     @Column(name = "login", nullable = false, length = 100)
     private String login;
 
-    @Column(name = "login", nullable = false, length = 100)
+    @Column(name = "password", nullable = false, length = 100)
     private String password;
 
-    @Column(name = "login", nullable = false, length = 100)
+    @Column(name = "email", nullable = false, length = 100)
     private String email;
 
-    @Column(name = "login", nullable = false, length = 100)
+    @Column(name = "firstName", nullable = false, length = 100)
     private String firstName;
 
-    @Column(name = "login", nullable = false, length = 100)
+    @Column(name = "secondName", nullable = false, length = 100)
     private String secondName;
 
     @Column(name = "birthday")

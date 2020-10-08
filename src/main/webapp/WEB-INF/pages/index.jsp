@@ -26,16 +26,9 @@
             <td>${user.firstName}</td>
             <td>${user.secondName}</td>
             <td>${user.birthday}</td>
-            <td>
-                <a href="/edit/${user.id}">edit</a>
-                <a href="/delete/${user.id}">delete</a>
-            </td>
         </tr>
     </c:forEach>
 </table>
 
-<h2>Add</h2>
-<%--<c:url value="/add" var="add"/>--%>
-<%--<a href="${add}">Add new film</a>--%>
 </body>
 </html>
