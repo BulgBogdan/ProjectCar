@@ -1,0 +1,45 @@
+package projectCar.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
+import projectCar.dao.IRepairDAO;
+import projectCar.dao.RepairDAOImpl;
+import projectCar.entity.Repair;
+
+import java.util.List;
+
+public class RepairServiceImpl implements IRepairService {
+
+    @Autowired
+    IRepairDAO repairDAO = new RepairDAOImpl();
+
+    @Override
+    @Transactional
+    public void add(Repair repair) {
+        repairDAO.add(repair);
+    }
+
+    @Override
+    @Transactional
+    public void update(Repair repair) {
+        repairDAO.update(repair);
+    }
+
+    @Override
+    @Transactional
+    public Repair read(int id) {
+        return repairDAO.read(id);
+    }
+
+    @Override
+    @Transactional
+    public void delete(Repair repair) {
+        repairDAO.delete(repair);
+    }
+
+    @Override
+    @Transactional
+    public List<Repair> getAll() {
+        return repairDAO.getAll();
+    }
+}

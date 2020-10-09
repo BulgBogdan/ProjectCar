@@ -46,29 +46,4 @@ public class UserServiceImpl implements IUserService {
     public List<User> getAll() {
         return userDAO.getAll();
     }
-
-    //    @Transactional
-//    public void add(User user) {
-//        userDAO.add(user);
-//    }
-//
-//    @Transactional
-//    public void update(User user) {
-//        userDAO.update(user);
-//    }
-//
-//    @Transactional
-//    public User read(int id) {
-//        return userDAO.read(id);
-//    }
-//
-//    @Transactional
-//    public void delete(User user) {
-//        userDAO.delete(user);
-//    }
-//
-//    @Transactional
-//    public List<User> getAll() {
-//        return userDAO.getAll();
-//    }
 }
