@@ -3,6 +3,7 @@ package projectCar.dao;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import projectCar.dao.interfaces.IFuelDAO;
 import projectCar.entity.Fuel;
 
 import java.util.List;

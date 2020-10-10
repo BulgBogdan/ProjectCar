@@ -3,8 +3,9 @@ package projectCar.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import projectCar.dao.DocumentDAOImpl;
-import projectCar.dao.IDocumentDAO;
+import projectCar.dao.interfaces.IDocumentDAO;
 import projectCar.entity.Document;
+import projectCar.service.interfaces.IDocumentService;
 
 import java.util.List;
 

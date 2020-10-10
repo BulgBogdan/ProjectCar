@@ -2,9 +2,10 @@ package projectCar.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import projectCar.dao.IRepairDAO;
+import projectCar.dao.interfaces.IRepairDAO;
 import projectCar.dao.RepairDAOImpl;
 import projectCar.entity.Repair;
+import projectCar.service.interfaces.IRepairService;
 
 import java.util.List;
 

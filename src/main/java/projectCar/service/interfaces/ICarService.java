@@ -1,10 +1,10 @@
-package projectCar.dao;
+package projectCar.service.interfaces;
 
 import projectCar.entity.Car;
 
 import java.util.List;
 
-public interface ICarDAO {
+public interface ICarService {
 
     void add(Car car);
 

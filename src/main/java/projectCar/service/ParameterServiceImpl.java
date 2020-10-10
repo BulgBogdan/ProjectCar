@@ -2,9 +2,10 @@ package projectCar.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import projectCar.dao.IParameterDAO;
+import projectCar.dao.interfaces.IParameterDAO;
 import projectCar.dao.ParameterDAOImpl;
 import projectCar.entity.Parameter;
+import projectCar.service.interfaces.IParameterService;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package projectCar.dao;
+package projectCar.dao.interfaces;
 
 import projectCar.entity.User;
 

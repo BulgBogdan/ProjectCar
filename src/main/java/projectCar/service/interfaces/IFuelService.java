@@ -1,4 +1,4 @@
-package projectCar.service;
+package projectCar.service.interfaces;
 
 import projectCar.entity.Fuel;
 

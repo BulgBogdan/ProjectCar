@@ -3,9 +3,10 @@ package projectCar.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import projectCar.dao.IUserDAO;
+import projectCar.dao.interfaces.IUserDAO;
 import projectCar.dao.UserDAOImpl;
 import projectCar.entity.User;
+import projectCar.service.interfaces.IUserService;
 
 import java.util.List;
 

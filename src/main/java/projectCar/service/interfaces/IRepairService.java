@@ -1,10 +1,10 @@
-package projectCar.dao;
+package projectCar.service.interfaces;
 
 import projectCar.entity.Repair;
 
 import java.util.List;
 
-public interface IRepairDAO {
+public interface IRepairService {
 
     void add(Repair repair);
 

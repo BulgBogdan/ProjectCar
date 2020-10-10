@@ -1,10 +1,10 @@
-package projectCar.dao;
+package projectCar.service.interfaces;
 
 import projectCar.entity.Document;
 
 import java.util.List;
 
-public interface IDocumentDAO {
+public interface IDocumentService {
 
     void add(Document document);
 

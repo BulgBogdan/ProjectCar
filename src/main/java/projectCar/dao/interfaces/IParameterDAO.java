@@ -1,10 +1,10 @@
-package projectCar.service;
+package projectCar.dao.interfaces;
 
 import projectCar.entity.Parameter;
 
 import java.util.List;
 
-public interface IParameterService {
+public interface IParameterDAO {
 
     void add(Parameter parameter);
 

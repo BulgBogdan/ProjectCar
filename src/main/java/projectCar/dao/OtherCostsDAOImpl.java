@@ -3,6 +3,7 @@ package projectCar.dao;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import projectCar.dao.interfaces.IOtherCostsDAO;
 import projectCar.entity.OtherCosts;
 
 import java.util.List;

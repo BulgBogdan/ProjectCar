@@ -3,11 +3,12 @@ package projectCar.dao;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import projectCar.dao.interfaces.ICarDAO;
 import projectCar.entity.Car;
 
 import java.util.List;
 
-public class CarDAOImpl implements ICarDAO{
+public class CarDAOImpl implements ICarDAO {
 
     private SessionFactory sessionFactory;
 

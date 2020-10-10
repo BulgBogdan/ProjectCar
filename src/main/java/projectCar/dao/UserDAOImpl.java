@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import projectCar.dao.interfaces.IUserDAO;
 import projectCar.entity.User;
 
 import java.util.List;
