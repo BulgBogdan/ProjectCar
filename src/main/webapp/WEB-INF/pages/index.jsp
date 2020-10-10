@@ -39,5 +39,8 @@
 <a href="${add}">Add new user</a>
 </body>
 
+<h2>SignUp USER</h2>
+<c:url value="/signup" var="signup"/>
+<a href="${signup}">SignUp</a>
 </body>
 </html>

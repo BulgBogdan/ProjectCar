@@ -29,7 +29,7 @@ public class User {
     @Column(name = "secondName", nullable = false, length = 100)
     private String secondName;
 
-    @Column(name = "birthday")
+    @Column(name = "birthday", columnDefinition="TIMESTAMP")
     private Date birthday;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")

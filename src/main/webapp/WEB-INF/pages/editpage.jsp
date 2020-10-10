@@ -19,7 +19,7 @@
     <label for="secondName">secondName</label>
     <input type="text" name="secondName" id="secondName">
     <label for="birthday">birthday</label>
-    <input type="text" name="birthday" id="birthday">
+    <input type="date" name="birthday" id="birthday">
     <input type="submit" value="Edit user">
 </form>
 </body>
