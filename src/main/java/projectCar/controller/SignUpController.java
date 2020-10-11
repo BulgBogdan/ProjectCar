@@ -7,14 +7,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import projectCar.entity.User;
-import projectCar.service.UserServiceImpl;
 import projectCar.service.interfaces.IUserService;
 
 @Controller
 public class SignUpController {
 
     @Autowired
-    private IUserService userService = new UserServiceImpl();
+    private IUserService userService;
 
     @RequestMapping(value = "/signup", method = RequestMethod.GET)
     public ModelAndView pageSignUpUser(){

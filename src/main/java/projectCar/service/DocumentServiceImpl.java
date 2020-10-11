@@ -1,6 +1,7 @@
 package projectCar.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import projectCar.dao.DocumentDAOImpl;
 import projectCar.dao.interfaces.IDocumentDAO;
@@ -9,6 +10,7 @@ import projectCar.service.interfaces.IDocumentService;
 
 import java.util.List;
 
+@Service
 public class DocumentServiceImpl implements IDocumentService {
 
     @Autowired

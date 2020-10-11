@@ -9,6 +9,7 @@
 <body>
 <div align="center">
     <form:form action="signupProcess" method="post" modelAttribute="user">
+
         <table border="0">
             <tr>
                 <td colspan="2" align="center"><h2>Registration</h2></td>

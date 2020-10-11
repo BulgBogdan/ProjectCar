@@ -1,6 +1,7 @@
 package projectCar.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import projectCar.dao.interfaces.IOtherCostsDAO;
 import projectCar.dao.OtherCostsDAOImpl;
@@ -9,6 +10,7 @@ import projectCar.service.interfaces.IOtherCostsService;
 
 import java.util.List;
 
+@Service
 public class OhterCostsServiceImpl implements IOtherCostsService {
 
     @Autowired

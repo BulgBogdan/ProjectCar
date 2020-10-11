@@ -3,11 +3,13 @@ package projectCar.dao;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import projectCar.dao.interfaces.IParameterDAO;
 import projectCar.entity.Parameter;
 
 import java.util.List;
 
+@Repository
 public class ParameterDAOImpl implements IParameterDAO {
 
     private SessionFactory sessionFactory;

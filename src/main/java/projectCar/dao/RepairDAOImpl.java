@@ -3,11 +3,13 @@ package projectCar.dao;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import projectCar.dao.interfaces.IRepairDAO;
 import projectCar.entity.Repair;
 
 import java.util.List;
 
+@Repository
 public class RepairDAOImpl implements IRepairDAO {
 
     private SessionFactory sessionFactory;
