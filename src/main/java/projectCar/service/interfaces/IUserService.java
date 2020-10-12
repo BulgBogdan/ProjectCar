@@ -12,6 +12,8 @@ public interface IUserService {
 
     User read(int id);
 
+    User findByLogin(String login);
+
     void delete(User user);
 
     List<User> getAll();

@@ -1,0 +1,42 @@
+package projectCar.validator;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.Errors;
+import org.springframework.validation.ValidationUtils;
+import org.springframework.validation.Validator;
+import projectCar.entity.User;
+import projectCar.service.interfaces.IUserService;
+
+public class UserValidator implements Validator {
+
+    @Autowired
+    private IUserService userService;
+
+    @Override
+    public boolean supports(Class<?> aClass) {
+        return User.class.equals(aClass);
+    }
+
+    @Override
+    public void validate(Object o, Errors errors) {
+        User user = (User) o;
+
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "login", "Required");
+
+        if (user.getLogin().length() < 4 || user.getLogin().length() > 32){
+            errors.rejectValue("login", "Size.user.login");
+        }
+
+        if (userService.findByLogin(user.getLogin()) != null){
+            errors.rejectValue("login","Duplicate.user.login");
+        }
+
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "Required");
+
+        if (user.getPassword().length() < 6 || user.getPassword().length() > 32){
+            errors.rejectValue("password", "Size.user.password");
+        }
+
+
+    }
+}

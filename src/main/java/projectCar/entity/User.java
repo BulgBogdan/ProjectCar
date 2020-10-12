@@ -20,6 +20,9 @@ public class User {
     @Column(name = "password", nullable = false, length = 100)
     private String password;
 
+    @Transient
+    transient private String confirmPassword;
+
     @Column(name = "email", nullable = false, length = 100)
     private String email;
 
@@ -38,9 +41,11 @@ public class User {
     public User() {
     }
 
-    public User(String login, String password, String email, String firstName, String secondName, Date birthday, List<Car> cars) {
+    public User(String login, String password, String confirmPassword, String email,
+                String firstName, String secondName, Date birthday, List<Car> cars) {
         this.login = login;
         this.password = password;
+        this.confirmPassword = confirmPassword;
         this.email = email;
         this.firstName = firstName;
         this.secondName = secondName;
@@ -70,6 +75,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
     }
 
     public String getEmail() {
@@ -120,6 +133,7 @@ public class User {
         return id == user.id &&
                 Objects.equals(login, user.login) &&
                 Objects.equals(password, user.password) &&
+                Objects.equals(confirmPassword, user.confirmPassword) &&
                 Objects.equals(email, user.email) &&
                 Objects.equals(firstName, user.firstName) &&
                 Objects.equals(secondName, user.secondName) &&
@@ -129,7 +143,7 @@ public class User {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, login, password, email, firstName, secondName, birthday, cars);
+        return Objects.hash(id, login, password, confirmPassword, email, firstName, secondName, birthday, cars);
     }
 
     @Override
@@ -138,6 +152,7 @@ public class User {
                 "id=" + id +
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
+                ", confirmPassword='" + confirmPassword + '\'' +
                 ", email='" + email + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", secondName='" + secondName + '\'' +

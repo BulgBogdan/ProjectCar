@@ -1,10 +1,10 @@
 package projectCar.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import projectCar.dao.interfaces.IUserDAO;
-import projectCar.dao.UserDAOImpl;
 import projectCar.entity.User;
 import projectCar.service.interfaces.IUserService;
 
@@ -14,12 +14,15 @@ import java.util.List;
 public class UserServiceImpl implements IUserService {
 
     @Autowired
-    private IUserDAO userDAO = new UserDAOImpl();
+    private IUserDAO userDAO;
 
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     @Transactional
     public void add(User user) {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userDAO.add(user);
     }
 
@@ -34,6 +37,11 @@ public class UserServiceImpl implements IUserService {
     @Transactional
     public User read(int id) {
         return userDAO.read(id);
+    }
+
+    @Override
+    public User findByLogin(String login) {
+        return userDAO.findByLogin(login);
     }
 
     @Override
