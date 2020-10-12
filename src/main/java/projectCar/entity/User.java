@@ -1,13 +1,18 @@
 package projectCar.entity;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
+import javax.validation.constraints.Size;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "users", schema = "projectcar")
-public class User {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,13 +20,15 @@ public class User {
     private int id;
 
     @Column(name = "login", nullable = false, length = 100)
+    @Size(min = 4, message = "4 and more characters")
     private String login;
 
     @Column(name = "password", nullable = false, length = 100)
+    @Size(min = 4, message = "4 and more characters")
     private String password;
 
     @Transient
-    transient private String confirmPassword;
+    private String confirmPassword;
 
     @Column(name = "email", nullable = false, length = 100)
     private String email;
@@ -32,7 +39,7 @@ public class User {
     @Column(name = "secondName", nullable = false, length = 100)
     private String secondName;
 
-    @Column(name = "birthday", columnDefinition="TIMESTAMP")
+    @Column(name = "birthday")
     private Date birthday;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
@@ -67,10 +74,6 @@ public class User {
 
     public void setLogin(String login) {
         this.login = login;
-    }
-
-    public String getPassword() {
-        return password;
     }
 
     public void setPassword(String password) {
@@ -123,6 +126,40 @@ public class User {
 
     public void setCars(List<Car> cars) {
         this.cars = cars;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return login;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
     @Override

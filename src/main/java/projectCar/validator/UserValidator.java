@@ -1,12 +1,14 @@
 package projectCar.validator;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 import projectCar.entity.User;
 import projectCar.service.interfaces.IUserService;
 
+@Component
 public class UserValidator implements Validator {
 
     @Autowired
@@ -37,6 +39,9 @@ public class UserValidator implements Validator {
             errors.rejectValue("password", "Size.user.password");
         }
 
+        if (!user.getConfirmPassword().equals(user.getPassword())){
+            errors.rejectValue("confirmPassword", "Different.user.password");
+        }
 
     }
 }

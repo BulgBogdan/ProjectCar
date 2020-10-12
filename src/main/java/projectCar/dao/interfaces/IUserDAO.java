@@ -1,11 +1,10 @@
 package projectCar.dao.interfaces;
 
-import org.springframework.data.jpa.repository.JpaRepository;
 import projectCar.entity.User;
 
 import java.util.List;
 
-public interface IUserDAO extends JpaRepository<User, Integer> {
+public interface IUserDAO{
 
     void add(User user);
 
