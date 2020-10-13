@@ -26,41 +26,19 @@ public class LoginController {
     @PostMapping("/registration")
     public String addUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, Model model){
         if (bindingResult.hasErrors()){
+            model.addAttribute("Errors", "Uncorrect enter");
             return "signup";
         }
         if (!user.getPassword().equals(user.getConfirmPassword())){
             model.addAttribute("passwordError", "Password not complaining");
             return "signup";
         }
-        userService.add(user);
-        if (userService == null){
+        if (!userService.add(user)){
             model.addAttribute("loginError", "User exist");
             return "signup";
         }
         return "redirect:/";
     }
-
-//    @RequestMapping(value = "/registration", method = RequestMethod.POST)
-//    public String registration(@ModelAttribute("user") User user, BindingResult bindingResult, Model model){
-//        userValidator.validate(user, bindingResult);
-//        if (bindingResult.hasErrors()){
-//            return "signup";
-//        }
-//        userService.add(user);
-//        securityService.autoLogin(user.getLogin(),user.getPassword());
-//        return "redirect:/";
-//    }
-//
-//    @RequestMapping(value = "/login", method = RequestMethod.GET)
-//    public String login(Model model, String error, String logout){
-//        if (error!=null){
-//            model.addAttribute("error","Username or Password is incorrect.");
-//        }
-//        if (logout!=null){
-//            model.addAttribute("message", "Logout out successfully.");
-//        }
-//        return "login";
-//    }
 
 
 }

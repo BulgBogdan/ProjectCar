@@ -24,23 +24,29 @@ public class UserDAOImpl implements IUserDAO {
     }
 
     @Override
-    public void add(User user) {
+    public boolean add(User user) {
         Session session = sessionFactory.getCurrentSession();
-        session.persist(user);
-        logger.info("User successfully added. User: " + user);
+        if (session!=null){
+            session.persist(user);
+            logger.info("User successfully added. User: " + user);
+        }
+        return false;
     }
 
     @Override
-    public void update(User user) {
+    public boolean update(User user) {
         Session session = sessionFactory.getCurrentSession();
-        session.update(user);
-        logger.info("User successfully updated. User: " + user);
+        if (session!=null) {
+            session.update(user);
+            logger.info("User successfully updated. User: " + user);
+        }
+        return false;
     }
 
     @Override
     public User read(int id) {
         Session session = sessionFactory.getCurrentSession();
-        User user = session.get(User.class, id);
+        User user = (User)session.load(User.class, new Integer(id));
         logger.info("User successfully readed. User: " + user);
         return user;
     }
@@ -48,19 +54,21 @@ public class UserDAOImpl implements IUserDAO {
     @Override
     public User findByLogin(String login) {
         Session session = sessionFactory.getCurrentSession();
-        User user = session.get(User.class, login);
+        User user = (User)session.createQuery("from User where login = '" + login +"'").uniqueResult();
         logger.info("User successfully readed. User: " + user);
         return user;
     }
 
     @Override
-    public void delete(User user) {
+    public boolean delete(User user) {
         Session session = sessionFactory.getCurrentSession();
         if (session!=null) {
             session.delete(user);
+            logger.info("User successfully deleted. User: " + user);
         }
-        logger.info("User successfully deleted. User: " + user);
+        return false;
     }
+
 
     @Override
     @SuppressWarnings("unchecked")
