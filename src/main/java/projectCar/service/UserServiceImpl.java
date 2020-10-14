@@ -1,7 +1,6 @@
 package projectCar.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import projectCar.dao.UserDAOImpl;
@@ -17,27 +16,21 @@ public class UserServiceImpl implements IUserService {
     @Autowired
     private IUserDAO userDAO = new UserDAOImpl();
 
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
-
     @Override
     @Transactional
     public boolean add(User user) {
         User userFromDB = userDAO.findByLogin(user.getLogin());
-        if (userFromDB == null){
-            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-            userDAO.add(user);
+        if (userFromDB != null) {
+            return false;
         }
-        return false;
+        userDAO.add(user);
+        return true;
     }
 
     @Override
     @Transactional
-    public boolean update(User user) {
-        if (userDAO.update(user)){
-            return true;
-        }
-            return false;
+    public void update(User user) {
+        userDAO.update(user);
     }
 
     @Override
@@ -54,11 +47,8 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     @Transactional
-    public boolean delete(User user) {
-        if (userDAO.delete(user)){
-            return true;
-        }
-        return false;
+    public void delete(User user) {
+        userDAO.delete(user);
     }
 
     @Override
@@ -66,4 +56,5 @@ public class UserServiceImpl implements IUserService {
     public List<User> getAll() {
         return userDAO.getAll();
     }
+
 }

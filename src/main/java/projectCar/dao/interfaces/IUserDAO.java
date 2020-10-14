@@ -6,15 +6,15 @@ import java.util.List;
 
 public interface IUserDAO{
 
-    boolean add(User user);
+    void add(User user);
 
-    boolean update(User user);
+    void update(User user);
 
     User read(int id);
 
     User findByLogin(String login);
 
-    boolean delete(User user);
+    void delete(User user);
 
     List<User> getAll();
 }

@@ -1,7 +1,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html>
@@ -43,12 +42,12 @@
                         autofocus="true"></form:input>
         </div>
         <div>
-            <fmt:formatDate type="date" var="fmtDate" value="${user.birthday}" pattern="yyyy//MM/dd"/>
-            <form:input type="date"  path="birthday" value="${fmtDate}"></form:input>
+            <form:input type="date"  path="birthday"></form:input>
         </div>
         <button type="submit">Зарегистрироваться</button>
         ${Errors}
     </form:form>
+    <br>
     <a href="/">Главная</a>
 </div>
 </body>

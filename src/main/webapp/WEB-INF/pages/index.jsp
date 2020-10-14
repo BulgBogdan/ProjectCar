@@ -11,7 +11,6 @@
     <tr>
         <th>id</th>
         <th>login</th>
-        <th>password</th>
         <th>email</th>
         <th>firstName</th>
         <th>secondName</th>
@@ -21,7 +20,6 @@
         <tr>
             <td>${user.id}</td>
             <td>${user.login}</td>
-            <td>${user.password}</td>
             <td>${user.email}</td>
             <td>${user.firstName}</td>
             <td>${user.secondName}</td>
@@ -33,6 +31,9 @@
 <h2>SignUp USER</h2>
 <c:url value="/registration" var="signup"/>
 <a href="${signup}">SignUp</a>
+<br>
+<c:url value="/login" var="login"/>
+<a href="${login}">LOGIN</a>
 </body>
 </html>
 
