@@ -16,11 +16,11 @@
     <form method="POST" action="/login">
         <h2>Вход в систему</h2>
         <div>
-            <input name="login" type="text" placeholder="login"
+            <input name="login" type="text" placeholder="Login"
                    autofocus="true"/>
             <input name="password" type="password" placeholder="Password"/>
             <button type="submit">Log In</button>
-            <h4><a href="/registration">Зарегистрироваться</a></h4>
+            <h4><a href="/signup">Зарегистрироваться</a></h4>
         </div>
     </form>
 </div>

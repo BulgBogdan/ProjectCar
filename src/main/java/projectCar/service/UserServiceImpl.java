@@ -1,6 +1,10 @@
 package projectCar.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import projectCar.dao.UserDAOImpl;
@@ -11,10 +15,19 @@ import projectCar.service.interfaces.IUserService;
 import java.util.List;
 
 @Service
-public class UserServiceImpl implements IUserService {
-
+public class UserServiceImpl implements IUserService, UserDetailsService {
     @Autowired
     private IUserDAO userDAO = new UserDAOImpl();
+
+    @Override
+    @Transactional
+    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        User user = userDAO.findByLogin(s);
+        if (user==null){
+            throw new UsernameNotFoundException("User Not Found ");
+        }
+        return user;
+    }
 
     @Override
     @Transactional
