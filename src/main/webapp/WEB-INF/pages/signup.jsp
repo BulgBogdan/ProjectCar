@@ -48,7 +48,7 @@
         ${Errors}
     </form:form>
     <br>
-    <a href="/">Главная</a>
+    <a href="/user">Главная</a>
 </div>
 </body>
 </html>

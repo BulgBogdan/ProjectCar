@@ -15,18 +15,20 @@ import projectCar.service.interfaces.IUserService;
 import java.util.List;
 
 @Service
-public class UserServiceImpl implements IUserService, UserDetailsService {
+public class UserServiceImpl implements UserDetailsService, IUserService {
     @Autowired
     private IUserDAO userDAO = new UserDAOImpl();
 
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        User user = userDAO.findByLogin(s);
-        if (user==null){
+        UserDetails loadedUser;
+        User client = userDAO.findByLogin(s);
+        loadedUser=new org.springframework.security.core.userdetails.User(client.getLogin(),client.getPassword(),client.getAuthorities());
+        if (loadedUser==null){
             throw new UsernameNotFoundException("User Not Found ");
         }
-        return user;
+        return loadedUser;
     }
 
     @Override

@@ -16,7 +16,7 @@ import projectCar.util.LocalDateTimeConverter;
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = "projectCar")
-public class WebConfig extends WebMvcConfigurerAdapter implements WebMvcConfigurer {
+public class WebConfig extends WebMvcConfigurerAdapter{
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
