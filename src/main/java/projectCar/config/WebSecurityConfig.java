@@ -23,12 +23,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests().antMatchers("/").permitAll()
-                .anyRequest().authenticated().and().formLogin().loginPage("/login")
-                .permitAll().and().logout();
+                .anyRequest().authenticated().and().formLogin().loginPage("/login").loginProcessingUrl("/loginAction")
+                .permitAll().and().logout().permitAll().and().csrf().disable();
+//        http.authorizeRequests().anyRequest().hasAnyRole("USER").and()
+//                .authorizeRequests().antMatchers("/").permitAll().and()
+//                .formLogin().loginPage("/login").loginProcessingUrl("/loginAction").permitAll().and()
+//                .logout().logoutSuccessUrl("/login").permitAll().and().csrf().disable();
     }
 
     @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder authentication) throws Exception{
+    public void configure(AuthenticationManagerBuilder authentication) throws Exception{
         authentication.userDetailsService(userDetailsService);
     }
 

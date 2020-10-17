@@ -1,6 +1,6 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
-<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,7 +10,7 @@
 
 <body>
 <div>
-    <form method="POST" action="${contextPath}/login">
+    <form method="post" action="<spring:url value="/loginAction"/>">
         <h2>Вход в систему</h2>
         <div>
             <input name="login" type="text" placeholder="Login"

@@ -2,6 +2,7 @@ package projectCar.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -22,13 +23,17 @@ public class UserServiceImpl implements UserDetailsService, IUserService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        UserDetails loadedUser;
-        User client = userDAO.findByLogin(s);
-        loadedUser=new org.springframework.security.core.userdetails.User(client.getLogin(),client.getPassword(),client.getAuthorities());
-        if (loadedUser==null){
+        User user = userDAO.findByLogin(s);
+        org.springframework.security.core.userdetails.User.UserBuilder builder;
+        if (user!=null){
+            builder=org.springframework.security.core.userdetails.User.withUsername(s);
+            builder.disabled(!user.isEnabled());
+            builder.password(user.getPassword());
+            builder.authorities("USER");
+        }else {
             throw new UsernameNotFoundException("User Not Found ");
         }
-        return loadedUser;
+        return builder.build();
     }
 
     @Override

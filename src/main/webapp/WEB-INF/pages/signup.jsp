@@ -48,7 +48,8 @@
         ${Errors}
     </form:form>
     <br>
-    <a href="/user">Главная</a>
+    <c:url value="/user" var="user"/>
+    <a href="${user}">Главная</a>
 </div>
 </body>
 </html>

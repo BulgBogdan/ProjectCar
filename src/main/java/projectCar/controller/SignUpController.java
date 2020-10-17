@@ -6,7 +6,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import projectCar.entity.User;
-import projectCar.service.ISecurityService;
 import projectCar.service.UserServiceImpl;
 import projectCar.service.interfaces.IUserService;
 
@@ -17,9 +16,6 @@ public class SignUpController {
 
     @Autowired
     private IUserService userService=new UserServiceImpl();
-
-    @Autowired
-    private ISecurityService securityService;
 
     @GetMapping("/")
     public String registration(Model model){
@@ -41,7 +37,6 @@ public class SignUpController {
             model.addAttribute("loginError", "User exist");
             return "signup";
         }
-        securityService.autoLogin(user.getLogin(),user.getPassword());
         return "redirect:/user";
     }
 
