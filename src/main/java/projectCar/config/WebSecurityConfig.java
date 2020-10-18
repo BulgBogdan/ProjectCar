@@ -29,16 +29,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeRequests().antMatchers("/").not().fullyAuthenticated()
-                .antMatchers("/**").hasRole("USER").anyRequest().authenticated().and();
+                .antMatchers("/**").authenticated().and();
+
         http.formLogin().loginPage("/login")
                 .loginProcessingUrl("/login-check").failureUrl("/error")
-                .usernameParameter("check_username").passwordParameter("check_password").defaultSuccessUrl("/user").permitAll();
+                .usernameParameter("check_username").passwordParameter("check_password")
+                .defaultSuccessUrl("/user").permitAll();
+
         http.logout().permitAll().logoutUrl("/logout").logoutSuccessUrl("/login?logout").invalidateHttpSession(true)
                 .and();
-//        http.authorizeRequests().anyRequest().hasAnyRole("USER").and()
-//                .authorizeRequests().antMatchers("/").permitAll().and()
-//                .formLogin().loginPage("/login").loginProcessingUrl("/loginAction").permitAll().and()
-//                .logout().logoutSuccessUrl("/login").permitAll().and().csrf().disable();
     }
 
     @Autowired

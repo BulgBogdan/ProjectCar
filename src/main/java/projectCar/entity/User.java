@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.sql.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 
@@ -130,7 +131,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return new HashSet<GrantedAuthority>();
     }
 
     public String getPassword() {
