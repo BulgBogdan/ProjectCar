@@ -6,6 +6,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import projectCar.dao.UserDAOImpl;
@@ -20,13 +21,16 @@ public class UserServiceImpl implements UserDetailsService, IUserService {
     @Autowired
     private IUserDAO userDAO = new UserDAOImpl();
 
+    @Autowired
+    BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @Override
-    @Transactional
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        User user = userDAO.findByLogin(s);
-        org.springframework.security.core.userdetails.User.UserBuilder builder;
+    @Transactional(readOnly = true)
+    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
+        User user = userDAO.findByLogin(login);
+        org.springframework.security.core.userdetails.User.UserBuilder builder=null;
         if (user!=null){
-            builder=org.springframework.security.core.userdetails.User.withUsername(s);
+            builder=org.springframework.security.core.userdetails.User.withUsername(login);
             builder.disabled(!user.isEnabled());
             builder.password(user.getPassword());
             builder.authorities("USER");
@@ -43,6 +47,7 @@ public class UserServiceImpl implements UserDetailsService, IUserService {
         if (userFromDB != null) {
             return false;
         }
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userDAO.add(user);
         return true;
     }
