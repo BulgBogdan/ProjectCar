@@ -9,8 +9,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
+import projectCar.entity.Car;
 import projectCar.entity.User;
+import projectCar.service.CarServiceImpl;
 import projectCar.service.UserServiceImpl;
+import projectCar.service.interfaces.ICarService;
 import projectCar.service.interfaces.IUserService;
 
 import java.util.List;
@@ -20,6 +23,9 @@ public class MyPageController {
 
     @Autowired
     private IUserService userService = new UserServiceImpl();
+
+    @Autowired
+    private ICarService carService = new CarServiceImpl();
 
     @GetMapping("/user")
     public ModelAndView allUsers() {
@@ -32,12 +38,14 @@ public class MyPageController {
     }
 
     @GetMapping("/home")
-    public ModelAndView myPage(@AuthenticationPrincipal UserDetails user) {
-        String login = user.getUsername();
+    public ModelAndView myPage(@AuthenticationPrincipal UserDetails userDetails) {
+        String login = userDetails.getUsername();
         User userAuth = userService.findByLogin(login);
+        List<Car> carList = userAuth.getCars();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("home");
         modelAndView.addObject("user",userAuth);
+        modelAndView.addObject("carList", carList);
         return modelAndView;
     }
 

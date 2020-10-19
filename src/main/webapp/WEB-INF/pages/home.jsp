@@ -35,11 +35,14 @@
     </div>
     <br>
     <h2>${user.firstName} select your car</h2>
-    <c:url value="/carView" var="cars"/>
-    <a href="${carView}">Open car</a>
+    <c:forEach items="${carList}" var="carsList">
+    <c:url value="/carView/${carsList.id}" var="cars"/>
+    <a href="${cars}">Open ${carsList.nameCar}</a>
+        <br>
+    </c:forEach>
     <br>
     <h2>add new car</h2>
-    <c:url value="/createCar" var="cars"/>
+    <c:url value="/createCar" var="createCar"/>
     <a href="${createCar}">Create car</a>
 </form:form>
 </body>
