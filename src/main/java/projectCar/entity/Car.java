@@ -16,6 +16,12 @@ public class Car {
     @Column(name = "nameCar", nullable = false, length = 100)
     private String nameCar;
 
+    @Column(name = "priceCar")
+    private double priceCar;
+
+    @Column(name = "costRegistration")
+    private double costRegistration;
+
     @ManyToOne
     @JoinColumn(name = "FK_users")
     private User user;
@@ -35,14 +41,18 @@ public class Car {
     public Car() {
     }
 
-    public Car(String nameCar, User user, List<Document> documents, List<Fuel> fuels, List<OtherCosts> otherCosts, List<Repair> repairs) {
+    public Car(String nameCar, double priceCar, double costRegistration, User user, List<Document> documents,
+               List<Fuel> fuels, List<OtherCosts> otherCosts, List<Repair> repairs) {
         this.nameCar = nameCar;
+        this.priceCar = priceCar;
+        this.costRegistration = costRegistration;
         this.user = user;
         this.documents = documents;
         this.fuels = fuels;
         this.otherCosts = otherCosts;
         this.repairs = repairs;
     }
+
 
     public int getId() {
         return id;
@@ -58,6 +68,22 @@ public class Car {
 
     public void setNameCar(String nameCar) {
         this.nameCar = nameCar;
+    }
+
+    public double getPriceCar() {
+        return priceCar;
+    }
+
+    public void setPriceCar(double priceCar) {
+        this.priceCar = priceCar;
+    }
+
+    public double getCostRegistration() {
+        return costRegistration;
+    }
+
+    public void setCostRegistration(double costRegistration) {
+        this.costRegistration = costRegistration;
     }
 
     public User getUser() {
@@ -106,6 +132,8 @@ public class Car {
         if (o == null || getClass() != o.getClass()) return false;
         Car car = (Car) o;
         return id == car.id &&
+                Double.compare(car.priceCar, priceCar) == 0 &&
+                Double.compare(car.costRegistration, costRegistration) == 0 &&
                 Objects.equals(nameCar, car.nameCar) &&
                 Objects.equals(user, car.user) &&
                 Objects.equals(documents, car.documents) &&
@@ -116,7 +144,7 @@ public class Car {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nameCar, user, documents, fuels, otherCosts, repairs);
+        return Objects.hash(id, nameCar, priceCar, costRegistration, user, documents, fuels, otherCosts, repairs);
     }
 
     @Override
@@ -124,6 +152,8 @@ public class Car {
         return "Car{" +
                 "id=" + id +
                 ", nameCar='" + nameCar + '\'' +
+                ", priceCar=" + priceCar +
+                ", costRegistration=" + costRegistration +
                 ", user=" + user +
                 ", documents=" + documents +
                 ", fuels=" + fuels +

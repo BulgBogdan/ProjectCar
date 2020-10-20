@@ -13,6 +13,11 @@
     <p><a class="btn btn-lg btn-danger" href="<c:url value="/logout" />" role="button">Выйти</a></p>
 </sec:authorize>
 
+<br>
+
+<c:url value="/user" var="userList"/>
+<a href="${userList}">list users</a>
+
 <h2>PersonalCabinet</h2>
 <form:form modelAttribute="user" >
     <div>
@@ -36,14 +41,14 @@
     <br>
     <h2>${user.firstName} select your car</h2>
     <c:forEach items="${carList}" var="carsList">
-    <c:url value="/carView/${carsList.id}" var="cars"/>
+    <c:url value="car/view/${carsList.id}" var="cars"/>
     <a href="${cars}">Open ${carsList.nameCar}</a>
         <br>
     </c:forEach>
     <br>
     <h2>add new car</h2>
-    <c:url value="/createCar" var="createCar"/>
-    <a href="${createCar}">Create car</a>
+    <c:url value="/car/createName" var="createCarName"/>
+    <a href="${createCarName}">Create car</a>
 </form:form>
 </body>
 </html>

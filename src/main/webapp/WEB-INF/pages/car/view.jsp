@@ -15,14 +15,24 @@
 
 <h2>PersonalCabinet</h2>
 <form:form modelAttribute="car" >
-    <div>
-        <td>${car.id}</td>
-    </div>
-    <div>
-        <td>${car.nameCar}</td>
-    </div>
+<table>
+    <tr>
+        <th>id</th>
+        <th>Цена авто при покупке</th>
+        <th>Затраты при регистрации</th>
+    </tr>
+        <tr>
+            <td>${car.id}</td>
+            <td>${car.priceCar}</td>
+            <td>${car.costRegistration}</td>
+            <td>
+                <c:url value="/car/edit/${car.id}" var="editCar"/>
+                <a href="${editCar}">edit</a>
+            </td>
+        </tr>
+</table>
 </form:form>
-<c:url value="/home" var="home"/>
-<a href="${home}">HOME</a>
+<c:url value="/personalCabinet" var="cabinet"/>
+<a href="${cabinet}">My cabinet</a>
 </body>
 </html>

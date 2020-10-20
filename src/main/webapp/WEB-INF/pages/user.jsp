@@ -41,7 +41,7 @@
 <c:url value="/login" var="login"/>
 <a href="${login}">LOGIN</a>
 <br>
-<c:url value="/home" var="home"/>
-<a href="${home}">HOME</a>
+<c:url value="/personalCabinet" var="cabinet"/>
+<a href="${cabinet}">My cabinet</a>
 </body>
 </html>

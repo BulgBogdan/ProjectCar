@@ -23,12 +23,22 @@
                         autofocus="true"></form:input>
         </div>
 
+        <div>
+            <form:input type="double" path="priceCar" placeholder="Price car"
+                        autofocus="true"></form:input>
+        </div>
+
+        <div>
+            <form:input type="double" path="costRegistration" placeholder="Registration cost"
+                        autofocus="true"></form:input>
+        </div>
+
         <button type="submit">Create</button>
 
     </form:form>
     <br>
-    <c:url value="/user" var="user"/>
-    <a href="${user}">Главная</a>
+    <c:url value="/personalCabinet" var="cabinet"/>
+    <a href="${cabinet}">Back</a>
 </div>
 
 </body>

@@ -40,6 +40,4 @@ public class SignUpController {
         return "redirect:/user";
     }
 
-
-
 }

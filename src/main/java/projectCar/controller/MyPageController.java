@@ -1,10 +1,7 @@
 package projectCar.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AbstractAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,17 +34,16 @@ public class MyPageController {
         return modelAndView;
     }
 
-    @GetMapping("/home")
+    @GetMapping("/personalCabinet")
     public ModelAndView myPage(@AuthenticationPrincipal UserDetails userDetails) {
         String login = userDetails.getUsername();
         User userAuth = userService.findByLogin(login);
         List<Car> carList = userAuth.getCars();
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("home");
+        modelAndView.setViewName("personalCabinet");
         modelAndView.addObject("user",userAuth);
         modelAndView.addObject("carList", carList);
         return modelAndView;
     }
-
 
 }

@@ -16,6 +16,9 @@ public class Document {
     @Column(name = "nameDocument", nullable = false, length = 100)
     private String nameDocument;
 
+    @Column(name = "documentCost")
+    private double documentCost;
+
     @Column(name = "beginDate", nullable = false)
     private Date beginDate;
 
@@ -29,8 +32,9 @@ public class Document {
     public Document() {
     }
 
-    public Document(String nameDocument, Date beginDate, Date endDate, Car car) {
+    public Document(String nameDocument, double documentCost, Date beginDate, Date endDate, Car car) {
         this.nameDocument = nameDocument;
+        this.documentCost = documentCost;
         this.beginDate = beginDate;
         this.endDate = endDate;
         this.car = car;
@@ -50,6 +54,14 @@ public class Document {
 
     public void setNameDocument(String nameDocument) {
         this.nameDocument = nameDocument;
+    }
+
+    public double getDocumentCost() {
+        return documentCost;
+    }
+
+    public void setDocumentCost(double documentCost) {
+        this.documentCost = documentCost;
     }
 
     public Date getBeginDate() {
@@ -82,6 +94,7 @@ public class Document {
         if (o == null || getClass() != o.getClass()) return false;
         Document document = (Document) o;
         return id == document.id &&
+                Double.compare(document.documentCost, documentCost) == 0 &&
                 Objects.equals(nameDocument, document.nameDocument) &&
                 Objects.equals(beginDate, document.beginDate) &&
                 Objects.equals(endDate, document.endDate) &&
@@ -90,7 +103,7 @@ public class Document {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nameDocument, beginDate, endDate, car);
+        return Objects.hash(id, nameDocument, documentCost, beginDate, endDate, car);
     }
 
     @Override
@@ -98,6 +111,7 @@ public class Document {
         return "Document{" +
                 "id=" + id +
                 ", nameDocument='" + nameDocument + '\'' +
+                ", documentCost=" + documentCost +
                 ", beginDate=" + beginDate +
                 ", endDate=" + endDate +
                 ", car=" + car +
