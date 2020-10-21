@@ -21,7 +21,7 @@ public class Fuel {
     @Column(name = "summ")
     private double summ;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "FK_cars")
     private Car car;
 
@@ -32,6 +32,46 @@ public class Fuel {
         this.literCost = literCost;
         this.lietrValue = lietrValue;
         this.summ = summ;
+        this.car = car;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public double getLiterCost() {
+        return literCost;
+    }
+
+    public void setLiterCost(double literCost) {
+        this.literCost = literCost;
+    }
+
+    public double getLietrValue() {
+        return lietrValue;
+    }
+
+    public void setLietrValue(double lietrValue) {
+        this.lietrValue = lietrValue;
+    }
+
+    public double getSumm() {
+        return summ;
+    }
+
+    public void setSumm(double summ) {
+        this.summ = summ;
+    }
+
+    public Car getCar() {
+        return car;
+    }
+
+    public void setCar(Car car) {
         this.car = car;
     }
 

@@ -13,8 +13,8 @@
     <p><a class="btn btn-lg btn-danger" href="<c:url value="/logout" />" role="button">Выйти</a></p>
 </sec:authorize>
 
-<h2>PersonalCabinet</h2>
-<form:form modelAttribute="car" >
+<h2>${car.nameCar}</h2>
+<form:form modelAttribute="car">
 <table>
     <tr>
         <th>id</th>
@@ -32,6 +32,45 @@
         </tr>
 </table>
 </form:form>
+
+    <h2>Parameter auto</h2>
+<form:form modelAttribute="parameter">
+    <c:if test="${parameter!=null}">
+        <table>
+            <tr>
+                <th>Марка Авто</th>
+                <th>Модель Авто</th>
+                <th>Год выпуска</th>
+                <th>Пробег</th>
+                <th>Масса Авто</th>
+                <th>Цвет Авто</th>
+                <th>Средний расход</th>
+                <th>VIN</th>
+                <th>Регистрационный знак</th>
+            </tr>
+            <tr>
+                <td>${parameter.mark}</td>
+                <td>${parameter.model}</td>
+                <td>${parameter.year}</td>
+                <td>${parameter.mileage}</td>
+                <td>${parameter.mass}</td>
+                <td>${parameter.color}</td>
+                <td>${parameter.averageRate}</td>
+                <td>${parameter.vin}</td>
+                <td>${parameter.registrationNumber}</td>
+                <td>
+                    <c:url value="/car/editParameter/${parameter.id}" var="editParameter"/>
+                    <a href="${editParameter}">edit</a>
+                </td>
+            </tr>
+        </table>
+    </c:if>
+    <c:if test="${parameter==null}">
+        <c:url value="/car/parameter/${car.id}" var="createParameter"/>
+        <p>Параметры небыли добавлены, <a href="${createParameter}">хотите добавить?</a></p>
+    </c:if>
+</form:form>
+
 <c:url value="/personalCabinet" var="cabinet"/>
 <a href="${cabinet}">My cabinet</a>
 </body>

@@ -25,7 +25,7 @@ public class Document {
     @Column(name = "endDate", nullable = false)
     private Date endDate;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "FK_cars")
     private Car car;
 

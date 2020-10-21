@@ -40,14 +40,15 @@ public class Parameter {
     @Column(name = "registrationNumber", nullable = false, length = 45)
     private String registrationNumber;
 
-    @ManyToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "FK_cars")
     private Car car;
 
     public Parameter() {
     }
 
-    public Parameter(String mark, String model, Date year, int mileage, int mass, String color, double averageRate, String vin, String registrationNumber, Car car) {
+    public Parameter(String mark, String model, Date year, int mileage, int mass, String color, double averageRate,
+                     String vin, String registrationNumber, Car car) {
         this.mark = mark;
         this.model = model;
         this.year = year;
@@ -57,6 +58,94 @@ public class Parameter {
         this.averageRate = averageRate;
         this.vin = vin;
         this.registrationNumber = registrationNumber;
+        this.car = car;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getMark() {
+        return mark;
+    }
+
+    public void setMark(String mark) {
+        this.mark = mark;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public Date getYear() {
+        return year;
+    }
+
+    public void setYear(Date year) {
+        this.year = year;
+    }
+
+    public int getMileage() {
+        return mileage;
+    }
+
+    public void setMileage(int mileage) {
+        this.mileage = mileage;
+    }
+
+    public int getMass() {
+        return mass;
+    }
+
+    public void setMass(int mass) {
+        this.mass = mass;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public double getAverageRate() {
+        return averageRate;
+    }
+
+    public void setAverageRate(double averageRate) {
+        this.averageRate = averageRate;
+    }
+
+    public String getVin() {
+        return vin;
+    }
+
+    public void setVin(String vin) {
+        this.vin = vin;
+    }
+
+    public String getRegistrationNumber() {
+        return registrationNumber;
+    }
+
+    public void setRegistrationNumber(String registrationNumber) {
+        this.registrationNumber = registrationNumber;
+    }
+
+    public Car getCar() {
+        return car;
+    }
+
+    public void setCar(Car car) {
         this.car = car;
     }
 

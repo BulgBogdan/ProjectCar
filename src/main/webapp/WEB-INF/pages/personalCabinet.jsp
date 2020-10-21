@@ -41,8 +41,13 @@
     <br>
     <h2>${user.firstName} select your car</h2>
     <c:forEach items="${carList}" var="carsList">
-    <c:url value="car/view/${carsList.id}" var="cars"/>
-    <a href="${cars}">Open ${carsList.nameCar}</a>
+        <c:if test="${carsList!=null}">
+            <c:url value="car/view/${carsList.id}" var="cars"/>
+            <a href="${cars}">Open ${carsList.nameCar}</a>
+        </c:if>
+        <c:if test="${carsList==null}">
+            <p>Car didn't created</p>
+        </c:if>
         <br>
     </c:forEach>
     <br>

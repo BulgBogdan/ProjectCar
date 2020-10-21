@@ -22,7 +22,7 @@ public class OtherCosts {
     @Column(name = "cost")
     private double cost;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "FK_cars")
     private Car car;
 

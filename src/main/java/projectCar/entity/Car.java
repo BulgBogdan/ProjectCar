@@ -22,9 +22,12 @@ public class Car {
     @Column(name = "costRegistration")
     private double costRegistration;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "FK_users")
     private User user;
+
+    @OneToOne(mappedBy = "car")
+    private Parameter parameters;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "car")
     private List<Document> documents;
@@ -41,18 +44,18 @@ public class Car {
     public Car() {
     }
 
-    public Car(String nameCar, double priceCar, double costRegistration, User user, List<Document> documents,
-               List<Fuel> fuels, List<OtherCosts> otherCosts, List<Repair> repairs) {
+    public Car(String nameCar, double priceCar, double costRegistration, User user, Parameter parameters,
+               List<Document> documents, List<Fuel> fuels, List<OtherCosts> otherCosts, List<Repair> repairs) {
         this.nameCar = nameCar;
         this.priceCar = priceCar;
         this.costRegistration = costRegistration;
         this.user = user;
+        this.parameters = parameters;
         this.documents = documents;
         this.fuels = fuels;
         this.otherCosts = otherCosts;
         this.repairs = repairs;
     }
-
 
     public int getId() {
         return id;
@@ -92,6 +95,14 @@ public class Car {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Parameter getParameters() {
+        return parameters;
+    }
+
+    public void setParameters(Parameter parameters) {
+        this.parameters = parameters;
     }
 
     public List<Document> getDocuments() {
@@ -136,6 +147,7 @@ public class Car {
                 Double.compare(car.costRegistration, costRegistration) == 0 &&
                 Objects.equals(nameCar, car.nameCar) &&
                 Objects.equals(user, car.user) &&
+                Objects.equals(parameters, car.parameters) &&
                 Objects.equals(documents, car.documents) &&
                 Objects.equals(fuels, car.fuels) &&
                 Objects.equals(otherCosts, car.otherCosts) &&
@@ -144,7 +156,7 @@ public class Car {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nameCar, priceCar, costRegistration, user, documents, fuels, otherCosts, repairs);
+        return Objects.hash(id, nameCar, priceCar, costRegistration, user, parameters, documents, fuels, otherCosts, repairs);
     }
 
     @Override
@@ -155,6 +167,7 @@ public class Car {
                 ", priceCar=" + priceCar +
                 ", costRegistration=" + costRegistration +
                 ", user=" + user +
+                ", parameters=" + parameters +
                 ", documents=" + documents +
                 ", fuels=" + fuels +
                 ", otherCosts=" + otherCosts +

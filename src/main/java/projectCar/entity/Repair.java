@@ -24,7 +24,7 @@ public class Repair {
     @Column(name = "costsRepair")
     private double costsRepair;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "FK_cars")
     private Car car;
 

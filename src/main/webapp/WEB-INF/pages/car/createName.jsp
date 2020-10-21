@@ -17,7 +17,8 @@
 <div>
     <form:form method="POST" modelAttribute="newCar">
 
-        <h2>Регистрация</h2>
+        <h2>Create car</h2>
+
         <div>
             <form:input type="text" path="nameCar" placeholder="Car Name"
                         autofocus="true"></form:input>
@@ -33,12 +34,12 @@
                         autofocus="true"></form:input>
         </div>
 
-        <button type="submit">Create</button>
+        <button type="submit" value="<c:url value="/car/parameter/${newCar.id}"/>">Create</button>
 
     </form:form>
     <br>
     <c:url value="/personalCabinet" var="cabinet"/>
-    <a href="${cabinet}">Back</a>
+    <a href="${cabinet}">В личный кабинет</a>
 </div>
 
 </body>

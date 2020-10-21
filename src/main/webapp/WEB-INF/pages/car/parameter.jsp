@@ -16,11 +16,43 @@
 
 <body>
 <div>
-    <form:form method="POST" modelAttribute="newCar">
+    <form:form method="POST" modelAttribute="parameter">
 
-        <h2>Регистрация</h2>
+        <h2>Параметры:</h2>
         <div>
-            <form:input type="text" path="nameCar" placeholder="Car Name"
+            <form:input type="text" path="mark" placeholder="Mark Auto"
+                        autofocus="true"></form:input>
+        </div>
+        <div>
+            <form:input type="text" path="model" placeholder="Model Auto"
+                        autofocus="true"></form:input>
+        </div>
+        <div>
+            <form:input type="date" path="year" placeholder="Year"
+                        autofocus="true"></form:input>
+        </div>
+        <div>
+            <form:input type="number" path="mileage" placeholder="Mileage"
+                        autofocus="true"></form:input>
+        </div>
+        <div>
+            <form:input type="number" path="mass" placeholder="Mass Auto"
+                        autofocus="true"></form:input>
+        </div>
+        <div>
+            <form:input type="text" path="color" placeholder="Color Auto"
+                        autofocus="true"></form:input>
+        </div>
+        <div>
+            <form:input type="double" path="averageRate" placeholder="Average Rate"
+                        autofocus="true"></form:input>
+        </div>
+        <div>
+            <form:input type="text" path="vin" placeholder="VIN Code"
+                        autofocus="true"></form:input>
+        </div>
+        <div>
+            <form:input type="text" path="registrationNumber" placeholder="Registration Number"
                         autofocus="true"></form:input>
         </div>
 

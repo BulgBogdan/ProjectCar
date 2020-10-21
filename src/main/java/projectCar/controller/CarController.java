@@ -38,7 +38,7 @@ public class CarController {
         User user = userService.findByLogin(userName);
         car.setUser(user);
         carService.add(car);
-        return "redirect:car/parameter";
+        return "redirect:/car/parameter";
     }
 
     @GetMapping("car/view/{id}")
@@ -47,6 +47,7 @@ public class CarController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("car/view");
         modelAndView.addObject("car", car);
+        modelAndView.addObject("parameter", car.getParameters());
         return modelAndView;
     }
 
@@ -59,10 +60,14 @@ public class CarController {
         return modelAndView;
     }
 
-    @PostMapping("car/edit")
-    public ModelAndView editCar(@ModelAttribute("car") Car car){
+    @PostMapping("car/edit/{id}")
+    public ModelAndView editCar(@ModelAttribute("car") Car car, @AuthenticationPrincipal UserDetails userDetails,
+                                @PathVariable("id")int id){
+        String userName = userDetails.getUsername();
+        User user = userService.findByLogin(userName);
+        car.setUser(user);
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:car/View");
+        modelAndView.setViewName("car/view");
         carService.update(car);
         return modelAndView;
     }
