@@ -37,6 +37,7 @@ public class CarController {
         String userName = userDetails.getUsername();
         User user = userService.findByLogin(userName);
         car.setUser(user);
+        int id = user.getId();
         carService.add(car);
         return "redirect:/car/parameter";
     }
@@ -61,7 +62,8 @@ public class CarController {
     }
 
     @PostMapping("car/edit/{id}")
-    public ModelAndView editCar(@ModelAttribute("car") Car car, @AuthenticationPrincipal UserDetails userDetails,
+    public ModelAndView editCar(@ModelAttribute("car") Car car,
+                                @AuthenticationPrincipal UserDetails userDetails,
                                 @PathVariable("id")int id){
         String userName = userDetails.getUsername();
         User user = userService.findByLogin(userName);

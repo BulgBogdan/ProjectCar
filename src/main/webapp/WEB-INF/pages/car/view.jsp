@@ -59,7 +59,7 @@
                 <td>${parameter.vin}</td>
                 <td>${parameter.registrationNumber}</td>
                 <td>
-                    <c:url value="/car/editParameter/${parameter.id}" var="editParameter"/>
+                    <c:url value="/car/editParameter/${car.id}" var="editParameter"/>
                     <a href="${editParameter}">edit</a>
                 </td>
             </tr>

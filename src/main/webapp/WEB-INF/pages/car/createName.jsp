@@ -34,7 +34,8 @@
                         autofocus="true"></form:input>
         </div>
 
-        <button type="submit" value="<c:url value="/car/parameter/${newCar.id}"/>">Create</button>
+        <c:url value="/car/parameter/${newCar.id}" var="next"/>
+        <button type="submit">Create</button>
 
     </form:form>
     <br>

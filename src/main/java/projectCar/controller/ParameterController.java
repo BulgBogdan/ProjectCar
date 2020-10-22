@@ -32,18 +32,19 @@ public class ParameterController {
     }
 
     @PostMapping("car/parameter/{id}")
-    public ModelAndView parameterCar(@ModelAttribute("parameter") Parameter parameter, @PathVariable("id") int id){
+    public ModelAndView parameterCar(@ModelAttribute("parameter") Parameter parameter,@PathVariable("id") int id){
         Car car = carService.read(id);
-        parameter.setCar(car);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("personalCabinet");
+        parameter.setCar(car);
         parameterService.add(parameter);
         return modelAndView;
     }
 
     @GetMapping("car/editParameter/{id}")
     public ModelAndView editParameter(@PathVariable("id") int id){
-        Parameter parameter = parameterService.read(id);
+        Car car = carService.read(id);
+        Parameter parameter = car.getParameters();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("car/editParameter");
         modelAndView.addObject("parameter", parameter);
@@ -52,6 +53,8 @@ public class ParameterController {
 
     @PostMapping("car/editParameter/{id}")
     public ModelAndView editParameter(@ModelAttribute("parameter") Parameter parameter, @PathVariable("id") int id){
+        Car car = carService.read(id);
+        parameter.setCar(car);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("car/view");
         parameterService.update(parameter);

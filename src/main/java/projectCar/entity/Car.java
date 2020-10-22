@@ -26,7 +26,7 @@ public class Car {
     @JoinColumn(name = "FK_users")
     private User user;
 
-    @OneToOne(mappedBy = "car")
+    @OneToOne(fetch = FetchType.LAZY, cascade =  CascadeType.ALL, mappedBy = "car")
     private Parameter parameters;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "car")
@@ -159,19 +159,19 @@ public class Car {
         return Objects.hash(id, nameCar, priceCar, costRegistration, user, parameters, documents, fuels, otherCosts, repairs);
     }
 
-    @Override
-    public String toString() {
-        return "Car{" +
-                "id=" + id +
-                ", nameCar='" + nameCar + '\'' +
-                ", priceCar=" + priceCar +
-                ", costRegistration=" + costRegistration +
-                ", user=" + user +
-                ", parameters=" + parameters +
-                ", documents=" + documents +
-                ", fuels=" + fuels +
-                ", otherCosts=" + otherCosts +
-                ", repairs=" + repairs +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "Car{" +
+//                "id=" + id +
+//                ", nameCar='" + nameCar + '\'' +
+//                ", priceCar=" + priceCar +
+//                ", costRegistration=" + costRegistration +
+//                ", user=" + user +
+//                ", parameters=" + parameters +
+//                ", documents=" + documents +
+//                ", fuels=" + fuels +
+//                ", otherCosts=" + otherCosts +
+//                ", repairs=" + repairs +
+//                '}';
+//    }
 }

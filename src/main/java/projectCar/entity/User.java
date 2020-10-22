@@ -43,7 +43,7 @@ public class User implements UserDetails {
     @Column(name = "birthday")
     private Date birthday;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<Car> cars;
 
     public User() {
@@ -184,18 +184,18 @@ public class User implements UserDetails {
         return Objects.hash(id, login, password, confirmPassword, email, firstName, secondName, birthday, cars);
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", login='" + login + '\'' +
-                ", password='" + password + '\'' +
-                ", confirmPassword='" + confirmPassword + '\'' +
-                ", email='" + email + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", secondName='" + secondName + '\'' +
-                ", birthday=" + birthday +
-                ", cars=" + cars +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "User{" +
+//                "id=" + id +
+//                ", login='" + login + '\'' +
+//                ", password='" + password + '\'' +
+//                ", confirmPassword='" + confirmPassword + '\'' +
+//                ", email='" + email + '\'' +
+//                ", firstName='" + firstName + '\'' +
+//                ", secondName='" + secondName + '\'' +
+//                ", birthday=" + birthday +
+//                ", cars=" + cars +
+//                '}';
+//    }
 }

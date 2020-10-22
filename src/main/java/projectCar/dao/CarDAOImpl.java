@@ -22,7 +22,7 @@ public class CarDAOImpl implements ICarDAO {
     @Override
     public void add(Car car) {
         Session session = sessionFactory.getCurrentSession();
-        session.persist(car);
+        session.save(car);
     }
 
     @Override

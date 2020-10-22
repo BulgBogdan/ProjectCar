@@ -19,7 +19,7 @@
 <a href="${userList}">list users</a>
 
 <h2>PersonalCabinet</h2>
-<form:form modelAttribute="user" >
+<form:form modelAttribute="user">
     <div>
         <td>${user.id}</td>
     </div>
@@ -38,22 +38,24 @@
     <div>
         <td>${user.secondName}</td>
     </div>
-    <br>
-    <h2>${user.firstName} select your car</h2>
-    <c:forEach items="${carList}" var="carsList">
-        <c:if test="${carsList!=null}">
-            <c:url value="car/view/${carsList.id}" var="cars"/>
-            <a href="${cars}">Open ${carsList.nameCar}</a>
-        </c:if>
-        <c:if test="${carsList==null}">
-            <p>Car didn't created</p>
-        </c:if>
-        <br>
-    </c:forEach>
-    <br>
-    <h2>add new car</h2>
-    <c:url value="/car/createName" var="createCarName"/>
-    <a href="${createCarName}">Create car</a>
 </form:form>
+<br>
+<c:url value="/car/createName" var="createCarName"/>
+<h2>${user.firstName} выберите машину:</h2>
+
+<c:if test="${user.cars==null}">
+    <p>В вашем списке нет машин, <a href="${createCarName}">хотите добавить?</a></p>
+</c:if>
+<br>
+<c:forEach items="${carList}" var="carsList">
+    <c:if test="${user.cars!=null}">
+        <c:url value="car/view/${carsList.id}" var="cars"/>
+        <a href="${cars}">Open ${carsList.nameCar}</a>
+    </c:if>
+</c:forEach>
+<br>
+<h2>add new car</h2>
+<c:url value="/car/createName" var="createCarName"/>
+<a href="${createCarName}">Create car</a>
 </body>
 </html>

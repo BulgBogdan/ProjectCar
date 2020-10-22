@@ -22,7 +22,7 @@ public class OtherCostsDAOImpl implements IOtherCostsDAO {
     @Override
     public void add(OtherCosts otherCosts) {
         Session session = sessionFactory.getCurrentSession();
-        session.persist(otherCosts);
+        session.save(otherCosts);
     }
 
     @Override

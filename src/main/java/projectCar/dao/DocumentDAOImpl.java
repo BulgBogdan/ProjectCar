@@ -22,7 +22,7 @@ public class DocumentDAOImpl implements IDocumentDAO {
     @Override
     public void add(Document document) {
         Session session = sessionFactory.getCurrentSession();
-        session.persist(document);
+        session.save(document);
 
     }
 

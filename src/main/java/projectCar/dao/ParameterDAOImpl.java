@@ -22,13 +22,13 @@ public class ParameterDAOImpl implements IParameterDAO {
     @Override
     public void add(Parameter parameter) {
         Session session = sessionFactory.getCurrentSession();
-        session.persist(parameter);
+        session.save(parameter);
     }
 
     @Override
     public void update(Parameter parameter) {
         Session session = sessionFactory.getCurrentSession();
-        session.update(parameter);
+        session.save(parameter);
     }
 
     @Override

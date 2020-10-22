@@ -40,7 +40,7 @@ public class Parameter {
     @Column(name = "registrationNumber", nullable = false, length = 45)
     private String registrationNumber;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "FK_cars")
     private Car car;
 
@@ -172,20 +172,20 @@ public class Parameter {
         return Objects.hash(id, mark, model, year, mileage, mass, color, averageRate, vin, registrationNumber, car);
     }
 
-    @Override
-    public String toString() {
-        return "Parameter{" +
-                "id=" + id +
-                ", mark='" + mark + '\'' +
-                ", model='" + model + '\'' +
-                ", year=" + year +
-                ", mileage=" + mileage +
-                ", mass=" + mass +
-                ", color='" + color + '\'' +
-                ", averageRate=" + averageRate +
-                ", vin='" + vin + '\'' +
-                ", registrationNumber='" + registrationNumber + '\'' +
-                ", car=" + car +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "Parameter{" +
+//                "id=" + id +
+//                ", mark='" + mark + '\'' +
+//                ", model='" + model + '\'' +
+//                ", year=" + year +
+//                ", mileage=" + mileage +
+//                ", mass=" + mass +
+//                ", color='" + color + '\'' +
+//                ", averageRate=" + averageRate +
+//                ", vin='" + vin + '\'' +
+//                ", registrationNumber='" + registrationNumber + '\'' +
+//                ", car=" + car +
+//                '}';
+//    }
 }
