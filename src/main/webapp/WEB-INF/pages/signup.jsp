@@ -53,7 +53,7 @@
         ${Errors}
     </form:form>
     <br>
-    <c:url value="/personalCabinet" var="cabinet"/>
+    <c:url value="/" var="cabinet"/>
     <a href="${cabinet}">My cabinet</a>
 </div>
 </body>

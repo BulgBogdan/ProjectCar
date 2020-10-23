@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,26 +25,29 @@ public class CarController {
     @Autowired
     private ICarService carService = new CarServiceImpl();
 
-    @GetMapping("car/createName")
-    public String createCar(Model model){
-        model.addAttribute("newCar", new Car());
-        return "car/createName";
+    private ModelAndView modelAndView = new ModelAndView();
+
+    @GetMapping("car/create")
+    public ModelAndView createCar(){
+        modelAndView.setViewName("car/create");
+        modelAndView.addObject("newCar", new Car());
+        return modelAndView;
     }
 
-    @PostMapping("car/createName")
-    public String addCar(@ModelAttribute("newCar")Car car, @AuthenticationPrincipal UserDetails userDetails, Model model){
+    @PostMapping("car/create")
+    public ModelAndView addCar(@ModelAttribute("newCar")Car car, @AuthenticationPrincipal UserDetails userDetails){
         String userName = userDetails.getUsername();
         User user = userService.findByLogin(userName);
         car.setUser(user);
-        int id = user.getId();
+        int id = car.getId();
+        modelAndView.setViewName("car/parameters");
         carService.add(car);
-        return "redirect:/car/parameter";
+        return modelAndView;
     }
 
     @GetMapping("car/view/{id}")
     public ModelAndView viewCar(@PathVariable("id") int id){
         Car car = carService.read(id);
-        ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("car/view");
         modelAndView.addObject("car", car);
         modelAndView.addObject("parameter", car.getParameters());
@@ -55,7 +57,6 @@ public class CarController {
     @GetMapping("car/edit/{id}")
     public ModelAndView editPage(@PathVariable("id")int id){
         Car car = carService.read(id);
-        ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("car/edit");
         modelAndView.addObject("car", car);
         return modelAndView;
@@ -68,10 +69,18 @@ public class CarController {
         String userName = userDetails.getUsername();
         User user = userService.findByLogin(userName);
         car.setUser(user);
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("car/view");
+        modelAndView.setViewName("redirect:/car/view/{id}");
         carService.update(car);
         return modelAndView;
     }
+
+    @GetMapping("car/delete/{id}")
+    public ModelAndView deletePage(@PathVariable("id")int id){
+        Car car = carService.read(id);
+        modelAndView.setViewName("redirect:/");
+        carService.delete(car);
+        return modelAndView;
+    }
+
 
 }

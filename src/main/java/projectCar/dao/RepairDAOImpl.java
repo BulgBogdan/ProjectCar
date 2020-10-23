@@ -22,7 +22,7 @@ public class RepairDAOImpl implements IRepairDAO {
     @Override
     public void add(Repair repair) {
         Session session = sessionFactory.getCurrentSession();
-        session.save(repair);
+        session.persist(repair);
     }
 
     @Override

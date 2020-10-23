@@ -22,7 +22,7 @@ public class FuelDAOImpl implements IFuelDAO {
     @Override
     public void add(Fuel fuel) {
         Session session = sessionFactory.getCurrentSession();
-        session.save(fuel);
+        session.persist(fuel);
     }
 
     @Override

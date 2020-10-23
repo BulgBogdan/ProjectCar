@@ -43,7 +43,7 @@ public class User implements UserDetails {
     @Column(name = "birthday")
     private Date birthday;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    @OneToMany(fetch = FetchType.EAGER, cascade =  CascadeType.ALL, mappedBy = "user")
     private List<Car> cars;
 
     public User() {

@@ -20,7 +20,7 @@
             <input name="check_password" type="password" placeholder="Password"/>
             <%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
             <button type="submit">Log In</button>
-            <h4><a href="/">Зарегистрироваться</a></h4>
+            <h4><a href="/registration">Зарегистрироваться</a></h4>
         </div>
     </form>
 </div>

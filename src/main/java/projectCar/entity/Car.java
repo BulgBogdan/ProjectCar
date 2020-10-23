@@ -22,7 +22,7 @@ public class Car {
     @Column(name = "costRegistration")
     private double costRegistration;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "FK_users")
     private User user;
 
@@ -156,7 +156,8 @@ public class Car {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nameCar, priceCar, costRegistration, user, parameters, documents, fuels, otherCosts, repairs);
+        return Objects.hash(id, nameCar, priceCar, costRegistration,
+                user, parameters, documents, fuels, otherCosts, repairs);
     }
 
 //    @Override

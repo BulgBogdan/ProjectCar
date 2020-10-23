@@ -9,8 +9,9 @@
 <body>
 
 <sec:authorize access="isAuthenticated()">
-    <p>Ваш логин: <sec:authentication property="principal.username"/></p>
-    <p><a class="btn btn-lg btn-danger" href="<c:url value="/logout" />" role="button">Выйти</a></p>
+    Ваш логин: <sec:authentication property="principal.username"/>
+    <s></s>
+    <a class="btn btn-lg btn-danger" href="<c:url value="/logout" />" role="button">Выйти</a>
 </sec:authorize>
 
 <br>
@@ -39,23 +40,27 @@
         <td>${user.secondName}</td>
     </div>
 </form:form>
-<br>
-<c:url value="/car/createName" var="createCarName"/>
+
+<c:url value="/car/create" var="createCarName"/>
 <h2>${user.firstName} выберите машину:</h2>
 
-<c:if test="${user.cars==null}">
+<c:if test="${user.cars.size()==0}">
     <p>В вашем списке нет машин, <a href="${createCarName}">хотите добавить?</a></p>
 </c:if>
-<br>
-<c:forEach items="${carList}" var="carsList">
-    <c:if test="${user.cars!=null}">
+
+<c:if test="${user.cars.size()!=0}">
+    <c:forEach items="${carList}" var="carsList">
         <c:url value="car/view/${carsList.id}" var="cars"/>
         <a href="${cars}">Open ${carsList.nameCar}</a>
-    </c:if>
-</c:forEach>
+        <b>|</b>
+        <c:url value="car/delete/${carsList.id}" var="carDelete"/>
+        <a href="${carDelete}">Delete ${carsList.nameCar}</a>
+        <br>
+    </c:forEach>
+</c:if>
+
 <br>
 <h2>add new car</h2>
-<c:url value="/car/createName" var="createCarName"/>
 <a href="${createCarName}">Create car</a>
 </body>
 </html>

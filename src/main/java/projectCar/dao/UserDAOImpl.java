@@ -22,7 +22,7 @@ public class UserDAOImpl implements IUserDAO {
     @Override
     public void add(User user) {
         Session session = sessionFactory.getCurrentSession();
-        session.save(user);
+        session.persist(user);
     }
 
     @Override
@@ -35,7 +35,7 @@ public class UserDAOImpl implements IUserDAO {
     @Override
     public User read(int id) {
         Session session = sessionFactory.getCurrentSession();
-        User user = (User) session.get(User.class, id);
+        User user = (User) session.load(User.class, id);
         return user;
     }
 

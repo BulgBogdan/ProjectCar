@@ -34,13 +34,13 @@ public class MyPageController {
         return modelAndView;
     }
 
-    @GetMapping("/personalCabinet")
+    @GetMapping("/")
     public ModelAndView myPage(@AuthenticationPrincipal UserDetails userDetails) {
         String login = userDetails.getUsername();
         User userAuth = userService.findByLogin(login);
         List<Car> carList = userAuth.getCars();
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("personalCabinet");
+        modelAndView.setViewName("home");
         modelAndView.addObject("user",userAuth);
         modelAndView.addObject("carList", carList);
         return modelAndView;

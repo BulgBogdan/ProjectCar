@@ -9,8 +9,9 @@
 <h1>Создать машинку</h1>
 
 <sec:authorize access="isAuthenticated()">
-    <p>Ваш логин: <sec:authentication property="principal.username"/></p>
-    <p><a class="btn btn-lg btn-danger" href="<c:url value="/logout" />" role="button">Выйти</a></p>
+    Ваш логин: <sec:authentication property="principal.username"/>
+    <s></s>
+    <a class="btn btn-lg btn-danger" href="<c:url value="/logout" />" role="button">Выйти</a>
 </sec:authorize>
 
 <body>
@@ -34,12 +35,13 @@
                         autofocus="true"></form:input>
         </div>
 
-        <c:url value="/car/parameter/${newCar.id}" var="next"/>
+        <form action="/car/parameters/${newCar.id}">
         <button type="submit">Create</button>
+        </form>
 
     </form:form>
     <br>
-    <c:url value="/personalCabinet" var="cabinet"/>
+    <c:url value="/" var="cabinet"/>
     <a href="${cabinet}">В личный кабинет</a>
 </div>
 

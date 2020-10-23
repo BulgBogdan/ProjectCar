@@ -28,7 +28,7 @@ public class ParameterDAOImpl implements IParameterDAO {
     @Override
     public void update(Parameter parameter) {
         Session session = sessionFactory.getCurrentSession();
-        session.save(parameter);
+        session.update(parameter);
     }
 
     @Override

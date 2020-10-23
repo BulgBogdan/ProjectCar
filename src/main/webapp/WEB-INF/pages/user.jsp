@@ -35,13 +35,13 @@
 </table>
 </body>
 <h2>SignUp USER</h2>
-<c:url value="/" var="signup"/>
+<c:url value="/registration" var="signup"/>
 <a href="${signup}">SignUp</a>
 <br>
 <c:url value="/login" var="login"/>
 <a href="${login}">LOGIN</a>
 <br>
-<c:url value="/personalCabinet" var="cabinet"/>
+<c:url value="/" var="cabinet"/>
 <a href="${cabinet}">My cabinet</a>
 </body>
 </html>
