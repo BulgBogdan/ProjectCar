@@ -4,7 +4,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
-    <title>myPage</title>
+    <title>My Page</title>
 </head>
 <body>
 
@@ -41,10 +41,11 @@
     </div>
 </form:form>
 
-<c:url value="/car/create" var="createCarName"/>
-<h2>${user.firstName} выберите машину:</h2>
 
+<h2>${user.firstName} выберите машину:</h2>
+<c:url value="/car/title" var="createCarName"/>
 <c:if test="${user.cars.size()==0}">
+
     <p>В вашем списке нет машин, <a href="${createCarName}">хотите добавить?</a></p>
 </c:if>
 
@@ -59,7 +60,6 @@
     </c:forEach>
 </c:if>
 
-<br>
 <h2>add new car</h2>
 <a href="${createCarName}">Create car</a>
 </body>

@@ -25,6 +25,9 @@ public class Document {
     @Column(name = "endDate", nullable = false)
     private Date endDate;
 
+    @Column(name = "numberOfDays", nullable = false)
+    private int numberOfDays;
+
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "FK_cars")
     private Car car;
@@ -32,11 +35,12 @@ public class Document {
     public Document() {
     }
 
-    public Document(String nameDocument, double documentCost, Date beginDate, Date endDate, Car car) {
+    public Document(String nameDocument, double documentCost, Date beginDate, Date endDate, int numberOfDays, Car car) {
         this.nameDocument = nameDocument;
         this.documentCost = documentCost;
         this.beginDate = beginDate;
         this.endDate = endDate;
+        this.numberOfDays = numberOfDays;
         this.car = car;
     }
 
@@ -88,6 +92,14 @@ public class Document {
         this.car = car;
     }
 
+    public int getNumberOfDays() {
+        return numberOfDays;
+    }
+
+    public void setNumberOfDays(int numberOfDays) {
+        this.numberOfDays = numberOfDays;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -95,6 +107,7 @@ public class Document {
         Document document = (Document) o;
         return id == document.id &&
                 Double.compare(document.documentCost, documentCost) == 0 &&
+                numberOfDays == document.numberOfDays &&
                 Objects.equals(nameDocument, document.nameDocument) &&
                 Objects.equals(beginDate, document.beginDate) &&
                 Objects.equals(endDate, document.endDate) &&
@@ -103,7 +116,7 @@ public class Document {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nameDocument, documentCost, beginDate, endDate, car);
+        return Objects.hash(id, nameDocument, documentCost, beginDate, endDate, numberOfDays, car);
     }
 
     @Override
@@ -114,6 +127,7 @@ public class Document {
                 ", documentCost=" + documentCost +
                 ", beginDate=" + beginDate +
                 ", endDate=" + endDate +
+                ", numberOfDays=" + numberOfDays +
                 ", car=" + car +
                 '}';
     }

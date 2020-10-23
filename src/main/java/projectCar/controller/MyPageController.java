@@ -43,7 +43,10 @@ public class MyPageController {
         modelAndView.setViewName("home");
         modelAndView.addObject("user",userAuth);
         modelAndView.addObject("carList", carList);
+        modelAndView.addObject("cars", new Car());
         return modelAndView;
     }
 
 }
+
+

@@ -27,23 +27,32 @@ public class CarController {
 
     private ModelAndView modelAndView = new ModelAndView();
 
-    @GetMapping("car/create")
+    @GetMapping("car/title")
     public ModelAndView createCar(){
-        modelAndView.setViewName("car/create");
+        modelAndView.setViewName("car/title");
         modelAndView.addObject("newCar", new Car());
         return modelAndView;
     }
 
-    @PostMapping("car/create")
+    @PostMapping("car/title}")
     public ModelAndView addCar(@ModelAttribute("newCar")Car car, @AuthenticationPrincipal UserDetails userDetails){
         String userName = userDetails.getUsername();
         User user = userService.findByLogin(userName);
         car.setUser(user);
-        int id = car.getId();
-        modelAndView.setViewName("car/parameters");
+        modelAndView.setViewName("redirect:/");
         carService.add(car);
         return modelAndView;
     }
+
+    @GetMapping("car/costs/first{id}")
+    public ModelAndView createFirstCosts(@PathVariable("id")int id){
+        Car car = carService.read(id);
+        modelAndView.setViewName("car/costs/first");
+        modelAndView.addObject("car",car);
+        return modelAndView;
+    }
+
+    @PostMapping
 
     @GetMapping("car/view/{id}")
     public ModelAndView viewCar(@PathVariable("id") int id){
@@ -51,6 +60,7 @@ public class CarController {
         modelAndView.setViewName("car/view");
         modelAndView.addObject("car", car);
         modelAndView.addObject("parameter", car.getParameters());
+        modelAndView.addObject("registration", car.getRegistration());
         return modelAndView;
     }
 

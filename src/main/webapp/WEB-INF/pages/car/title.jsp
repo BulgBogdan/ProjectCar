@@ -25,24 +25,12 @@
                         autofocus="true"></form:input>
         </div>
 
-        <div>
-            <form:input type="double" path="priceCar" placeholder="Price car"
-                        autofocus="true"></form:input>
-        </div>
-
-        <div>
-            <form:input type="double" path="costRegistration" placeholder="Registration cost"
-                        autofocus="true"></form:input>
-        </div>
-
-        <form action="/car/parameters/${newCar.id}">
-        <button type="submit">Create</button>
-        </form>
+        <button type="submit">Продолжить</button>
 
     </form:form>
     <br>
     <c:url value="/" var="cabinet"/>
-    <a href="${cabinet}">В личный кабинет</a>
+    <a href="${cabinet}">Вернутся в личный кабинет</a>
 </div>
 
 </body>
