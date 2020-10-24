@@ -4,7 +4,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Documents Car</title>
+    <title>Documents</title>
 </head>
 <body>
 
@@ -15,7 +15,7 @@
 </sec:authorize>
 
 <h2>${car.nameCar}</h2>
-<p>Parameter auto</p>
+<p>Параметры авто:</p>
 <form:form modelAttribute="parameters">
     <c:if test="${parameters!=null}">
         <table>
@@ -53,7 +53,7 @@
     </c:if>
 </form:form>
 
-<c:if test="${documents!=0}">
+<c:if test="${documents.size() != 0}">
 <c:forEach items="${documents}" var="docs">
     <h2>Документы:</h2>
     <table>
@@ -69,7 +69,7 @@
             <td>${docs.documentCost}</td>
             <td>${docs.beginDate}</td>
             <td>${docs.endDate}</td>
-            <td>${docs.numberOfDays}</td>
+            <td>${docs.numberOf}</td>
             <td>
                 <c:url value="/car/documents/edit/${docs.id}" var="editDoc"/>
                 <a href="${editDoc}">edit</a>
@@ -78,12 +78,12 @@
     </table>
 </c:forEach>
 </c:if>
-<c:if test="${documents==0}">
+<c:if test="${documents.size() == 0}">
     <c:url value="/car/documents/create/${car.id}" var="createDoc"/>
     <p>Документы небыли добавлены, <a href="${createDoc}">хотите добавить?</a></p>
 </c:if>
 
-<c:url value="/" var="cabinet"/>
-<a href="${cabinet}">My cabinet</a>
+<c:url value="/car/view/${car.id}" var="cabinet"/>
+<a href="${cabinet}">Вернуться назад</a>
 </body>
 </html>

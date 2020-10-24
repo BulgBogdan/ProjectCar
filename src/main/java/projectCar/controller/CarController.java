@@ -10,11 +10,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import projectCar.entity.Car;
+import projectCar.entity.Registration;
 import projectCar.entity.User;
 import projectCar.service.CarServiceImpl;
 import projectCar.service.UserServiceImpl;
 import projectCar.service.interfaces.ICarService;
+import projectCar.service.interfaces.IRegistrationService;
 import projectCar.service.interfaces.IUserService;
+import projectCar.service.RegistrationServiceImpl;
 
 @Controller
 public class CarController {
@@ -25,17 +28,21 @@ public class CarController {
     @Autowired
     private ICarService carService = new CarServiceImpl();
 
+    @Autowired
+    private IRegistrationService registrationService = new RegistrationServiceImpl();
+
     private ModelAndView modelAndView = new ModelAndView();
 
     @GetMapping("car/title")
-    public ModelAndView createCar(){
+    public ModelAndView createCar() {
         modelAndView.setViewName("car/title");
         modelAndView.addObject("newCar", new Car());
         return modelAndView;
     }
 
-    @PostMapping("car/title}")
-    public ModelAndView addCar(@ModelAttribute("newCar")Car car, @AuthenticationPrincipal UserDetails userDetails){
+    @PostMapping("car/title")
+    public ModelAndView addCar(@ModelAttribute("newCar") Car car,
+                               @AuthenticationPrincipal UserDetails userDetails) {
         String userName = userDetails.getUsername();
         User user = userService.findByLogin(userName);
         car.setUser(user);
@@ -44,18 +51,24 @@ public class CarController {
         return modelAndView;
     }
 
-    @GetMapping("car/costs/first{id}")
-    public ModelAndView createFirstCosts(@PathVariable("id")int id){
-        Car car = carService.read(id);
+    @GetMapping("car/costs/first/{id}")
+    public ModelAndView createFirstCost(@PathVariable("id") int id) {
         modelAndView.setViewName("car/costs/first");
-        modelAndView.addObject("car",car);
+        modelAndView.addObject("registration", new Registration());
+        return modelAndView;
+    }
+    @PostMapping("car/costs/first/{id}")
+    public ModelAndView addFirstCost(@PathVariable("id") int id,
+                                     @ModelAttribute("registration")Registration registration){
+        Car car = carService.read(id);
+        registration.setCar(car);
+        modelAndView.setViewName("redirect:/car/view/{id}");
+        registrationService.add(registration);
         return modelAndView;
     }
 
-    @PostMapping
-
     @GetMapping("car/view/{id}")
-    public ModelAndView viewCar(@PathVariable("id") int id){
+    public ModelAndView viewCar(@PathVariable("id") int id) {
         Car car = carService.read(id);
         modelAndView.setViewName("car/view");
         modelAndView.addObject("car", car);
@@ -64,8 +77,26 @@ public class CarController {
         return modelAndView;
     }
 
+    @GetMapping("car/costs/edit/{id}")
+    public ModelAndView editPageFirstCost(@PathVariable("id") int id) {
+        Car car = carService.read(id);
+        modelAndView.setViewName("car/costs/edit");
+        modelAndView.addObject("registration", car.getRegistration());
+        return modelAndView;
+    }
+
+    @PostMapping("car/costs/edit/{id}")
+    public ModelAndView editFirstCost(@ModelAttribute("registration") Registration registration,
+                                @PathVariable("id") int id) {
+        Car car = carService.read(id);
+        registration.setCar(car);
+        modelAndView.setViewName("redirect:/car/view/{id}");
+        registrationService.update(registration);
+        return modelAndView;
+    }
+
     @GetMapping("car/edit/{id}")
-    public ModelAndView editPage(@PathVariable("id")int id){
+    public ModelAndView editPage(@PathVariable("id") int id) {
         Car car = carService.read(id);
         modelAndView.setViewName("car/edit");
         modelAndView.addObject("car", car);
@@ -75,7 +106,7 @@ public class CarController {
     @PostMapping("car/edit/{id}")
     public ModelAndView editCar(@ModelAttribute("car") Car car,
                                 @AuthenticationPrincipal UserDetails userDetails,
-                                @PathVariable("id")int id){
+                                @PathVariable("id") int id) {
         String userName = userDetails.getUsername();
         User user = userService.findByLogin(userName);
         car.setUser(user);
@@ -85,7 +116,7 @@ public class CarController {
     }
 
     @GetMapping("car/delete/{id}")
-    public ModelAndView deletePage(@PathVariable("id")int id){
+    public ModelAndView deletePage(@PathVariable("id") int id) {
         Car car = carService.read(id);
         modelAndView.setViewName("redirect:/");
         carService.delete(car);

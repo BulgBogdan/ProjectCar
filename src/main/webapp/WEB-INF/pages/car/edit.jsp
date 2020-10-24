@@ -15,7 +15,7 @@
 
 <form:form method="POST" modelAttribute="car">
 
-    <h2>Correct ${car.nameCar}</h2>
+    <h2>Correct Title</h2>
     <br>
     <div>
         <form:input type="hidden" path="id" title="${car.id}"></form:input>
@@ -23,12 +23,7 @@
     <div>
         <form:input type="text" path="nameCar" title="${car.nameCar}"></form:input>
     </div>
-    <div>
-        <form:input type="number" path="priceCar" title="${car.priceCar}"></form:input>
-    </div>
-    <div>
-        <form:input type="number" path="costRegistration" title="${car.costRegistration}"></form:input>
-    </div>
+
     <button type="submit">edit</button>
 
 </form:form>

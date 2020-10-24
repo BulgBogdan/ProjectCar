@@ -14,7 +14,7 @@ import java.util.List;
 public class RepairServiceImpl implements IRepairService {
 
     @Autowired
-    IRepairDAO repairDAO = new RepairDAOImpl();
+    private IRepairDAO repairDAO = new RepairDAOImpl();
 
     @Override
     @Transactional

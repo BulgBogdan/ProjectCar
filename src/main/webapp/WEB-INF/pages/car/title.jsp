@@ -6,7 +6,7 @@
 <head>
     <title>Create Car</title>
 </head>
-<h1>Создать машинку</h1>
+<h1>Создать новую вкладку</h1>
 
 <sec:authorize access="isAuthenticated()">
     Ваш логин: <sec:authentication property="principal.username"/>
@@ -18,7 +18,7 @@
 <div>
     <form:form method="POST" modelAttribute="newCar">
 
-        <h2>Create car</h2>
+        <h2>Создать машину</h2>
 
         <div>
             <form:input type="text" path="nameCar" placeholder="Car Name"

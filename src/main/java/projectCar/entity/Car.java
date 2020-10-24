@@ -26,7 +26,7 @@ public class Car {
     @OneToOne(fetch = FetchType.LAZY, cascade =  CascadeType.ALL, mappedBy = "car")
     private Parameter parameters;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "car")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "car")
     private List<Document> documents;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "car")

@@ -14,7 +14,7 @@ import java.util.List;
 public class ParameterServiceImpl implements IParameterService {
 
     @Autowired
-    IParameterDAO parameterDAO = new ParameterDAOImpl();
+    private IParameterDAO parameterDAO = new ParameterDAOImpl();
 
     @Override
     @Transactional

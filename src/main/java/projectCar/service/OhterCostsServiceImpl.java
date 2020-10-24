@@ -14,7 +14,7 @@ import java.util.List;
 public class OhterCostsServiceImpl implements IOtherCostsService {
 
     @Autowired
-    IOtherCostsDAO otherCostsDAO = new OtherCostsDAOImpl();
+    private IOtherCostsDAO otherCostsDAO = new OtherCostsDAOImpl();
 
     @Override
     @Transactional

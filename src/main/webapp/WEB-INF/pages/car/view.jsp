@@ -16,7 +16,7 @@
 
 <form:form modelAttribute="car">
 
-    <h2>${car.nameCar}</h2>
+    <p>${car.nameCar}</p>
     <c:url value="/car/edit/${car.id}" var="editCar"/>
     <a href="${editCar}">edit</a>
 </form:form>
@@ -108,6 +108,7 @@
     </tr>
 </table>
 
+<br>
 <c:url value="/" var="cabinet"/>
 <a href="${cabinet}">My cabinet</a>
 </body>

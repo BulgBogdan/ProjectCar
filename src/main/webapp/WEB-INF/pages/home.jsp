@@ -19,11 +19,8 @@
 <c:url value="/user" var="userList"/>
 <a href="${userList}">list users</a>
 
-<h2>PersonalCabinet</h2>
+<h2>Личный Кабинет</h2>
 <form:form modelAttribute="user">
-    <div>
-        <td>${user.id}</td>
-    </div>
     <div>
         <td>${user.login}</td>
     </div>
@@ -55,7 +52,7 @@
         <a href="${cars}">Open ${carsList.nameCar}</a>
         <b>|</b>
         <c:url value="car/delete/${carsList.id}" var="carDelete"/>
-        <a href="${carDelete}">Delete ${carsList.nameCar}</a>
+        <a href="${carDelete}">Delete</a>
         <br>
     </c:forEach>
 </c:if>

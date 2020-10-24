@@ -14,7 +14,7 @@ import java.util.List;
 public class FuelServiceImpl implements IFuelService {
 
     @Autowired
-    IFuelDAO fuelDAO = new FuelDAOImpl();
+    private IFuelDAO fuelDAO = new FuelDAOImpl();
 
     @Override
     @Transactional

@@ -4,7 +4,7 @@ import projectCar.entity.Registration;
 
 import java.util.List;
 
-public interface IRegistartionService {
+public interface IRegistrationService {
 
     void add(Registration registration);
 
