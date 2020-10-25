@@ -42,7 +42,7 @@
 
     </form:form>
     <br>
-    <c:url value="/car/view/${car.id}" var="view"/>
+    <c:url value="/car/documents/${car.id}" var="view"/>
     <a href="${view}">Back</a>
 </div>
 

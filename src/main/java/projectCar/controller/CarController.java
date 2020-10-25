@@ -33,6 +33,11 @@ public class CarController {
 
     private ModelAndView modelAndView = new ModelAndView();
 
+    private Car getCarById(int id){
+        Car carById = carService.read(id);
+        return carById;
+    }
+
     @GetMapping("car/title")
     public ModelAndView createCar() {
         modelAndView.setViewName("car/title");
@@ -60,7 +65,7 @@ public class CarController {
     @PostMapping("car/costs/first/{id}")
     public ModelAndView addFirstCost(@PathVariable("id") int id,
                                      @ModelAttribute("registration")Registration registration){
-        Car car = carService.read(id);
+        Car car = getCarById(id);
         registration.setCar(car);
         modelAndView.setViewName("redirect:/car/view/{id}");
         registrationService.add(registration);
@@ -69,7 +74,7 @@ public class CarController {
 
     @GetMapping("car/view/{id}")
     public ModelAndView viewCar(@PathVariable("id") int id) {
-        Car car = carService.read(id);
+        Car car = getCarById(id);
         modelAndView.setViewName("car/view");
         modelAndView.addObject("car", car);
         modelAndView.addObject("parameter", car.getParameters());
@@ -79,7 +84,7 @@ public class CarController {
 
     @GetMapping("car/costs/edit/{id}")
     public ModelAndView editPageFirstCost(@PathVariable("id") int id) {
-        Car car = carService.read(id);
+        Car car = getCarById(id);
         modelAndView.setViewName("car/costs/edit");
         modelAndView.addObject("registration", car.getRegistration());
         return modelAndView;
@@ -88,7 +93,7 @@ public class CarController {
     @PostMapping("car/costs/edit/{id}")
     public ModelAndView editFirstCost(@ModelAttribute("registration") Registration registration,
                                 @PathVariable("id") int id) {
-        Car car = carService.read(id);
+        Car car = getCarById(id);
         registration.setCar(car);
         modelAndView.setViewName("redirect:/car/view/{id}");
         registrationService.update(registration);
@@ -97,7 +102,7 @@ public class CarController {
 
     @GetMapping("car/edit/{id}")
     public ModelAndView editPage(@PathVariable("id") int id) {
-        Car car = carService.read(id);
+        Car car = getCarById(id);
         modelAndView.setViewName("car/edit");
         modelAndView.addObject("car", car);
         return modelAndView;
@@ -117,7 +122,7 @@ public class CarController {
 
     @GetMapping("car/delete/{id}")
     public ModelAndView deletePage(@PathVariable("id") int id) {
-        Car car = carService.read(id);
+        Car car = getCarById(id);
         modelAndView.setViewName("redirect:/");
         carService.delete(car);
         return modelAndView;

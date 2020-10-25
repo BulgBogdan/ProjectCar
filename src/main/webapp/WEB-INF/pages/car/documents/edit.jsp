@@ -31,7 +31,6 @@
     <div>
         <form:input type="date" path="endDate" title="${docs.endDate}"></form:input>
     </div>
-
     <button type="submit">Create</button>
 
     </form:form>

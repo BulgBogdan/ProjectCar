@@ -41,8 +41,8 @@
 
 <h2>${user.firstName} выберите машину:</h2>
 <c:url value="/car/title" var="createCarName"/>
-<c:if test="${user.cars.size()==0}">
 
+<c:if test="${user.cars.size()==0}">
     <p>В вашем списке нет машин, <a href="${createCarName}">хотите добавить?</a></p>
 </c:if>
 
@@ -55,9 +55,9 @@
         <a href="${carDelete}">Delete</a>
         <br>
     </c:forEach>
+    <h2>add new car</h2>
+    <a href="${createCarName}">Create car</a>
 </c:if>
 
-<h2>add new car</h2>
-<a href="${createCarName}">Create car</a>
 </body>
 </html>

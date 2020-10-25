@@ -25,16 +25,22 @@ public class ParameterController {
 
     private ModelAndView modelAndView = new ModelAndView();
 
+    private Car getCarById(int id) {
+        Car carById = carService.read(id);
+        return carById;
+    }
+
     @GetMapping("car/parameters/{id}")
-    public ModelAndView parameterCar(@PathVariable("id") int id){
+    public ModelAndView parameterCar(@PathVariable("id") int id) {
         modelAndView.setViewName("car/parameters");
         modelAndView.addObject("parameter", new Parameter());
         return modelAndView;
     }
 
     @PostMapping("car/parameters/{id}")
-    public ModelAndView parameterCar(@ModelAttribute("parameter") Parameter parameter,@PathVariable("id") int id){
-        Car car = carService.read(id);
+    public ModelAndView parameterCar(@ModelAttribute("parameter") Parameter parameter,
+                                     @PathVariable("id") int id) {
+        Car car = getCarById(id);
         modelAndView.setViewName("redirect:/car/view/{id}");
         parameter.setCar(car);
         parameterService.add(parameter);
@@ -42,8 +48,8 @@ public class ParameterController {
     }
 
     @GetMapping("car/parameters/edit/{id}")
-    public ModelAndView editParameter(@PathVariable("id") int id){
-        Car car = carService.read(id);
+    public ModelAndView editParameter(@PathVariable("id") int id) {
+        Car car = getCarById(id);
         Parameter parameter = car.getParameters();
         modelAndView.setViewName("car/parameters/edit");
         modelAndView.addObject("parameter", parameter);
@@ -51,9 +57,9 @@ public class ParameterController {
     }
 
     @PostMapping("car/parameters/edit/{id}")
-    public ModelAndView editParameter(@ModelAttribute("parameter") Parameter parameter, @PathVariable("id") int id){
-        Car car = carService.read(id);   ////////////////////////////////
-        parameter.setCar(car);
+    public ModelAndView editParameter(@ModelAttribute("parameter") Parameter parameter,
+                                      @PathVariable("id") int id) {
+        parameter.setCar(getCarById(id));
         modelAndView.setViewName("redirect:/car/view/{id}");
         parameterService.update(parameter);
         return modelAndView;

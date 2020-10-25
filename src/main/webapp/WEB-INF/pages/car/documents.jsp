@@ -47,13 +47,18 @@
             </tr>
         </table>
     </c:if>
+
     <c:if test="${parameters==null}">
         <c:url value="/car/parameters/${car.id}" var="createParameter"/>
         <p>Параметры небыли добавлены, <a href="${createParameter}">хотите добавить?</a></p>
     </c:if>
+
 </form:form>
 
+<c:url value="/car/documents/create/${car.id}" var="createDoc"/>
+
 <c:if test="${documents.size() != 0}">
+
 <c:forEach items="${documents}" var="docs">
     <h2>Документы:</h2>
     <table>
@@ -76,12 +81,17 @@
             </td>
         </tr>
     </table>
+    <br>
 </c:forEach>
+    <a href="${createDoc}">Добавить документ</a>
 </c:if>
+
 <c:if test="${documents.size() == 0}">
     <c:url value="/car/documents/create/${car.id}" var="createDoc"/>
     <p>Документы небыли добавлены, <a href="${createDoc}">хотите добавить?</a></p>
 </c:if>
+
+<br>
 
 <c:url value="/car/view/${car.id}" var="cabinet"/>
 <a href="${cabinet}">Вернуться назад</a>
