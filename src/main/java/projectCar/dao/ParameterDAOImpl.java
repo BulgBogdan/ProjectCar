@@ -34,16 +34,14 @@ public class ParameterDAOImpl implements IParameterDAO {
     @Override
     public Parameter read(int id) {
         Session session = sessionFactory.getCurrentSession();
-        Parameter parameter = session.get(Parameter.class,id);
+        Parameter parameter = session.get(Parameter.class, id);
         return parameter;
     }
 
     @Override
     public void delete(Parameter parameter) {
         Session session = sessionFactory.getCurrentSession();
-        if (session != null) {
-            session.delete(parameter);
-        }
+        session.delete(parameter);
     }
 
     @Override

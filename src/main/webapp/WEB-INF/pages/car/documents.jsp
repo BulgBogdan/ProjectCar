@@ -62,14 +62,14 @@
             <th>Стоимость</th>
             <th>Дата начала</th>
             <th>Дата окончания</th>
-            <th>Срок истекает</th>
+            <th>Срок истекает через</th>
         </tr>
         <tr>
             <td>${docs.nameDocument}</td>
             <td>${docs.documentCost}</td>
             <td>${docs.beginDate}</td>
             <td>${docs.endDate}</td>
-            <td>${docs.numberOf}</td>
+            <td>${docs.numberOf} дня(ей)</td>
             <td>
                 <c:url value="/car/documents/edit/${docs.id}" var="editDoc"/>
                 <a href="${editDoc}">edit</a>

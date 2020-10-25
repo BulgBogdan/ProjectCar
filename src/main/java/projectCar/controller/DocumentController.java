@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import projectCar.entity.Car;
 import projectCar.entity.Document;
-import projectCar.entity.Parameter;
 import projectCar.service.CarServiceImpl;
 import projectCar.service.DocumentServiceImpl;
 import projectCar.service.interfaces.ICarService;
 import projectCar.service.interfaces.IDocumentService;
 
+import java.sql.Date;
 import java.util.concurrent.TimeUnit;
 
 @Controller
@@ -28,8 +28,14 @@ public class DocumentController {
 
     private ModelAndView modelAndView = new ModelAndView();
 
+    private static int amountOfDays(Date startDate, Date endDate) {
+        long period = Math.abs(endDate.getTime() - startDate.getTime());
+        int days = (int) TimeUnit.DAYS.convert(period, TimeUnit.MILLISECONDS);
+        return days;
+    }
+
     @GetMapping("/car/documents/{id}")
-    public ModelAndView pageDocuments(@PathVariable("id") int id){
+    public ModelAndView pageDocuments(@PathVariable("id") int id) {
         Car car = carService.read(id);
         modelAndView.setViewName("car/documents");
         modelAndView.addObject("car", car);
@@ -39,7 +45,7 @@ public class DocumentController {
     }
 
     @PostMapping("/car/documents/{id}")
-    public ModelAndView addDocuments(@PathVariable("id") int id, @ModelAttribute("documents") Document document){
+    public ModelAndView addDocuments(@PathVariable("id") int id, @ModelAttribute("documents") Document document) {
         Car car = carService.read(id);
         document.setCar(car);
         documentService.add(document);
@@ -48,23 +54,19 @@ public class DocumentController {
     }
 
     @GetMapping("/car/documents/create/{id}")
-    public ModelAndView pageAddDocuments(@PathVariable("id") int id){
+    public ModelAndView pageAddDocuments(@PathVariable("id") int id) {
         Car car = carService.read(id);
         modelAndView.setViewName("car/documents/create");
-        modelAndView.addObject("doc",new Document());
-        modelAndView.addObject("car",car);
+        modelAndView.addObject("doc", new Document());
+        modelAndView.addObject("car", car);
         return modelAndView;
     }
 
     @PostMapping("/car/documents/create/{id}")
     public ModelAndView addDocument(@PathVariable("id") int id,
-                                    @ModelAttribute("doc") Document document){
+                                    @ModelAttribute("doc") Document document) {
         Car car = carService.read(id);
-        if (document.getNumberOf()==0){
-            long period = Math.abs( document.getEndDate().getTime() - document.getBeginDate().getTime());
-            int days = (int) TimeUnit.DAYS.convert(period, TimeUnit.MILLISECONDS);
-            document.setNumberOf(days);
-        }
+        document.setNumberOf(amountOfDays(document.getBeginDate(), document.getEndDate()));
         document.setCar(car);
         modelAndView.setViewName("redirect:/car/documents/{id}");
         documentService.add(document);
@@ -72,7 +74,7 @@ public class DocumentController {
     }
 
     @GetMapping("car/documents/edit/{id}")
-    public ModelAndView editParameter(@PathVariable("id") int id){
+    public ModelAndView editParameter(@PathVariable("id") int id) {
         Document document = documentService.read(id);
         modelAndView.setViewName("car/documents/edit");
         modelAndView.addObject("docs", document);
@@ -83,11 +85,10 @@ public class DocumentController {
     @PostMapping("car/documents/edit/{id}")
     public ModelAndView editParameter(@ModelAttribute("docs") Document document,
                                       @ModelAttribute("car") Car car,
-                                      @PathVariable("id") int id){
-        document.setCar(car);
-        long period = Math.abs( document.getEndDate().getTime() - document.getBeginDate().getTime());
-        int days = (int) TimeUnit.DAYS.convert(period, TimeUnit.MILLISECONDS);
-        document.setNumberOf(days);
+                                      @PathVariable("id") int id) {
+        Car carForDocument = carService.read(car.getId());
+        document.setCar(carForDocument);
+        document.setNumberOf(amountOfDays(document.getBeginDate(), document.getEndDate()));
         modelAndView.setViewName("redirect:/car/documents/{id}");
         documentService.update(document);
         return modelAndView;

@@ -22,7 +22,7 @@ public class OtherCostsDAOImpl implements IOtherCostsDAO {
     @Override
     public void add(OtherCosts otherCosts) {
         Session session = sessionFactory.getCurrentSession();
-        session.persist(otherCosts);
+        session.save(otherCosts);
     }
 
     @Override
@@ -41,9 +41,8 @@ public class OtherCostsDAOImpl implements IOtherCostsDAO {
     @Override
     public void delete(OtherCosts otherCosts) {
         Session session = sessionFactory.getCurrentSession();
-        if (session != null){
-            session.delete(otherCosts);
-        }
+        session.delete(otherCosts);
+
     }
 
     @Override

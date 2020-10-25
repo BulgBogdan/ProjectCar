@@ -22,8 +22,7 @@ public class DocumentDAOImpl implements IDocumentDAO {
     @Override
     public void add(Document document) {
         Session session = sessionFactory.getCurrentSession();
-        session.persist(document);
-
+        session.save(document);
     }
 
     @Override
@@ -35,16 +34,14 @@ public class DocumentDAOImpl implements IDocumentDAO {
     @Override
     public Document read(int id) {
         Session session = sessionFactory.getCurrentSession();
-        Document document = session.get(Document.class,id);
+        Document document = session.get(Document.class, id);
         return document;
     }
 
     @Override
     public void delete(Document document) {
         Session session = sessionFactory.getCurrentSession();
-        if (session!=null){
-            session.delete(document);
-        }
+        session.delete(document);
     }
 
     @Override

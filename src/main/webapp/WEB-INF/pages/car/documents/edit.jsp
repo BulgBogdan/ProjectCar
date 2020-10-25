@@ -4,7 +4,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Parameter Edit</title>
+    <title>Изменить Документ</title>
 </head>
 <body>
 
@@ -36,8 +36,8 @@
 
     </form:form>
     <br>
-    <c:url value="/car/view/${parameter.car.id}" var="carView"/>
-    <a href="${carView}">Back to ${parameter.car.nameCar}</a>
+    <c:url value="/car/view/${docs.car.id}" var="carView"/>
+    <a href="${carView}">Back to ${docs.car.nameCar}</a>
 
 </body>
 </html>
