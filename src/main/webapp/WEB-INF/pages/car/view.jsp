@@ -103,7 +103,7 @@
             <a href="${fuel}">Топливо</a></td>
     </tr>
     <tr>
-        <td><c:url value="/car/costs/${car.id}" var="costs"/>
+        <td><c:url value="/car/other/costs/${car.id}" var="costs"/>
             <a href="${costs}">Инные расходы</a></td>
     </tr>
 </table>
