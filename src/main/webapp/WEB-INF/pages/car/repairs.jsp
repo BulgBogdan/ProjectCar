@@ -72,7 +72,7 @@
                 <td>${repair.beginMileage}</td>
                 <td>${repair.endMileage}</td>
                 <td>${repair.costsRepair}</td>
-                    <%--<td>${docs.numberOf} дня(ей)</td>--%>
+                    <%--<td>${repair.serviceLife} дня(ей)</td>--%>
                 <td>
                     <c:url value="/car/repairs/edit/${repair.id}" var="editDoc"/>
                     <a href="${editDoc}">edit</a>
