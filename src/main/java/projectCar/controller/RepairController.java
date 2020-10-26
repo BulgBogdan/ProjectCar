@@ -9,32 +9,22 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import projectCar.entity.Car;
 import projectCar.entity.Repair;
-import projectCar.service.CarServiceImpl;
 import projectCar.service.RepairServiceImpl;
-import projectCar.service.interfaces.ICarService;
 import projectCar.service.interfaces.IRepairService;
 
 @Controller
-public class RepairController {
-
-    @Autowired
-    private ICarService carService = new CarServiceImpl();
+public class RepairController extends MethodsCarForControllers {
 
     @Autowired
     private IRepairService repairService = new RepairServiceImpl();
 
     private ModelAndView modelAndView = new ModelAndView();
 
-    private Car getCarById(int id) {
-        Car carById = carService.read(id);
-        return carById;
-    }
-
     private Car car = new Car();
 
     @GetMapping("/car/repairs/{id}")
     public ModelAndView pageRepairs(@PathVariable("id") int id) {
-        car = getCarById(id);
+        car = getCarWithWires(id);
         modelAndView.setViewName("car/repairs");
         modelAndView.addObject("car", car);
         modelAndView.addObject("parameters", car.getParameters());
@@ -74,7 +64,8 @@ public class RepairController {
     public ModelAndView addEdit(@PathVariable("id")int id,
                                 @ModelAttribute("repair") Repair repair,
                                 @ModelAttribute("car") Car car){
-        repair.setCar(getCarById(car.getId()));
+        repair.setCar(
+                getCarById(car.getId()));
         modelAndView.setViewName("redirect:/car/repairs/{id}");
         repairService.update(repair);
         return modelAndView;

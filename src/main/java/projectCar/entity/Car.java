@@ -35,7 +35,7 @@ public class Car {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "car")
     private List<OtherCosts> otherCosts;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "car")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "car")
     private List<Repair> repairs;
 
     public Car() {

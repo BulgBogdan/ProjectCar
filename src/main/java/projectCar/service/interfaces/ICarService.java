@@ -15,4 +15,6 @@ public interface ICarService {
     void delete(Car car);
 
     List<Car> getAll();
+
+    List<Car> getLists(int id);
 }

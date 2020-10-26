@@ -56,16 +56,17 @@
 
 <c:url value="/car/repairs/create/${car.id}" var="createRepair"/>
 <c:if test="${repairs.size() != 0}">
-    <c:forEach items="${repairs}" var="repair">
-        <h2>Ремонты:</h2>
-        <table>
-            <tr>
-                <th>Название</th>
-                <th>Пробег при поломке</th>
-                <th>Срок службы по регламенту(км)</th>
-                <th>Цена ремонта и(или) запчастей</th>
-                <th>Срок истекает по регламенту</th>
-            </tr>
+    <h2>Ремонты:</h2>
+    <table>
+        <tr>
+            <th>Название</th>
+            <th>Пробег при поломке</th>
+            <th>Срок службы по регламенту(км)</th>
+            <th>Цена ремонта и(или) запчастей</th>
+            <th>Срок истекает по регламенту</th>
+        </tr>
+
+        <c:forEach items="${repairs}" var="repair">
             <tr>
                 <td>${repair.nameRepair}</td>
                 <td>${repair.beginMileage}</td>
@@ -77,8 +78,9 @@
                     <a href="${editDoc}">edit</a>
                 </td>
             </tr>
-        </table>
-    </c:forEach>
+        </c:forEach>
+    </table>
+    <br>
     <a href="${createRepair}">Добавить произведенный ремонт</a>
 </c:if>
 

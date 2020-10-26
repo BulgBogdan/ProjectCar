@@ -45,4 +45,10 @@ public class CarServiceImpl implements ICarService {
     public List<Car> getAll() {
         return carDAO.getAll();
     }
+
+    @Override
+    @Transactional
+    public List<Car> getLists(int id) {
+        return carDAO.getLists(id);
+    }
 }

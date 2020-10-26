@@ -9,26 +9,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import projectCar.entity.Car;
 import projectCar.entity.Parameter;
-import projectCar.service.CarServiceImpl;
 import projectCar.service.ParameterServiceImpl;
-import projectCar.service.interfaces.ICarService;
 import projectCar.service.interfaces.IParameterService;
 
 @Controller
-public class ParameterController {
-
-    @Autowired
-    private ICarService carService = new CarServiceImpl();
+public class ParameterController extends MethodsCarForControllers{
 
     @Autowired
     private IParameterService parameterService = new ParameterServiceImpl();
 
     private ModelAndView modelAndView = new ModelAndView();
 
-    private Car getCarById(int id) {
-        Car carById = carService.read(id);
-        return carById;
-    }
+    private Car car = null;
 
     @GetMapping("car/parameters/{id}")
     public ModelAndView parameterCar(@PathVariable("id") int id) {
@@ -40,7 +32,7 @@ public class ParameterController {
     @PostMapping("car/parameters/{id}")
     public ModelAndView parameterCar(@ModelAttribute("parameter") Parameter parameter,
                                      @PathVariable("id") int id) {
-        Car car = getCarById(id);
+        car = getCarById(id);
         modelAndView.setViewName("redirect:/car/view/{id}");
         parameter.setCar(car);
         parameterService.add(parameter);
@@ -49,7 +41,7 @@ public class ParameterController {
 
     @GetMapping("car/parameters/edit/{id}")
     public ModelAndView editParameter(@PathVariable("id") int id) {
-        Car car = getCarById(id);
+        car = getCarById(id);
         Parameter parameter = car.getParameters();
         modelAndView.setViewName("car/parameters/edit");
         modelAndView.addObject("parameter", parameter);

@@ -24,7 +24,7 @@ public class ScheduledTask {
         return days;
     }
 
-    @Scheduled(cron = "1 0 0 * * ?")
+    @Scheduled(cron = "0 * * ? * *")
     private void correctAmountOFDays (){
         List<Document> listDocuments = documentService.getAll();
         for (Document document : listDocuments) {

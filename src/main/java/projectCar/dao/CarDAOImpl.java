@@ -2,6 +2,7 @@ package projectCar.dao;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.annotations.QueryHints;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import projectCar.dao.interfaces.ICarDAO;
@@ -41,7 +42,7 @@ public class CarDAOImpl implements ICarDAO {
     @Override
     public void delete(Car car) {
         Session session = sessionFactory.getCurrentSession();
-        if (session!=null) {
+        if (session != null) {
             session.delete(car);
         }
     }
@@ -52,5 +53,31 @@ public class CarDAOImpl implements ICarDAO {
         Session session = sessionFactory.getCurrentSession();
         List<Car> listCar = session.createQuery("from Car").list();
         return listCar;
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<Car> getLists(int id) {
+        Session session = sessionFactory.getCurrentSession();
+        List<Car> cars = null;
+        cars = session.createQuery(
+                "select distinct car from Car car left join fetch car.documents where car.id = '" + id + "'",
+                Car.class)
+                .setHint(QueryHints.PASS_DISTINCT_THROUGH, false).getResultList();
+        cars = session.createQuery(
+                "select distinct car from Car car left join fetch car.repairs where car.id = '" + id + "'",
+                Car.class)
+                .setHint(QueryHints.PASS_DISTINCT_THROUGH, false).getResultList();
+        cars = session.createQuery(
+                "select distinct car from Car car left join fetch car.fuels where car.id = '" + id + "'",
+                Car.class)
+                .setHint(QueryHints.PASS_DISTINCT_THROUGH, false).getResultList();
+        cars = session.createQuery(
+                "select distinct car from Car car left join fetch car.otherCosts where car.id = '" + id + "'",
+                Car.class)
+                .setHint(QueryHints.PASS_DISTINCT_THROUGH, false).getResultList();
+
+        return cars;
+
     }
 }

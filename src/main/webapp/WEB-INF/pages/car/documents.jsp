@@ -59,7 +59,6 @@
 
 <c:if test="${documents.size() != 0}">
 
-<c:forEach items="${documents}" var="docs">
     <h2>Документы:</h2>
     <table>
         <tr>
@@ -69,6 +68,8 @@
             <th>Дата окончания</th>
             <th>Срок истекает через</th>
         </tr>
+    <c:forEach items="${documents}" var="docs">
+
         <tr>
             <td>${docs.nameDocument}</td>
             <td>${docs.documentCost}</td>
@@ -80,9 +81,10 @@
                 <a href="${editDoc}">edit</a>
             </td>
         </tr>
+
+    </c:forEach>
     </table>
     <br>
-</c:forEach>
     <a href="${createDoc}">Добавить документ</a>
 </c:if>
 
