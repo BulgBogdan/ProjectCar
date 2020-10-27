@@ -27,7 +27,7 @@
         </div>
         <p>Введите заправленое количество литров или сумму</p>
         <div>
-            <form:input type="number" path="lietrValue" placeholder="Liter Value"
+            <form:input type="number" path="literValue" placeholder="Liter Value"
                         autofocus="true"></form:input>
         </div>
         <div>

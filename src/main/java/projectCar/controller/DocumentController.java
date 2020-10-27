@@ -45,7 +45,7 @@ public class DocumentController extends MethodsCarForControllers {
     public ModelAndView addDocument(@PathVariable("id") int id,
                                     @ModelAttribute("doc") Document document) {
         car = getCarById(id);
-        document.setNumberOf(
+        document.setNumberOfDays(
                 amountOfDays(document.getBeginDate(), document.getEndDate()));
         document.setCar(car);
         modelAndView.setViewName("redirect:/car/documents/{id}");
@@ -68,7 +68,7 @@ public class DocumentController extends MethodsCarForControllers {
                                       @PathVariable("id") int id) {
         document.setCar(
                 getCarById(car.getId()));
-        document.setNumberOf(
+        document.setNumberOfDays(
                 amountOfDays(document.getBeginDate(), document.getEndDate()));
         modelAndView.setViewName("redirect:/car/documents/{id}");
         documentService.update(document);

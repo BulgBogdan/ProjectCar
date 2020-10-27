@@ -12,10 +12,10 @@ public class Registration {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "priceCar", nullable = false)
+    @Column(name = "price_car", nullable = false)
     private int priceCar;
 
-    @Column(name = "priceRegistration", nullable = false)
+    @Column(name = "price_registration", nullable = false)
     private double priceRegistration;
 
     @OneToOne
@@ -77,15 +77,5 @@ public class Registration {
     @Override
     public int hashCode() {
         return Objects.hash(id, priceCar, priceRegistration, car);
-    }
-
-    @Override
-    public String toString() {
-        return "Registration{" +
-                "id=" + id +
-                ", priceCar=" + priceCar +
-                ", priceRegistration=" + priceRegistration +
-                ", car=" + car +
-                '}';
     }
 }

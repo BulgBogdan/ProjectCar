@@ -12,14 +12,17 @@ public class Fuel {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "literCost")
+    @Column(name = "liter_cost")
     private double literCost;
 
-    @Column(name = "literValue")
-    private double lietrValue;
+    @Column(name = "liter_value")
+    private double literValue;
 
     @Column(name = "summ")
     private double summ;
+
+    @Column(name = "fuel_distance")
+    private double fuelDistance;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "FK_cars")
@@ -28,10 +31,11 @@ public class Fuel {
     public Fuel() {
     }
 
-    public Fuel(double literCost, double lietrValue, double summ, Car car) {
+    public Fuel(double literCost, double literValue, double summ, double fuelDistance, Car car) {
         this.literCost = literCost;
-        this.lietrValue = lietrValue;
+        this.literValue = literValue;
         this.summ = summ;
+        this.fuelDistance = fuelDistance;
         this.car = car;
     }
 
@@ -51,12 +55,12 @@ public class Fuel {
         this.literCost = literCost;
     }
 
-    public double getLietrValue() {
-        return lietrValue;
+    public double getLiterValue() {
+        return literValue;
     }
 
-    public void setLietrValue(double lietrValue) {
-        this.lietrValue = lietrValue;
+    public void setLiterValue(double lietrValue) {
+        this.literValue = lietrValue;
     }
 
     public double getSumm() {
@@ -65,6 +69,14 @@ public class Fuel {
 
     public void setSumm(double summ) {
         this.summ = summ;
+    }
+
+    public double getFuelDistance() {
+        return fuelDistance;
+    }
+
+    public void setFuelDistance(double fuelDistance) {
+        this.fuelDistance = fuelDistance;
     }
 
     public Car getCar() {
@@ -82,24 +94,14 @@ public class Fuel {
         Fuel fuel = (Fuel) o;
         return id == fuel.id &&
                 Double.compare(fuel.literCost, literCost) == 0 &&
-                Double.compare(fuel.lietrValue, lietrValue) == 0 &&
+                Double.compare(fuel.literValue, literValue) == 0 &&
                 Double.compare(fuel.summ, summ) == 0 &&
+                Double.compare(fuel.fuelDistance, fuelDistance) == 0 &&
                 Objects.equals(car, fuel.car);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, literCost, lietrValue, summ, car);
-    }
-
-    @Override
-    public String toString() {
-        return "Fuel{" +
-                "id=" + id +
-                ", literCost=" + literCost +
-                ", lietrValue=" + lietrValue +
-                ", summ=" + summ +
-                ", car=" + car +
-                '}';
+        return Objects.hash(id, literCost, literValue, summ, fuelDistance, car);
     }
 }

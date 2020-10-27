@@ -58,10 +58,10 @@ public class FuelController extends MethodsCarForControllers{
         fuel.setCar(car);
         if (fuel.getSumm() == 0){
             fuel.setSumm(
-                    fuelSumm(fuel.getLiterCost(),fuel.getLietrValue()));
+                    fuelSumm(fuel.getLiterCost(),fuel.getLiterValue()));
         }
-        if (fuel.getLietrValue() == 0){
-            fuel.setLietrValue(
+        if (fuel.getLiterValue() == 0){
+            fuel.setLiterValue(
                     fuelValue(fuel.getSumm(),fuel.getLiterCost()));
         }
         modelAndView.setViewName("redirect:/car/fuel/{id}");
@@ -87,10 +87,10 @@ public class FuelController extends MethodsCarForControllers{
                 getCarById(car.getId()));
         if (fuelEdit.getSumm() != fuel.getSumm()){
             fuelEdit.setSumm(
-                    fuelSumm(fuelEdit.getLiterCost(),fuelEdit.getLietrValue()));
+                    fuelSumm(fuelEdit.getLiterCost(),fuelEdit.getLiterValue()));
         }
-        if (fuelEdit.getLietrValue() != fuel.getLietrValue()){
-            fuelEdit.setLietrValue(
+        if (fuelEdit.getLiterValue() != fuel.getLiterValue()){
+            fuelEdit.setLiterValue(
                     fuelValue(fuelEdit.getSumm(),fuelEdit.getLiterCost()));
         }
         modelAndView.setViewName("redirect:/car/fuel/{id}");

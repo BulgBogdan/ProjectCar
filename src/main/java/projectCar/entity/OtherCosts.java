@@ -13,10 +13,10 @@ public class OtherCosts {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "nameOtherCost", nullable = false, length = 100)
+    @Column(name = "name_other_cost", nullable = false, length = 100)
     private String nameOtherCost;
 
-    @Column(name = "dateCost", nullable = false)
+    @Column(name = "cost_date", nullable = false)
     private Date dateCost;
 
     @Column(name = "cost")
@@ -93,14 +93,4 @@ public class OtherCosts {
         return Objects.hash(id, nameOtherCost, dateCost, cost, car);
     }
 
-    @Override
-    public String toString() {
-        return "OtherCosts{" +
-                "id=" + id +
-                ", nameOtherCost='" + nameOtherCost + '\'' +
-                ", dateCost=" + dateCost +
-                ", cost=" + cost +
-                ", car=" + car +
-                '}';
-    }
 }

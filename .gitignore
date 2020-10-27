@@ -1,4 +1,4 @@
 ﻿.idea/
 target/
-src/main/webapp/WEB-INF/pages/css/
-src/main/webapp/WEB-INF/pages/js/
+src/main/webapp/res/css/
+src/main/webapp/res/js/

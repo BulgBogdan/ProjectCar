@@ -34,7 +34,7 @@
                         autofocus="true"></form:input>
         </div>
         <div>
-            <form:input type="number" path="mileage" placeholder="Mileage"
+            <form:input type="number" path="firstMileage" placeholder="Mileage"
                         autofocus="true"></form:input>
         </div>
         <div>

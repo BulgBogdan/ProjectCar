@@ -60,24 +60,20 @@ public class CarDAOImpl implements ICarDAO {
     public List<Car> getLists(int id) {
         Session session = sessionFactory.getCurrentSession();
         List<Car> cars = null;
+
         cars = session.createQuery(
                 "select distinct car from Car car left join fetch car.documents where car.id = '" + id + "'",
-                Car.class)
-                .setHint(QueryHints.PASS_DISTINCT_THROUGH, false).getResultList();
+                Car.class).setHint(QueryHints.PASS_DISTINCT_THROUGH, false).getResultList();
         cars = session.createQuery(
                 "select distinct car from Car car left join fetch car.repairs where car.id = '" + id + "'",
-                Car.class)
-                .setHint(QueryHints.PASS_DISTINCT_THROUGH, false).getResultList();
+                Car.class).setHint(QueryHints.PASS_DISTINCT_THROUGH, false).getResultList();
         cars = session.createQuery(
                 "select distinct car from Car car left join fetch car.fuels where car.id = '" + id + "'",
-                Car.class)
-                .setHint(QueryHints.PASS_DISTINCT_THROUGH, false).getResultList();
+                Car.class).setHint(QueryHints.PASS_DISTINCT_THROUGH, false).getResultList();
         cars = session.createQuery(
                 "select distinct car from Car car left join fetch car.otherCosts where car.id = '" + id + "'",
-                Car.class)
-                .setHint(QueryHints.PASS_DISTINCT_THROUGH, false).getResultList();
+                Car.class).setHint(QueryHints.PASS_DISTINCT_THROUGH, false).getResultList();
 
         return cars;
-
     }
 }

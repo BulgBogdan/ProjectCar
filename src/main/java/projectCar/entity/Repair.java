@@ -12,16 +12,19 @@ public class Repair {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "nameRepair", nullable = false, length = 100)
+    @Column(name = "name_repair", nullable = false, length = 100)
     private String nameRepair;
 
-    @Column(name = "beginMileage")
+    @Column(name = "start_mileage")
     private int beginMileage;
 
-    @Column(name = "endMileage")
+    @Column(name = "end_mileage")
     private int endMileage;
 
-    @Column(name = "costsRepair")
+    @Column(name = "service_life")
+    private int serviceLife;
+
+    @Column(name = "cost_repair")
     private double costsRepair;
 
     @ManyToOne(cascade = CascadeType.ALL)
@@ -31,10 +34,11 @@ public class Repair {
     public Repair() {
     }
 
-    public Repair(String nameRepair, int beginMileage, int endMileage, double costsRepair, Car car) {
+    public Repair(String nameRepair, int beginMileage, int endMileage, int serviceLife, double costsRepair, Car car) {
         this.nameRepair = nameRepair;
         this.beginMileage = beginMileage;
         this.endMileage = endMileage;
+        this.serviceLife = serviceLife;
         this.costsRepair = costsRepair;
         this.car = car;
     }
@@ -71,6 +75,14 @@ public class Repair {
         this.endMileage = endMileage;
     }
 
+    public int getServiceLife() {
+        return serviceLife;
+    }
+
+    public void setServiceLife(int serviceLife) {
+        this.serviceLife = serviceLife;
+    }
+
     public double getCostsRepair() {
         return costsRepair;
     }
@@ -95,6 +107,7 @@ public class Repair {
         return id == repair.id &&
                 beginMileage == repair.beginMileage &&
                 endMileage == repair.endMileage &&
+                serviceLife == repair.serviceLife &&
                 Double.compare(repair.costsRepair, costsRepair) == 0 &&
                 Objects.equals(nameRepair, repair.nameRepair) &&
                 Objects.equals(car, repair.car);
@@ -102,18 +115,6 @@ public class Repair {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nameRepair, beginMileage, endMileage, costsRepair, car);
-    }
-
-    @Override
-    public String toString() {
-        return "Repair{" +
-                "id=" + id +
-                ", nameRepair='" + nameRepair + '\'' +
-                ", beginMileage=" + beginMileage +
-                ", endMileage=" + endMileage +
-                ", costsRepair=" + costsRepair +
-                ", car=" + car +
-                '}';
+        return Objects.hash(id, nameRepair, beginMileage, endMileage, serviceLife, costsRepair, car);
     }
 }

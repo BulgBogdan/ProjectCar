@@ -30,7 +30,7 @@ public class ScheduledTask {
         for (Document document : listDocuments) {
             int value = countDays(Date.valueOf(LocalDate.now()), document.getEndDate());
             if (value >= 0) {
-                document.setNumberOf(value);
+                document.setNumberOfDays(value);
                 documentService.update(document);
             }
         }

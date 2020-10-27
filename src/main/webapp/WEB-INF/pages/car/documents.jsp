@@ -34,7 +34,7 @@
                 <td>${parameters.mark}</td>
                 <td>${parameters.model}</td>
                 <td>${parameters.year}</td>
-                <td>${parameters.mileage}</td>
+                <td>${parameters.firstMileage}</td>
                 <td>${parameters.mass}</td>
                 <td>${parameters.color}</td>
                 <td>${parameters.averageRate}</td>
@@ -75,7 +75,7 @@
             <td>${docs.documentCost}</td>
             <td>${docs.beginDate}</td>
             <td>${docs.endDate}</td>
-            <td>${docs.numberOf} дня(ей)</td>
+            <td>${docs.numberOfDays} дня(ей)</td>
             <td>
                 <c:url value="/car/documents/edit/${docs.id}" var="editDoc"/>
                 <a href="${editDoc}">edit</a>

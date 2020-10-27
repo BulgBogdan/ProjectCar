@@ -22,8 +22,8 @@ public class Parameter {
     @Column(name = "year", nullable = false)
     private Date year;
 
-    @Column(name = "mileage")
-    private int mileage;
+    @Column(name = "first_mileage")
+    private int firstMileage;
 
     @Column(name = "mass")
     private int mass;
@@ -31,13 +31,13 @@ public class Parameter {
     @Column(name = "color", nullable = false, length = 100)
     private String color;
 
-    @Column(name = "averageRate")
+    @Column(name = "average_rate")
     private double averageRate;
 
     @Column(name = "vin", nullable = false, length = 45)
     private String vin;
 
-    @Column(name = "registrationNumber", nullable = false, length = 45)
+    @Column(name = "registration_number", nullable = false, length = 45)
     private String registrationNumber;
 
     @OneToOne
@@ -47,12 +47,12 @@ public class Parameter {
     public Parameter() {
     }
 
-    public Parameter(String mark, String model, Date year, int mileage, int mass, String color, double averageRate,
+    public Parameter(String mark, String model, Date year, int firstMileage, int mass, String color, double averageRate,
                      String vin, String registrationNumber, Car car) {
         this.mark = mark;
         this.model = model;
         this.year = year;
-        this.mileage = mileage;
+        this.firstMileage = firstMileage;
         this.mass = mass;
         this.color = color;
         this.averageRate = averageRate;
@@ -93,12 +93,12 @@ public class Parameter {
         this.year = year;
     }
 
-    public int getMileage() {
-        return mileage;
+    public int getFirstMileage() {
+        return firstMileage;
     }
 
-    public void setMileage(int mileage) {
-        this.mileage = mileage;
+    public void setFirstMileage(int mileage) {
+        this.firstMileage = mileage;
     }
 
     public int getMass() {
@@ -155,7 +155,7 @@ public class Parameter {
         if (o == null || getClass() != o.getClass()) return false;
         Parameter parameter = (Parameter) o;
         return id == parameter.id &&
-                mileage == parameter.mileage &&
+                firstMileage == parameter.firstMileage &&
                 mass == parameter.mass &&
                 Double.compare(parameter.averageRate, averageRate) == 0 &&
                 Objects.equals(mark, parameter.mark) &&
@@ -169,23 +169,6 @@ public class Parameter {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, mark, model, year, mileage, mass, color, averageRate, vin, registrationNumber, car);
+        return Objects.hash(id, mark, model, year, firstMileage, mass, color, averageRate, vin, registrationNumber, car);
     }
-
-//    @Override
-//    public String toString() {
-//        return "Parameter{" +
-//                "id=" + id +
-//                ", mark='" + mark + '\'' +
-//                ", model='" + model + '\'' +
-//                ", year=" + year +
-//                ", mileage=" + mileage +
-//                ", mass=" + mass +
-//                ", color='" + color + '\'' +
-//                ", averageRate=" + averageRate +
-//                ", vin='" + vin + '\'' +
-//                ", registrationNumber='" + registrationNumber + '\'' +
-//                ", car=" + car +
-//                '}';
-//    }
 }

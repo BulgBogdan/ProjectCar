@@ -25,7 +25,7 @@
             <form:input type="number" path="literCost" title="${fuel.literCost}"></form:input>
         </div>
         <div>
-            <form:input type="number" path="lietrValue" title="${fuel.lietrValue}"></form:input>
+            <form:input type="number" path="literValue" title="${fuel.literValue}"></form:input>
         </div>
         <div>
             <form:input type="number" path="summ" title="${fuel.summ}"></form:input>

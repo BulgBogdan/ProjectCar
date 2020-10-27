@@ -29,7 +29,7 @@
             <form:input type="date" path="year" title="${parameter.year}"></form:input>
         </div>
         <div>
-            <form:input type="number" path="mileage" title="${parameter.mileage}"></form:input>
+            <form:input type="number" path="firstMileage" title="${parameter.firstMileage}"></form:input>
         </div>
         <div>
             <form:input type="number" path="mass" title="${parameter.mass}"></form:input>

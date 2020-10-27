@@ -13,8 +13,11 @@ public class Car {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "nameCar", nullable = false, length = 100)
+    @Column(name = "name_car", nullable = false, length = 100)
     private String nameCar;
+
+    @Column(name = "mileage")
+    private int mileage;
 
     @ManyToOne
     @JoinColumn(name = "FK_users")
@@ -41,9 +44,10 @@ public class Car {
     public Car() {
     }
 
-    public Car(String nameCar, User user, Registration registration, Parameter parameters, List<Document> documents,
-               List<Fuel> fuels, List<OtherCosts> otherCosts, List<Repair> repairs) {
+    public Car(String nameCar, int mileage, User user, Registration registration, Parameter parameters,
+               List<Document> documents, List<Fuel> fuels, List<OtherCosts> otherCosts, List<Repair> repairs) {
         this.nameCar = nameCar;
+        this.mileage = mileage;
         this.user = user;
         this.registration = registration;
         this.parameters = parameters;
@@ -67,6 +71,14 @@ public class Car {
 
     public void setNameCar(String nameCar) {
         this.nameCar = nameCar;
+    }
+
+    public int getMileage() {
+        return mileage;
+    }
+
+    public void setMileage(int mileage) {
+        this.mileage = mileage;
     }
 
     public User getUser() {
@@ -131,6 +143,7 @@ public class Car {
         if (o == null || getClass() != o.getClass()) return false;
         Car car = (Car) o;
         return id == car.id &&
+                mileage == car.mileage &&
                 Objects.equals(nameCar, car.nameCar) &&
                 Objects.equals(user, car.user) &&
                 Objects.equals(registration, car.registration) &&
@@ -143,7 +156,6 @@ public class Car {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nameCar, user, registration, parameters, documents, fuels, otherCosts, repairs);
+        return Objects.hash(id, nameCar, mileage, user, registration, parameters, documents, fuels, otherCosts, repairs);
     }
-
 }

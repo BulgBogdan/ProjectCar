@@ -35,7 +35,7 @@
                 <td>${parameters.mark}</td>
                 <td>${parameters.model}</td>
                 <td>${parameters.year}</td>
-                <td>${parameters.mileage}</td>
+                <td>${parameters.firstMileage}</td>
                 <td>${parameters.mass}</td>
                 <td>${parameters.color}</td>
                 <td>${parameters.averageRate}</td>
@@ -68,7 +68,7 @@
         <c:forEach items="${fuel}" var="fuels">
             <tr>
                 <td>${fuels.literCost}</td>
-                <td>${fuels.lietrValue}</td>
+                <td>${fuels.literValue}</td>
                 <td>${fuels.summ}</td>
                 <%--<td>${fuel.fuelDistance}</td>--%>
 

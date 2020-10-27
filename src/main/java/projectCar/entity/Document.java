@@ -13,20 +13,23 @@ public class Document {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "nameDocument", nullable = false, length = 100)
+    @Column(name = "name_document", nullable = false, length = 100)
     private String nameDocument;
 
-    @Column(name = "documentCost")
+    @Column(name = "cost_document")
     private double documentCost;
 
-    @Column(name = "beginDate", nullable = false)
+    @Column(name = "start_date", nullable = false)
     private Date beginDate;
 
-    @Column(name = "endDate", nullable = false)
+    @Column(name = "end_date", nullable = false)
     private Date endDate;
 
-    @Column(name = "numberOfDays", nullable = false)
-    private int numberOf;
+    @Column(name = "number_of_days", nullable = false)
+    private int numberOfDays;
+
+    @Column(name = "number_of_month", nullable = false)
+    private int numberOfMonth;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "FK_cars")
@@ -35,12 +38,14 @@ public class Document {
     public Document() {
     }
 
-    public Document(String nameDocument, double documentCost, Date beginDate, Date endDate, int numberOf, Car car) {
+    public Document(String nameDocument, double documentCost, Date beginDate, Date endDate,
+                    int numberOfDays, int numberOfMonth, Car car) {
         this.nameDocument = nameDocument;
         this.documentCost = documentCost;
         this.beginDate = beginDate;
         this.endDate = endDate;
-        this.numberOf = numberOf;
+        this.numberOfDays = numberOfDays;
+        this.numberOfMonth = numberOfMonth;
         this.car = car;
     }
 
@@ -92,12 +97,20 @@ public class Document {
         this.car = car;
     }
 
-    public int getNumberOf() {
-        return numberOf;
+    public int getNumberOfDays() {
+        return numberOfDays;
     }
 
-    public void setNumberOf(int numberOfDays) {
-        this.numberOf = numberOfDays;
+    public void setNumberOfDays(int numberOfDays) {
+        this.numberOfDays = numberOfDays;
+    }
+
+    public int getNumberOfMonth() {
+        return numberOfMonth;
+    }
+
+    public void setNumberOfMonth(int numberOfMonth) {
+        this.numberOfMonth = numberOfMonth;
     }
 
     @Override
@@ -107,7 +120,8 @@ public class Document {
         Document document = (Document) o;
         return id == document.id &&
                 Double.compare(document.documentCost, documentCost) == 0 &&
-                numberOf == document.numberOf &&
+                numberOfDays == document.numberOfDays &&
+                numberOfMonth == document.numberOfMonth &&
                 Objects.equals(nameDocument, document.nameDocument) &&
                 Objects.equals(beginDate, document.beginDate) &&
                 Objects.equals(endDate, document.endDate) &&
@@ -116,19 +130,6 @@ public class Document {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nameDocument, documentCost, beginDate, endDate, numberOf, car);
-    }
-
-    @Override
-    public String toString() {
-        return "Document{" +
-                "id=" + id +
-                ", nameDocument='" + nameDocument + '\'' +
-                ", documentCost=" + documentCost +
-                ", beginDate=" + beginDate +
-                ", endDate=" + endDate +
-                ", numberOfDays=" + numberOf +
-                ", car=" + car +
-                '}';
+        return Objects.hash(id, nameDocument, documentCost, beginDate, endDate, numberOfDays, numberOfMonth, car);
     }
 }

@@ -66,7 +66,7 @@
                 <td>${parameter.mark}</td>
                 <td>${parameter.model}</td>
                 <td>${parameter.year}</td>
-                <td>${parameter.mileage}</td>
+                <td>${parameter.firstMileage}</td>
                 <td>${parameter.mass}</td>
                 <td>${parameter.color}</td>
                 <td>${parameter.averageRate}</td>
