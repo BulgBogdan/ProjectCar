@@ -28,8 +28,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().authorizeRequests().antMatchers("/registration").not().fullyAuthenticated()
-                .antMatchers("/","/**").authenticated().and();
+        http.csrf().disable().authorizeRequests().antMatchers("/registration","/res/css/**", "/res/js/**")
+                .not().fullyAuthenticated().antMatchers("/","/**").authenticated().and();
 
         http.formLogin().loginPage("/login")
                 .loginProcessingUrl("/login-check").failureUrl("/error")

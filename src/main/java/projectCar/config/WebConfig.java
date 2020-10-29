@@ -6,10 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.servlet.ViewResolver;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 import projectCar.util.LocalDateTimeConverter;
@@ -17,7 +14,7 @@ import projectCar.util.LocalDateTimeConverter;
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = "projectCar")
-public class WebConfig extends WebMvcConfigurerAdapter{
+public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {

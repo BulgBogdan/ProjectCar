@@ -6,12 +6,15 @@
 <html>
 <head>
     <title>MyCar</title>
+    <link href="../../../res/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="../../../res/js/bootstrap.bundle.min.js"></script>
+    <script src="../../../res/jquery/jquery-3.2.1.min.js"></script>
 </head>
 <body>
 <sec:authorize access="isAuthenticated()">
     Ваш логин: <sec:authentication property="principal.username"/>
     <s></s>
-    <a class="btn btn-lg btn-danger" href="<c:url value="/logout" />" role="button">Выйти</a>
+    <a class="btn btn-sm btn-danger" href="<c:url value="/logout" />" role="button">Выйти</a>
 </sec:authorize>
 
 <form:form modelAttribute="car">
@@ -19,7 +22,11 @@
     <p>Незабывайте редактировать пробег, чтобы корректно производились расчеты:</p>
     <p>${car.mileage} км</p>
     <c:url value="/car/edit/${car.id}" var="editCar"/>
-    <a href="${editCar}">edit</a>
+    <a href="${editCar}" class="btn btn-sm btn-info">
+        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
+    </svg></a>
+
 </form:form>
 
 <h2>Цена автомобиля и затраты на оформление</h2>
