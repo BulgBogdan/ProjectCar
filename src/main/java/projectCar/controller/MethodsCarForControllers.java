@@ -7,6 +7,7 @@ import projectCar.service.CarServiceImpl;
 import projectCar.service.interfaces.ICarService;
 
 import java.sql.Date;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -36,5 +37,9 @@ public class MethodsCarForControllers {
         long period = Math.abs(endDate.getTime() - startDate.getTime());
         int days = (int) TimeUnit.DAYS.convert(period, TimeUnit.MILLISECONDS);
         return days;
+    }
+    int amountOfMonths(Date startDate, Date endDate) {
+        int monthBetween = (int)ChronoUnit.MONTHS.between(startDate.toLocalDate(),endDate.toLocalDate());
+        return monthBetween;
     }
 }

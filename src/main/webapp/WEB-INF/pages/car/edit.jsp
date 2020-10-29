@@ -18,10 +18,10 @@
     <h2>Correct Title</h2>
     <br>
     <div>
-        <form:input type="hidden" path="id" title="${car.id}"></form:input>
+        <form:input type="text" path="nameCar" title="${car.nameCar}"></form:input>
     </div>
     <div>
-        <form:input type="text" path="nameCar" title="${car.nameCar}"></form:input>
+        <form:input type="number" path="mileage" title="${car.nameCar}"></form:input>
     </div>
 
     <button type="submit">edit</button>

@@ -47,6 +47,8 @@ public class DocumentController extends MethodsCarForControllers {
         car = getCarById(id);
         document.setNumberOfDays(
                 amountOfDays(document.getBeginDate(), document.getEndDate()));
+        document.setNumberOfMonth(
+                amountOfMonths(document.getBeginDate(),document.getEndDate()));
         document.setCar(car);
         modelAndView.setViewName("redirect:/car/documents/{id}");
         documentService.add(document);

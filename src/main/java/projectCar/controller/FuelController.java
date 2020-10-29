@@ -13,27 +13,32 @@ import projectCar.service.FuelServiceImpl;
 import projectCar.service.interfaces.IFuelService;
 
 @Controller
-public class FuelController extends MethodsCarForControllers{
+public class FuelController extends MethodsCarForControllers {
 
     @Autowired
     private IFuelService fuelService = new FuelServiceImpl();
 
-    private ModelAndView modelAndView =  new ModelAndView();
+    private ModelAndView modelAndView = new ModelAndView();
 
     private Car car = new Car();
 
-    private static double fuelSumm (double liter, double value){
+    private static double fuelSumm(double liter, double value) {
         double summ = liter * value;
         return summ;
     }
 
-    private static double fuelValue (double sum, double liter){
+    private static double fuelValue(double sum, double liter) {
         double value = sum / liter;
         return value;
     }
 
+    private static int fuelDistance(double literValue, double averageRate) {
+        double distance = (literValue/averageRate)*100;
+        return (int) Math.round(distance);
+    }
+
     @GetMapping("/car/fuel/{id}")
-    public ModelAndView pageFuel(@PathVariable("id") int id){
+    public ModelAndView pageFuel(@PathVariable("id") int id) {
         car = getCarWithWires(id);
         modelAndView.setViewName("car/fuel");
         modelAndView.addObject("car", car);
@@ -43,7 +48,7 @@ public class FuelController extends MethodsCarForControllers{
     }
 
     @GetMapping("/car/fuel/create/{id}")
-    public ModelAndView pageCreateFuel(@PathVariable("id") int id){
+    public ModelAndView pageCreateFuel(@PathVariable("id") int id) {
         car = getCarById(id);
         modelAndView.setViewName("car/fuel/create");
         modelAndView.addObject("car", car);
@@ -53,24 +58,26 @@ public class FuelController extends MethodsCarForControllers{
 
     @PostMapping("/car/fuel/create/{id}")
     public ModelAndView addFuel(@PathVariable("id") int id,
-                                 @ModelAttribute("fuel") Fuel fuel){
+                                @ModelAttribute("fuel") Fuel fuel) {
         car = getCarById(id);
         fuel.setCar(car);
-        if (fuel.getSumm() == 0){
+        if (fuel.getSumm() == 0) {
             fuel.setSumm(
-                    fuelSumm(fuel.getLiterCost(),fuel.getLiterValue()));
+                    fuelSumm(fuel.getLiterCost(), fuel.getLiterValue()));
         }
-        if (fuel.getLiterValue() == 0){
+        if (fuel.getLiterValue() == 0) {
             fuel.setLiterValue(
-                    fuelValue(fuel.getSumm(),fuel.getLiterCost()));
+                    fuelValue(fuel.getSumm(), fuel.getLiterCost()));
         }
+        fuel.setFuelDistance(
+                fuelDistance(fuel.getLiterValue(), car.getParameters().getAverageRate()));
         modelAndView.setViewName("redirect:/car/fuel/{id}");
         fuelService.add(fuel);
         return modelAndView;
     }
 
     @GetMapping("/car/fuel/edit/{id}")
-    public ModelAndView pageEditFuel(@PathVariable("id") int id){
+    public ModelAndView pageEditFuel(@PathVariable("id") int id) {
         Fuel fuel = fuelService.read(id);
         modelAndView.setViewName("car/fuel/edit");
         modelAndView.addObject("car", fuel.getCar());
@@ -79,20 +86,22 @@ public class FuelController extends MethodsCarForControllers{
     }
 
     @PostMapping("/car/fuel/edit/{id}")
-    public ModelAndView editFuel(@PathVariable("id")int id,
-                                  @ModelAttribute("fuel") Fuel fuelEdit,
-                                  @ModelAttribute("car") Car car){
+    public ModelAndView editFuel(@PathVariable("id") int id,
+                                 @ModelAttribute("fuel") Fuel fuelEdit,
+                                 @ModelAttribute("car") Car car) {
         Fuel fuel = fuelService.read(id);
         fuelEdit.setCar(
                 getCarById(car.getId()));
-        if (fuelEdit.getSumm() != fuel.getSumm()){
+        if (fuelEdit.getSumm() != fuel.getSumm()) {
             fuelEdit.setSumm(
-                    fuelSumm(fuelEdit.getLiterCost(),fuelEdit.getLiterValue()));
+                    fuelSumm(fuelEdit.getLiterCost(), fuelEdit.getLiterValue()));
         }
-        if (fuelEdit.getLiterValue() != fuel.getLiterValue()){
+        if (fuelEdit.getLiterValue() != fuel.getLiterValue()) {
             fuelEdit.setLiterValue(
-                    fuelValue(fuelEdit.getSumm(),fuelEdit.getLiterCost()));
+                    fuelValue(fuelEdit.getSumm(), fuelEdit.getLiterCost()));
         }
+        fuelEdit.setFuelDistance(
+                fuelDistance(fuelEdit.getLiterValue(), getCarById(car.getId()).getParameters().getAverageRate()));
         modelAndView.setViewName("redirect:/car/fuel/{id}");
         fuelService.update(fuelEdit);
         return modelAndView;

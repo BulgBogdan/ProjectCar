@@ -15,8 +15,9 @@
 </sec:authorize>
 
 <form:form modelAttribute="car">
-
     <p>${car.nameCar}</p>
+    <p>Незабывайте редактировать пробег, чтобы корректно производились расчеты:</p>
+    <p>${car.mileage} км</p>
     <c:url value="/car/edit/${car.id}" var="editCar"/>
     <a href="${editCar}">edit</a>
 </form:form>
@@ -31,8 +32,8 @@
             <th>Оформление</th>
         </tr>
         <tr>
-            <td>${registration.priceCar}</td>
-            <td>${registration.priceRegistration}</td>
+            <td>${registration.priceCar} $</td>
+            <td>${registration.priceRegistration} $</td>
             <td>
                 <c:url value="/car/costs/edit/${car.id}" var="editFirst"/>
                 <a href="${editFirst}">edit</a>
@@ -66,10 +67,10 @@
                 <td>${parameter.mark}</td>
                 <td>${parameter.model}</td>
                 <td>${parameter.year}</td>
-                <td>${parameter.firstMileage}</td>
-                <td>${parameter.mass}</td>
+                <td>${parameter.firstMileage} km</td>
+                <td>${parameter.mass} kg</td>
                 <td>${parameter.color}</td>
-                <td>${parameter.averageRate}</td>
+                <td>${parameter.averageRate} km/h</td>
                 <td>${parameter.vin}</td>
                 <td>${parameter.registrationNumber}</td>
                 <td>

@@ -9,6 +9,7 @@ import projectCar.service.interfaces.IDocumentService;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -19,21 +20,30 @@ public class ScheduledTask {
     private IDocumentService documentService = new DocumentServiceImpl();
 
     private int countDays (Date start, Date end){
-        long count = Math.abs(end.getTime() - start.getTime());
-        int days = (int) TimeUnit.DAYS.convert(count, TimeUnit.MILLISECONDS);
+        long daysBetween = Math.abs(end.getTime() - start.getTime());
+        int days = (int) TimeUnit.DAYS.convert(daysBetween, TimeUnit.MILLISECONDS);
         return days;
+    }
+
+    private int countMonths (Date start, Date end){
+        int months = (int) ChronoUnit.MONTHS.between(start.toLocalDate(),end.toLocalDate());
+        return months;
     }
 
     @Scheduled(cron = "0 * * ? * *")
     private void correctAmountOFDays (){
         List<Document> listDocuments = documentService.getAll();
         for (Document document : listDocuments) {
-            int value = countDays(Date.valueOf(LocalDate.now()), document.getEndDate());
-            if (value >= 0) {
-                document.setNumberOfDays(value);
+            int days = countDays(Date.valueOf(LocalDate.now()), document.getEndDate());
+            int months = countMonths(Date.valueOf(LocalDate.now()),document.getEndDate());
+            if ((days >= 0) && (months >=0)) {
+                document.setNumberOfDays(days);
+                document.setNumberOfMonth(months);
                 documentService.update(document);
             }
         }
     }
 
 }
+
+//for server 0 0 0 * * ? every midnight

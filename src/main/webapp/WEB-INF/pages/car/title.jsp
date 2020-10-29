@@ -24,6 +24,10 @@
             <form:input type="text" path="nameCar" placeholder="Car Name"
                         autofocus="true"></form:input>
         </div>
+        <div>
+            <form:input type="number" path="mileage" placeholder="Mileage"
+                        autofocus="true"></form:input>
+        </div>
 
         <button type="submit">Продолжить</button>
 

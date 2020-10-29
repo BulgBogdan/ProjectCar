@@ -14,44 +14,12 @@
     <a class="btn btn-lg btn-danger" href="<c:url value="/logout" />" role="button">Выйти</a>
 </sec:authorize>
 
-<h2>${car.nameCar}</h2>
-
-<p>Параметры авто:</p>
-<form:form modelAttribute="parameters">
-    <c:if test="${parameters!=null}">
-        <table>
-            <tr>
-                <th>Марка Авто</th>
-                <th>Модель Авто</th>
-                <th>Год выпуска</th>
-                <th>Пробег</th>
-                <th>Масса Авто</th>
-                <th>Цвет Авто</th>
-                <th>Средний расход</th>
-                <th>VIN</th>
-                <th>Регистрационный знак</th>
-            </tr>
-            <tr>
-                <td>${parameters.mark}</td>
-                <td>${parameters.model}</td>
-                <td>${parameters.year}</td>
-                <td>${parameters.firstMileage}</td>
-                <td>${parameters.mass}</td>
-                <td>${parameters.color}</td>
-                <td>${parameters.averageRate}</td>
-                <td>${parameters.vin}</td>
-                <td>${parameters.registrationNumber}</td>
-                <td>
-                    <c:url value="/car/parameters/edit/${car.id}" var="editParameter"/>
-                    <a href="${editParameter}">edit</a>
-                </td>
-            </tr>
-        </table>
-    </c:if>
-    <c:if test="${parameters==null}">
-        <c:url value="/car/parameters/${car.id}" var="createParameter"/>
-        <p>Параметры небыли добавлены, <a href="${createParameter}">хотите добавить?</a></p>
-    </c:if>
+<form:form modelAttribute="car">
+    <p>${car.nameCar}</p>
+    <p>Незабывайте редактировать пробег, чтобы корректно производились расчеты:</p>
+    <p>${car.mileage} км</p>
+    <c:url value="/car/edit/${car.id}" var="editCar"/>
+    <a href="${editCar}">edit</a>
 </form:form>
 
 <c:url value="/car/other/costs/create/${car.id}" var="createCost"/>
@@ -69,7 +37,6 @@
                 <td>${costs.nameOtherCost}</td>
                 <td>${costs.dateCost}</td>
                 <td>${costs.cost}</td>
-                    <%--<td>${fuel.fuelDistance}</td>--%>
 
                 <td>
                     <c:url value="/car/other/costs/edit/${costs.id}" var="editCost"/>

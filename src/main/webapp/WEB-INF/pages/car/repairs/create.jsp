@@ -30,11 +30,11 @@
                         autofocus="true"></form:input>
         </div>
         <div>
-            <form:input type="number" path="endMileage" placeholder="Mileage end"
+            <form:input type="number" path="costsRepair" placeholder="Cost"
                         autofocus="true"></form:input>
         </div>
         <div>
-            <form:input type="number" path="costsRepair" placeholder="Cost"
+            <form:input type="number" path="serviceLife" placeholder="Service Mileage"
                         autofocus="true"></form:input>
         </div>
 

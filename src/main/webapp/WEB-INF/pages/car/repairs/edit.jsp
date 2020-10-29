@@ -9,7 +9,8 @@
 <body>
 
 <sec:authorize access="isAuthenticated()">
-Ваш логин: <sec:authentication property="principal.username"/>
+Ваш логин:
+    <sec:authentication property="principal.username"/>
 <s></s>
 <a class="btn btn-lg btn-danger" href="<c:url value="/logout" />" role="button">Выйти</a>
 </sec:authorize>
@@ -26,11 +27,12 @@
         <form:input type="number" path="beginMileage" title="${repair.beginMileage}"></form:input>
     </div>
     <div>
-        <form:input type="number" path="endMileage" title="${repair.endMileage}"></form:input>
-    </div>
-    <div>
         <form:input type="number" path="costsRepair" title="${repair.costsRepair}"></form:input>
     </div>
+    <div>
+        <form:input type="number" path="serviceLife" title="${repair.serviceLife}"></form:input>
+    </div>
+
     <button type="submit">Create</button>
 
     </form:form>

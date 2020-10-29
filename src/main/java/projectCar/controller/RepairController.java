@@ -22,6 +22,11 @@ public class RepairController extends MethodsCarForControllers {
 
     private Car car = new Car();
 
+    private static int endMileageRepairs(int startMileage, int serviceMileage) {
+        int mileage = startMileage + serviceMileage;
+        return mileage;
+    }
+
     @GetMapping("/car/repairs/{id}")
     public ModelAndView pageRepairs(@PathVariable("id") int id) {
         car = getCarWithWires(id);
@@ -45,6 +50,8 @@ public class RepairController extends MethodsCarForControllers {
     public ModelAndView addRepair(@PathVariable("id") int id,
                                   @ModelAttribute("repair") Repair repair) {
         car = getCarById(id);
+        repair.setEndMileage(
+                endMileageRepairs(repair.getBeginMileage(),repair.getServiceLife()));
         repair.setCar(car);
         modelAndView.setViewName("redirect:/car/repairs/{id}");
         repairService.add(repair);
@@ -66,6 +73,8 @@ public class RepairController extends MethodsCarForControllers {
                                 @ModelAttribute("car") Car car){
         repair.setCar(
                 getCarById(car.getId()));
+        repair.setEndMileage(
+                endMileageRepairs(repair.getBeginMileage(),repair.getServiceLife()));
         modelAndView.setViewName("redirect:/car/repairs/{id}");
         repairService.update(repair);
         return modelAndView;

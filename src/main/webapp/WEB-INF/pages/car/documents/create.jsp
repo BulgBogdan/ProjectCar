@@ -11,7 +11,8 @@
 <body>
 
 <sec:authorize access="isAuthenticated()">
-Ваш логин: <sec:authentication property="principal.username"/>
+Ваш логин:
+    <sec:authentication property="principal.username"/>
 <s></s>
 <a class="btn btn-lg btn-danger" href="<c:url value="/logout" />" role="button">Выйти</a>
 </sec:authorize>
@@ -33,10 +34,10 @@
             <form:input type="date" path="beginDate" placeholder="start date"
                         autofocus="true"></form:input>
         </div>
-            <div>
-                <form:input type="date" path="endDate" placeholder="end date"
-                            autofocus="true"></form:input>
-            </div>
+        <div>
+            <form:input type="date" path="endDate" placeholder="end date"
+                        autofocus="true"></form:input>
+        </div>
 
         <button type="submit">Create</button>
 
