@@ -1,8 +1,8 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <html>
 <head>
     <title>MyCar</title>
@@ -14,7 +14,7 @@
 <sec:authorize access="isAuthenticated()">
     Ваш логин: <sec:authentication property="principal.username"/>
     <s></s>
-    <a class="btn btn-sm btn-danger" href="<c:url value="/logout" />" role="button">Выйти</a>
+    <a class="btn btn-xs btn-danger" href="<c:url value="/logout" />" role="button">Выйти</a>
 </sec:authorize>
 
 <form:form modelAttribute="car">

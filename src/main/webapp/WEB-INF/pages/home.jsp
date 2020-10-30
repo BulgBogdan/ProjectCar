@@ -2,41 +2,40 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<html>
-<head>
-    <title>My Page</title>
-</head>
-<body>
+<%@include file="include/head.jsp" %>
 
-<sec:authorize access="isAuthenticated()">
-    Ваш логин: <sec:authentication property="principal.username"/>
-    <s></s>
-    <a class="btn btn-lg btn-danger" href="<c:url value="/logout" />" role="button">Выйти</a>
-</sec:authorize>
-
-<br>
-
-<c:url value="/user" var="userList"/>
-<a href="${userList}">list users</a>
-
-<h2>Личный Кабинет</h2>
 <form:form modelAttribute="user">
-    <div>
-        <td>${user.login}</td>
-    </div>
-    <div>
-        <td>${user.birthday}</td>
-    </div>
-    <div>
-        <td>${user.email}</td>
-    </div>
-    <div>
-        <td>${user.firstName}</td>
-    </div>
-    <div>
-        <td>${user.secondName}</td>
-    </div>
+    <section class="content content_content" style="width: 70%; margin: auto;">
+        <section class="invoice">
+            <div class="row">
+                <div class="col-xs-12">
+                    <h3 class="page-header">
+                        <i class="fa fa-globe"></i> Ваш профиль:
+                    </h3>
+                </div>
+            </div>
+            <div class="row invoice-info">
+                <div class="col-sm-8 invoice-col">
+                    <address>
+                        Логин:<b> ${user.login}</b><br>
+                        День рождения:<b> ${user.birthday}</b><br>
+                        Почта:<b> ${user.email}</b><br>
+                        Имя:<b> ${user.firstName}</b><br>
+                        Фамилия:<b> ${user.secondName}</b><br>
+                        <span class="badge badge-pill badge-light">Редактировать профиль</span>
+                    </address>
+                </div>
+            </div>
+        </section>
+    </section>
 </form:form>
+    <br>
+
+    <c:url value="/user" var="userList"/>
+    <a href="${userList}">list users</a>
+
+
+
 
 
 <h2>${user.firstName} выберите машину:</h2>
@@ -59,5 +58,4 @@
     <a href="${createCarName}">Create car</a>
 </c:if>
 
-</body>
-</html>
+<%@include file="include/under.jsp" %>
