@@ -2,34 +2,34 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Изменить Название</title>
-</head>
-<body>
-<sec:authorize access="isAuthenticated()">
-    Ваш логин: <sec:authentication property="principal.username"/>
-    <s></s>
-    <a class="btn btn-lg btn-danger" href="<c:url value="/logout" />" role="button">Выйти</a>
-</sec:authorize>
+<%@include file="../include/head.jsp" %>
 
-<form:form method="POST" modelAttribute="car">
+    <div class="container">
+    <div id="edit-row" class="row justify-content-center align-items-center">
+        <div id="edit-column" class="col-md-6">
+            <div id="edit-box" class="col-md-12">
 
-    <h2>Correct Title</h2>
-    <br>
-    <div>
-        <form:input type="text" path="nameCar" title="${car.nameCar}"></form:input>
+                <form:form method="POST" modelAttribute="car">
+                    <h3 class="text-center text-info">Редактировать</h3>
+                    <div class="form-group">
+                        <label for="name" class="text-info">Название машины:</label><br>
+                        <input type="text" name="nameCar" id="name" class="form-control" value="${car.nameCar}">
+                    </div>
+                    <div class="form-group">
+                        <label for="mileage" class="text-info">Пробег:</label><br>
+                        <input type="text" name="mileage" id="mileage" class="form-control" value="${car.mileage}">
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" name="submit" class="btn btn-info btn-md" value="Изменить">
+                    </div>
+                </form:form>
+            </div>
+        </div>
     </div>
-    <div>
-        <form:input type="number" path="mileage" title="${car.nameCar}"></form:input>
+    <div id="register-link" class="text-left">
+        <a href="/" class="text-info">Вернуться назад</a>
     </div>
 
-    <button type="submit">edit</button>
 
-</form:form>
-<br>
-<c:url value="/car/view/${car.id}" var="carView"/>
-<a href="${carView}">Back to ${car.nameCar}</a>
-
-</body>
-</html>
+<%@ include file="../include/under.jsp"%>

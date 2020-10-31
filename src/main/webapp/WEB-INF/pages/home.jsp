@@ -5,7 +5,7 @@
 <%@include file="include/head.jsp" %>
 
 <form:form modelAttribute="user">
-    <div class="container-fluid h-100" style="background-color: #f6fcff">
+    <div class="container-fluid h-100">
         <div class="row h-100">
             <aside class="col-12 col-md-2 p-0 bg-light">
                 <nav class="navbar navbar-expand navbar-light bg-light flex-md-column flex-row align-items-start py-0">

@@ -10,10 +10,11 @@
     <title>Регистрация</title>
     <link href="<c:url value="/res/css/bootstrap.css"/>" rel="stylesheet" type="text/css"/>
     <script src="<c:url value="/res/js/bootstrap.js" />"></script>
+    <style>body{background-color: #f6fcff}</style>
 </head>
 
 <sec:authorize access="!isAuthenticated()">
-    <p><a class="btn btn-lg btn-success" href="<c:url value="/login" />" role="button">Войти</a></p>
+    <p><a class="btn btn-xs btn-success" href="<c:url value="/login" />" role="button">Login</a></p>
 </sec:authorize>
 
 <body>
@@ -59,7 +60,7 @@
                                     <%--<label for="remember-me" class="text-info"><span>Remember me</span> --%>
                                     <%--<span><input id="remember-me" name="remember-me" type="checkbox"></span>--%>
                                     <%--</label><br>--%>
-                                <input type="submit" name="submit" class="btn btn-info btn-md" value="submit">
+                                <input type="submit" name="submit" class="btn btn-info btn-md" value="Registration">
                             </div>
                             <div id="register-link" class="text-right">
                                 <a href="/" class="text-info">My cabinet</a>

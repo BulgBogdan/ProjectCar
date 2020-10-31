@@ -9,13 +9,14 @@
     <title>Log in with your account</title>
     <link href="<c:url value="/res/css/bootstrap.css"/>" rel="stylesheet" type="text/css"/>
     <script src="<c:url value="/res/js/bootstrap.js" />"></script>
+    <style>body{background-color: #f6fcff}</style>
 </head>
 
 <body>
 <c:url value="/login-check" var="loginUrl"/>
 <div id="login">
 
-    <h3 class="text-center text-white pt-5">Login form</h3>
+    <h3 class="text-center text-white pt-5"></h3>
     <div class="container">
         <div id="login-row" class="row justify-content-center align-items-center">
             <div id="login-column" class="col-md-6">

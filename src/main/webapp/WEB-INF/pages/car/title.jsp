@@ -2,40 +2,33 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Create Car</title>
-</head>
-<h1>Создать новую вкладку</h1>
+<%@ include file="../include/head.jsp"%>
 
-<sec:authorize access="isAuthenticated()">
-    Ваш логин: <sec:authentication property="principal.username"/>
-    <s></s>
-    <a class="btn btn-lg btn-danger" href="<c:url value="/logout" />" role="button">Выйти</a>
-</sec:authorize>
+        <div class="container">
+        <div id="title-row" class="row justify-content-center align-items-center">
+            <div id="title-column" class="col-md-6">
+                <div id="title-box" class="col-md-12">
 
-<body>
-<div>
-    <form:form method="POST" modelAttribute="newCar">
+                    <form:form method="POST" modelAttribute="newCar">
+                        <h3 class="text-center text-info">Создать машину</h3>
+                        <div class="form-group">
+                            <label for="name" class="text-info">Название машины:</label><br>
+                            <input type="text" name="nameCar" id="name" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="mileage" class="text-info">Пробег:</label><br>
+                            <input type="text" name="mileage" id="mileage" class="form-control">
+                        </div>
 
-        <h2>Создать машину</h2>
-
-        <div>
-            <form:input type="text" path="nameCar" placeholder="Car Name"
-                        autofocus="true"></form:input>
+                        <div class="form-group">
+                            <input type="submit" name="submit" class="btn btn-info btn-md" value="Создать">
+                        </div>
+                    </form:form>
+                </div>
+            </div>
         </div>
-        <div>
-            <form:input type="number" path="mileage" placeholder="Mileage"
-                        autofocus="true"></form:input>
-        </div>
+            <div id="register-link" class="text-left">
+                <a href="/" class="text-info">Вернуться назад</a>
+            </div>
 
-        <button type="submit">Продолжить</button>
-
-    </form:form>
-    <br>
-    <c:url value="/" var="cabinet"/>
-    <a href="${cabinet}">Вернутся в личный кабинет</a>
-</div>
-
-</body>
-</html>
+<%@ include file="../include/under.jsp"%>
