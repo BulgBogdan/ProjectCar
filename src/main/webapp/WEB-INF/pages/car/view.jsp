@@ -56,11 +56,15 @@
 
                             <c:if test="${registration==null}">
                                 <c:url value="/car/costs/first/${car.id}" var="createFirst"/>
-                                <p>Затрат нет <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-emoji-frown" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                                    <path fill-rule="evenodd" d="M4.285 12.433a.5.5 0 0 0 .683-.183A3.498 3.498 0 0 1 8 10.5c1.295 0 2.426.703 3.032 1.75a.5.5 0 0 0 .866-.5A4.498 4.498 0 0 0 8 9.5a4.5 4.5 0 0 0-3.898 2.25.5.5 0 0 0 .183.683z"/>
-                                    <path d="M7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5zm4 0c0 .828-.448 1.5-1 1.5s-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5z"/>
-                                </svg>
+                                <p>Затрат нет
+                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-emoji-frown"
+                                         fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd"
+                                              d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                        <path fill-rule="evenodd"
+                                              d="M4.285 12.433a.5.5 0 0 0 .683-.183A3.498 3.498 0 0 1 8 10.5c1.295 0 2.426.703 3.032 1.75a.5.5 0 0 0 .866-.5A4.498 4.498 0 0 0 8 9.5a4.5 4.5 0 0 0-3.898 2.25.5.5 0 0 0 .183.683z"/>
+                                        <path d="M7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5zm4 0c0 .828-.448 1.5-1 1.5s-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5z"/>
+                                    </svg>
                                 <li class="nav-item">
                                     <a class="nav-link pl-0" href="${createFirst}"><i class="fa fa-list fa-fw"></i>
                                         <span
@@ -87,15 +91,15 @@
                                     <br>
                                 </li>
                                 <li class="nav-item">
-                                    <small>Пробег при покупке:<b> ${parameter.firstMileage} км</b></small>
+                                    <small>Пробег до:<b> ${parameter.firstMileage} км</b></small>
                                     <br>
                                 </li>
                                 <li class="nav-item">
-                                    <small>Масса Авто:<b> ${parameter.mass} кг</b></small>
+                                    <small>Масса:<b> ${parameter.mass} кг</b></small>
                                     <br>
                                 </li>
                                 <li class="nav-item">
-                                    <small>Цвет Авто:<b> ${parameter.color}</b></small>
+                                    <small>Цвет:<b> ${parameter.color}</b></small>
                                     <br>
                                 </li>
                                 <li class="nav-item">
@@ -107,7 +111,7 @@
                                     <br>
                                 </li>
                                 <li class="nav-item">
-                                    <small>Регистрационный знак:<b> ${parameter.registrationNumber}</b></small>
+                                    <small>Гос. номер:<b> ${parameter.registrationNumber}</b></small>
                                     <br>
                                 </li>
                                 <c:url value="/car/parameters/edit/${car.id}" var="editParameter"/>
@@ -127,11 +131,15 @@
 
                             <c:if test="${parameter==null}">
                                 <c:url value="/car/parameters/${car.id}" var="createParameter"/>
-                                <p>Параметров нет <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-emoji-frown" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                                    <path fill-rule="evenodd" d="M4.285 12.433a.5.5 0 0 0 .683-.183A3.498 3.498 0 0 1 8 10.5c1.295 0 2.426.703 3.032 1.75a.5.5 0 0 0 .866-.5A4.498 4.498 0 0 0 8 9.5a4.5 4.5 0 0 0-3.898 2.25.5.5 0 0 0 .183.683z"/>
-                                    <path d="M7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5zm4 0c0 .828-.448 1.5-1 1.5s-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5z"/>
-                                </svg>
+                                <p>Параметров нет
+                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-emoji-frown"
+                                         fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd"
+                                              d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                        <path fill-rule="evenodd"
+                                              d="M4.285 12.433a.5.5 0 0 0 .683-.183A3.498 3.498 0 0 1 8 10.5c1.295 0 2.426.703 3.032 1.75a.5.5 0 0 0 .866-.5A4.498 4.498 0 0 0 8 9.5a4.5 4.5 0 0 0-3.898 2.25.5.5 0 0 0 .183.683z"/>
+                                        <path d="M7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5zm4 0c0 .828-.448 1.5-1 1.5s-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5z"/>
+                                    </svg>
                                 <li class="nav-item">
                                     <a class="nav-link pl-0" href="${createParameter}"><i class="fa fa-list fa-fw"></i>
                                         <span
@@ -146,33 +154,69 @@
         </aside>
         <main class="col offset-md-0 bg-faded py-0">
             <br>
-            <h2>Выбирете, чтобы открыть:</h2>
+            <h2>Выбирете раздел:</h2>
+            <br>
+            <div class="row">
+                <c:url value="/car/documents/${car.id}" var="documents"/>
+                <div class="col-md-3">
+                    <div class="card border-info mx-auto mb-3" style="max-width: 300px;">
+                        <div class="card-header text-center" style="background-color: #77a4ff">
+                            <b>Документы</b>
+                        </div>
+                        <div class="card-body" style="background-color: #d9eeff">
+                            <p class="card-text">В разделе, отображены затраты на документы.</p>
+                            <a href="${documents}" class="btn btn-info btn-md">Перейти</a>
+                        </div>
+                    </div>
+                </div>
 
-            <table>
-                <tr>
-                    <td><c:url value="/car/documents/${car.id}" var="documents"/>
-                        <a href="${documents}">Документы</a></td>
-                </tr>
-                <tr>
-                    <td><c:url value="/car/repairs/${car.id}" var="repairs"/>
-                        <a href="${repairs}">Ремонт</a></td>
-                </tr>
-                <tr>
-                    <td><c:url value="/car/fuel/${car.id}" var="fuel"/>
-                        <a href="${fuel}">Топливо</a></td>
-                </tr>
-                <tr>
-                    <td><c:url value="/car/other/costs/${car.id}" var="costs"/>
-                        <a href="${costs}">Инные расходы</a></td>
-                </tr>
-            </table>
+                <c:url value="/car/repairs/${car.id}" var="repairs"/>
+                <div class="col-md-3">
+                    <div class="card mx-auto border-danger mb-3" style="max-width: 300px;">
+                        <div class="card-header text-center" style="background-color: #77a4ff">
+                            <b>Ремонты</b>
+                        </div>
+                        <div class="card-body" style="background-color: #d9eeff">
+                            <p class="card-text">В разделе, отображены затраты на ремонт.</p>
+                            <a href="${repairs}" class="btn btn-info btn-md">Перейти</a>
+                        </div>
+                    </div>
+                </div>
+
+                <c:url value="/car/fuel/${car.id}" var="fuel"/>
+                <div class="col-md-3">
+                    <div class="card border-warning mx-auto mb-3" style="max-width: 300px;">
+                        <div class="card-header text-center" style="background-color: #77a4ff">
+                            <b>Топливо</b>
+                        </div>
+                        <div class="card-body" style="background-color: #d9eeff">
+                            <p class="card-text">В разделе, отображены затраты на топливо.</p>
+                            <a href="${fuel}" class="btn btn-info btn-md">Перейти</a>
+                        </div>
+                    </div>
+                </div>
+
+                <c:url value="/car/other/costs/${car.id}" var="costs"/>
+                <div class="col-md-3">
+                    <div class="card border-success mx-auto mb-3" style="max-width: 300px;">
+                        <div class="card-header text-center" style="background-color: #77a4ff">
+                            <b>Остальные расходы</b>
+                        </div>
+                        <div class="card-body" style="background-color: #d9eeff">
+                            <p class="card-text" >В разделе отображены остальные расходы.</p>
+                            <a href="${costs}" class="btn btn-info btn-md">Перейти</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
         </main>
         <div id="register-link" class="text-left">
             <a href="/" class="text-info">Вернуться назад</a>
         </div>
     </div>
 </div>
-
 
 
 <%@ include file="../include/under.jsp" %>

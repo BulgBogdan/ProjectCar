@@ -68,9 +68,9 @@
 
                 <c:if test="${user.cars.size()!=0}">
                     <div class="container">
-                        <div class="row col-md-8 col-md-offset-2 custyle">
+                        <div class="row col-md-8 col-md-offset-2">
                             <h3>${user.firstName} выберите машину:</h3>
-                            <table class="table table-striped custab">
+                            <table class="table table-striped">
                                 <c:forEach items="${carList}" var="carsList">
                                     <tr>
                                         <c:url value="car/view/${carsList.id}" var="cars"/>

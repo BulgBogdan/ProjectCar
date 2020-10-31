@@ -25,23 +25,24 @@
             <ul class="navbar-nav mr-auto mt-3 mt-lg-0">
                 <sec:authorize access="isAuthenticated()">
                     <li class="nav-item active">
+                        <sec:authentication property="principal.username"/>
                         <a class="btn btn-sm btn-danger" href="<c:url value="/logout" />">Выход</a>
                     </li>
                 </sec:authorize>
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="#"><span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
+                    <a class="nav-link" href="#"></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link disabled" href="#">Disabled</a>
+                    <a class="nav-link" href="/">На главную</a>
                 </li>
             </ul>
 
-            <div class="mx-auto">
-                <a href="#" class="navbar-brand">Navbar</a>
-            </div>
+            <%--<div class="mx-auto">--%>
+                <%--<a href="/" class="navbar-brand">На главную</a>--%>
+            <%--</div>--%>
 
             <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search">
