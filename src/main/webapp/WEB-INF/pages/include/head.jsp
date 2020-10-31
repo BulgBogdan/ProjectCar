@@ -10,23 +10,22 @@
 </head>
 <body>
 
-<div class="container-fluid">
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
 
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
+                aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
 
-            <%--<a class="btn btn-sm btn-danger" href="<c:url value="/logout" />" role="button">Выйти</a>--%>
+        <%--<a class="btn btn-sm btn-danger" href="<c:url value="/logout" />" role="button">Выйти</a>--%>
         <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
             <ul class="navbar-nav mr-auto mt-3 mt-lg-0">
                 <sec:authorize access="isAuthenticated()">
-                <li class="nav-item active">
-                    <sec:authentication property="principal.username"/>
-                    <a class="btn btn-sm btn-danger" href="<c:url value="/logout" />">Выход</a>
-                </li>
+                    <li class="nav-item active">
+                        <a class="btn btn-sm btn-danger" href="<c:url value="/logout" />">Выход</a>
+                    </li>
                 </sec:authorize>
                 <li class="nav-item active">
                     <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
@@ -49,4 +48,4 @@
             </form>
         </div>
     </nav>
-    <div class="col-md-12 col-lg-12 content-container" style="background-color: #ffe0b2">
+

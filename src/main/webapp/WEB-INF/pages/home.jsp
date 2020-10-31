@@ -5,57 +5,96 @@
 <%@include file="include/head.jsp" %>
 
 <form:form modelAttribute="user">
-    <section class="content content_content" style="width: 70%; margin: auto;">
-        <section class="invoice">
-            <div class="row">
-                <div class="col-xs-12">
-                    <h3 class="page-header">
-                        <i class="fa fa-globe"></i> Ваш профиль:
-                    </h3>
-                </div>
-            </div>
-            <div class="row invoice-info">
-                <div class="col-sm-8 invoice-col">
-                    <address>
-                        Логин:<b> ${user.login}</b><br>
-                        День рождения:<b> ${user.birthday}</b><br>
-                        Почта:<b> ${user.email}</b><br>
-                        Имя:<b> ${user.firstName}</b><br>
-                        Фамилия:<b> ${user.secondName}</b><br>
-                        <span class="badge badge-pill badge-light">Редактировать профиль</span>
-                    </address>
-                </div>
-            </div>
-        </section>
-    </section>
+    <div class="container-fluid h-100" style="background-color: #f6fcff">
+        <div class="row h-100">
+            <aside class="col-12 col-md-2 p-0 bg-light">
+                <nav class="navbar navbar-expand navbar-light bg-light flex-md-column flex-row align-items-start py-0">
+                    <div class="collapse navbar-collapse align-items-start">
+                        <ul class="flex-md-column flex-row navbar-nav w-100 justify-content-between">
+                            <b>Ваши профиль:</b>
+
+                            <li class="nav-item">
+                                <small>Логин:<b> ${user.login}</b></small>
+                                <br>
+                            </li>
+                            <li class="nav-item">
+                                <small>День рождения:<b> ${user.birthday}</b></small>
+                                <br>
+                            </li>
+                            <li class="nav-item">
+                                <small>Почта:<b> ${user.email}</b></small>
+                                <br>
+                            </li>
+                            <li class="nav-item">
+                                <small>Имя:<b> ${user.firstName}</b></small>
+                                <br>
+                            </li>
+                            <li class="nav-item">
+                                <small>Фамилия:<b> ${user.secondName}</b></small>
+                                <br>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link pl-0" href="#"><i class="fa fa-list fa-fw"></i> <span
+                                        class="d-none d-md-inline">Редактировать профиль</span></a>
+                            </li>
+                            <br>
+                            <b>Описание приложения:</b>
+                            <small><p>Приложение MyCar, позволяет вести учет всех затрат на ваш автомобиль. Если
+                                редактировать пробег
+                                и указывать все данные, вы увидите сколько денег требует автомобиль.</p></small>
+                            <small><p>Также приложение показывает(при помощи цветовой гаммы), какой срок износа у
+                                замененной детали, что
+                                позволяет контролировать заявленные сроки износа.</p></small>
+                            <small><p>В дальнейшем можно будет смотреть динамику роста топлива, а при помощи
+                                автоматического подсчета
+                                расхода вашего автомобиля, будет показано среднее расстояние, которое может преодолеть
+                                автомобиль.</p></small>
+                            <small><p>Все это делается для подсчета вашего бюджета и контроля затрат и конечно позволяет
+                                предположить вам,
+                                сколько необходимо вам потратить на обслуживание в следующем месяце или даже году.</p>
+                            </small>
+                        </ul>
+                    </div>
+                </nav>
+            </aside>
+            <main class="col offset-md-0 bg-faded py-0">
+
+                <c:url value="/car/title" var="createCarName"/>
+
+                <c:if test="${user.cars.size()==0}">
+                    <br>
+                    <p>В вашем списке нет машин, <a href="${createCarName}">добавить?</a></p>
+                </c:if>
+
+                <c:if test="${user.cars.size()!=0}">
+                    <div class="container">
+                        <div class="row col-md-8 col-md-offset-2 custyle">
+                            <h3>${user.firstName} выберите машину:</h3>
+                            <table class="table table-striped custab">
+                                <c:forEach items="${carList}" var="carsList">
+                                    <tr>
+                                        <c:url value="car/view/${carsList.id}" var="cars"/>
+                                        <c:url value="car/delete/${carsList.id}" var="carDelete"/>
+                                        <c:url value="/car/edit/${carsList.id}" var="editCar"/>
+                                        <td><a href="${cars}"><b>${carsList.nameCar}</b></a></td>
+                                        <td></td>
+                                        <td class="text-right">
+                                            <a class='btn btn-info btn-xs' href="${editCar}">Изменить</a>
+                                            <a href="${carDelete}" class="btn btn-danger btn-xs ">Удалить</a></td>
+                                    </tr>
+                                </c:forEach>
+
+                            </table>
+                            <a href="${createCarName}" class="btn btn-primary btn-xs pull-right"><b>+</b> Добавить
+                                автомобиль</a>
+                        </div>
+                    </div>
+                </c:if>
+
+
+            </main>
+        </div>
+    </div>
 </form:form>
-    <br>
-
-    <c:url value="/user" var="userList"/>
-    <a href="${userList}">list users</a>
-
-
-
-
-
-<h2>${user.firstName} выберите машину:</h2>
-<c:url value="/car/title" var="createCarName"/>
-
-<c:if test="${user.cars.size()==0}">
-    <p>В вашем списке нет машин, <a href="${createCarName}">хотите добавить?</a></p>
-</c:if>
-
-<c:if test="${user.cars.size()!=0}">
-    <c:forEach items="${carList}" var="carsList">
-        <c:url value="car/view/${carsList.id}" var="cars"/>
-        <a href="${cars}">Open ${carsList.nameCar}</a>
-        <b>|</b>
-        <c:url value="car/delete/${carsList.id}" var="carDelete"/>
-        <a href="${carDelete}">Delete</a>
-        <br>
-    </c:forEach>
-    <h2>add new car</h2>
-    <a href="${createCarName}">Create car</a>
-</c:if>
 
 <%@include file="include/under.jsp" %>
