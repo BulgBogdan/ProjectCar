@@ -30,7 +30,7 @@ public class ScheduledTask {
         return months;
     }
 
-    @Scheduled(cron = "0 * * ? * *")
+    @Scheduled(cron = "0 * * ? * *")    //every 1 minute
     private void correctAmountOFDays (){
         List<Document> listDocuments = documentService.getAll();
         for (Document document : listDocuments) {

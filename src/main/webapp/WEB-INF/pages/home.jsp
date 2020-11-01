@@ -80,7 +80,7 @@
                                         <td></td>
                                         <td class="text-right">
                                             <a class='btn btn-info btn-xs' href="${editCar}">Изменить</a>
-                                            <a href="${carDelete}" class="btn btn-danger btn-xs ">Удалить</a></td>
+                                            <a href="${carDelete}" class="btn btn-danger btn-xs">Удалить</a></td>
                                     </tr>
                                 </c:forEach>
 

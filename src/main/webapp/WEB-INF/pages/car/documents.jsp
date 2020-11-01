@@ -119,23 +119,23 @@
 
                             <thead style="background-color: #77a4ff">
                             <tr>
-                                <th>Название</th>
-                                <th>Стоимость</th>
-                                <th>Дата начала</th>
-                                <th>Дата окончания</th>
-                                <th>Дней до окончания</th>
-                                <th>Месяцев до окончания</th>
+                                <th class="text-center">Название</th>
+                                <th class="text-center">Стоимость</th>
+                                <th class="text-center">Дата начала</th>
+                                <th class="text-center">Дата окончания</th>
+                                <th class="text-center">Дней до окончания</th>
+                                <th class="text-center">Месяцев до окончания</th>
                                 <th class="text-center"></th>
                             </tr>
                             </thead>
                             <c:forEach items="${documents}" var="docs">
                                 <tr>
-                                    <td>${docs.nameDocument}</td>
-                                    <td>${docs.documentCost}</td>
-                                    <td>${docs.beginDate}</td>
-                                    <td>${docs.endDate}</td>
-                                    <td>${docs.numberOfDays} дня(ей)</td>
-                                    <td>${docs.numberOfMonth} месяцев</td>
+                                    <td class="text-center">${docs.nameDocument}</td>
+                                    <td class="text-center">${docs.documentCost}</td>
+                                    <td class="text-center">${docs.beginDate}</td>
+                                    <td class="text-center">${docs.endDate}</td>
+                                    <td class="text-center">${docs.numberOfDays} дня(ей)</td>
+                                    <td class="text-center">${docs.numberOfMonth} месяцев</td>
                                     <c:url value="/car/documents/edit/${docs.id}" var="editDoc"/>
                                     <td class="text-center"><a class='btn btn-info btn-xs' href="${editDoc}">
                                         <svg width="1em" height="1em"
@@ -147,7 +147,8 @@
                                                   d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
                                         </svg>
                                     </a>
-                                        <a href="#" class="btn btn-danger btn-xs">
+                                        <c:url value="/car/documents/delete/${docs.id}" var="docDel"/>
+                                        <a href="${docDel}" class="btn btn-danger btn-xs">
                                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash"
                                                  fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
@@ -170,7 +171,7 @@
         </main>
     </div>
     <div id="register-link" class="text-left">
-        <a href="/car/view/${car.id}" class="text-info">Вернуться назад</a>
+        <a href="/car/view/${car.id}" class="text-info">На страницу авто</a>
     </div>
 </div>
 

@@ -4,40 +4,41 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Fuel</title>
-</head>
-<body>
+<%@include file="../../include/head.jsp" %>
 
-<sec:authorize access="isAuthenticated()">
-Ваш логин: <sec:authentication property="principal.username"/>
-<s></s>
-<a class="btn btn-lg btn-danger" href="<c:url value="/logout" />" role="button">Выйти</a>
-</sec:authorize>
+<div class="container">
+    <div id="edit-row" class="row justify-content-center align-items-center">
+        <div id="edit-column" class="col-md-6">
+            <div id="edit-box" class="col-md-12">
 
-<body>
-<div>
-    <form:form method="POST" modelAttribute="fuel">
+                <form:form method="POST" modelAttribute="fuel">
+                    <h3 class="text-center text-info">Редактировать отчет о заправке</h3>
+                    <div class="form-group">
+                        <label for="literCost" class="text-info">Цена за литр топлива:</label><br>
+                        <input type="number" name="literCost" id="literCost" class="form-control" value="${fuel.literCost}">
+                    </div>
+                    <div class="form-group">
+                        <label for="literValue" class="text-info">Заправленный объем:</label><br>
+                        <input type="number" name="literValue" id="literValue" class="form-control" value="${fuel.literValue}">
+                    </div>
+                    <div class="form-group">
+                        <label for="summ" class="text-info">Сумма:</label><br>
+                        <input type="number" name="summ" id="summ" class="form-control" value="${fuel.summ}">
+                    </div>
 
-        <h2>Изменить Заправку:</h2>
-        <div>
-            <form:input type="number" path="literCost" title="${fuel.literCost}"></form:input>
+                    <div class="form-group">
+                        <input type="submit" name="submit" class="btn btn-info btn-md" value="Редактировать">
+                    </div>
+                </form:form>
+
+            </div>
         </div>
-        <div>
-            <form:input type="number" path="literValue" title="${fuel.literValue}"></form:input>
-        </div>
-        <div>
-            <form:input type="number" path="summ" title="${fuel.summ}"></form:input>
-        </div>
-
-        <button type="submit">Create</button>
-
-    </form:form>
-    <br>
-    <c:url value="/car/fuel/${car.id}" var="view"/>
-    <a href="${view}">Back</a>
+    </div>
 </div>
 
-</body>
-</html>
+<div id="register-link" class="text-left">
+    <a href="/car/fuel/${car.id}" class="text-info">Вернуться к списку заправок</a>
+</div>
+
+
+<%@ include file="../../include/under.jsp"%>

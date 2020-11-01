@@ -2,41 +2,49 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Изменить Документ</title>
-</head>
-<body>
+<%@ include file="../../include/head.jsp" %>
 
-<sec:authorize access="isAuthenticated()">
-Ваш логин: <sec:authentication property="principal.username"/>
-<s></s>
-<a class="btn btn-lg btn-danger" href="<c:url value="/logout" />" role="button">Выйти</a>
-</sec:authorize>
+<div class="container">
+    <div id="edit-row" class="row justify-content-center align-items-center">
+        <div id="edit-column" class="col-md-6">
+            <div id="edit-box" class="col-md-12">
 
-<body>
-<div>
-    <form:form method="POST" modelAttribute="docs">
+                <form:form method="POST" modelAttribute="docs">
+                    <h3 class="text-center text-info">Редактировать документ</h3>
+                    <div class="form-group">
+                        <label for="name" class="text-info">Название документа:</label><br>
+                        <input type="text" name="nameDocument" id="name" class="form-control"
+                               value="${docs.nameDocument}">
+                    </div>
+                    <div class="form-group">
+                        <label for="cost" class="text-info">Стоимость:</label><br>
+                        <input type="number" name="documentCost" id="cost" class="form-control"
+                               value="${docs.documentCost}">
+                    </div>
+                    <div class="form-group">
+                        <label for="date" class="text-info">Дата начала:</label><br>
+                        <input type="date" name="beginDate" id="date" class="form-control" value="${docs.beginDate}">
+                    </div>
+                    <div class="form-group">
+                        <label for="dateEnd" class="text-info">Дата окончания:</label><br>
+                        <input type="date" name="endDate" id="dateEnd" class="form-control" value="${docs.endDate}">
+                    </div>
+                    <div class="form-group">
+                        <label for="month" class="text-info">Кол-во месяцев:</label><br>
+                        <input type="number" name="endDate" id="month" class="form-control"
+                               value="${docs.numberOfMonth}">
+                    </div>
 
-    <h2>Изменить Документ</h2>
-    <div>
-        <form:input type="text" path="nameDocument" title="${docs.nameDocument}"></form:input>
+                    <div class="form-group">
+                        <input type="submit" name="submit" class="btn btn-info btn-md" value="Изменить">
+                    </div>
+                </form:form>
+            </div>
+        </div>
     </div>
-    <div>
-        <form:input type="number" path="documentCost" title="${docs.documentCost}"></form:input>
-    </div>
-    <div>
-        <form:input type="date" path="beginDate" title="${docs.beginDate}"></form:input>
-    </div>
-    <div>
-        <form:input type="date" path="endDate" title="${docs.endDate}"></form:input>
-    </div>
-    <button type="submit">Create</button>
+</div>
+<div id="register-link" class="text-left">
+    <a href="/car/documents/${car.id}" class="text-info">Вернуться к списку документов</a>
+</div>
 
-    </form:form>
-    <br>
-    <c:url value="/car/view/${docs.car.id}" var="carView"/>
-    <a href="${carView}">Back to ${docs.car.nameCar}</a>
-
-</body>
-</html>
+<%@ include file="../../include/under.jsp" %>

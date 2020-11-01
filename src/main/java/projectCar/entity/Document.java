@@ -31,7 +31,7 @@ public class Document {
     @Column(name = "number_of_month", nullable = false)
     private int numberOfMonth;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "FK_cars")
     private Car car;
 

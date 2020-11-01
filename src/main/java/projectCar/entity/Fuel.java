@@ -24,7 +24,7 @@ public class Fuel {
     @Column(name = "fuel_distance")
     private double fuelDistance;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "FK_cars")
     private Car car;
 

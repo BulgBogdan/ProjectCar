@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>My Page</title>
+    <title>MyCar</title>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -25,18 +25,18 @@
             <ul class="navbar-nav mr-auto mt-3 mt-lg-0">
                 <sec:authorize access="isAuthenticated()">
                     <li class="nav-item active">
-                        <sec:authentication property="principal.username"/>
-                        <a class="btn btn-sm btn-danger" href="<c:url value="/logout" />">Выход</a>
+                        <b><sec:authentication property="principal.username"/></b>
+                        <a class="btn btn-sm btn-outline-danger" href="<c:url value="/logout" />">Выход</a>
                     </li>
                 </sec:authorize>
-                <li class="nav-item active">
-                    <a class="nav-link" href="#"><span class="sr-only">(current)</span></a>
-                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#"></a>
                 </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/"><span class="sr-only">(current)</span>Личный кабинет</a>
+                </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/">На главную</a>
+                    <a class="nav-link" href="#"></a>
                 </li>
             </ul>
 

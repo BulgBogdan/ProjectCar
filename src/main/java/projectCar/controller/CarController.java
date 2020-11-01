@@ -94,7 +94,6 @@ public class CarController {
     public ModelAndView editFirstCost(@ModelAttribute("registration") Registration registration,
                                 @PathVariable("id") int id) {
         Car car = getCarById(id);
-        registration.setCar(car);
         modelAndView.setViewName("redirect:/car/view/{id}");
         registrationService.update(registration);
         return modelAndView;

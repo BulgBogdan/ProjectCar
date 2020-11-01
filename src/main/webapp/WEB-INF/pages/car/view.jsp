@@ -213,7 +213,7 @@
 
         </main>
         <div id="register-link" class="text-left">
-            <a href="/" class="text-info">Вернуться назад</a>
+            <a href="/" class="text-info">В личный кабинет</a>
         </div>
     </div>
 </div>

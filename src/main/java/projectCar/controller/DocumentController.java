@@ -56,7 +56,7 @@ public class DocumentController extends MethodsCarForControllers {
     }
 
     @GetMapping("car/documents/edit/{id}")
-    public ModelAndView editParameter(@PathVariable("id") int id) {
+    public ModelAndView editDocument(@PathVariable("id") int id) {
         Document document = documentService.read(id);
         modelAndView.setViewName("car/documents/edit");
         modelAndView.addObject("docs", document);
@@ -65,7 +65,7 @@ public class DocumentController extends MethodsCarForControllers {
     }
 
     @PostMapping("car/documents/edit/{id}")
-    public ModelAndView editParameter(@ModelAttribute("docs") Document document,
+    public ModelAndView editDocument(@ModelAttribute("docs") Document document,
                                       @ModelAttribute("car") Car car,
                                       @PathVariable("id") int id) {
         document.setCar(
@@ -74,6 +74,15 @@ public class DocumentController extends MethodsCarForControllers {
                 amountOfDays(document.getBeginDate(), document.getEndDate()));
         modelAndView.setViewName("redirect:/car/documents/{id}");
         documentService.update(document);
+        return modelAndView;
+    }
+
+    @GetMapping("/car/documents/delete/{id}")
+    public ModelAndView deleteDocument(@PathVariable("id") int id){
+        Document document = documentService.read(id);
+        modelAndView.addObject("carId", document.getCar().getId());
+        modelAndView.setViewName("redirect:/car/documents/{carId}");
+        documentService.delete(document);
         return modelAndView;
     }
 
