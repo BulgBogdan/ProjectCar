@@ -118,10 +118,10 @@
 
                             <thead style="background-color: #77a4ff">
                             <tr>
-                                <th>Название</th>
+                                <th>Название<br>(<small><b>ремонта и(или) запчастей</b></small>)</th>
                                 <th>Пробег при поломке</th>
-                                <th>Цена ремонта и(или) запчастей</th>
-                                <th>Срок износа запчасти по регламенту(км)</th>
+                                <th>Стоимость<br>(<small><b>ремонта и(или) запчастей</b></small>)</th>
+                                <th>Срок износа<br>(<small><b>по регламенту(км)</b></small>)</th>
                                 <th>Срок истекает</th>
                                 <th class="text-center"></th>
                             </tr>
@@ -170,6 +170,9 @@
             <div id="register-link" class="text-left">
                 <br>
                 <a href="/car/view/${car.id}" class="text-info">На страницу авто</a>
+            </div>
+            <div class="text-center">
+                <b class="text-info">Сумма затрат равна <b class="text-danger">${allRepairsCosts}</b></b>
             </div>
         </main>
     </div>

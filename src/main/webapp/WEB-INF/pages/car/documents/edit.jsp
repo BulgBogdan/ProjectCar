@@ -19,7 +19,7 @@
                     <div class="form-group">
                         <label for="cost" class="text-info">Стоимость:</label><br>
                         <input type="number" name="documentCost" id="cost" class="form-control"
-                               value="${docs.documentCost}">
+                               value="${docs.documentCost}" step="0.01">
                     </div>
                     <div class="form-group">
                         <label for="date" class="text-info">Дата начала:</label><br>

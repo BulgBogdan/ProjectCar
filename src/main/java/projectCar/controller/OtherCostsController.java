@@ -12,6 +12,8 @@ import projectCar.entity.OtherCosts;
 import projectCar.service.OhterCostsServiceImpl;
 import projectCar.service.interfaces.IOtherCostsService;
 
+import java.util.List;
+
 @Controller
 public class OtherCostsController extends MethodsCarForControllers {
 
@@ -29,6 +31,11 @@ public class OtherCostsController extends MethodsCarForControllers {
         modelAndView.addObject("car", car);
         modelAndView.addObject("parameters", car.getParameters());
         modelAndView.addObject("otherCosts", car.getOtherCosts());
+        double costs = 0;
+        for (OtherCosts listCosts : car.getOtherCosts()) {
+            costs = costs + listCosts.getCost();
+        }
+        modelAndView.addObject("sumAllCosts", costs);
         return modelAndView;
     }
 
@@ -68,6 +75,15 @@ public class OtherCostsController extends MethodsCarForControllers {
                 getCarById(car.getId()));
         modelAndView.setViewName("redirect:/car/other/costs/{id}");
         costsService.update(otherCosts);
+        return modelAndView;
+    }
+
+    @GetMapping("/car/other/costs/delete/{id}")
+    public ModelAndView deleteOtherCost(@PathVariable("id") int id){
+        OtherCosts cost = costsService.read(id);
+        modelAndView.addObject("carId", cost.getCar().getId());
+        modelAndView.setViewName("redirect:/car/other/costs/{carId}");
+        costsService.delete(cost);
         return modelAndView;
     }
 }

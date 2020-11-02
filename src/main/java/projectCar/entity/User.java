@@ -1,5 +1,6 @@
 package projectCar.entity;
 
+import org.hibernate.validator.constraints.Email;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -32,6 +33,7 @@ public class User implements UserDetails {
     private String confirmPassword;
 
     @Column(name = "email", nullable = false, length = 100)
+    @Email(message = "uncorrect enter email")
     private String email;
 
     @Column(name = "first_name", nullable = false, length = 100)

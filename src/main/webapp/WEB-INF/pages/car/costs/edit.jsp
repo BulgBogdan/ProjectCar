@@ -17,12 +17,12 @@
                     <div class="form-group">
                         <label for="price" class="text-info">Цена авто:</label><br>
                         <input type="number" name="priceCar" id="price" class="form-control"
-                               value="${registration.priceCar}">
+                               value="${registration.priceCar}" step="0.01">
                     </div>
                     <div class="form-group">
                         <label for="registration" class="text-info">Сумма за оформление авто:</label><br>
                         <input type="number" name="priceRegistration" id="registration" class="form-control"
-                               value="${registration.priceRegistration}">
+                               value="${registration.priceRegistration}" step="0.01">
                     </div>
 
                     <div class="form-group">

@@ -13,7 +13,7 @@
                     <h3 class="text-center text-info">Редактировать отчет о ремонте</h3>
                     <div class="form-group">
                         <label for="nameRepair" class="text-info">Название ремонта и(или) запчасти:</label><br>
-                        <input type="number" name="nameRepair" id="nameRepair" class="form-control"
+                        <input type="text" name="nameRepair" id="nameRepair" class="form-control"
                                value="${repair.nameRepair}">
                     </div>
                     <div class="form-group">
@@ -23,7 +23,7 @@
                     </div>
                     <div class="form-group">
                         <label for="costsRepair" class="text-info">Цена ремонта и(или) запчастей:</label><br>
-                        <input type="number" name="costsRepair" id="costsRepair" class="form-control"
+                        <input type="number" name="costsRepair" id="costsRepair" class="form-control" step="0.01"
                                value="${repair.costsRepair}">
                     </div>
                     <div class="form-group">

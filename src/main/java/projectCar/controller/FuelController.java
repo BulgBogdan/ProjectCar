@@ -44,6 +44,11 @@ public class FuelController extends MethodsCarForControllers {
         modelAndView.addObject("car", car);
         modelAndView.addObject("parameters", car.getParameters());
         modelAndView.addObject("fuel", car.getFuels());
+        double fuels = 0;
+        for (Fuel fuel : car.getFuels()) {
+            fuels = fuel.getSumm() + fuels;
+        }
+        modelAndView.addObject("allFuelsCosts", fuels);
         return modelAndView;
     }
 
@@ -104,6 +109,15 @@ public class FuelController extends MethodsCarForControllers {
                 fuelDistance(fuelEdit.getLiterValue(), getCarById(car.getId()).getParameters().getAverageRate()));
         modelAndView.setViewName("redirect:/car/fuel/{id}");
         fuelService.update(fuelEdit);
+        return modelAndView;
+    }
+
+    @GetMapping("/car/fuel/delete/{id}")
+    public ModelAndView deleteFuel(@PathVariable("id") int id) {
+        Fuel fuel = fuelService.read(id);
+        modelAndView.addObject("idCar", fuel.getCar().getId());
+        modelAndView.setViewName("redirect:/car/fuel/{idCar}");
+        fuelService.delete(fuel);
         return modelAndView;
     }
 }

@@ -29,6 +29,11 @@ public class DocumentController extends MethodsCarForControllers {
         modelAndView.addObject("car", car);
         modelAndView.addObject("parameters", car.getParameters());
         modelAndView.addObject("documents", car.getDocuments());
+        double documentsCosts = 0;
+        for (Document document : car.getDocuments()) {
+            documentsCosts = documentsCosts + document.getDocumentCost();
+        }
+        modelAndView.addObject("allDocumentsCosts", documentsCosts);
         return modelAndView;
     }
 

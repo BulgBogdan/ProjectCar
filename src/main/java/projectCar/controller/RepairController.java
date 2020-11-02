@@ -34,6 +34,11 @@ public class RepairController extends MethodsCarForControllers {
         modelAndView.addObject("car", car);
         modelAndView.addObject("parameters", car.getParameters());
         modelAndView.addObject("repairs", car.getRepairs());
+        double repairs = 0;
+        for (Repair repair : car.getRepairs()) {
+            repairs = repair.getCostsRepair() + repairs;
+        }
+        modelAndView.addObject("allRepairsCosts",repairs);
         return modelAndView;
     }
 
@@ -77,6 +82,15 @@ public class RepairController extends MethodsCarForControllers {
                 endMileageRepairs(repair.getBeginMileage(),repair.getServiceLife()));
         modelAndView.setViewName("redirect:/car/repairs/{id}");
         repairService.update(repair);
+        return modelAndView;
+    }
+
+    @GetMapping("/car/repairs/delete/{id}")
+    public ModelAndView deleteRepair(@PathVariable("id") int id){
+        Repair repair = repairService.read(id);
+        modelAndView.addObject("carId", repair.getCar().getId());
+        modelAndView.setViewName("redirect:/car/repairs/{carId}");
+        repairService.delete(repair);
         return modelAndView;
     }
 }

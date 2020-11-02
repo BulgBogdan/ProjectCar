@@ -15,7 +15,7 @@
                     <h3 class="text-center text-info">Создать отчет о ремонте</h3>
                     <div class="form-group">
                         <label for="nameRepair" class="text-info">Название ремонта и(или) запчасти:</label><br>
-                        <input type="number" name="nameRepair" id="nameRepair" class="form-control">
+                        <input type="text" name="nameRepair" id="nameRepair" class="form-control">
                     </div>
                     <div class="form-group">
                         <label for="beginMileage" class="text-info">Пробег при ремонте(км.):</label><br>
@@ -23,7 +23,7 @@
                     </div>
                     <div class="form-group">
                         <label for="costsRepair" class="text-info">Цена ремонта и(или) запчастей:</label><br>
-                        <input type="number" name="costsRepair" id="costsRepair" class="form-control">
+                        <input type="number" name="costsRepair" id="costsRepair" class="form-control" step="0.01">
                     </div>
                     <div class="form-group">
                         <label for="serviceLife" class="text-info">Срок износа запчасти по регламенту(км.):</label><br>

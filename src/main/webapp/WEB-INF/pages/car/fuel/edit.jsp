@@ -16,16 +16,16 @@
                     <div class="form-group">
                         <label for="literCost" class="text-info">Цена за литр топлива:</label><br>
                         <input type="number" name="literCost" id="literCost" class="form-control"
-                               value="${fuel.literCost}">
+                               value="${fuel.literCost}" step="0.01">
                     </div>
                     <div class="form-group">
                         <label for="literValue" class="text-info">Заправленный объем:</label><br>
                         <input type="number" name="literValue" id="literValue" class="form-control"
-                               value="${fuel.literValue}">
+                               value="${fuel.literValue}" step="0.01">
                     </div>
                     <div class="form-group">
                         <label for="summ" class="text-info">Сумма:</label><br>
-                        <input type="number" name="summ" id="summ" class="form-control" value="${fuel.summ}">
+                        <input type="number" name="summ" id="summ" class="form-control" value="${fuel.summ}" step="0.01">
                     </div>
 
                     <div class="form-group">

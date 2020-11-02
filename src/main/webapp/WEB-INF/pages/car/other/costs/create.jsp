@@ -22,7 +22,7 @@
                     </div>
                     <div class="form-group">
                         <label for="cost" class="text-info">Стоимость:</label><br>
-                        <input type="number" name="cost" id="cost" class="form-control">
+                        <input type="number" name="cost" id="cost" class="form-control" step="0.01">
                     </div>
 
                     <div class="form-group">

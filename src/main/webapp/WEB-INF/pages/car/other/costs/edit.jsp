@@ -23,7 +23,8 @@
                     </div>
                     <div class="form-group">
                         <label for="cost" class="text-info">Стоимость:</label><br>
-                        <input type="number" name="cost" id="cost" class="form-control" value="${costs.cost}">
+                        <input type="number" name="cost" id="cost" class="form-control" value="${costs.cost}"
+                               step="0.01">
                     </div>
 
                     <div class="form-group">

@@ -30,6 +30,9 @@
                             <div class="form-group">
                                 <label for="login" class="text-info">Username:</label><br>
                                 <input type="text" name="login" id="login" class="form-control">
+                                <form:errors path="login"></form:errors>
+                                ${loginError}
+                                ${message}
                             </div>
                             <div class="form-group">
                                 <label for="password" class="text-info">password:</label><br>
@@ -38,10 +41,13 @@
                             <div class="form-group">
                                 <label for="confirmPassword" class="text-info">confirmPassword:</label><br>
                                 <input type="password" name="confirmPassword" id="confirmPassword" class="form-control">
+                                <form:errors path="password"></form:errors>
+                                    ${passwordError}
+                                ${message}
                             </div>
                             <div class="form-group">
                                 <label for="email" class="text-info">email:</label><br>
-                                <input type="text" name="email" id="email" class="form-control">
+                                <input type="email" name="email" id="email" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="firstName" class="text-info">firstName:</label><br>
@@ -61,11 +67,12 @@
                                     <%--<span><input id="remember-me" name="remember-me" type="checkbox"></span>--%>
                                     <%--</label><br>--%>
                                 <input type="submit" name="submit" class="btn btn-info btn-md" value="Registration">
+                                            ${Errors}
                             </div>
                             <div id="register-link" class="text-right">
                                 <a href="/" class="text-info">My cabinet</a>
+
                             </div>
-                            ${Errors}
                         </form:form>
                     </div>
                 </div>

@@ -14,15 +14,15 @@
                     <h3 class="text-center text-info">Создать отчет о заправке</h3>
                     <div class="form-group">
                         <label for="literCost" class="text-info">Цена за литр топлива:</label><br>
-                        <input type="number" name="literCost" id="literCost" class="form-control">
+                        <input type="number" name="literCost" id="literCost" class="form-control" step="0.01">
                     </div>
                     <div class="form-group">
                         <label for="literValue" class="text-info">Заправленный объем:</label><br>
-                        <input type="number" name="literValue" id="literValue" class="form-control">
+                        <input type="number" name="literValue" id="literValue" class="form-control" step="0.01">
                     </div>
                     <div class="form-group">
                         <label for="summ" class="text-info">Сумма:</label><br>
-                        <input type="number" name="summ" id="summ" class="form-control">
+                        <input type="number" name="summ" id="summ" class="form-control" step="0.01">
                     </div>
 
                     <div class="form-group">

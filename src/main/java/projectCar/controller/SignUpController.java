@@ -8,7 +8,6 @@ import org.springframework.web.servlet.ModelAndView;
 import projectCar.entity.User;
 import projectCar.service.UserServiceImpl;
 import projectCar.service.interfaces.IUserService;
-
 import javax.validation.Valid;
 
 @Controller
