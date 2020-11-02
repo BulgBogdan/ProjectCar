@@ -2,69 +2,67 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Parameter Car</title>
-</head>
-<body>
 
-<sec:authorize access="isAuthenticated()">
-Ваш логин: <sec:authentication property="principal.username"/>
-<s></s>
-<a class="btn btn-lg btn-danger" href="<c:url value="/logout" />" role="button">Выйти</a>
-</sec:authorize>
+<%@include file="../include/head.jsp" %>
 
-<body>
-<div>
-    <form:form method="POST" modelAttribute="parameter">
+<div class="container">
+    <div id="edit-row" class="row justify-content-center align-items-center">
+        <div id="edit-column" class="col-md-6">
+            <div id="edit-box" class="col-md-12">
 
-        <h2>Параметры:</h2>
-        <div>
-            <form:input type="text" path="mark" placeholder="Mark Auto"
-                        autofocus="true"></form:input>
-        </div>
-        <div>
-            <form:input type="text" path="model" placeholder="Model Auto"
-                        autofocus="true"></form:input>
-        </div>
-        <div>
-            <form:input type="date" path="year" placeholder="Year"
-                        autofocus="true"></form:input>
-        </div>
-        <div>
-            <form:input type="number" path="firstMileage" placeholder="Mileage"
-                        autofocus="true"></form:input>
-        </div>
-        <div>
-            <form:input type="number" path="mass" placeholder="Mass Auto"
-                        autofocus="true"></form:input>
-        </div>
-        <div>
-            <form:input type="text" path="color" placeholder="Color Auto"
-                        autofocus="true"></form:input>
-        </div>
-        <div>
-            <form:input type="double" path="averageRate" placeholder="Average Rate"
-                        autofocus="true"></form:input>
-        </div>
-        <div>
-            <form:input type="text" path="vin" placeholder="VIN Code"
-                        autofocus="true"></form:input>
-        </div>
-        <div>
-            <form:input type="text" path="registrationNumber" placeholder="Registration Number"
-                        autofocus="true"></form:input>
-        </div>
+                <form:form method="POST" modelAttribute="parameter">
+                    <h3 class="text-center text-info">Создать</h3>
+                    <div class="form-group">
+                        <input type="hidden" name="${parameter.id}" id="id" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="mark" class="text-info">Марка:</label><br>
+                        <input type="text" name="mark" id="mark" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="model" class="text-info">Модель:</label><br>
+                        <input type="text" name="model" id="model" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="year" class="text-info">Год выпуска:</label><br>
+                        <input type="number" name="year" id="year" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="firstMileage" class="text-info">Первоначальный пробег(км.):</label><br>
+                        <input type="number" name="firstMileage" id="firstMileage" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="mass" class="text-info">Масса(кг.):</label><br>
+                        <input type="number" name="mass" id="mass" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="color" class="text-info">Цвет:</label><br>
+                        <input type="text" name="color" id="color" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="averageRate" class="text-info">Средний расход топлива(необходим для расчетов):</label><br>
+                        <input type="number" name="averageRate" id="averageRate" class="form-control" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label for="vin" class="text-info">VIN:</label><br>
+                        <input type="text" name="vin" id="vin" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="registrationNumber" class="text-info">Регистрационный знак:</label><br>
+                        <input type="text" name="registrationNumber" id="registrationNumber" class="form-control">
+                    </div>
 
-        <button type="submit">Create</button>
-
-    </form:form>
-    <br>
-    <c:url value="/" var="cabinet"/>
-    <a href="${cabinet}">Back</a>
+                    <div class="form-group">
+                        <input type="submit" name="submit" class="btn btn-info btn-md" value="Создать">
+                        <div id="register-link" class="text-right">
+                            <a href="/car/view/${parameter.car.id}" class="text-info">На страницу авто</a>
+                        </div>
+                    </div>
+                </form:form>
+            </div>
+        </div>
+    </div>
 </div>
 
-</body>
-</html>
+<%@ include file="../include/under.jsp" %>

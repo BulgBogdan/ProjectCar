@@ -2,49 +2,45 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Document</title>
-</head>
-<body>
 
-<sec:authorize access="isAuthenticated()">
-Ваш логин: <sec:authentication property="principal.username"/>
-<s></s>
-<a class="btn btn-lg btn-danger" href="<c:url value="/logout" />" role="button">Выйти</a>
-</sec:authorize>
+<%@include file="../../include/head.jsp" %>
 
-<body>
-<div>
-    <form:form method="POST" modelAttribute="repair">
+<div class="container">
+    <div id="edit-row" class="row justify-content-center align-items-center">
+        <div id="edit-column" class="col-md-6">
+            <div id="edit-box" class="col-md-12">
 
-        <h2>Ремонт:</h2>
-        <div>
-            <form:input type="text" path="nameRepair" placeholder="Name"
-                        autofocus="true"></form:input>
+                <form:form method="POST" modelAttribute="repair">
+                    <h3 class="text-center text-info">Создать отчет о ремонте</h3>
+                    <div class="form-group">
+                        <label for="nameRepair" class="text-info">Название ремонта и(или) запчасти:</label><br>
+                        <input type="number" name="nameRepair" id="nameRepair" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="beginMileage" class="text-info">Пробег при ремонте(км.):</label><br>
+                        <input type="number" name="beginMileage" id="beginMileage" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="costsRepair" class="text-info">Цена ремонта и(или) запчастей:</label><br>
+                        <input type="number" name="costsRepair" id="costsRepair" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="serviceLife" class="text-info">Срок износа запчасти по регламенту(км.):</label><br>
+                        <input type="number" name="serviceLife" id="serviceLife" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" name="submit" class="btn btn-info btn-md" value="Создать">
+                        <div id="register-link" class="text-right">
+                            <a href="/car/repairs/${car.id}" class="text-info">Вернуться к списку ремонтов</a>
+                        </div>
+                    </div>
+                </form:form>
+
+            </div>
         </div>
-        <div>
-            <form:input type="number" path="beginMileage" placeholder="Mileage start"
-                        autofocus="true"></form:input>
-        </div>
-        <div>
-            <form:input type="number" path="costsRepair" placeholder="Cost"
-                        autofocus="true"></form:input>
-        </div>
-        <div>
-            <form:input type="number" path="serviceLife" placeholder="Service Mileage"
-                        autofocus="true"></form:input>
-        </div>
-
-        <button type="submit">Create</button>
-
-    </form:form>
-    <br>
-    <c:url value="/car/repairs/${car.id}" var="view"/>
-    <a href="${view}">Back</a>
+    </div>
 </div>
 
-</body>
-</html>
+<%@ include file="../../include/under.jsp" %>

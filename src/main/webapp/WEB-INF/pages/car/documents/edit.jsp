@@ -37,14 +37,14 @@
 
                     <div class="form-group">
                         <input type="submit" name="submit" class="btn btn-info btn-md" value="Изменить">
+                        <div id="register-link" class="text-right">
+                            <a href="/car/documents/${car.id}" class="text-info">Вернуться к списку документов</a>
+                        </div>
                     </div>
                 </form:form>
             </div>
         </div>
     </div>
-</div>
-<div id="register-link" class="text-left">
-    <a href="/car/documents/${car.id}" class="text-info">Вернуться к списку документов</a>
 </div>
 
 <%@ include file="../../include/under.jsp" %>

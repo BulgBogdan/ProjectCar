@@ -22,14 +22,13 @@
 
                     <div class="form-group">
                         <input type="submit" name="submit" class="btn btn-info btn-md" value="Изменить">
+                        <div id="register-link" class="text-right">
+                            <a href="/" class="text-info">Вернуться назад</a>
+                        </div>
                     </div>
                 </form:form>
             </div>
         </div>
     </div>
-    <div id="register-link" class="text-left">
-        <a href="/" class="text-info">Вернуться назад</a>
-    </div>
-
 
 <%@ include file="../include/under.jsp"%>

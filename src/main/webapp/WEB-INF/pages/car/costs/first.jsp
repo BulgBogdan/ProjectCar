@@ -12,6 +12,9 @@
                 <form:form method="POST" modelAttribute="registration">
                     <h3 class="text-center text-info">Создать</h3>
                     <div class="form-group">
+                        <input type="hidden" name="${registration.id}" id="id" class="form-control">
+                    </div>
+                    <div class="form-group">
                         <label for="price" class="text-info">Цена авто:</label><br>
                         <input type="number" name="priceCar" id="price" class="form-control">
                     </div>
@@ -22,16 +25,14 @@
 
                     <div class="form-group">
                         <input type="submit" name="submit" class="btn btn-info btn-md" value="Создать">
+                        <div id="register-link" class="text-right">
+                            <a href="/car/view/${registration.car.id}" class="text-info">На страницу авто</a>
+                        </div>
                     </div>
                 </form:form>
-
             </div>
         </div>
     </div>
-    <div id="register-link" class="text-left">
-        <a href="/" class="text-info">В личный кабинет</a>
-    </div>
 </div>
-
 
 <%@ include file="../../include/under.jsp" %>

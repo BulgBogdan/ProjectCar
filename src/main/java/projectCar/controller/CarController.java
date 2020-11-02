@@ -33,7 +33,7 @@ public class CarController {
 
     private ModelAndView modelAndView = new ModelAndView();
 
-    private Car getCarById(int id){
+    private Car getCarById(int id) {
         Car carById = carService.read(id);
         return carById;
     }
@@ -62,9 +62,10 @@ public class CarController {
         modelAndView.addObject("registration", new Registration());
         return modelAndView;
     }
+
     @PostMapping("car/costs/first/{id}")
     public ModelAndView addFirstCost(@PathVariable("id") int id,
-                                     @ModelAttribute("registration")Registration registration){
+                                     @ModelAttribute("registration") Registration registration) {
         Car car = getCarById(id);
         registration.setCar(car);
         modelAndView.setViewName("redirect:/car/view/{id}");
@@ -92,8 +93,9 @@ public class CarController {
 
     @PostMapping("car/costs/edit/{id}")
     public ModelAndView editFirstCost(@ModelAttribute("registration") Registration registration,
-                                @PathVariable("id") int id) {
+                                      @PathVariable("id") int id) {
         Car car = getCarById(id);
+        registration.setCar(car);
         modelAndView.setViewName("redirect:/car/view/{id}");
         registrationService.update(registration);
         return modelAndView;

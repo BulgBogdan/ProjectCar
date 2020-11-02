@@ -27,18 +27,14 @@
 
                     <div class="form-group">
                         <input type="submit" name="submit" class="btn btn-info btn-md" value="Создать">
+                        <div id="register-link" class="text-right">
+                            <a href="/car/fuel/${car.id}" class="text-info">Вернуться к списку заправок</a>
+                        </div>
                     </div>
                 </form:form>
-
             </div>
         </div>
     </div>
 </div>
 
-<div id="register-link" class="text-left">
-    <a href="/car/fuel/${car.id}" class="text-info">Вернуться к списку заправок</a>
-</div>
-
-
-<%@ include file="../../include/under.jsp"%>
-
+<%@ include file="../../include/under.jsp" %>

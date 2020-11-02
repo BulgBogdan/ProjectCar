@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ include file="../include/head.jsp" %>
+<%@ include file="../include/head.jsp"%>
 
 <div class="container-fluid h-100">
     <div class="row h-100">
@@ -79,11 +79,11 @@
                             <br>
                             <c:if test="${parameter!=null}">
                                 <li class="nav-item">
-                                    <small>Марка Авто:<b> ${parameter.mark}</b></small>
+                                    <small>Марка:<b> ${parameter.mark}</b></small>
                                     <br>
                                 </li>
                                 <li class="nav-item">
-                                    <small>Модель Авто:<b> ${parameter.model}</b></small>
+                                    <small>Модель:<b> ${parameter.model}</b></small>
                                     <br>
                                 </li>
                                 <li class="nav-item">
@@ -111,7 +111,7 @@
                                     <br>
                                 </li>
                                 <li class="nav-item">
-                                    <small>Гос. номер:<b> ${parameter.registrationNumber}</b></small>
+                                    <small>Гос.номер:<b> ${parameter.registrationNumber}</b></small>
                                     <br>
                                 </li>
                                 <c:url value="/car/parameters/edit/${car.id}" var="editParameter"/>
@@ -210,13 +210,12 @@
                 </div>
 
             </div>
-
+            <div id="register-link" class="text-left">
+                <br>
+                <a href="/" class="text-info">В личный кабинет</a>
+            </div>
         </main>
-        <div id="register-link" class="text-left">
-            <a href="/" class="text-info">В личный кабинет</a>
-        </div>
     </div>
 </div>
-
 
 <%@ include file="../include/under.jsp" %>

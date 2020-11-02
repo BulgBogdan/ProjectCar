@@ -2,42 +2,40 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Fuel</title>
-</head>
-<body>
+<%@include file="../../../include/head.jsp" %>
 
-<sec:authorize access="isAuthenticated()">
-Ваш логин: <sec:authentication property="principal.username"/>
-<s></s>
-<a class="btn btn-lg btn-danger" href="<c:url value="/logout" />" role="button">Выйти</a>
-</sec:authorize>
+<div class="container">
+    <div id="edit-row" class="row justify-content-center align-items-center">
+        <div id="edit-column" class="col-md-6">
+            <div id="edit-box" class="col-md-12">
 
-<body>
-<div>
-    <form:form method="POST" modelAttribute="costs">
+                <form:form method="POST" modelAttribute="costs">
+                    <h3 class="text-center text-info">Редактировать отчет о затратах</h3>
+                    <div class="form-group">
+                        <label for="nameOtherCost" class="text-info">Название:</label><br>
+                        <input type="text" name="nameOtherCost" id="nameOtherCost" class="form-control"
+                               value="${costs.nameOtherCost}">
+                    </div>
+                    <div class="form-group">
+                        <label for="date" class="text-info">Дата:</label><br>
+                        <input type="date" name="dateCost" id="date" class="form-control" value="${costs.dateCost}">
+                    </div>
+                    <div class="form-group">
+                        <label for="cost" class="text-info">Стоимость:</label><br>
+                        <input type="number" name="cost" id="cost" class="form-control" value="${costs.cost}">
+                    </div>
 
-        <h2>Изменить Затратуу:</h2>
-        <div>
-            <form:input type="text" path="nameOtherCost" title="${costs.nameOtherCost}"></form:input>
+                    <div class="form-group">
+                        <input type="submit" name="submit" class="btn btn-info btn-md" value="Изменить">
+                        <div id="register-link" class="text-right">
+                            <a href="/car/other/costs/${car.id}" class="text-info">Вернуться к списку затрат</a>
+                        </div>
+                    </div>
+                </form:form>
+            </div>
         </div>
-        <div>
-            <form:input type="date" path="dateCost" title="${costs.dateCost}"></form:input>
-        </div>
-        <div>
-            <form:input type="number" path="cost" title="${costs.cost}"></form:input>
-        </div>
-
-        <button type="submit">Create</button>
-
-    </form:form>
-    <br>
-    <c:url value="/car/other/costs/${car.id}" var="view"/>
-    <a href="${view}">Back</a>
+    </div>
 </div>
 
-</body>
-</html>
+<%@ include file="../../../include/under.jsp" %>

@@ -36,11 +36,11 @@
                             <br>
                             <c:if test="${parameters!=null}">
                                 <li class="nav-item">
-                                    <small>Марка Авто:<b> ${parameters.mark}</b></small>
+                                    <small>Марка:<b> ${parameters.mark}</b></small>
                                     <br>
                                 </li>
                                 <li class="nav-item">
-                                    <small>Модель Авто:<b> ${parameters.model}</b></small>
+                                    <small>Модель:<b> ${parameters.model}</b></small>
                                     <br>
                                 </li>
                                 <li class="nav-item">
@@ -68,7 +68,7 @@
                                     <br>
                                 </li>
                                 <li class="nav-item">
-                                    <small>Гос. номер:<b> ${parameters.registrationNumber}</b></small>
+                                    <small>Гос.номер:<b> ${parameters.registrationNumber}</b></small>
                                     <br>
                                 </li>
                                 <c:url value="/car/parameters/edit/${car.id}" var="editParameter"/>
@@ -158,15 +158,18 @@
                     </div>
                 </div>
             </c:if>
-            <c:if test="${fuel.size() == 0}">
+            <c:if test="${(parameters != null) && (fuel.size() == 0)}">
                 <br>
                 <p>В вашем каталоге нет заправок топливом, <a href="${createFuel}"> добавить?</a></p>
             </c:if>
-
+            <c:if test="${parameters == null}">
+                <p>Вы не заполнили параметры автомобиля, <a href="/car/parameters/${car.id}"> заполнить?</a></p>
+            </c:if>
+            <div id="register-link" class="text-left">
+                <br>
+                <a href="/car/view/${car.id}" class="text-info">На страницу авто</a>
+            </div>
         </main>
-    </div>
-    <div id="register-link" class="text-left">
-        <a href="/car/view/${car.id}" class="text-info">На страницу авто</a>
     </div>
 </div>
 

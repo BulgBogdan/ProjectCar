@@ -19,8 +19,8 @@ public class Parameter {
     @Column(name = "model", nullable = false, length = 100)
     private String model;
 
-    @Column(name = "year", nullable = false)
-    private Date year;
+    @Column(name = "year")
+    private int year;
 
     @Column(name = "first_mileage")
     private int firstMileage;
@@ -47,7 +47,7 @@ public class Parameter {
     public Parameter() {
     }
 
-    public Parameter(String mark, String model, Date year, int firstMileage, int mass, String color, double averageRate,
+    public Parameter(String mark, String model, int year, int firstMileage, int mass, String color, double averageRate,
                      String vin, String registrationNumber, Car car) {
         this.mark = mark;
         this.model = model;
@@ -85,11 +85,11 @@ public class Parameter {
         this.model = model;
     }
 
-    public Date getYear() {
+    public int getYear() {
         return year;
     }
 
-    public void setYear(Date year) {
+    public void setYear(int year) {
         this.year = year;
     }
 

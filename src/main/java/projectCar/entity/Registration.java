@@ -12,10 +12,10 @@ public class Registration {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "price_car", nullable = false)
+    @Column(name = "price_car")
     private int priceCar;
 
-    @Column(name = "price_registration", nullable = false)
+    @Column(name = "price_registration")
     private double priceRegistration;
 
     @OneToOne
