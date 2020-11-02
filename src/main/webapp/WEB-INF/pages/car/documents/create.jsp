@@ -35,6 +35,7 @@
 
                     <div class="form-group">
                         <input type="submit" name="submit" class="btn btn-info btn-md" value="Создать">
+                        <b class="text-danger">${Errors}</b>
                         <div id="register-link" class="text-right">
                             <a href="/car/documents/${car.id}" class="text-info">Вернуться к списку документов</a>
                         </div>

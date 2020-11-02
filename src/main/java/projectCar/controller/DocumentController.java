@@ -2,6 +2,7 @@ package projectCar.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -48,12 +49,17 @@ public class DocumentController extends MethodsCarForControllers {
 
     @PostMapping("/car/documents/create/{id}")
     public ModelAndView addDocument(@PathVariable("id") int id,
-                                    @ModelAttribute("doc") Document document) {
+                                    @ModelAttribute("doc") Document document,
+                                    BindingResult result) {
+        if (result.hasErrors()){
+            errorIncorrectEnter();
+        }
         car = getCarById(id);
-        document.setNumberOfDays(
-                amountOfDays(document.getBeginDate(), document.getEndDate()));
-        document.setNumberOfMonth(
-                amountOfMonths(document.getBeginDate(),document.getEndDate()));
+        int numberOfDays = amountOfDays(document.getBeginDate(), document.getEndDate());
+        int numberOfMonths = amountOfMonths(document.getBeginDate(),document.getEndDate());
+
+        document.setNumberOfDays(numberOfDays);
+        document.setNumberOfMonth(numberOfMonths);
         document.setCar(car);
         modelAndView.setViewName("redirect:/car/documents/{id}");
         documentService.add(document);
@@ -72,11 +78,16 @@ public class DocumentController extends MethodsCarForControllers {
     @PostMapping("car/documents/edit/{id}")
     public ModelAndView editDocument(@ModelAttribute("docs") Document document,
                                       @ModelAttribute("car") Car car,
-                                      @PathVariable("id") int id) {
-        document.setCar(
-                getCarById(car.getId()));
-        document.setNumberOfDays(
-                amountOfDays(document.getBeginDate(), document.getEndDate()));
+                                      @PathVariable("id") int id,
+                                     BindingResult result) {
+        if (result.hasErrors()){
+            errorIncorrectEnter();
+        }
+        int carId = car.getId();
+        int numberOfDays = amountOfDays(document.getBeginDate(), document.getEndDate());
+
+        document.setCar(getCarById(carId));
+        document.setNumberOfDays(numberOfDays);
         modelAndView.setViewName("redirect:/car/documents/{id}");
         documentService.update(document);
         return modelAndView;

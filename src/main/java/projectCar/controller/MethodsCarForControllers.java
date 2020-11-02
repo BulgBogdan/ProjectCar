@@ -2,6 +2,7 @@ package projectCar.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.servlet.ModelAndView;
 import projectCar.entity.Car;
 import projectCar.service.CarServiceImpl;
 import projectCar.service.interfaces.ICarService;
@@ -41,5 +42,11 @@ public class MethodsCarForControllers {
     int amountOfMonths(Date startDate, Date endDate) {
         int monthBetween = (int)ChronoUnit.MONTHS.between(startDate.toLocalDate(),endDate.toLocalDate());
         return monthBetween;
+    }
+
+    ModelAndView errorIncorrectEnter(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("Errors", "Incorrect enter");
+        return modelAndView;
     }
 }

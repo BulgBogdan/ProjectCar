@@ -2,6 +2,7 @@ package projectCar.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,8 +12,6 @@ import projectCar.entity.Car;
 import projectCar.entity.OtherCosts;
 import projectCar.service.OhterCostsServiceImpl;
 import projectCar.service.interfaces.IOtherCostsService;
-
-import java.util.List;
 
 @Controller
 public class OtherCostsController extends MethodsCarForControllers {
@@ -50,9 +49,12 @@ public class OtherCostsController extends MethodsCarForControllers {
 
     @PostMapping("/car/other/costs/create/{id}")
     public ModelAndView addRepair(@PathVariable("id") int id,
-                                  @ModelAttribute("otherCosts") OtherCosts costs) {
-        costs.setCar(
-                getCarById(id));
+                                  @ModelAttribute("otherCosts") OtherCosts costs,
+                                  BindingResult result) {
+        if (result.hasErrors()){
+            errorIncorrectEnter();
+        }
+        costs.setCar(getCarById(id));
         modelAndView.setViewName("redirect:/car/other/costs/{id}");
         costsService.add(costs);
         return modelAndView;
@@ -70,9 +72,12 @@ public class OtherCostsController extends MethodsCarForControllers {
     @PostMapping("/car/other/costs/edit/{id}")
     public ModelAndView addEdit(@PathVariable("id")int id,
                                 @ModelAttribute("costs") OtherCosts otherCosts,
+                                BindingResult result,
                                 @ModelAttribute("car") Car car){
-        otherCosts.setCar(
-                getCarById(car.getId()));
+        if (result.hasErrors()){
+            errorIncorrectEnter();
+        }
+        otherCosts.setCar(getCarById(car.getId()));
         modelAndView.setViewName("redirect:/car/other/costs/{id}");
         costsService.update(otherCosts);
         return modelAndView;

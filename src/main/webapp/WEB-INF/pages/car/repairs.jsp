@@ -172,7 +172,7 @@
                 <a href="/car/view/${car.id}" class="text-info">На страницу авто</a>
             </div>
             <div class="text-center">
-                <b class="text-info">Сумма затрат равна <b class="text-danger">${allRepairsCosts}</b></b>
+                <b class="text-info">Сумма затрат на ремонт и запчасти = <b class="text-danger">${allRepairsCosts}</b></b>
             </div>
         </main>
     </div>

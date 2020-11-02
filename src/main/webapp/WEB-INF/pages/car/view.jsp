@@ -210,6 +210,11 @@
                 </div>
 
             </div>
+            <br>
+            <div class="text-center">
+                <b class="text-info">Общая сумма затрат на <b class="text-dark">${car.nameCar}</b>, равна <b class="text-danger">${cos}</b></b>
+            </div>
+            <br>
             <div id="register-link" class="text-left">
                 <br>
                 <a href="/" class="text-info">В личный кабинет</a>

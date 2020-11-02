@@ -34,6 +34,7 @@
 
                     <div class="form-group">
                         <input type="submit" name="submit" class="btn btn-info btn-md" value="Изменить">
+                        <b class="text-danger">${Errors}</b>
                         <div id="register-link" class="text-right">
                             <a href="/car/repairs/${car.id}" class="text-info">Вернуться к списку ремонтов</a>
                         </div>

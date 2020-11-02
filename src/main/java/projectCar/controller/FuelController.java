@@ -2,6 +2,7 @@ package projectCar.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,7 +34,7 @@ public class FuelController extends MethodsCarForControllers {
     }
 
     private static int fuelDistance(double literValue, double averageRate) {
-        double distance = (literValue/averageRate)*100;
+        double distance = (literValue / averageRate) * 100;
         return (int) Math.round(distance);
     }
 
@@ -63,19 +64,23 @@ public class FuelController extends MethodsCarForControllers {
 
     @PostMapping("/car/fuel/create/{id}")
     public ModelAndView addFuel(@PathVariable("id") int id,
-                                @ModelAttribute("fuel") Fuel fuel) {
+                                @ModelAttribute("fuel") Fuel fuel,
+                                BindingResult result) {
+        if (result.hasErrors()){
+            errorIncorrectEnter();
+        }
         car = getCarById(id);
-        fuel.setCar(car);
+
         if (fuel.getSumm() == 0) {
-            fuel.setSumm(
-                    fuelSumm(fuel.getLiterCost(), fuel.getLiterValue()));
+            double sumFuel = fuelSumm(fuel.getLiterCost(), fuel.getLiterValue());
+            fuel.setSumm(sumFuel);
         }
         if (fuel.getLiterValue() == 0) {
-            fuel.setLiterValue(
-                    fuelValue(fuel.getSumm(), fuel.getLiterCost()));
+            double valueFuel = fuelValue(fuel.getSumm(), fuel.getLiterCost());
+            fuel.setLiterValue(valueFuel);
         }
-        fuel.setFuelDistance(
-                fuelDistance(fuel.getLiterValue(), car.getParameters().getAverageRate()));
+        double distanceFuel = fuelDistance(fuel.getLiterValue(), car.getParameters().getAverageRate());
+        fuel.setFuelDistance(distanceFuel);
         modelAndView.setViewName("redirect:/car/fuel/{id}");
         fuelService.add(fuel);
         return modelAndView;
@@ -93,20 +98,25 @@ public class FuelController extends MethodsCarForControllers {
     @PostMapping("/car/fuel/edit/{id}")
     public ModelAndView editFuel(@PathVariable("id") int id,
                                  @ModelAttribute("fuel") Fuel fuelEdit,
+                                 BindingResult result,
                                  @ModelAttribute("car") Car car) {
+        if (result.hasErrors()){
+            errorIncorrectEnter();
+        }
         Fuel fuel = fuelService.read(id);
-        fuelEdit.setCar(
-                getCarById(car.getId()));
+        int carId = car.getId();
+
+        fuelEdit.setCar(getCarById(carId));
         if (fuelEdit.getSumm() != fuel.getSumm()) {
-            fuelEdit.setSumm(
-                    fuelSumm(fuelEdit.getLiterCost(), fuelEdit.getLiterValue()));
+            double sumFuel = fuelSumm(fuelEdit.getLiterCost(), fuelEdit.getLiterValue());
+            fuelEdit.setSumm(sumFuel);
         }
         if (fuelEdit.getLiterValue() != fuel.getLiterValue()) {
-            fuelEdit.setLiterValue(
-                    fuelValue(fuelEdit.getSumm(), fuelEdit.getLiterCost()));
+            double valueFuel = fuelValue(fuelEdit.getSumm(), fuelEdit.getLiterCost());
+            fuelEdit.setLiterValue(valueFuel);
         }
-        fuelEdit.setFuelDistance(
-                fuelDistance(fuelEdit.getLiterValue(), getCarById(car.getId()).getParameters().getAverageRate()));
+        double distanceFuel = fuelDistance(fuelEdit.getLiterValue(), getCarById(car.getId()).getParameters().getAverageRate());
+        fuelEdit.setFuelDistance(distanceFuel);
         modelAndView.setViewName("redirect:/car/fuel/{id}");
         fuelService.update(fuelEdit);
         return modelAndView;

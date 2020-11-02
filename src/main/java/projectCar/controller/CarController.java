@@ -4,20 +4,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
-import projectCar.entity.Car;
-import projectCar.entity.Registration;
-import projectCar.entity.User;
+import projectCar.entity.*;
 import projectCar.service.CarServiceImpl;
 import projectCar.service.UserServiceImpl;
 import projectCar.service.interfaces.ICarService;
 import projectCar.service.interfaces.IRegistrationService;
 import projectCar.service.interfaces.IUserService;
 import projectCar.service.RegistrationServiceImpl;
+
+import java.util.List;
 
 @Controller
 public class CarController {
@@ -38,6 +39,11 @@ public class CarController {
         return carById;
     }
 
+    private ModelAndView errorIncorrectEnter(){
+        modelAndView.addObject("Errors", "Incorrect enter");
+        return modelAndView;
+    }
+
     @GetMapping("car/title")
     public ModelAndView createCar() {
         modelAndView.setViewName("car/title");
@@ -47,7 +53,12 @@ public class CarController {
 
     @PostMapping("car/title")
     public ModelAndView addCar(@ModelAttribute("newCar") Car car,
+                               BindingResult result,
                                @AuthenticationPrincipal UserDetails userDetails) {
+        if (result.hasErrors()){
+            modelAndView.addObject("Errors", "Incorrect enter");
+            return modelAndView;
+        }
         String userName = userDetails.getUsername();
         User user = userService.findByLogin(userName);
         car.setUser(user);
@@ -65,7 +76,11 @@ public class CarController {
 
     @PostMapping("car/costs/first/{id}")
     public ModelAndView addFirstCost(@PathVariable("id") int id,
-                                     @ModelAttribute("registration") Registration registration) {
+                                     @ModelAttribute("registration") Registration registration,
+                                     BindingResult result) {
+        if (result.hasErrors()){
+            errorIncorrectEnter();
+        }
         Car car = getCarById(id);
         registration.setCar(car);
         modelAndView.setViewName("redirect:/car/view/{id}");
@@ -80,6 +95,26 @@ public class CarController {
         modelAndView.addObject("car", car);
         modelAndView.addObject("parameter", car.getParameters());
         modelAndView.addObject("registration", car.getRegistration());
+
+        double costs = 0;
+        List<Car> listCar = carService.getLists(id);
+        for (Car list : listCar) {
+            for (Fuel fuel : list.getFuels()) {
+                costs = costs + fuel.getSumm();
+            }
+            for (OtherCosts otherCost : list.getOtherCosts()) {
+                costs = costs + otherCost.getCost();
+            }
+            for (Repair repair : list.getRepairs()) {
+                costs = costs + repair.getCostsRepair();
+            }
+            for (Document document : list.getDocuments()) {
+                costs = costs + document.getDocumentCost();
+            }
+        }
+        double firstCosts = car.getRegistration().getPriceCar() + car.getRegistration().getPriceRegistration();
+        costs = costs + firstCosts;
+        modelAndView.addObject("cos", costs);
         return modelAndView;
     }
 
@@ -93,7 +128,11 @@ public class CarController {
 
     @PostMapping("car/costs/edit/{id}")
     public ModelAndView editFirstCost(@ModelAttribute("registration") Registration registration,
+                                      BindingResult result,
                                       @PathVariable("id") int id) {
+        if (result.hasErrors()){
+            errorIncorrectEnter();
+        }
         Car car = getCarById(id);
         registration.setCar(car);
         modelAndView.setViewName("redirect:/car/view/{id}");
@@ -111,8 +150,12 @@ public class CarController {
 
     @PostMapping("car/edit/{id}")
     public ModelAndView editCar(@ModelAttribute("car") Car car,
+                                BindingResult result,
                                 @AuthenticationPrincipal UserDetails userDetails,
                                 @PathVariable("id") int id) {
+        if (result.hasErrors()){
+            errorIncorrectEnter();
+        }
         String userName = userDetails.getUsername();
         User user = userService.findByLogin(userName);
         car.setUser(user);

@@ -2,6 +2,7 @@ package projectCar.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -53,10 +54,14 @@ public class RepairController extends MethodsCarForControllers {
 
     @PostMapping("/car/repairs/create/{id}")
     public ModelAndView addRepair(@PathVariable("id") int id,
-                                  @ModelAttribute("repair") Repair repair) {
+                                  @ModelAttribute("repair") Repair repair,
+                                  BindingResult result) {
+        if (result.hasErrors()){
+            errorIncorrectEnter();
+        }
         car = getCarById(id);
-        repair.setEndMileage(
-                endMileageRepairs(repair.getBeginMileage(),repair.getServiceLife()));
+        int endMileageRepair = endMileageRepairs(repair.getBeginMileage(),repair.getServiceLife());
+        repair.setEndMileage(endMileageRepair);
         repair.setCar(car);
         modelAndView.setViewName("redirect:/car/repairs/{id}");
         repairService.add(repair);
@@ -75,11 +80,14 @@ public class RepairController extends MethodsCarForControllers {
     @PostMapping("/car/repairs/edit/{id}")
     public ModelAndView addEdit(@PathVariable("id")int id,
                                 @ModelAttribute("repair") Repair repair,
+                                BindingResult result,
                                 @ModelAttribute("car") Car car){
-        repair.setCar(
-                getCarById(car.getId()));
-        repair.setEndMileage(
-                endMileageRepairs(repair.getBeginMileage(),repair.getServiceLife()));
+        if (result.hasErrors()){
+            errorIncorrectEnter();
+        }
+        repair.setCar(getCarById(car.getId()));
+        int endMileageRepair = endMileageRepairs(repair.getBeginMileage(),repair.getServiceLife());
+        repair.setEndMileage(endMileageRepair);
         modelAndView.setViewName("redirect:/car/repairs/{id}");
         repairService.update(repair);
         return modelAndView;
