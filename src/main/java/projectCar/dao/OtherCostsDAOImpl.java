@@ -1,5 +1,6 @@
 package projectCar.dao;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,8 @@ import java.util.List;
 @Repository
 public class OtherCostsDAOImpl implements IOtherCostsDAO {
 
+    private static final Logger logger = Logger.getLogger(DocumentDAOImpl.class);
+
     private SessionFactory sessionFactory;
 
     @Autowired
@@ -23,18 +26,21 @@ public class OtherCostsDAOImpl implements IOtherCostsDAO {
     public void add(OtherCosts otherCosts) {
         Session session = sessionFactory.getCurrentSession();
         session.save(otherCosts);
+        logger.info("OtherCosts successfully added. OtherCosts: " + otherCosts);
     }
 
     @Override
     public void update(OtherCosts otherCosts) {
         Session session = sessionFactory.getCurrentSession();
         session.update(otherCosts);
+        logger.info("OtherCosts successfully updated. OtherCosts: " + otherCosts);
     }
 
     @Override
     public OtherCosts read(int id) {
         Session session = sessionFactory.getCurrentSession();
         OtherCosts otherCosts = session.get(OtherCosts.class, id);
+        logger.info("OtherCosts successfully read. OtherCosts: " + otherCosts);
         return otherCosts;
     }
 
@@ -42,7 +48,7 @@ public class OtherCostsDAOImpl implements IOtherCostsDAO {
     public void delete(OtherCosts otherCosts) {
         Session session = sessionFactory.getCurrentSession();
         session.delete(otherCosts);
-
+        logger.info("OtherCosts successfully deleted. OtherCosts: " + otherCosts);
     }
 
     @Override
@@ -50,6 +56,9 @@ public class OtherCostsDAOImpl implements IOtherCostsDAO {
     public List<OtherCosts> getAll() {
         Session session = sessionFactory.getCurrentSession();
         List<OtherCosts> listOtherCosts = session.createQuery("from OtherCosts").list();
+        for (OtherCosts otherCosts : listOtherCosts) {
+            logger.info("OtherCosts list. OtherCosts: " + otherCosts);
+        }
         return listOtherCosts;
     }
 }

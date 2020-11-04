@@ -26,7 +26,10 @@
                     </div>
                     <div class="form-group">
                         <label for="dateEnd" class="text-info">Дата окончания:</label><br>
-                        <input type="date" name="endDate" id="dateEnd" class="form-control">
+                        <input type="date" name="${doc.endDate}" id="dateEnd" class="form-control">
+                        <c:if test="${doc.endDate == null}">
+                            <input type="date" name="${doc.endDate}" id="dateEnd" value="2000-01-01">
+                        </c:if>
                     </div>
                     <div class="form-group">
                         <label for="month" class="text-info">Кол-во месяцев:</label><br>
