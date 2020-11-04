@@ -1,5 +1,6 @@
 package projectCar.dao;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.annotations.QueryHints;
@@ -13,6 +14,8 @@ import java.util.List;
 @Repository
 public class CarDAOImpl implements ICarDAO {
 
+    private static final Logger logger = Logger.getLogger(CarDAOImpl.class);
+
     private SessionFactory sessionFactory;
 
     @Autowired
@@ -24,27 +27,31 @@ public class CarDAOImpl implements ICarDAO {
     public void add(Car car) {
         Session session = sessionFactory.getCurrentSession();
         session.save(car);
+        logger.info("Car successfully added. Car: " + car);
     }
 
     @Override
     public void update(Car car) {
         Session session = sessionFactory.getCurrentSession();
         session.update(car);
+        logger.info("Car successfully updated. Car: " + car);
+
     }
 
     @Override
     public Car read(int id) {
         Session session = sessionFactory.getCurrentSession();
         Car car = session.get(Car.class, id);
+        logger.info("Car successfully read. Car: " + car);
         return car;
     }
 
     @Override
     public void delete(Car car) {
         Session session = sessionFactory.getCurrentSession();
-        if (session != null) {
             session.delete(car);
-        }
+        logger.info("Car successfully deleted. Car: " + car);
+
     }
 
     @Override
@@ -52,6 +59,9 @@ public class CarDAOImpl implements ICarDAO {
     public List<Car> getAll() {
         Session session = sessionFactory.getCurrentSession();
         List<Car> listCar = session.createQuery("from Car").list();
+        for (Car car : listCar) {
+            logger.info("Car list. Car: " + car);
+        }
         return listCar;
     }
 
@@ -73,7 +83,9 @@ public class CarDAOImpl implements ICarDAO {
         cars = session.createQuery(
                 "select distinct car from Car car left join fetch car.otherCosts where car.id = '" + id + "'",
                 Car.class).setHint(QueryHints.PASS_DISTINCT_THROUGH, false).getResultList();
-
+        for (Car car : cars) {
+            logger.info("Car list. Car: " + car);
+        }
         return cars;
     }
 }

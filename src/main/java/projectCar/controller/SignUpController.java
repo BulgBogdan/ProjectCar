@@ -39,7 +39,7 @@ public class SignUpController {
             modelAndView.addObject("loginError", "User exist");
             return modelAndView;
         }
-        modelAndView.setViewName("redirect:/login");
+        modelAndView.setViewName("redirect:/");
         return modelAndView;
     }
 

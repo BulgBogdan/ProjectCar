@@ -158,4 +158,20 @@ public class Car {
     public int hashCode() {
         return Objects.hash(id, nameCar, mileage, user, registration, parameters, documents, fuels, otherCosts, repairs);
     }
+
+//    @Override
+//    public String toString() {
+//        return "Car{" +
+//                "id=" + id +
+//                ", nameCar='" + nameCar + '\'' +
+//                ", mileage=" + mileage +
+//                ", user=" + user +
+//                ", registration=" + registration +
+//                ", parameters=" + parameters +
+//                ", documents=" + documents +
+//                ", fuels=" + fuels +
+//                ", otherCosts=" + otherCosts +
+//                ", repairs=" + repairs +
+//                '}';
+//    }
 }
