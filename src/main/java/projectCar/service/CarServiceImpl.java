@@ -42,8 +42,20 @@ public class CarServiceImpl implements ICarService {
 
     @Override
     @Transactional
+    public int carsCount() {
+        return carDAO.carsCount();
+    }
+
+    @Override
+    @Transactional
     public List<Car> getAll() {
         return carDAO.getAll();
+    }
+
+    @Override
+    @Transactional
+    public List<Car> getCars(int page) {
+        return carDAO.getCars(page);
     }
 
     @Override

@@ -14,7 +14,11 @@ public interface ICarDAO {
 
     void delete(Car car);
 
+    int carsCount();
+
     List<Car> getAll();
+
+    List<Car> getCars(int page);
 
     List<Car> getLists(int id);
 }

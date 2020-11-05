@@ -76,7 +76,7 @@
                                         <c:url value="car/view/${carsList.id}" var="cars"/>
                                         <c:url value="car/delete/${carsList.id}" var="carDelete"/>
                                         <c:url value="/car/edit/${carsList.id}" var="editCar"/>
-                                        <td><a href="${cars}"><b>${carsList.nameCar}</b></a></td>
+                                        <td><a href="${cars}"><h4>${carsList.nameCar}</h4></a></td>
                                         <td></td>
                                         <td class="text-right">
                                             <a class='btn btn-info btn-xs' href="${editCar}">Изменить</a>
@@ -87,6 +87,70 @@
                             </table>
                             <a href="${createCarName}" class="btn btn-primary btn-xs pull-right"><b>+</b> Добавить
                                 автомобиль</a>
+                            <span class="text-info text-right"
+                                  style="margin-left: 70px; font-size: 120%">Количество машин: ${carsCount}</span>
+                            <div class="container text-center">
+                                <c:if test="${pagesCount > 1}">
+                                    <c:set value="disabled" var="disabled"/>
+                                    <c:set value="" var="active"/>
+                                    <c:url value="/" var="url">
+                                        <c:param name="page" value="1"/>
+                                    </c:url>
+                                    <a class="${page == 1 ? disabled : active}" href="${url}">
+                                        &nbsp<span class="text-info">первая</span> &nbsp
+                                    </a>
+                                    <c:url value="/" var="url">
+                                        <c:param name="page" value="${page - 1}"/>
+                                    </c:url>
+                                    <a class="${page == 1 ? disabled : active}" href="${url}">
+                                        &nbsp<span class="text-info">&larr;</span>&nbsp
+                                    </a>
+
+                                    <c:if test="${pagesCount <= 5}">
+                                        <c:set var="begin" value="1"/>
+                                        <c:set var="end" value="${pagesCount}"/>
+                                    </c:if>
+                                    <c:if test="${pagesCount > 5}">
+                                        <c:choose>
+                                            <c:when test="${page < 3}">
+                                                <c:set var="begin" value="1"/>
+                                                <c:set var="end" value="5"/>
+                                            </c:when>
+                                            <c:when test="${page > pagesCount - 2}">
+                                                <c:set var="begin" value="${pagesCount - 4}"/>
+                                                <c:set var="end" value="${pagesCount}"/>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <c:set var="begin" value="${page - 2}"/>
+                                                <c:set var="end" value="${page + 2}"/>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:if>
+
+                                    <c:forEach begin="${begin}" end="${end}" step="1" varStatus="i">
+                                        <c:url value="/" var="url">
+                                            <c:param name="page" value="${i.index}"/>
+                                        </c:url>
+                                        <c:set value="current-page" var="current"/>
+                                        <c:set value="" var="perspective"/>
+                                        <a class="${page == i.index ? current : perspective}"
+                                           href="${url}"> ${i.index} </a>
+                                    </c:forEach>
+
+                                    <c:url value="/" var="url">
+                                        <c:param name="page" value="${page + 1}"/>
+                                    </c:url>
+                                    <a class="${page == pagesCount ? disabled : active}" href="${url}">
+                                        &nbsp<span class="text-info">&rarr;</span>&nbsp
+                                    </a>
+                                    <c:url value="/" var="url">
+                                        <c:param name="page" value="${pagesCount}"/>
+                                    </c:url>
+                                    <a class="${page == pagesCount ? disabled : active}" href="${url}">
+                                        &nbsp<span class="text-info">последняя</span>
+                                    </a>
+                                </c:if>
+                            </div>
                         </div>
                     </div>
                 </c:if>

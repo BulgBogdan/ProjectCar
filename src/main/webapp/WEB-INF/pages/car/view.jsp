@@ -211,6 +211,7 @@
 
             </div>
             <br>
+            <c:if test="${car.registration != null}">
             <div class="dropdown text-right">
                 <a href="#" data-toggle="dropdown" class="dropdown-toggle" title="Нажмите, чтобы развернуть и посмотреть">
                     Общая сумма затрат на <b class="text-dark">${car.nameCar}</b>
@@ -220,6 +221,7 @@
                     <b class="text-danger">${cos}</b>
                 </ul>
             </div>
+            </c:if>
             <br>
             <div id="register-link" class="text-left">
                 <br>

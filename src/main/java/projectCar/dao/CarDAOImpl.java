@@ -49,9 +49,17 @@ public class CarDAOImpl implements ICarDAO {
     @Override
     public void delete(Car car) {
         Session session = sessionFactory.getCurrentSession();
-            session.delete(car);
+        session.delete(car);
         logger.info("Car successfully deleted. Car: " + car);
 
+    }
+
+    @Override
+    public int carsCount() {
+        Session session = sessionFactory.getCurrentSession();
+        int count = session.createQuery("select count(*) from Car", Number.class)
+                .getSingleResult().intValue();
+        return count;
     }
 
     @Override
@@ -59,6 +67,18 @@ public class CarDAOImpl implements ICarDAO {
     public List<Car> getAll() {
         Session session = sessionFactory.getCurrentSession();
         List<Car> listCar = session.createQuery("from Car").list();
+        for (Car car : listCar) {
+            logger.info("Car list. Car: " + car);
+        }
+        return listCar;
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<Car> getCars(int page) {
+        Session session = sessionFactory.getCurrentSession();
+        List<Car> listCar = session.createQuery("from Car")
+                .setFirstResult(10 * (page - 1)).setMaxResults(10).list();
         for (Car car : listCar) {
             logger.info("Car list. Car: " + car);
         }

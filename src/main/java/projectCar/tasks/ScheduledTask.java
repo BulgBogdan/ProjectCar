@@ -56,7 +56,7 @@ public class ScheduledTask {
     }
 
     @Scheduled(cron = "0/5 * * ? * *") //every 5 seconds
-    private void correctGaranteMileageRepair(){
+    private void correctGarantMileageRepair(){
         List<Repair> listRepair = repairService.getAll();
         for (Repair repair : listRepair) {
             int mileageCarNow = repair.getCar().getMileage();

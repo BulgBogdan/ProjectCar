@@ -5,10 +5,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import projectCar.entity.*;
 import projectCar.service.CarServiceImpl;
@@ -96,25 +93,27 @@ public class CarController {
         modelAndView.addObject("parameter", car.getParameters());
         modelAndView.addObject("registration", car.getRegistration());
 
-        double costs = 0;
-        List<Car> listCar = carService.getLists(id);
-        for (Car list : listCar) {
-            for (Fuel fuel : list.getFuels()) {
-                costs = costs + fuel.getSumm();
+        if ((car.getRegistration()!=null) && (car.getParameters() != null)) {
+            double costs = 0;
+            List<Car> listCar = carService.getLists(id);
+            for (Car list : listCar) {
+                for (Fuel fuel : list.getFuels()) {
+                    costs = costs + fuel.getSumm();
+                }
+                for (OtherCosts otherCost : list.getOtherCosts()) {
+                    costs = costs + otherCost.getCost();
+                }
+                for (Repair repair : list.getRepairs()) {
+                    costs = costs + repair.getCostsRepair();
+                }
+                for (Document document : list.getDocuments()) {
+                    costs = costs + document.getDocumentCost();
+                }
             }
-            for (OtherCosts otherCost : list.getOtherCosts()) {
-                costs = costs + otherCost.getCost();
-            }
-            for (Repair repair : list.getRepairs()) {
-                costs = costs + repair.getCostsRepair();
-            }
-            for (Document document : list.getDocuments()) {
-                costs = costs + document.getDocumentCost();
-            }
+            double firstCosts = car.getRegistration().getPriceCar() + car.getRegistration().getPriceRegistration();
+            costs = costs + firstCosts;
+            modelAndView.addObject("cos", costs);
         }
-        double firstCosts = car.getRegistration().getPriceCar() + car.getRegistration().getPriceRegistration();
-        costs = costs + firstCosts;
-        modelAndView.addObject("cos", costs);
         return modelAndView;
     }
 
