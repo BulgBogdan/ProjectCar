@@ -174,8 +174,14 @@
                 <br>
                 <a href="/car/view/${car.id}" class="text-info">На страницу авто</a>
             </div>
-            <div class="text-center">
-                <b class="text-info">Сумма затрат на документы = <b class="text-danger">${allDocumentsCosts}</b></b>
+            <div class="dropdown text-right">
+                <a href="#" data-toggle="dropdown" class="dropdown-toggle" title="Нажмите, чтобы развернуть и посмотреть">
+                    Сумма затрат на документы
+                    <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu text-center">
+                    <b class="text-danger">${allDocumentsCosts}</b>
+                </ul>
             </div>
         </main>
     </div>

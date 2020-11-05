@@ -79,8 +79,14 @@ public class FuelController extends MethodsCarForControllers {
             double valueFuel = fuelValue(fuel.getSumm(), fuel.getLiterCost());
             fuel.setLiterValue(valueFuel);
         }
+        if ((fuel.getSumm() == 0) && (fuel.getLiterValue() == 0)){
+            errorIncorrectEnter();
+            modelAndView.setViewName("redirect:/car/fuel/create/{id}");
+            return modelAndView;
+        }
         double distanceFuel = fuelDistance(fuel.getLiterValue(), car.getParameters().getAverageRate());
         fuel.setFuelDistance(distanceFuel);
+        fuel.setCar(car);
         modelAndView.setViewName("redirect:/car/fuel/{id}");
         fuelService.add(fuel);
         return modelAndView;
@@ -98,26 +104,32 @@ public class FuelController extends MethodsCarForControllers {
     @PostMapping("/car/fuel/edit/{id}")
     public ModelAndView editFuel(@PathVariable("id") int id,
                                  @ModelAttribute("fuel") Fuel fuelEdit,
-                                 BindingResult result,
-                                 @ModelAttribute("car") Car car) {
+                                 BindingResult result) {
         if (result.hasErrors()){
             errorIncorrectEnter();
         }
         Fuel fuel = fuelService.read(id);
-        int carId = car.getId();
-
+        int carId = fuel.getCar().getId();
         fuelEdit.setCar(getCarById(carId));
-        if (fuelEdit.getSumm() != fuel.getSumm()) {
-            double sumFuel = fuelSumm(fuelEdit.getLiterCost(), fuelEdit.getLiterValue());
-            fuelEdit.setSumm(sumFuel);
-        }
-        if (fuelEdit.getLiterValue() != fuel.getLiterValue()) {
+        boolean editSum = fuelEdit.getSumm() == fuel.getSumm();
+        boolean editValue = fuelEdit.getLiterValue() == fuel.getLiterValue();
+        if (!editSum) {
             double valueFuel = fuelValue(fuelEdit.getSumm(), fuelEdit.getLiterCost());
             fuelEdit.setLiterValue(valueFuel);
         }
-        double distanceFuel = fuelDistance(fuelEdit.getLiterValue(), getCarById(car.getId()).getParameters().getAverageRate());
+        if (!editValue) {
+            double sumFuel = fuelSumm(fuelEdit.getLiterCost(), fuelEdit.getLiterValue());
+            fuelEdit.setSumm(sumFuel);
+        }
+        if ((fuelEdit.getSumm() == 0) && (fuelEdit.getLiterValue() == 0)){
+            errorIncorrectEnter();
+            modelAndView.setViewName("redirect:/car/fuel/edit/{id}");
+            return modelAndView;
+        }
+        double distanceFuel = fuelDistance(fuelEdit.getLiterValue(), fuel.getCar().getParameters().getAverageRate());
         fuelEdit.setFuelDistance(distanceFuel);
-        modelAndView.setViewName("redirect:/car/fuel/{id}");
+        modelAndView.addObject("carId", carId);
+        modelAndView.setViewName("redirect:/car/fuel/{carId}");
         fuelService.update(fuelEdit);
         return modelAndView;
     }

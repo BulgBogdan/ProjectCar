@@ -72,12 +72,11 @@ public class OtherCostsController extends MethodsCarForControllers {
     @PostMapping("/car/other/costs/edit/{id}")
     public ModelAndView addEdit(@PathVariable("id")int id,
                                 @ModelAttribute("costs") OtherCosts otherCosts,
-                                BindingResult result,
-                                @ModelAttribute("car") Car car){
+                                BindingResult result){
         if (result.hasErrors()){
             errorIncorrectEnter();
         }
-        otherCosts.setCar(getCarById(car.getId()));
+        otherCosts.setCar(costsService.read(id).getCar());
         modelAndView.setViewName("redirect:/car/other/costs/{id}");
         costsService.update(otherCosts);
         return modelAndView;

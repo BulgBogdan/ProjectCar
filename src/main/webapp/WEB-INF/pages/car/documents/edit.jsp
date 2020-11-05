@@ -24,8 +24,7 @@
                         <label for="date" class="text-info">Дата начала:</label><br>
                         <input type="date" name="beginDate" id="date" class="form-control" value="${docs.beginDate}">
                     </div>
-                    <div>
-                        <p class="text-center text-info"><b>Измените дату окончания или кол-во месяцев:</b></p>
+
                     <div class="form-group">
                         <label for="dateEnd" class="text-info">Дата окончания:</label><br>
                         <input type="date" name="endDate" id="dateEnd" class="form-control" value="${docs.endDate}">
@@ -33,7 +32,6 @@
                     <div class="form-group">
                         <label for="month" class="text-info">Кол-во месяцев:</label><br>
                         <input type="number" name="numberOfMonth" id="month" class="form-control" value="${docs.numberOfMonth}">
-                    </div>
                     </div>
 
                     <div class="form-group">

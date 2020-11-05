@@ -211,8 +211,14 @@
 
             </div>
             <br>
-            <div class="text-center">
-                <b class="text-info">Общая сумма затрат на <b class="text-dark">${car.nameCar}</b>, равна <b class="text-danger">${cos}</b></b>
+            <div class="dropdown text-right">
+                <a href="#" data-toggle="dropdown" class="dropdown-toggle" title="Нажмите, чтобы развернуть и посмотреть">
+                    Общая сумма затрат на <b class="text-dark">${car.nameCar}</b>
+                    <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu text-center">
+                    <b class="text-danger">${cos}</b>
+                </ul>
             </div>
             <br>
             <div id="register-link" class="text-left">
