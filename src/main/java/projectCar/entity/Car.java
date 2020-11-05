@@ -137,27 +137,27 @@ public class Car {
         this.repairs = repairs;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Car car = (Car) o;
-        return id == car.id &&
-                mileage == car.mileage &&
-                Objects.equals(nameCar, car.nameCar) &&
-                Objects.equals(user, car.user) &&
-                Objects.equals(registration, car.registration) &&
-                Objects.equals(parameters, car.parameters) &&
-                Objects.equals(documents, car.documents) &&
-                Objects.equals(fuels, car.fuels) &&
-                Objects.equals(otherCosts, car.otherCosts) &&
-                Objects.equals(repairs, car.repairs);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, nameCar, mileage, user, registration, parameters, documents, fuels, otherCosts, repairs);
-    }
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || getClass() != o.getClass()) return false;
+//        Car car = (Car) o;
+//        return id == car.id &&
+//                mileage == car.mileage &&
+//                Objects.equals(nameCar, car.nameCar) &&
+//                Objects.equals(user, car.user) &&
+//                Objects.equals(registration, car.registration) &&
+//                Objects.equals(parameters, car.parameters) &&
+//                Objects.equals(documents, car.documents) &&
+//                Objects.equals(fuels, car.fuels) &&
+//                Objects.equals(otherCosts, car.otherCosts) &&
+//                Objects.equals(repairs, car.repairs);
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(id, nameCar, mileage, user, registration, parameters, documents, fuels, otherCosts, repairs);
+//    }
 
 //    @Override
 //    public String toString() {

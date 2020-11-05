@@ -24,16 +24,16 @@
                         <label for="date" class="text-info">Дата начала:</label><br>
                         <input type="date" name="beginDate" id="date" class="form-control">
                     </div>
+                    <div>
+                        <p class="text-center text-info"><b>Добавьте дату окончания или кол-во месяцев:</b></p>
                     <div class="form-group">
                         <label for="dateEnd" class="text-info">Дата окончания:</label><br>
-                        <input type="date" name="${doc.endDate}" id="dateEnd" class="form-control">
-                        <c:if test="${doc.endDate == null}">
-                            <input type="date" name="${doc.endDate}" id="dateEnd" value="2000-01-01">
-                        </c:if>
+                        <input type="date" name="endDate" id="dateEnd" class="form-control" value="hidden null">
                     </div>
                     <div class="form-group">
                         <label for="month" class="text-info">Кол-во месяцев:</label><br>
-                        <input type="number" name="endDate" id="month" class="form-control">
+                        <input type="number" name="numberOfMonth" id="month" class="form-control">
+                    </div>
                     </div>
 
                     <div class="form-group">

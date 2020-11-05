@@ -13,6 +13,9 @@ import projectCar.entity.Document;
 import projectCar.service.DocumentServiceImpl;
 import projectCar.service.interfaces.IDocumentService;
 
+import java.sql.Date;
+import java.time.LocalDate;
+
 @Controller
 public class DocumentController extends MethodsCarForControllers {
 
@@ -51,15 +54,22 @@ public class DocumentController extends MethodsCarForControllers {
     public ModelAndView addDocument(@PathVariable("id") int id,
                                     @ModelAttribute("doc") Document document,
                                     BindingResult result) {
-        if (result.hasErrors()){
+        if (result.hasErrors()) {
             errorIncorrectEnter();
         }
-        car = getCarById(id);
-        int numberOfDays = amountOfDays(document.getBeginDate(), document.getEndDate());
-        int numberOfMonths = amountOfMonths(document.getBeginDate(),document.getEndDate());
 
+        int numberOfMonths;
+        car = getCarById(id);
+        if (document.getEndDate() == null) {
+            LocalDate endDate = document.getBeginDate().toLocalDate().plusMonths(document.getNumberOfMonth());
+            document.setEndDate(Date.valueOf(endDate));
+        }
+        if (document.getNumberOfMonth() == 0) {
+            numberOfMonths = amountOfMonths(document.getBeginDate(), document.getEndDate());
+            document.setNumberOfMonth(numberOfMonths);
+        }
+        int numberOfDays = amountOfDays(document.getBeginDate(), document.getEndDate());
         document.setNumberOfDays(numberOfDays);
-        document.setNumberOfMonth(numberOfMonths);
         document.setCar(car);
         modelAndView.setViewName("redirect:/car/documents/{id}");
         documentService.add(document);
@@ -76,25 +86,37 @@ public class DocumentController extends MethodsCarForControllers {
     }
 
     @PostMapping("car/documents/edit/{id}")
-    public ModelAndView editDocument(@ModelAttribute("docs") Document document,
-                                      @ModelAttribute("car") Car car,
-                                      @PathVariable("id") int id,
-                                     BindingResult result) {
-        if (result.hasErrors()){
+    public ModelAndView editDocument(@ModelAttribute("docs") Document documentEdit,
+                                     BindingResult result,
+                                     @PathVariable("id") int id) {
+        if (result.hasErrors()) {
             errorIncorrectEnter();
         }
-        int carId = car.getId();
-        int numberOfDays = amountOfDays(document.getBeginDate(), document.getEndDate());
-
-        document.setCar(getCarById(carId));
-        document.setNumberOfDays(numberOfDays);
-        modelAndView.setViewName("redirect:/car/documents/{id}");
-        documentService.update(document);
+        Document document = documentService.read(id);
+        int carId = document.getCar().getId();
+        LocalDate endDate;
+        boolean dateEditEqualDate = document.getEndDate().getTime() == documentEdit.getEndDate().getTime();
+        boolean monthsEditEqualMonths = document.getNumberOfMonth() == documentEdit.getNumberOfMonth();
+        int numberOfMonth;
+        if (!dateEditEqualDate) {
+            numberOfMonth = amountOfMonths(documentEdit.getBeginDate(), documentEdit.getEndDate());
+            documentEdit.setNumberOfMonth(numberOfMonth);
+        }
+        if ((!monthsEditEqualMonths) && (dateEditEqualDate)) {
+            endDate = documentEdit.getBeginDate().toLocalDate().plusMonths(documentEdit.getNumberOfMonth());
+            documentEdit.setEndDate(Date.valueOf(endDate));
+        }
+        int numberOfDays = amountOfDays(documentEdit.getBeginDate(), documentEdit.getEndDate());
+        documentEdit.setNumberOfDays(numberOfDays);
+        documentEdit.setCar(getCarById(carId));
+        modelAndView.addObject("carId", carId);
+        modelAndView.setViewName("redirect:/car/documents/{carId}");
+        documentService.update(documentEdit);
         return modelAndView;
     }
 
     @GetMapping("/car/documents/delete/{id}")
-    public ModelAndView deleteDocument(@PathVariable("id") int id){
+    public ModelAndView deleteDocument(@PathVariable("id") int id) {
         Document document = documentService.read(id);
         modelAndView.addObject("carId", document.getCar().getId());
         modelAndView.setViewName("redirect:/car/documents/{carId}");
