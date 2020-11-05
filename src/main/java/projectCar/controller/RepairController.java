@@ -3,15 +3,14 @@ package projectCar.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import projectCar.entity.Car;
 import projectCar.entity.Repair;
 import projectCar.service.RepairServiceImpl;
 import projectCar.service.interfaces.IRepairService;
+
+import java.util.List;
 
 @Controller
 public class RepairController extends MethodsCarForControllers {
@@ -23,18 +22,28 @@ public class RepairController extends MethodsCarForControllers {
 
     private Car car = new Car();
 
+    private int page;
+
     private static int endMileageRepairs(int startMileage, int serviceMileage) {
         int mileage = startMileage + serviceMileage;
         return mileage;
     }
 
     @GetMapping("/car/repairs/{id}")
-    public ModelAndView pageRepairs(@PathVariable("id") int id) {
+    public ModelAndView pageRepairs(@PathVariable("id") int id,
+                                    @RequestParam(defaultValue = "1") int page) {
         car = getCarWithWires(id);
+        List<Repair> repairList = repairService.getRepair(page, id);
+        int repairCount = repairService.repairCount();
+        int pagesCount = (repairCount + 9) / 10;
         modelAndView.setViewName("car/repairs");
+        modelAndView.addObject("page",page);
+        modelAndView.addObject("repairCount", repairCount);
+        modelAndView.addObject("pagesCount", pagesCount);
         modelAndView.addObject("car", car);
         modelAndView.addObject("parameters", car.getParameters());
-        modelAndView.addObject("repairs", car.getRepairs());
+        modelAndView.addObject("repairs", repairList);
+        this.page = page;
         double repairs = 0;
         for (Repair repair : car.getRepairs()) {
             repairs = repair.getCostsRepair() + repairs;

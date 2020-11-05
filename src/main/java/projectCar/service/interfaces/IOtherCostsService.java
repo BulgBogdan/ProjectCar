@@ -14,5 +14,9 @@ public interface IOtherCostsService {
 
     void delete(OtherCosts otherCosts);
 
+    int otherCostsCount ();
+
+    List<OtherCosts> getOtherCosts (int page, int id);
+
     List<OtherCosts> getAll();
 }

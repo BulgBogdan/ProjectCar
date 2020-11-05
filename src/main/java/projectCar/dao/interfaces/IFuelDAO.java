@@ -14,5 +14,9 @@ public interface IFuelDAO {
 
     void delete(Fuel fuel);
 
+    int fuelCount ();
+
+    List<Fuel> getFuel (int page, int id);
+
     List<Fuel> getAll();
 }

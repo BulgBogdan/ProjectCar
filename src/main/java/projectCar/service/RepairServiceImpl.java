@@ -42,6 +42,18 @@ public class RepairServiceImpl implements IRepairService {
 
     @Override
     @Transactional
+    public int repairCount() {
+        return repairDAO.repairCount();
+    }
+
+    @Override
+    @Transactional
+    public List<Repair> getRepair(int page, int id) {
+        return repairDAO.getRepair(page, id);
+    }
+
+    @Override
+    @Transactional
     public List<Repair> getAll() {
         return repairDAO.getAll();
     }

@@ -27,14 +27,14 @@ public class CarDAOImpl implements ICarDAO {
     public void add(Car car) {
         Session session = sessionFactory.getCurrentSession();
         session.save(car);
-        logger.info("Car successfully added. Car: " + car);
+        logger.info("Car successfully added. Car: " + car.toString());
     }
 
     @Override
     public void update(Car car) {
         Session session = sessionFactory.getCurrentSession();
         session.update(car);
-        logger.info("Car successfully updated. Car: " + car);
+        logger.info("Car successfully updated. Car: " + car.toString());
 
     }
 
@@ -42,7 +42,7 @@ public class CarDAOImpl implements ICarDAO {
     public Car read(int id) {
         Session session = sessionFactory.getCurrentSession();
         Car car = session.get(Car.class, id);
-        logger.info("Car successfully read. Car: " + car);
+        logger.info("Car successfully read. Car: " + car.toString());
         return car;
     }
 
@@ -50,7 +50,7 @@ public class CarDAOImpl implements ICarDAO {
     public void delete(Car car) {
         Session session = sessionFactory.getCurrentSession();
         session.delete(car);
-        logger.info("Car successfully deleted. Car: " + car);
+        logger.info("Car successfully deleted. Car: " + car.toString());
 
     }
 
@@ -59,6 +59,7 @@ public class CarDAOImpl implements ICarDAO {
         Session session = sessionFactory.getCurrentSession();
         int count = session.createQuery("select count(*) from Car", Number.class)
                 .getSingleResult().intValue();
+        logger.info("Car returned count. Car: " + count);
         return count;
     }
 
@@ -68,7 +69,7 @@ public class CarDAOImpl implements ICarDAO {
         Session session = sessionFactory.getCurrentSession();
         List<Car> listCar = session.createQuery("from Car").list();
         for (Car car : listCar) {
-            logger.info("Car list. Car: " + car);
+            logger.info("Car list. Car: " + car.toString());
         }
         return listCar;
     }
@@ -80,7 +81,7 @@ public class CarDAOImpl implements ICarDAO {
         List<Car> listCar = session.createQuery("from Car")
                 .setFirstResult(10 * (page - 1)).setMaxResults(10).list();
         for (Car car : listCar) {
-            logger.info("Car list. Car: " + car);
+            logger.info("Car list. Car: " + car.toString());
         }
         return listCar;
     }

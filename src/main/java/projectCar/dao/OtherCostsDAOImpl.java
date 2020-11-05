@@ -53,6 +53,28 @@ public class OtherCostsDAOImpl implements IOtherCostsDAO {
 
     @Override
     @SuppressWarnings("unchecked")
+    public int otherCostsCount() {
+        Session session = sessionFactory.getCurrentSession();
+        int count = session.createQuery("select count(*) from OtherCosts", Number.class)
+                .getSingleResult().intValue();
+        logger.info("OtherCosts returned count. OtherCosts: " + count);
+        return count;
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<OtherCosts> getOtherCosts(int page, int id) {
+        Session session = sessionFactory.getCurrentSession();
+        List<OtherCosts> otherCostsList = session.createQuery("from OtherCosts where car.id = '" + id + "'")
+                .setFirstResult(10 * (page - 1)).setMaxResults(10).list();
+        for (OtherCosts costs : otherCostsList) {
+            logger.info("OtherCosts list. OtherCosts: " + costs.toString());
+        }
+        return otherCostsList;
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
     public List<OtherCosts> getAll() {
         Session session = sessionFactory.getCurrentSession();
         List<OtherCosts> listOtherCosts = session.createQuery("from OtherCosts").list();

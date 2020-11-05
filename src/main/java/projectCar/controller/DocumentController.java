@@ -3,10 +3,7 @@ package projectCar.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import projectCar.entity.Car;
 import projectCar.entity.Document;
@@ -15,6 +12,7 @@ import projectCar.service.interfaces.IDocumentService;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.List;
 
 @Controller
 public class DocumentController extends MethodsCarForControllers {
@@ -26,13 +24,23 @@ public class DocumentController extends MethodsCarForControllers {
 
     private Car car = new Car();
 
+    private int page;
+
     @GetMapping("/car/documents/{id}")
-    public ModelAndView pageDocuments(@PathVariable("id") int id) {
+    public ModelAndView pageDocuments(@PathVariable("id") int id,
+                                      @RequestParam(defaultValue = "1") int page) {
         car = getCarWithWires(id);
+        List<Document> documentList = documentService.getDocuments(page, id);
+        int documentsCount = documentService.docsCount();
+        int pagesCount = (documentsCount+9)/10;
         modelAndView.setViewName("car/documents");
         modelAndView.addObject("car", car);
+        modelAndView.addObject("page",page);
+        modelAndView.addObject("documentsCount", documentsCount);
+        modelAndView.addObject("pagesCount", pagesCount);
         modelAndView.addObject("parameters", car.getParameters());
-        modelAndView.addObject("documents", car.getDocuments());
+        modelAndView.addObject("documents", documentList);
+        this.page = page;
         double documentsCosts = 0;
         for (Document document : car.getDocuments()) {
             documentsCosts = documentsCosts + document.getDocumentCost();

@@ -54,6 +54,28 @@ public class RepairDAOImpl implements IRepairDAO {
 
     @Override
     @SuppressWarnings("unchecked")
+    public int repairCount() {
+        Session session = sessionFactory.getCurrentSession();
+        int count = session.createQuery("select count(*) from Repair", Number.class)
+                .getSingleResult().intValue();
+        logger.info("Repair returned count. Repair: " + count);
+        return count;
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<Repair> getRepair(int page, int id) {
+        Session session = sessionFactory.getCurrentSession();
+        List<Repair> repairList = session.createQuery("from Repair where car.id = '" + id + "'")
+                .setFirstResult(10 * (page - 1)).setMaxResults(10).list();
+        for (Repair repair : repairList) {
+            logger.info("Repair list. Repair: " + repair.toString());
+        }
+        return repairList;
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
     public List<Repair> getAll() {
         Session session = sessionFactory.getCurrentSession();
         List<Repair> listRepair = session.createQuery("from Repair").list();

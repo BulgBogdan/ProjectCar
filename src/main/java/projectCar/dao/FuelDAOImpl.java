@@ -53,6 +53,28 @@ public class FuelDAOImpl implements IFuelDAO {
 
     @Override
     @SuppressWarnings("unchecked")
+    public int fuelCount() {
+        Session session = sessionFactory.getCurrentSession();
+        int count = session.createQuery("select count(*) from Fuel", Number.class)
+                .getSingleResult().intValue();
+        logger.info("Fuel returned count. Fuel: " + count);
+        return count;
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<Fuel> getFuel(int page, int id) {
+        Session session = sessionFactory.getCurrentSession();
+        List<Fuel> fuelList = session.createQuery("from Fuel where car.id = '" + id + "'")
+                .setFirstResult(10 * (page - 1)).setMaxResults(10).list();
+        for (Fuel fuel : fuelList) {
+            logger.info("Fuel list. Fuel: " + fuel.toString());
+        }
+        return fuelList;
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
     public List<Fuel> getAll() {
         Session session = sessionFactory.getCurrentSession();
         List<Fuel> listFuel = session.createQuery("from Fuel").list();

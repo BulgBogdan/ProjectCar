@@ -42,6 +42,18 @@ public class DocumentServiceImpl implements IDocumentService {
 
     @Override
     @Transactional
+    public int docsCount() {
+        return documentDAO.docsCount();
+    }
+
+    @Override
+    @Transactional
+    public List<Document> getDocuments(int page, int id) {
+        return documentDAO.getDocuments(page, id);
+    }
+
+    @Override
+    @Transactional
     public List<Document> getAll() {
         return documentDAO.getAll();
     }

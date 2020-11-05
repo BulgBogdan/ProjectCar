@@ -3,15 +3,14 @@ package projectCar.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import projectCar.entity.Car;
 import projectCar.entity.Fuel;
 import projectCar.service.FuelServiceImpl;
 import projectCar.service.interfaces.IFuelService;
+
+import java.util.List;
 
 @Controller
 public class FuelController extends MethodsCarForControllers {
@@ -22,6 +21,8 @@ public class FuelController extends MethodsCarForControllers {
     private ModelAndView modelAndView = new ModelAndView();
 
     private Car car = new Car();
+
+    private int page;
 
     private static double fuelSumm(double liter, double value) {
         double summ = liter * value;
@@ -39,12 +40,20 @@ public class FuelController extends MethodsCarForControllers {
     }
 
     @GetMapping("/car/fuel/{id}")
-    public ModelAndView pageFuel(@PathVariable("id") int id) {
+    public ModelAndView pageFuel(@PathVariable("id") int id,
+                                 @RequestParam(defaultValue = "1") int page) {
         car = getCarWithWires(id);
+        List<Fuel> fuelList = fuelService.getFuel(page, id);
+        int fuelCount = fuelService.fuelCount();
+        int pagesCount = (fuelCount + 9) / 10;
         modelAndView.setViewName("car/fuel");
         modelAndView.addObject("car", car);
+        modelAndView.addObject("page",page);
+        modelAndView.addObject("fuelCount", fuelCount);
+        modelAndView.addObject("pagesCount", pagesCount);
         modelAndView.addObject("parameters", car.getParameters());
-        modelAndView.addObject("fuel", car.getFuels());
+        modelAndView.addObject("fuel", fuelList);
+        this.page = page;
         double fuels = 0;
         for (Fuel fuel : car.getFuels()) {
             fuels = fuel.getSumm() + fuels;
@@ -66,7 +75,7 @@ public class FuelController extends MethodsCarForControllers {
     public ModelAndView addFuel(@PathVariable("id") int id,
                                 @ModelAttribute("fuel") Fuel fuel,
                                 BindingResult result) {
-        if (result.hasErrors()){
+        if (result.hasErrors()) {
             errorIncorrectEnter();
         }
         car = getCarById(id);
@@ -79,7 +88,7 @@ public class FuelController extends MethodsCarForControllers {
             double valueFuel = fuelValue(fuel.getSumm(), fuel.getLiterCost());
             fuel.setLiterValue(valueFuel);
         }
-        if ((fuel.getSumm() == 0) && (fuel.getLiterValue() == 0)){
+        if ((fuel.getSumm() == 0) && (fuel.getLiterValue() == 0)) {
             errorIncorrectEnter();
             modelAndView.setViewName("redirect:/car/fuel/create/{id}");
             return modelAndView;
@@ -105,7 +114,7 @@ public class FuelController extends MethodsCarForControllers {
     public ModelAndView editFuel(@PathVariable("id") int id,
                                  @ModelAttribute("fuel") Fuel fuelEdit,
                                  BindingResult result) {
-        if (result.hasErrors()){
+        if (result.hasErrors()) {
             errorIncorrectEnter();
         }
         Fuel fuel = fuelService.read(id);
@@ -121,7 +130,7 @@ public class FuelController extends MethodsCarForControllers {
             double sumFuel = fuelSumm(fuelEdit.getLiterCost(), fuelEdit.getLiterValue());
             fuelEdit.setSumm(sumFuel);
         }
-        if ((fuelEdit.getSumm() == 0) && (fuelEdit.getLiterValue() == 0)){
+        if ((fuelEdit.getSumm() == 0) && (fuelEdit.getLiterValue() == 0)) {
             errorIncorrectEnter();
             modelAndView.setViewName("redirect:/car/fuel/edit/{id}");
             return modelAndView;

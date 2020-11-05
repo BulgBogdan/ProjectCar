@@ -114,7 +114,7 @@
             <c:url value="/car/documents/create/${car.id}" var="createDoc"/>
             <c:if test="${documents.size() != 0}">
                 <div class="container">
-                    <div class="row col-md-12 col-md-offset-2">
+                    <div class="row col-md-12 col-md-offset-0">
                         <table class="table table-striped">
 
                             <thead style="background-color: #77a4ff">
@@ -160,6 +160,80 @@
                             </c:forEach>
                         </table>
                         <a href="${createDoc}" class="btn btn-primary btn-xs pull-right"><b>+</b> Добавить документ</a>
+                        <span class="text-info text-right"
+                              style="margin-left: 70px; font-size: 120%">Количество документов: ${documentsCount}</span>
+                        <div class="container text-center">
+                            <c:if test="${pagesCount > 1}">
+                                <c:set value="disabled" var="disabled"/>
+                                <c:set value="" var="active"/>
+                                <c:url value="/car/documents/${car.id}" var="url">
+                                    <c:param name="page" value="1"/>
+                                </c:url>
+                                <a class="${page == 1 ? disabled : active}" href="${url}">
+                                    &nbsp<span class="text-info">первая</span> &nbsp
+                                </a>
+                                <c:url value="/car/documents/${car.id}" var="url">
+                                    <c:param name="page" value="${page - 1}"/>
+                                </c:url>
+                                <a class="${page == 1 ? disabled : active}" href="${url}">
+                                    &nbsp<span class="text-info">&larr;</span>&nbsp
+                                </a>
+
+                                <c:if test="${pagesCount <= 5}">
+                                    <c:set var="begin" value="1"/>
+                                    <c:set var="end" value="${pagesCount}"/>
+                                </c:if>
+                                <c:if test="${pagesCount > 5}">
+                                    <c:choose>
+                                        <c:when test="${page < 3}">
+                                            <c:set var="begin" value="1"/>
+                                            <c:set var="end" value="5"/>
+                                        </c:when>
+                                        <c:when test="${page > pagesCount - 2}">
+                                            <c:set var="begin" value="${pagesCount - 4}"/>
+                                            <c:set var="end" value="${pagesCount}"/>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <c:set var="begin" value="${page - 2}"/>
+                                            <c:set var="end" value="${page + 2}"/>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:if>
+
+                                <c:forEach begin="${begin}" end="${end}" step="1" varStatus="i">
+                                    <c:url value="/car/documents/${car.id}" var="url">
+                                        <c:param name="page" value="${i.index}"/>
+                                    </c:url>
+                                    <c:set value="current-page" var="current"/>
+                                    <c:set value="" var="perspective"/>
+                                    <a class="${page == i.index ? current : perspective}"
+                                       href="${url}"> ${i.index} </a>
+                                </c:forEach>
+
+                                <c:url value="/car/documents/${car.id}" var="url">
+                                    <c:param name="page" value="${page + 1}"/>
+                                </c:url>
+                                <a class="${page == pagesCount ? disabled : active}" href="${url}">
+                                    &nbsp<span class="text-info">&rarr;</span>&nbsp
+                                </a>
+                                <c:url value="/car/documents/${car.id}" var="url">
+                                    <c:param name="page" value="${pagesCount}"/>
+                                </c:url>
+                                <a class="${page == pagesCount ? disabled : active}" href="${url}">
+                                    &nbsp<span class="text-info">последняя</span>
+                                </a>
+                            </c:if>
+                        </div>
+                    </div>
+                    <div class="dropdown text-right">
+                        <a href="#" data-toggle="dropdown" class="dropdown-toggle"
+                           title="Нажмите, чтобы развернуть и посмотреть">
+                            Сумма затрат на документы
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu text-center">
+                            <b class="text-danger">${allDocumentsCosts}</b>
+                        </ul>
                     </div>
                 </div>
             </c:if>
@@ -170,19 +244,10 @@
             <c:if test="${parameters == null}">
                 <p>Вы не заполнили параметры автомобиля, <a href="/car/parameters/${car.id}"> заполнить?</a></p>
             </c:if>
-            <div id="register-link" class="text-left">
-                <br>
-                <a href="/car/view/${car.id}" class="text-info">На страницу авто</a>
+            <div id="register-link">
+                <a href="/car/view/${car.id}" class="text-info text-right">На страницу авто</a>
             </div>
-            <div class="dropdown text-right">
-                <a href="#" data-toggle="dropdown" class="dropdown-toggle" title="Нажмите, чтобы развернуть и посмотреть">
-                    Сумма затрат на документы
-                    <b class="caret"></b>
-                </a>
-                <ul class="dropdown-menu text-center">
-                    <b class="text-danger">${allDocumentsCosts}</b>
-                </ul>
-            </div>
+            <div>&nbsp;</div>
         </main>
     </div>
 </div>

@@ -14,5 +14,9 @@ public interface IDocumentService {
 
     void delete(Document document);
 
+    int docsCount ();
+
+    List<Document> getDocuments(int page, int id);
+
     List<Document> getAll();
 }

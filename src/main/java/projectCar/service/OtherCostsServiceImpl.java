@@ -11,7 +11,7 @@ import projectCar.service.interfaces.IOtherCostsService;
 import java.util.List;
 
 @Service
-public class OhterCostsServiceImpl implements IOtherCostsService {
+public class OtherCostsServiceImpl implements IOtherCostsService {
 
     @Autowired
     private IOtherCostsDAO otherCostsDAO = new OtherCostsDAOImpl();
@@ -38,6 +38,18 @@ public class OhterCostsServiceImpl implements IOtherCostsService {
     @Transactional
     public void delete(OtherCosts otherCosts) {
         otherCostsDAO.delete(otherCosts);
+    }
+
+    @Override
+    @Transactional
+    public int otherCostsCount() {
+        return otherCostsDAO.otherCostsCount();
+    }
+
+    @Override
+    @Transactional
+    public List<OtherCosts> getOtherCosts(int page, int id) {
+        return otherCostsDAO.getOtherCosts(page, id);
     }
 
     @Override

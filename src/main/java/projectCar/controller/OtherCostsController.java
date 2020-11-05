@@ -3,33 +3,42 @@ package projectCar.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import projectCar.entity.Car;
 import projectCar.entity.OtherCosts;
-import projectCar.service.OhterCostsServiceImpl;
+import projectCar.service.OtherCostsServiceImpl;
 import projectCar.service.interfaces.IOtherCostsService;
+
+import java.util.List;
 
 @Controller
 public class OtherCostsController extends MethodsCarForControllers {
 
     @Autowired
-    private IOtherCostsService costsService = new OhterCostsServiceImpl();
+    private IOtherCostsService costsService = new OtherCostsServiceImpl();
 
     private ModelAndView modelAndView = new ModelAndView();
 
     private Car car = new Car();
 
+    private int page;
+
     @GetMapping("/car/other/costs/{id}")
-    public ModelAndView pageRepairs(@PathVariable("id") int id) {
+    public ModelAndView pageRepairs(@PathVariable("id") int id,
+                                    @RequestParam(defaultValue = "1") int page) {
         car = getCarWithWires(id);
+        List<OtherCosts> costsList = costsService.getOtherCosts(page, id);
+        int costsCount = costsService.otherCostsCount();
+        int pagesCount = (costsCount + 9) / 10;
         modelAndView.setViewName("car/other/costs");
         modelAndView.addObject("car", car);
         modelAndView.addObject("parameters", car.getParameters());
-        modelAndView.addObject("otherCosts", car.getOtherCosts());
+        modelAndView.addObject("otherCosts", costsList);
+        modelAndView.addObject("page",page);
+        modelAndView.addObject("costsCount", costsCount);
+        modelAndView.addObject("pagesCount", pagesCount);
+        this.page = page;
         double costs = 0;
         for (OtherCosts listCosts : car.getOtherCosts()) {
             costs = costs + listCosts.getCost();

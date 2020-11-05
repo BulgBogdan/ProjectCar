@@ -42,6 +42,18 @@ public class FuelServiceImpl implements IFuelService {
 
     @Override
     @Transactional
+    public int fuelCount() {
+        return fuelDAO.fuelCount();
+    }
+
+    @Override
+    @Transactional
+    public List<Fuel> getFuel(int page, int id) {
+        return fuelDAO.getFuel(page,id);
+    }
+
+    @Override
+    @Transactional
     public List<Fuel> getAll() {
         return fuelDAO.getAll();
     }

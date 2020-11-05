@@ -99,8 +99,7 @@
                                     </svg>
                                 <li class="nav-item">
                                     <a class="nav-link pl-0" href="${createParameter}"><i class="fa fa-list fa-fw"></i>
-                                        <span
-                                                class="d-none d-md-inline">добавить?</span></a>
+                                        <span class="d-none d-md-inline">добавить?</span></a>
                                 </li>
                                 </p>
                             </c:if>
@@ -156,6 +155,79 @@
                             </c:forEach>
                         </table>
                         <a href="${createFuel}" class="btn btn-primary btn-xs pull-right"><b>+</b> Добавить заправку</a>
+                        <span class="text-info text-right"
+                              style="margin-left: 70px; font-size: 120%">Количество заправок: ${fuelCount}</span>
+                        <div class="container text-center">
+                            <c:if test="${pagesCount > 1}">
+                                <c:set value="disabled" var="disabled"/>
+                                <c:set value="" var="active"/>
+                                <c:url value="/car/fuel/${car.id}" var="url">
+                                    <c:param name="page" value="1"/>
+                                </c:url>
+                                <a class="${page == 1 ? disabled : active}" href="${url}">
+                                    &nbsp<span class="text-info">первая</span> &nbsp
+                                </a>
+                                <c:url value="/car/fuel/${car.id}" var="url">
+                                    <c:param name="page" value="${page - 1}"/>
+                                </c:url>
+                                <a class="${page == 1 ? disabled : active}" href="${url}">
+                                    &nbsp<span class="text-info">&larr;</span>&nbsp
+                                </a>
+
+                                <c:if test="${pagesCount <= 5}">
+                                    <c:set var="begin" value="1"/>
+                                    <c:set var="end" value="${pagesCount}"/>
+                                </c:if>
+                                <c:if test="${pagesCount > 5}">
+                                    <c:choose>
+                                        <c:when test="${page < 3}">
+                                            <c:set var="begin" value="1"/>
+                                            <c:set var="end" value="5"/>
+                                        </c:when>
+                                        <c:when test="${page > pagesCount - 2}">
+                                            <c:set var="begin" value="${pagesCount - 4}"/>
+                                            <c:set var="end" value="${pagesCount}"/>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <c:set var="begin" value="${page - 2}"/>
+                                            <c:set var="end" value="${page + 2}"/>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:if>
+
+                                <c:forEach begin="${begin}" end="${end}" step="1" varStatus="i">
+                                    <c:url value="/car/fuel/${car.id}" var="url">
+                                        <c:param name="page" value="${i.index}"/>
+                                    </c:url>
+                                    <c:set value="current-page" var="current"/>
+                                    <c:set value="" var="perspective"/>
+                                    <a class="${page == i.index ? current : perspective}"
+                                       href="${url}"> ${i.index} </a>
+                                </c:forEach>
+
+                                <c:url value="/car/fuel/${car.id}" var="url">
+                                    <c:param name="page" value="${page + 1}"/>
+                                </c:url>
+                                <a class="${page == pagesCount ? disabled : active}" href="${url}">
+                                    &nbsp<span class="text-info">&rarr;</span>&nbsp
+                                </a>
+                                <c:url value="/car/fuel/${car.id}" var="url">
+                                    <c:param name="page" value="${pagesCount}"/>
+                                </c:url>
+                                <a class="${page == pagesCount ? disabled : active}" href="${url}">
+                                    &nbsp<span class="text-info">последняя</span>
+                                </a>
+                            </c:if>
+                        </div>
+                    </div>
+                    <div class="dropdown text-right">
+                        <a href="#" data-toggle="dropdown" class="dropdown-toggle" title="Нажмите, чтобы развернуть и посмотреть">
+                            Сумма затрат на топливо
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu text-center">
+                            <b class="text-danger">${allFuelsCosts}</b>
+                        </ul>
                     </div>
                 </div>
             </c:if>
@@ -170,16 +242,7 @@
                 <br>
                 <a href="/car/view/${car.id}" class="text-info">На страницу авто</a>
             </div>
-
-            <div class="dropdown text-right">
-                <a href="#" data-toggle="dropdown" class="dropdown-toggle" title="Нажмите, чтобы развернуть и посмотреть">
-                    Сумма затрат на топливо
-                    <b class="caret"></b>
-                </a>
-                <ul class="dropdown-menu text-center">
-                    <b class="text-danger">${allFuelsCosts}</b>
-                </ul>
-            </div>
+            <div>&nbsp;</div>
         </main>
     </div>
 </div>

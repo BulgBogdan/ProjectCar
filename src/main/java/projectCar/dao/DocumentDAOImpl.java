@@ -55,6 +55,28 @@ public class DocumentDAOImpl implements IDocumentDAO {
 
     @Override
     @SuppressWarnings("unchecked")
+    public int docsCount() {
+        Session session = sessionFactory.getCurrentSession();
+        int count = session.createQuery("select count(*) from Document ", Number.class)
+                .getSingleResult().intValue();
+        logger.info("Document returned count. Document: " + count);
+        return count;
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<Document> getDocuments(int page, int id) {
+        Session session = sessionFactory.getCurrentSession();
+        List<Document> documentList = session.createQuery("from Document where car.id = '" + id + "'")
+                .setFirstResult(10 * (page - 1)).setMaxResults(10).list();
+        for (Document document : documentList) {
+            logger.info("Document list. Document: " + document.toString());
+        }
+        return documentList;
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
     public List<Document> getAll() {
         Session session = sessionFactory.getCurrentSession();
         List<Document> listDocument = session.createQuery("from Document").list();

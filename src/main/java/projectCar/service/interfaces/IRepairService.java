@@ -14,5 +14,9 @@ public interface IRepairService {
 
     void delete(Repair repair);
 
+    int repairCount ();
+
+    List<Repair> getRepair (int page, int id);
+
     List<Repair> getAll();
 }
