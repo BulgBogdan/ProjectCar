@@ -1,10 +1,15 @@
 package projectCar.entity;
 
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.TermVector;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
+@Indexed
 @Table(name = "cars", schema = "projectcar")
 public class Car {
 
@@ -14,9 +19,11 @@ public class Car {
     private int id;
 
     @Column(name = "name_car", nullable = false, length = 100)
+    @Field(termVector = TermVector.YES)
     private String nameCar;
 
     @Column(name = "mileage")
+    @Field(termVector = TermVector.YES)
     private int mileage;
 
     @ManyToOne
@@ -137,41 +144,41 @@ public class Car {
         this.repairs = repairs;
     }
 
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || getClass() != o.getClass()) return false;
-//        Car car = (Car) o;
-//        return id == car.id &&
-//                mileage == car.mileage &&
-//                Objects.equals(nameCar, car.nameCar) &&
-//                Objects.equals(user, car.user) &&
-//                Objects.equals(registration, car.registration) &&
-//                Objects.equals(parameters, car.parameters) &&
-//                Objects.equals(documents, car.documents) &&
-//                Objects.equals(fuels, car.fuels) &&
-//                Objects.equals(otherCosts, car.otherCosts) &&
-//                Objects.equals(repairs, car.repairs);
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(id, nameCar, mileage, user, registration, parameters, documents, fuels, otherCosts, repairs);
-//    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Car car = (Car) o;
+        return id == car.id &&
+                mileage == car.mileage &&
+                Objects.equals(nameCar, car.nameCar) &&
+                Objects.equals(user, car.user) &&
+                Objects.equals(registration, car.registration) &&
+                Objects.equals(parameters, car.parameters) &&
+                Objects.equals(documents, car.documents) &&
+                Objects.equals(fuels, car.fuels) &&
+                Objects.equals(otherCosts, car.otherCosts) &&
+                Objects.equals(repairs, car.repairs);
+    }
 
-//    @Override
-//    public String toString() {
-//        return "Car{" +
-//                "id=" + id +
-//                ", nameCar='" + nameCar + '\'' +
-//                ", mileage=" + mileage +
-//                ", user=" + user +
-//                ", registration=" + registration +
-//                ", parameters=" + parameters +
-//                ", documents=" + documents +
-//                ", fuels=" + fuels +
-//                ", otherCosts=" + otherCosts +
-//                ", repairs=" + repairs +
-//                '}';
-//    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, nameCar, mileage, user);
+    }
+
+    @Override
+    public String toString() {
+        return "Car{" +
+                "id=" + id +
+                ", nameCar='" + nameCar + '\'' +
+                ", mileage=" + mileage +
+                ", user=" + user +
+                ", registration=" + registration +
+                ", parameters=" + parameters +
+                ", documents=" + documents +
+                ", fuels=" + fuels +
+                ", otherCosts=" + otherCosts +
+                ", repairs=" + repairs +
+                '}';
+    }
 }

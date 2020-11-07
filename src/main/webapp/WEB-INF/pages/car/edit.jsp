@@ -24,7 +24,7 @@
                         <input type="submit" name="submit" class="btn btn-info btn-md" value="Изменить">
                         <b class="text-danger">${Errors}</b>
                         <div id="register-link" class="text-right">
-                            <a href="/" class="text-info">Вернуться назад</a>
+                            <a href="/car/view/${car.id}" class="text-info">На страницу авто</a>
                         </div>
                     </div>
                 </form:form>
