@@ -56,4 +56,12 @@ public class MyPageController {
         return modelAndView;
     }
 
+    @GetMapping("/search")
+    public ModelAndView searchPage(@RequestParam("searchText") String searchText){
+        List<Car> cars = carService.searchList(searchText);
+        modelAndView.setViewName("search");
+        modelAndView.addObject("carsList", cars);
+        return modelAndView;
+    }
+
 }

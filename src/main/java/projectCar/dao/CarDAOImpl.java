@@ -1,9 +1,13 @@
 package projectCar.dao;
 
 import org.apache.log4j.Logger;
+import org.apache.lucene.search.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.annotations.QueryHints;
+import org.hibernate.search.FullTextSession;
+import org.hibernate.search.Search;
+import org.hibernate.search.query.dsl.QueryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import projectCar.dao.interfaces.ICarDAO;
@@ -105,6 +109,21 @@ public class CarDAOImpl implements ICarDAO {
                 "select distinct car from Car car left join fetch car.otherCosts where car.id = '" + id + "'",
                 Car.class).setHint(QueryHints.PASS_DISTINCT_THROUGH, false).getResultList();
         for (Car car : cars) {
+            logger.info("Car list. Car: " + car);
+        }
+        return cars;
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<Car> searchList(String textSearch) {
+        Session session = sessionFactory.getCurrentSession();
+        FullTextSession fullTextSession  = Search.getFullTextSession(session);
+        QueryBuilder queryBuilder = fullTextSession.getSearchFactory().buildQueryBuilder().forEntity(Car.class).get();
+        Query query = queryBuilder.keyword().onField("nameCar").matching(textSearch).createQuery();
+        org.hibernate.Query hibQuery = fullTextSession.createFullTextQuery(query, Car.class);
+        List<Car> cars = hibQuery.list();
+        for (Car car: cars){
             logger.info("Car list. Car: " + car);
         }
         return cars;

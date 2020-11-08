@@ -19,11 +19,11 @@ public class Car {
     private int id;
 
     @Column(name = "name_car", nullable = false, length = 100)
-    @Field(termVector = TermVector.YES)
+    @Field
     private String nameCar;
 
     @Column(name = "mileage")
-    @Field(termVector = TermVector.YES)
+    @Field
     private int mileage;
 
     @ManyToOne

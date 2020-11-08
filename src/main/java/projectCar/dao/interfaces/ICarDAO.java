@@ -21,4 +21,6 @@ public interface ICarDAO {
     List<Car> getCars(int page);
 
     List<Car> getLists(int id);
+
+    List<Car> searchList(String textSearch);
 }

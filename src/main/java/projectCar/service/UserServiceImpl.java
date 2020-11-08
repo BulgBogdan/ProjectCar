@@ -16,6 +16,7 @@ import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserDetailsService, IUserService {
+
     @Autowired
     private IUserDAO userDAO = new UserDAOImpl();
 
