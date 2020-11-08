@@ -1,8 +1,11 @@
 package projectCar.entity;
 
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Indexed;
-import org.hibernate.search.annotations.TermVector;
+import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
+import org.apache.lucene.analysis.miscellaneous.ASCIIFoldingFilterFactory;
+import org.apache.lucene.analysis.snowball.SnowballPorterFilterFactory;
+import org.apache.lucene.analysis.standard.StandardTokenizerFactory;
+import org.hibernate.search.annotations.*;
+import org.hibernate.search.annotations.Index;
 
 import javax.persistence.*;
 import java.util.List;
@@ -19,11 +22,11 @@ public class Car {
     private int id;
 
     @Column(name = "name_car", nullable = false, length = 100)
-    @Field
+    @Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
     private String nameCar;
 
     @Column(name = "mileage")
-    @Field
+    @Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
     private int mileage;
 
     @ManyToOne

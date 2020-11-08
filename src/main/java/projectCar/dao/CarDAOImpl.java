@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import org.apache.lucene.search.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.annotations.QueryHints;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
@@ -120,9 +121,9 @@ public class CarDAOImpl implements ICarDAO {
         Session session = sessionFactory.getCurrentSession();
         FullTextSession fullTextSession  = Search.getFullTextSession(session);
         QueryBuilder queryBuilder = fullTextSession.getSearchFactory().buildQueryBuilder().forEntity(Car.class).get();
-        Query query = queryBuilder.keyword().onField("nameCar").matching(textSearch).createQuery();
-        org.hibernate.Query hibQuery = fullTextSession.createFullTextQuery(query, Car.class);
-        List<Car> cars = hibQuery.list();
+        org.apache.lucene.search.Query query = queryBuilder.keyword().wildcard().onField("nameCar").matching(textSearch + "*").createQuery();
+        javax.persistence.Query hibQuery = fullTextSession.createFullTextQuery(query, Car.class);
+        List<Car> cars = hibQuery.getResultList();
         for (Car car: cars){
             logger.info("Car list. Car: " + car);
         }
