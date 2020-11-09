@@ -42,8 +42,8 @@ public class OtherCostsServiceImpl implements IOtherCostsService {
 
     @Override
     @Transactional
-    public int otherCostsCount() {
-        return otherCostsDAO.otherCostsCount();
+    public int otherCostsCount(int id) {
+        return otherCostsDAO.otherCostsCount(id);
     }
 
     @Override
@@ -56,5 +56,10 @@ public class OtherCostsServiceImpl implements IOtherCostsService {
     @Transactional
     public List<OtherCosts> getAll() {
         return otherCostsDAO.getAll();
+    }
+
+    @Override
+    public List<OtherCosts> searchList(String searchText) {
+        return otherCostsDAO.searchList(searchText);
     }
 }

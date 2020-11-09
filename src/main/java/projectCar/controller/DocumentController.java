@@ -31,7 +31,7 @@ public class DocumentController extends MethodsCarForControllers {
                                       @RequestParam(defaultValue = "1") int page) {
         car = getCarWithWires(id);
         List<Document> documentList = documentService.getDocuments(page, id);
-        int documentsCount = documentService.docsCount();
+        int documentsCount = documentService.docsCount(id);
         int pagesCount = (documentsCount+9)/10;
         modelAndView.setViewName("car/documents");
         modelAndView.addObject("car", car);

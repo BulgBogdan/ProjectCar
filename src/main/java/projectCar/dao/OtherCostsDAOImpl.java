@@ -1,8 +1,12 @@
 package projectCar.dao;
 
 import org.apache.log4j.Logger;
+import org.apache.lucene.search.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.search.FullTextSession;
+import org.hibernate.search.Search;
+import org.hibernate.search.query.dsl.QueryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import projectCar.dao.interfaces.IOtherCostsDAO;
@@ -53,9 +57,9 @@ public class OtherCostsDAOImpl implements IOtherCostsDAO {
 
     @Override
     @SuppressWarnings("unchecked")
-    public int otherCostsCount() {
+    public int otherCostsCount(int id) {
         Session session = sessionFactory.getCurrentSession();
-        int count = session.createQuery("select count(*) from OtherCosts", Number.class)
+        int count = session.createQuery("select count(*) from OtherCosts where car.id = '" + id + "'", Number.class)
                 .getSingleResult().intValue();
         logger.info("OtherCosts returned count. OtherCosts: " + count);
         return count;
@@ -82,5 +86,26 @@ public class OtherCostsDAOImpl implements IOtherCostsDAO {
             logger.info("OtherCosts list. OtherCosts: " + otherCosts);
         }
         return listOtherCosts;
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<OtherCosts> searchList(String searchText) {
+        Session session = sessionFactory.getCurrentSession();
+        FullTextSession fullTextSession  = Search.getFullTextSession(session);
+        try {
+            fullTextSession.createIndexer().startAndWait();
+        } catch (InterruptedException e) {
+            logger.error("FullTextSession OtherCosts exception", e);
+            e.printStackTrace();
+        }
+        QueryBuilder queryBuilder = fullTextSession.getSearchFactory().buildQueryBuilder().forEntity(OtherCosts.class).get();
+        Query query = queryBuilder.keyword().onField("nameRepair").matching(searchText).createQuery();
+        org.hibernate.search.jpa.FullTextQuery hibQuery = fullTextSession.createFullTextQuery(query, OtherCosts.class);
+        List<OtherCosts> otherCosts = hibQuery.getResultList();
+        for (OtherCosts otherCost: otherCosts){
+            logger.info("OtherCosts list. OtherCosts: " + otherCost);
+        }
+        return otherCosts;
     }
 }

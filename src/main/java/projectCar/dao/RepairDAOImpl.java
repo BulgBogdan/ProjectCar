@@ -1,8 +1,12 @@
 package projectCar.dao;
 
 import org.apache.log4j.Logger;
+import org.apache.lucene.search.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.search.FullTextSession;
+import org.hibernate.search.Search;
+import org.hibernate.search.query.dsl.QueryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import projectCar.dao.interfaces.IRepairDAO;
@@ -54,9 +58,9 @@ public class RepairDAOImpl implements IRepairDAO {
 
     @Override
     @SuppressWarnings("unchecked")
-    public int repairCount() {
+    public int repairCount(int id) {
         Session session = sessionFactory.getCurrentSession();
-        int count = session.createQuery("select count(*) from Repair", Number.class)
+        int count = session.createQuery("select count(*) from Repair where car.id = '" + id + "'", Number.class)
                 .getSingleResult().intValue();
         logger.info("Repair returned count. Repair: " + count);
         return count;
@@ -83,5 +87,26 @@ public class RepairDAOImpl implements IRepairDAO {
             logger.info("Repair list. Repair: " + repair);
         }
         return listRepair;
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<Repair> searchList(String searchText) {
+        Session session = sessionFactory.getCurrentSession();
+        FullTextSession fullTextSession  = Search.getFullTextSession(session);
+        try {
+            fullTextSession.createIndexer().startAndWait();
+        } catch (InterruptedException e) {
+            logger.error("FullTextSession Repair exception", e);
+            e.printStackTrace();
+        }
+        QueryBuilder queryBuilder = fullTextSession.getSearchFactory().buildQueryBuilder().forEntity(Repair.class).get();
+        Query query = queryBuilder.keyword().onField("nameRepair").matching(searchText).createQuery();
+        org.hibernate.search.jpa.FullTextQuery hibQuery = fullTextSession.createFullTextQuery(query, Repair.class);
+        List<Repair> repairs = hibQuery.getResultList();
+        for (Repair repair: repairs){
+            logger.info("Repair list. Repair: " + repair);
+        }
+        return repairs;
     }
 }

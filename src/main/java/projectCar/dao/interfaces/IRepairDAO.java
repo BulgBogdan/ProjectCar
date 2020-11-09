@@ -14,9 +14,11 @@ public interface IRepairDAO {
 
     void delete(Repair repair);
 
-    int repairCount ();
+    int repairCount (int id);
 
     List<Repair> getRepair (int page, int id);
 
     List<Repair> getAll();
+
+    List<Repair> searchList(String searchText);
 }

@@ -1,10 +1,14 @@
 package projectCar.entity;
 
+import org.hibernate.search.annotations.*;
+import org.hibernate.search.annotations.Index;
+
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.Objects;
 
 @Entity
+@Indexed
 @Table(name = "documents", schema = "projectcar")
 public class Document {
 
@@ -14,6 +18,7 @@ public class Document {
     private int id;
 
     @Column(name = "name_document", nullable = false, length = 100)
+    @Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
     private String nameDocument;
 
     @Column(name = "cost_document")

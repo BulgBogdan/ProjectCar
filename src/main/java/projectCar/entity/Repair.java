@@ -1,5 +1,10 @@
 package projectCar.entity;
 
+import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Store;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -13,6 +18,7 @@ public class Repair {
     private int id;
 
     @Column(name = "name_repair", nullable = false, length = 100)
+    @Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
     private String nameRepair;
 
     @Column(name = "start_mileage")

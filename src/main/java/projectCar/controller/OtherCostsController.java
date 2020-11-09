@@ -29,7 +29,7 @@ public class OtherCostsController extends MethodsCarForControllers {
                                     @RequestParam(defaultValue = "1") int page) {
         car = getCarWithWires(id);
         List<OtherCosts> costsList = costsService.getOtherCosts(page, id);
-        int costsCount = costsService.otherCostsCount();
+        int costsCount = costsService.otherCostsCount(id);
         int pagesCount = (costsCount + 9) / 10;
         modelAndView.setViewName("car/other/costs");
         modelAndView.addObject("car", car);

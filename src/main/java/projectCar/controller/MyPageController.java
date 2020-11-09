@@ -42,13 +42,14 @@ public class MyPageController {
                                @RequestParam(defaultValue = "1") int page) {
         String login = userDetails.getUsername();
         User userAuth = userService.findByLogin(login);
-        List<Car> carList = carService.getCars(page);
-        int carsCount = carService.carsCount();
-        int pagesCount = (carsCount + 9)/10;
+        int idUser = userAuth.getId();
+        List<Car> carList = carService.getCars(page, idUser);
+        int carsCount = carService.carsCount(idUser);
+        int pagesCount = (carsCount + 9) / 10;
         modelAndView.setViewName("home");
         modelAndView.addObject("page", page);
         modelAndView.addObject("pagesCount", pagesCount);
-        modelAndView.addObject("user",userAuth);
+        modelAndView.addObject("user", userAuth);
         modelAndView.addObject("carList", carList);
         modelAndView.addObject("carsCount", carsCount);
         modelAndView.addObject("cars", new Car());
@@ -57,8 +58,12 @@ public class MyPageController {
     }
 
     @GetMapping("/search")
-    public ModelAndView searchPage(@RequestParam("searchText") String searchText){
+    public ModelAndView searchPage(@RequestParam("searchText") String searchText,
+                                   @AuthenticationPrincipal UserDetails userDetails) {
+        String loginUser = userDetails.getUsername();
+        User userAuth = userService.findByLogin(loginUser);
         List<Car> cars = carService.searchList(searchText);
+
         modelAndView.setViewName("search");
         modelAndView.addObject("carsList", cars);
         return modelAndView;

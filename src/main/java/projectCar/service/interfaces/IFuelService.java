@@ -14,7 +14,7 @@ public interface IFuelService {
 
     void delete(Fuel fuel);
 
-    int fuelCount ();
+    int fuelCount (int id);
 
     List<Fuel> getFuel (int page, int id);
 

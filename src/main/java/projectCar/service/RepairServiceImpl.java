@@ -42,8 +42,8 @@ public class RepairServiceImpl implements IRepairService {
 
     @Override
     @Transactional
-    public int repairCount() {
-        return repairDAO.repairCount();
+    public int repairCount(int id) {
+        return repairDAO.repairCount(id);
     }
 
     @Override
@@ -56,5 +56,11 @@ public class RepairServiceImpl implements IRepairService {
     @Transactional
     public List<Repair> getAll() {
         return repairDAO.getAll();
+    }
+
+    @Override
+    @Transactional
+    public List<Repair> searchList(String searchText) {
+        return repairDAO.searchList(searchText);
     }
 }

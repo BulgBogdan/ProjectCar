@@ -53,9 +53,9 @@ public class FuelDAOImpl implements IFuelDAO {
 
     @Override
     @SuppressWarnings("unchecked")
-    public int fuelCount() {
+    public int fuelCount(int id) {
         Session session = sessionFactory.getCurrentSession();
-        int count = session.createQuery("select count(*) from Fuel", Number.class)
+        int count = session.createQuery("select count(*) from Fuel where car.id = '" + id + "'", Number.class)
                 .getSingleResult().intValue();
         logger.info("Fuel returned count. Fuel: " + count);
         return count;

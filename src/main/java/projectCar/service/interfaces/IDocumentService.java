@@ -14,9 +14,12 @@ public interface IDocumentService {
 
     void delete(Document document);
 
-    int docsCount ();
+    int docsCount (int id);
 
     List<Document> getDocuments(int page, int id);
 
     List<Document> getAll();
+
+    List<Document> searchList(String searchText);
+
 }

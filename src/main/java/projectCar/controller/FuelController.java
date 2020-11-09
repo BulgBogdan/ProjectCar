@@ -44,7 +44,7 @@ public class FuelController extends MethodsCarForControllers {
                                  @RequestParam(defaultValue = "1") int page) {
         car = getCarWithWires(id);
         List<Fuel> fuelList = fuelService.getFuel(page, id);
-        int fuelCount = fuelService.fuelCount();
+        int fuelCount = fuelService.fuelCount(id);
         int pagesCount = (fuelCount + 9) / 10;
         modelAndView.setViewName("car/fuel");
         modelAndView.addObject("car", car);

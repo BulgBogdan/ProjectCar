@@ -14,9 +14,12 @@ public interface IOtherCostsService {
 
     void delete(OtherCosts otherCosts);
 
-    int otherCostsCount ();
+    int otherCostsCount (int id);
 
     List<OtherCosts> getOtherCosts (int page, int id);
 
     List<OtherCosts> getAll();
+
+    List<OtherCosts> searchList(String searchText);
+
 }

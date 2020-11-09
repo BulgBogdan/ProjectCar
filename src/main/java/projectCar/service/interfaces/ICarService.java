@@ -14,11 +14,11 @@ public interface ICarService {
 
     void delete(Car car);
 
-    int carsCount();
+    int carsCount(int id);
 
     List<Car> getAll();
 
-    List<Car> getCars(int page);
+    List<Car> getCars(int page, int id);
 
     List<Car> getLists(int id);
 

@@ -34,7 +34,7 @@ public class RepairController extends MethodsCarForControllers {
                                     @RequestParam(defaultValue = "1") int page) {
         car = getCarWithWires(id);
         List<Repair> repairList = repairService.getRepair(page, id);
-        int repairCount = repairService.repairCount();
+        int repairCount = repairService.repairCount(id);
         int pagesCount = (repairCount + 9) / 10;
         modelAndView.setViewName("car/repairs");
         modelAndView.addObject("page",page);

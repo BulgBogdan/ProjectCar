@@ -1,8 +1,12 @@
 package projectCar.dao;
 
 import org.apache.log4j.Logger;
+import org.apache.lucene.search.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.search.FullTextSession;
+import org.hibernate.search.Search;
+import org.hibernate.search.query.dsl.QueryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import projectCar.dao.interfaces.IDocumentDAO;
@@ -55,9 +59,9 @@ public class DocumentDAOImpl implements IDocumentDAO {
 
     @Override
     @SuppressWarnings("unchecked")
-    public int docsCount() {
+    public int docsCount(int id) {
         Session session = sessionFactory.getCurrentSession();
-        int count = session.createQuery("select count(*) from Document ", Number.class)
+        int count = session.createQuery("select count(*) from Document where car.id = '" + id + "'", Number.class)
                 .getSingleResult().intValue();
         logger.info("Document returned count. Document: " + count);
         return count;
@@ -84,5 +88,26 @@ public class DocumentDAOImpl implements IDocumentDAO {
             logger.info("Document list. Document: " + document);
         }
         return listDocument;
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<Document> searchList(String searchText) {
+        Session session = sessionFactory.getCurrentSession();
+        FullTextSession fullTextSession  = Search.getFullTextSession(session);
+        try {
+            fullTextSession.createIndexer().startAndWait();
+        } catch (InterruptedException e) {
+            logger.error("FullTextSession Document exception", e);
+            e.printStackTrace();
+        }
+        QueryBuilder queryBuilder = fullTextSession.getSearchFactory().buildQueryBuilder().forEntity(Document.class).get();
+        Query query = queryBuilder.keyword().onField("nameDocument").matching(searchText).createQuery();
+        org.hibernate.search.jpa.FullTextQuery hibQuery = fullTextSession.createFullTextQuery(query, Document.class);
+        List<Document> documents = hibQuery.getResultList();
+        for (Document document: documents){
+            logger.info("Document list. Document: " + document);
+        }
+        return documents;
     }
 }

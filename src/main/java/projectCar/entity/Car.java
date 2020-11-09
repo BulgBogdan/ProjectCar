@@ -1,9 +1,5 @@
 package projectCar.entity;
 
-import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
-import org.apache.lucene.analysis.miscellaneous.ASCIIFoldingFilterFactory;
-import org.apache.lucene.analysis.snowball.SnowballPorterFilterFactory;
-import org.apache.lucene.analysis.standard.StandardTokenizerFactory;
 import org.hibernate.search.annotations.*;
 import org.hibernate.search.annotations.Index;
 
@@ -26,7 +22,6 @@ public class Car {
     private String nameCar;
 
     @Column(name = "mileage")
-    @Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
     private int mileage;
 
     @ManyToOne

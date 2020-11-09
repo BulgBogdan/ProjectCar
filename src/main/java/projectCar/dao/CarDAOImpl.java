@@ -60,9 +60,9 @@ public class CarDAOImpl implements ICarDAO {
     }
 
     @Override
-    public int carsCount() {
+    public int carsCount(int id) {
         Session session = sessionFactory.getCurrentSession();
-        int count = session.createQuery("select count(*) from Car", Number.class)
+        int count = session.createQuery("select count(*) from Car where user.id = '" + id + "'", Number.class)
                 .getSingleResult().intValue();
         logger.info("Car returned count. Car: " + count);
         return count;
@@ -81,9 +81,9 @@ public class CarDAOImpl implements ICarDAO {
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<Car> getCars(int page) {
+    public List<Car> getCars(int page, int id) {
         Session session = sessionFactory.getCurrentSession();
-        List<Car> listCar = session.createQuery("from Car")
+        List<Car> listCar = session.createQuery("from Car where user.id = '" + id + "'")
                 .setFirstResult(10 * (page - 1)).setMaxResults(10).list();
         for (Car car : listCar) {
             logger.info("Car list. Car: " + car.toString());

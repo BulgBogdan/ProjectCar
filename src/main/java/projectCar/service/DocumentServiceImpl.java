@@ -42,8 +42,8 @@ public class DocumentServiceImpl implements IDocumentService {
 
     @Override
     @Transactional
-    public int docsCount() {
-        return documentDAO.docsCount();
+    public int docsCount(int id) {
+        return documentDAO.docsCount(id);
     }
 
     @Override
@@ -56,5 +56,11 @@ public class DocumentServiceImpl implements IDocumentService {
     @Transactional
     public List<Document> getAll() {
         return documentDAO.getAll();
+    }
+
+    @Override
+    @Transactional
+    public List<Document> searchList(String searchText) {
+        return documentDAO.searchList(searchText);
     }
 }

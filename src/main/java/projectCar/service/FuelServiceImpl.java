@@ -42,8 +42,8 @@ public class FuelServiceImpl implements IFuelService {
 
     @Override
     @Transactional
-    public int fuelCount() {
-        return fuelDAO.fuelCount();
+    public int fuelCount(int id) {
+        return fuelDAO.fuelCount(id);
     }
 
     @Override
