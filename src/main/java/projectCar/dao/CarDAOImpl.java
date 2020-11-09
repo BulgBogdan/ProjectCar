@@ -120,9 +120,15 @@ public class CarDAOImpl implements ICarDAO {
     public List<Car> searchList(String textSearch) {
         Session session = sessionFactory.getCurrentSession();
         FullTextSession fullTextSession  = Search.getFullTextSession(session);
+        try {
+            fullTextSession.createIndexer().startAndWait();
+        } catch (InterruptedException e) {
+            logger.error("FullTextSession exception", e);
+            e.printStackTrace();
+        }
         QueryBuilder queryBuilder = fullTextSession.getSearchFactory().buildQueryBuilder().forEntity(Car.class).get();
-        org.apache.lucene.search.Query query = queryBuilder.keyword().wildcard().onField("nameCar").matching(textSearch + "*").createQuery();
-        javax.persistence.Query hibQuery = fullTextSession.createFullTextQuery(query, Car.class);
+        Query query = queryBuilder.keyword().onField("nameCar").matching(textSearch).createQuery();
+        org.hibernate.search.jpa.FullTextQuery hibQuery = fullTextSession.createFullTextQuery(query, Car.class);
         List<Car> cars = hibQuery.getResultList();
         for (Car car: cars){
             logger.info("Car list. Car: " + car);
