@@ -60,7 +60,7 @@ public class DocumentServiceImpl implements IDocumentService {
 
     @Override
     @Transactional
-    public List<Document> searchList(String searchText) {
-        return documentDAO.searchList(searchText);
+    public List<Document> searchList(String searchText, int id) {
+        return documentDAO.searchList(searchText, id);
     }
 }

@@ -1,14 +1,13 @@
 package projectCar.entity;
 
-import org.hibernate.search.annotations.Analyze;
-import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.*;
 import org.hibernate.search.annotations.Index;
-import org.hibernate.search.annotations.Store;
 
 import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
+@Indexed
 @Table(name = "repairs", schema = "projectcar")
 public class Repair {
 

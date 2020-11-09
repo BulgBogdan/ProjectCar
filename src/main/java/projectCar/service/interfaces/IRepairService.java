@@ -20,6 +20,6 @@ public interface IRepairService {
 
     List<Repair> getAll();
 
-    List<Repair> searchList(String searchText);
+    List<Repair> searchList(String searchText, int id);
 
 }

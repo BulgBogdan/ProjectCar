@@ -8,6 +8,7 @@ import org.hibernate.Transaction;
 import org.hibernate.annotations.QueryHints;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
+import org.hibernate.search.query.dsl.BooleanJunction;
 import org.hibernate.search.query.dsl.QueryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -117,7 +118,7 @@ public class CarDAOImpl implements ICarDAO {
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<Car> searchList(String textSearch) {
+    public List<Car> searchList(String textSearch, int id) {
         Session session = sessionFactory.getCurrentSession();
         FullTextSession fullTextSession  = Search.getFullTextSession(session);
         try {
@@ -126,9 +127,20 @@ public class CarDAOImpl implements ICarDAO {
             logger.error("FullTextSession exception", e);
             e.printStackTrace();
         }
+        List<Integer> idsForCar = session
+                .createQuery("select id from Car where user.id = '" + id + "'", Integer.class).getResultList();
         QueryBuilder queryBuilder = fullTextSession.getSearchFactory().buildQueryBuilder().forEntity(Car.class).get();
         Query query = queryBuilder.keyword().onField("nameCar").matching(textSearch).createQuery();
-        org.hibernate.search.jpa.FullTextQuery hibQuery = fullTextSession.createFullTextQuery(query, Car.class);
+        // matching @field and request text
+        BooleanJunction idJunction = queryBuilder.bool();
+        for (Integer ids : idsForCar) {
+            idJunction.should(queryBuilder.keyword().onField("id").matching(ids).createQuery());
+            // match id from field with id from request text
+        }
+        Query idQuery = idJunction.createQuery();
+        Query combinedQuery = queryBuilder.bool().must(query).must(idQuery).createQuery();
+        // method boolean AND (must().must()), which equals output
+        org.hibernate.search.jpa.FullTextQuery hibQuery = fullTextSession.createFullTextQuery(combinedQuery, Car.class);
         List<Car> cars = hibQuery.getResultList();
         for (Car car: cars){
             logger.info("Car list. Car: " + car);

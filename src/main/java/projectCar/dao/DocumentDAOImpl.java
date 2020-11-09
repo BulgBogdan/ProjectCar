@@ -6,6 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
+import org.hibernate.search.query.dsl.BooleanJunction;
 import org.hibernate.search.query.dsl.QueryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -92,7 +93,7 @@ public class DocumentDAOImpl implements IDocumentDAO {
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<Document> searchList(String searchText) {
+    public List<Document> searchList(String searchText, int id) {
         Session session = sessionFactory.getCurrentSession();
         FullTextSession fullTextSession  = Search.getFullTextSession(session);
         try {
@@ -101,9 +102,20 @@ public class DocumentDAOImpl implements IDocumentDAO {
             logger.error("FullTextSession Document exception", e);
             e.printStackTrace();
         }
-        QueryBuilder queryBuilder = fullTextSession.getSearchFactory().buildQueryBuilder().forEntity(Document.class).get();
+        List<Integer> idsForDocuments = session
+                .createQuery("select id from Document where car.user.id = '" + id + "'", Integer.class)
+                .getResultList();
+        QueryBuilder queryBuilder = fullTextSession.getSearchFactory()
+                .buildQueryBuilder().forEntity(Document.class).get();
         Query query = queryBuilder.keyword().onField("nameDocument").matching(searchText).createQuery();
-        org.hibernate.search.jpa.FullTextQuery hibQuery = fullTextSession.createFullTextQuery(query, Document.class);
+        BooleanJunction idJunction = queryBuilder.bool();
+        for (Integer idforDocs : idsForDocuments) {
+            idJunction.should(queryBuilder.keyword().onField("id").matching(idforDocs).createQuery());
+        }
+        Query idQuery = idJunction.createQuery();
+        Query combinedQuery = queryBuilder.bool().must(query).must(idQuery).createQuery();
+        org.hibernate.search.jpa.FullTextQuery hibQuery = fullTextSession
+                .createFullTextQuery(combinedQuery, Document.class);
         List<Document> documents = hibQuery.getResultList();
         for (Document document: documents){
             logger.info("Document list. Document: " + document);

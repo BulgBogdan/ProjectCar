@@ -60,7 +60,7 @@ public class RepairServiceImpl implements IRepairService {
 
     @Override
     @Transactional
-    public List<Repair> searchList(String searchText) {
-        return repairDAO.searchList(searchText);
+    public List<Repair> searchList(String searchText, int id) {
+        return repairDAO.searchList(searchText, id);
     }
 }

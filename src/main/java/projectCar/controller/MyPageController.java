@@ -7,12 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import projectCar.entity.Car;
-import projectCar.entity.User;
-import projectCar.service.CarServiceImpl;
-import projectCar.service.UserServiceImpl;
-import projectCar.service.interfaces.ICarService;
-import projectCar.service.interfaces.IUserService;
+import projectCar.entity.*;
+import projectCar.service.*;
+import projectCar.service.interfaces.*;
 
 import java.util.List;
 
@@ -24,6 +21,15 @@ public class MyPageController {
 
     @Autowired
     private ICarService carService = new CarServiceImpl();
+
+    @Autowired
+    private IDocumentService documentService = new DocumentServiceImpl();
+
+    @Autowired
+    private IOtherCostsService costsService = new OtherCostsServiceImpl();
+
+    @Autowired
+    private IRepairService repairService = new RepairServiceImpl();
 
     private ModelAndView modelAndView = new ModelAndView();
 
@@ -62,10 +68,16 @@ public class MyPageController {
                                    @AuthenticationPrincipal UserDetails userDetails) {
         String loginUser = userDetails.getUsername();
         User userAuth = userService.findByLogin(loginUser);
-        List<Car> cars = carService.searchList(searchText);
-
+        int idUser = userAuth.getId();
+        List<Car> cars = carService.searchList(searchText, idUser);
+        List<Document> docs = documentService.searchList(searchText, idUser);
+        List<Repair> repairs = repairService.searchList(searchText, idUser);
+        List<OtherCosts> costs = costsService.searchList(searchText, idUser);
         modelAndView.setViewName("search");
         modelAndView.addObject("carsList", cars);
+        modelAndView.addObject("docs", docs);
+        modelAndView.addObject("repairs", repairs);
+        modelAndView.addObject("costs", costs);
         return modelAndView;
     }
 
