@@ -39,8 +39,8 @@ public class UserDAOImpl implements IUserDAO {
     @Override
     public User read(int id) {
         Session session = sessionFactory.getCurrentSession();
-        User user = (User) session.load(User.class, id);
-        logger.info("User successfully readed. User: " + user);
+        User user = session.get(User.class, id);
+        logger.info("User successfully read. User: " + user);
         return user;
     }
 

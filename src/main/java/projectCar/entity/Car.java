@@ -35,15 +35,18 @@ public class Car {
     private Parameter parameters;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "car")
+    @IndexedEmbedded(includePaths = "nameDocument")
     private List<Document> documents;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "car")
     private List<Fuel> fuels;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "car")
+    @IndexedEmbedded(includePaths = "nameOtherCost")
     private List<OtherCosts> otherCosts;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "car")
+    @IndexedEmbedded(includePaths = "nameRepair")
     private List<Repair> repairs;
 
     public Car() {

@@ -3,6 +3,7 @@ package projectCar.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,6 +35,9 @@ public class MyPageController {
 
     @Autowired
     private IRepairService repairService = new RepairServiceImpl();
+
+//    @Autowired
+//    BCryptPasswordEncoder bCryptPasswordEncoder;
 
     private ModelAndView modelAndView = new ModelAndView();
 
@@ -73,15 +77,21 @@ public class MyPageController {
         String loginUser = userDetails.getUsername();
         User userAuth = userService.findByLogin(loginUser);
         int idUser = userAuth.getId();
-        List<Car> cars = carService.searchList(searchText, idUser);
+        List<Car> carsList = carService.searchList(searchText, idUser);
+        Car car = null;
+        for (Car cars : carsList) {
+            car = cars;
+
+        }
 //        List<Document> docs = documentService.searchList(searchText, idUser);
 //        List<Repair> repairs = repairService.searchList(searchText, idUser);
 //        List<OtherCosts> costs = costsService.searchList(searchText, idUser);
         modelAndView.setViewName("search");
-        modelAndView.addObject("carsList", cars);
-//        modelAndView.addObject("docs", docs);
-//        modelAndView.addObject("repairs", repairs);
-//        modelAndView.addObject("costs", costs);
+        modelAndView.addObject("carsList", carsList);
+        modelAndView.addObject("docs", car.getDocuments());
+        modelAndView.addObject("repairs", car.getRepairs());
+        modelAndView.addObject("costs", car.getOtherCosts());
+
         return modelAndView;
     }
 
@@ -106,42 +116,43 @@ public class MyPageController {
         return modelAndView;
     }
 
-    @GetMapping("/editPassword")
-    public ModelAndView editPasswordPage(@AuthenticationPrincipal UserDetails userDetails) {
-        String login = userDetails.getUsername();
-        User userAuth = userService.findByLogin(login);
-        String newPassword = "";
-        modelAndView.addObject("user", userAuth);
-        modelAndView.addObject("newPassword", newPassword);
-        modelAndView.setViewName("editPassword");
-        return modelAndView;
-    }
-
-    @PostMapping("/editPassword")
-    public ModelAndView editPasswordUser(@ModelAttribute("user") @Valid User user,
-                                         BindingResult bindingResult,
-                                         @ModelAttribute("newPassword") String newPassword,
-                                         @AuthenticationPrincipal UserDetails userDetails) {
-        User userAuth = userService.findByLogin(userDetails.getUsername());
-        if (bindingResult.hasErrors()) {
-            modelAndView.addObject("error", "Некорректный ввод данных");
-            return modelAndView;
-        }
-        if (!user.getPassword().equals(userAuth.getPassword())) {
-            modelAndView.addObject("passwordError", "Неверный пароль");
-            return modelAndView;
-        }
-        user.setPassword(newPassword);
-        if (!user.getPassword().equals(user.getConfirmPassword())) {
-            modelAndView.addObject("passwordConfirmError",
-                    "Подтвержденный пароль не совпадает с новым");
-            return modelAndView;
-        }
-
-        modelAndView.setViewName("redirect:/editUser");
-        userService.update(user);
-        return modelAndView;
-    }
+    //Problem with bCryptPasswordEncoder
+//    @GetMapping("/editPassword")
+//    public ModelAndView editPasswordPage(@AuthenticationPrincipal UserDetails userDetails) {
+//        String login = userDetails.getUsername();
+//        User userAuth = userService.findByLogin(login);
+//        String newPassword = "";
+//        modelAndView.addObject("user", userAuth);
+//        modelAndView.addObject("newPassword", newPassword);
+//        modelAndView.setViewName("editPassword");
+//        return modelAndView;
+//    }
+//
+//    @PostMapping("/editPassword")
+//    public ModelAndView editPasswordUser(@ModelAttribute("user") User user,
+//                                         BindingResult bindingResult,
+//                                         @ModelAttribute("newPassword") String newPassword) {
+//        User userAuth = userService.read(user.getId());
+//        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+//        if (bindingResult.hasErrors()) {
+//            modelAndView.addObject("error", "Некорректный ввод данных");
+//            return modelAndView;
+//        }
+//        if (!user.getPassword().equals(userAuth.getPassword())) {
+//            modelAndView.addObject("passwordError", "Неверный пароль");
+//            return modelAndView;
+//        }
+//        user.setPassword(newPassword);
+//        if (!user.getPassword().equals(user.getConfirmPassword())) {
+//            modelAndView.addObject("passwordConfirmError",
+//                    "Подтвержденный пароль не совпадает с новым");
+//            return modelAndView;
+//        }
+//        user.setPassword(bCryptPasswordEncoder.encode(newPassword));
+//        modelAndView.setViewName("redirect:/editUser");
+//        userService.update(user);
+//        return modelAndView;
+//    }
 
 
 }

@@ -130,7 +130,12 @@ public class CarDAOImpl implements ICarDAO {
         List<Integer> idsForCar = session
                 .createQuery("select id from Car where user.id = '" + id + "'", Integer.class).getResultList();
         QueryBuilder queryBuilder = fullTextSession.getSearchFactory().buildQueryBuilder().forEntity(Car.class).get();
-        Query query = queryBuilder.keyword().onField("nameCar").matching(textSearch).createQuery();
+        Query query = queryBuilder.keyword()
+                .onField("nameCar")
+                .andField("documents.nameDocument")
+                .andField("otherCosts.nameOtherCost")
+                .andField("repairs.nameRepair")
+                .matching(textSearch).createQuery();
         // matching @field and request text
         BooleanJunction idJunction = queryBuilder.bool();
         for (Integer ids : idsForCar) {
@@ -138,7 +143,12 @@ public class CarDAOImpl implements ICarDAO {
             // match id from field with id from request text
         }
         Query idQuery = idJunction.createQuery();
-        Query combinedQuery = queryBuilder.bool().must(query).must(idQuery).createQuery();
+        Query combinedQuery = queryBuilder.bool().must(query)
+//                .must(queryBuilder.keyword().onField("nameCar").matching(textSearch).createQuery())
+//                .must(queryBuilder.keyword().onField("documents.nameDocument").matching(textSearch).createQuery())
+//                .must(queryBuilder.keyword().onField("otherCosts.nameOtherCost").matching(textSearch).createQuery())
+//                .must(queryBuilder.keyword().onField("repairs.nameRepair").matching(textSearch).createQuery())
+                .must(idQuery).createQuery();
         // method boolean AND (must().must()), which equals output
         org.hibernate.search.jpa.FullTextQuery hibQuery = fullTextSession.createFullTextQuery(combinedQuery, Car.class);
         List<Car> cars = hibQuery.getResultList();
