@@ -26,17 +26,19 @@ public class SignUpController {
     }
 
     @PostMapping("/registration")
-    public ModelAndView addUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult){
+    public ModelAndView addUser(@ModelAttribute("user") @Valid User user,
+                                BindingResult bindingResult){
         if (bindingResult.hasErrors()){
-            modelAndView.addObject("Errors", "Uncorrect enter");
+            modelAndView.addObject("Errors", "Некорректный ввод данных");
             return modelAndView;
         }
         if (!user.getPassword().equals(user.getConfirmPassword())){
-            modelAndView.addObject("passwordError", "Password not complaining");
+            modelAndView.addObject("passwordError", "Пароли не совпадают");
             return modelAndView;
         }
         if (!userService.add(user)){
-            modelAndView.addObject("loginError", "User exist");
+            modelAndView.addObject("loginError", "Пользователь с таким логином существует," +
+                    " введите другой");
             return modelAndView;
         }
         modelAndView.setViewName("redirect:/");

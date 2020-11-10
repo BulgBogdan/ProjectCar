@@ -34,7 +34,7 @@
                                 <br>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link pl-0" href="#"><i class="fa fa-list fa-fw"></i> <span
+                                <a class="nav-link pl-0" href="/editUser"><i class="fa fa-list fa-fw"></i> <span
                                         class="d-none d-md-inline">Редактировать профиль</span></a>
                             </li>
                             <br>

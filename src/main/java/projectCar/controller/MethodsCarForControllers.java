@@ -46,7 +46,7 @@ public class MethodsCarForControllers {
 
     ModelAndView errorIncorrectEnter(){
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("Errors", "Incorrect enter");
+        modelAndView.addObject("Errors", "Некоректный ввод данных");
         return modelAndView;
     }
 }

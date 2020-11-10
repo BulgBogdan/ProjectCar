@@ -64,6 +64,7 @@ public class DocumentController extends MethodsCarForControllers {
                                     BindingResult result) {
         if (result.hasErrors()) {
             errorIncorrectEnter();
+            return modelAndView;
         }
 
         int numberOfMonths;
@@ -99,6 +100,7 @@ public class DocumentController extends MethodsCarForControllers {
                                      @PathVariable("id") int id) {
         if (result.hasErrors()) {
             errorIncorrectEnter();
+            return modelAndView;
         }
         Document document = documentService.read(id);
         int carId = document.getCar().getId();

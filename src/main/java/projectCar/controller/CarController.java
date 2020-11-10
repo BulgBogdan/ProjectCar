@@ -77,6 +77,7 @@ public class CarController {
                                      BindingResult result) {
         if (result.hasErrors()){
             errorIncorrectEnter();
+            return modelAndView;
         }
         Car car = getCarById(id);
         registration.setCar(car);
@@ -131,6 +132,7 @@ public class CarController {
                                       @PathVariable("id") int id) {
         if (result.hasErrors()){
             errorIncorrectEnter();
+            return modelAndView;
         }
         Car car = getCarById(id);
         registration.setCar(car);
@@ -154,6 +156,7 @@ public class CarController {
                                 @PathVariable("id") int id) {
         if (result.hasErrors()){
             errorIncorrectEnter();
+            return modelAndView;
         }
         String userName = userDetails.getUsername();
         User user = userService.findByLogin(userName);

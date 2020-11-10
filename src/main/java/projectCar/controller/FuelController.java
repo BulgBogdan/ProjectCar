@@ -77,6 +77,7 @@ public class FuelController extends MethodsCarForControllers {
                                 BindingResult result) {
         if (result.hasErrors()) {
             errorIncorrectEnter();
+            return modelAndView;
         }
         car = getCarById(id);
 
@@ -116,6 +117,7 @@ public class FuelController extends MethodsCarForControllers {
                                  BindingResult result) {
         if (result.hasErrors()) {
             errorIncorrectEnter();
+            return modelAndView;
         }
         Fuel fuel = fuelService.read(id);
         int carId = fuel.getCar().getId();

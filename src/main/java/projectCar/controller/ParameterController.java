@@ -36,6 +36,7 @@ public class ParameterController extends MethodsCarForControllers{
                                      @PathVariable("id") int id) {
         if (result.hasErrors()){
             errorIncorrectEnter();
+            return modelAndView;
         }
         car = getCarById(id);
         modelAndView.setViewName("redirect:/car/view/{id}");
@@ -59,6 +60,7 @@ public class ParameterController extends MethodsCarForControllers{
                                       @PathVariable("id") int id) {
         if (result.hasErrors()){
             errorIncorrectEnter();
+            return modelAndView;
         }
         parameter.setCar(getCarById(id));
         modelAndView.setViewName("redirect:/car/view/{id}");

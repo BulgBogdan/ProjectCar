@@ -62,6 +62,7 @@ public class OtherCostsController extends MethodsCarForControllers {
                                   BindingResult result) {
         if (result.hasErrors()){
             errorIncorrectEnter();
+            return modelAndView;
         }
         costs.setCar(getCarById(id));
         modelAndView.setViewName("redirect:/car/other/costs/{id}");
@@ -84,6 +85,7 @@ public class OtherCostsController extends MethodsCarForControllers {
                                 BindingResult result){
         if (result.hasErrors()){
             errorIncorrectEnter();
+            return modelAndView;
         }
         otherCosts.setCar(costsService.read(id).getCar());
         modelAndView.setViewName("redirect:/car/other/costs/{id}");

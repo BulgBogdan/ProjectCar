@@ -67,6 +67,7 @@ public class RepairController extends MethodsCarForControllers {
                                   BindingResult result) {
         if (result.hasErrors()){
             errorIncorrectEnter();
+            return modelAndView;
         }
         car = getCarById(id);
         int endMileageRepair = endMileageRepairs(repair.getBeginMileage(),repair.getServiceLife());
@@ -93,8 +94,10 @@ public class RepairController extends MethodsCarForControllers {
                                 @ModelAttribute("car") Car car){
         if (result.hasErrors()){
             errorIncorrectEnter();
+            return modelAndView;
         }
-        repair.setCar(getCarById(car.getId()));
+        Car carRepair = getCarById(car.getId());
+        repair.setCar(carRepair);
         int endMileageRepair = endMileageRepairs(repair.getBeginMileage(),repair.getServiceLife());
         repair.setEndMileage(endMileageRepair);
         modelAndView.setViewName("redirect:/car/repairs/{id}");
