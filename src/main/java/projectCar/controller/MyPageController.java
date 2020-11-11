@@ -16,7 +16,9 @@ import projectCar.service.*;
 import projectCar.service.interfaces.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class MyPageController {
@@ -81,16 +83,19 @@ public class MyPageController {
         Car car = null;
         for (Car cars : carsList) {
             car = cars;
-
+            List<Document> docs = car.getDocuments().stream()
+                    .filter(document -> document.getNameDocument().equals(searchText))
+                    .collect(Collectors.toList());
+            modelAndView.addObject("docs", docs);
+            modelAndView.addObject("repairs", car.getRepairs());
+            modelAndView.addObject("costs", car.getOtherCosts());
         }
 //        List<Document> docs = documentService.searchList(searchText, idUser);
 //        List<Repair> repairs = repairService.searchList(searchText, idUser);
 //        List<OtherCosts> costs = costsService.searchList(searchText, idUser);
         modelAndView.setViewName("search");
         modelAndView.addObject("carsList", carsList);
-        modelAndView.addObject("docs", car.getDocuments());
-        modelAndView.addObject("repairs", car.getRepairs());
-        modelAndView.addObject("costs", car.getOtherCosts());
+
 
         return modelAndView;
     }

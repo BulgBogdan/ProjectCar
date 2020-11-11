@@ -129,6 +129,7 @@ public class CarDAOImpl implements ICarDAO {
         }
         List<Integer> idsForCar = session
                 .createQuery("select id from Car where user.id = '" + id + "'", Integer.class).getResultList();
+
         QueryBuilder queryBuilder = fullTextSession.getSearchFactory().buildQueryBuilder().forEntity(Car.class).get();
         Query query = queryBuilder.keyword()
                 .onField("nameCar")
