@@ -3,7 +3,6 @@ package projectCar.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,12 +10,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import projectCar.entity.*;
+import projectCar.entity.Car;
+import projectCar.entity.Document;
+import projectCar.entity.User;
 import projectCar.service.*;
 import projectCar.service.interfaces.*;
 
-import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -90,7 +89,6 @@ public class MyPageController {
             modelAndView.addObject("repairs", car.getRepairs());
             modelAndView.addObject("costs", car.getOtherCosts());
         }
-//        List<Document> docs = documentService.searchList(searchText, idUser);
 //        List<Repair> repairs = repairService.searchList(searchText, idUser);
 //        List<OtherCosts> costs = costsService.searchList(searchText, idUser);
         modelAndView.setViewName("search");
