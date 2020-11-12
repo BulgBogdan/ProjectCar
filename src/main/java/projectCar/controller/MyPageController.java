@@ -10,9 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import projectCar.entity.Car;
-import projectCar.entity.Document;
-import projectCar.entity.User;
+import projectCar.entity.*;
 import projectCar.service.*;
 import projectCar.service.interfaces.*;
 
@@ -79,22 +77,23 @@ public class MyPageController {
         User userAuth = userService.findByLogin(loginUser);
         int idUser = userAuth.getId();
         List<Car> carsList = carService.searchList(searchText, idUser);
-        Car car = null;
         for (Car cars : carsList) {
-            car = cars;
-            List<Document> docs = car.getDocuments().stream()
-                    .filter(document -> document.getNameDocument().equals(searchText))
-                    .collect(Collectors.toList());
+
+            List<Document> docs = cars.getDocuments().stream()
+                    .filter(document -> document.getNameDocument().equals(searchText)).collect(Collectors.toList());
+            List<Repair> repairs = cars.getRepairs().stream()
+                    .filter(repair -> repair.getNameRepair().equals(searchText)).collect(Collectors.toList());
+            List<OtherCosts> costs = cars.getOtherCosts().stream()
+                    .filter(othCosts -> othCosts.getNameOtherCost().equals(searchText)).collect(Collectors.toList());
+
             modelAndView.addObject("docs", docs);
-            modelAndView.addObject("repairs", car.getRepairs());
-            modelAndView.addObject("costs", car.getOtherCosts());
+            modelAndView.addObject("repairs", repairs);
+            modelAndView.addObject("costs", costs);
         }
-//        List<Repair> repairs = repairService.searchList(searchText, idUser);
-//        List<OtherCosts> costs = costsService.searchList(searchText, idUser);
+
+        carsList = carsList.stream().filter(car -> car.getNameCar().equals(searchText)).collect(Collectors.toList());
         modelAndView.setViewName("search");
         modelAndView.addObject("carsList", carsList);
-
-
         return modelAndView;
     }
 
