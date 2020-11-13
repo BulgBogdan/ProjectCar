@@ -40,7 +40,7 @@ public class SpringBootApplication {
 
         properties.put("hibernate.show_sql",
                 environment.getProperty("spring.jpa.show-sql"));
-        properties.put("hibernate.hbm2ddl.auto",
+        properties.put("hibernate.ddl-auto",
                 environment.getProperty("spring.jpa.hibernate.ddl-auto"));
         properties.put("hibernate.dialect",
                 environment.getProperty("spring.jpa.properties.hibernate.dialect"));
