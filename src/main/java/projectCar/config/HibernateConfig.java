@@ -1,14 +1,10 @@
 package projectCar.config;
 
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
-
-@Configuration
-@ComponentScan(basePackages = "projectCar")
-@EnableTransactionManagement
-@PropertySource(value = {"classpath:database.properties"})
+//
+//@Configuration
+//@ComponentScan(basePackages = "projectCar")
+//@EnableTransactionManagement
+//@PropertySource(value = {"classpath:database.properties"})
 public class HibernateConfig {
 
 //    private Environment environment;

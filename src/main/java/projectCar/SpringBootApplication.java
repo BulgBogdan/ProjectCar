@@ -34,7 +34,7 @@ public class SpringBootApplication {
     }
 
     @Autowired
-    @Bean(name = "sessionFactory")
+    @Bean(name = "entityManagerFactory")
     public SessionFactory getSessionFactory(DataSource dataSource) throws Exception {
         Properties properties = new Properties();
 
@@ -44,8 +44,6 @@ public class SpringBootApplication {
                 environment.getProperty("spring.jpa.hibernate.ddl-auto"));
         properties.put("hibernate.dialect",
                 environment.getProperty("spring.jpa.properties.hibernate.dialect"));
-        properties.put("current_session_context_class",
-                environment.getProperty("spring.jpa.properties.hibernate.current_session_context_class"));
         properties.put("hibernate.search.default.directory_provider",
                 environment.getProperty("spring.jpa.properties.hibernate.search.default.directory_provider"));
         properties.put("hibernate.search.default.indexBase",
