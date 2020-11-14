@@ -79,21 +79,25 @@ public class FuelController extends MethodsCarForControllers {
             errorIncorrectEnter();
             return modelAndView;
         }
+
         car = getCarById(id);
 
         if (fuel.getSumm() == 0) {
             double sumFuel = fuelSumm(fuel.getLiterCost(), fuel.getLiterValue());
             fuel.setSumm(sumFuel);
         }
+
         if (fuel.getLiterValue() == 0) {
             double valueFuel = fuelValue(fuel.getSumm(), fuel.getLiterCost());
             fuel.setLiterValue(valueFuel);
         }
+
         if ((fuel.getSumm() == 0) && (fuel.getLiterValue() == 0)) {
             errorIncorrectEnter();
             modelAndView.setViewName("redirect:/car/fuel/create/{id}");
             return modelAndView;
         }
+
         double distanceFuel = fuelDistance(fuel.getLiterValue(), car.getParameters().getAverageRate());
         fuel.setFuelDistance(distanceFuel);
         fuel.setCar(car);
@@ -119,24 +123,29 @@ public class FuelController extends MethodsCarForControllers {
             errorIncorrectEnter();
             return modelAndView;
         }
+
         Fuel fuel = fuelService.read(id);
         int carId = fuel.getCar().getId();
         fuelEdit.setCar(getCarById(carId));
         boolean editSum = fuelEdit.getSumm() == fuel.getSumm();
         boolean editValue = fuelEdit.getLiterValue() == fuel.getLiterValue();
+
         if (!editSum) {
             double valueFuel = fuelValue(fuelEdit.getSumm(), fuelEdit.getLiterCost());
             fuelEdit.setLiterValue(valueFuel);
         }
+
         if (!editValue) {
             double sumFuel = fuelSumm(fuelEdit.getLiterCost(), fuelEdit.getLiterValue());
             fuelEdit.setSumm(sumFuel);
         }
+
         if ((fuelEdit.getSumm() == 0) && (fuelEdit.getLiterValue() == 0)) {
             errorIncorrectEnter();
             modelAndView.setViewName("redirect:/car/fuel/edit/{id}");
             return modelAndView;
         }
+
         double distanceFuel = fuelDistance(fuelEdit.getLiterValue(), fuel.getCar().getParameters().getAverageRate());
         fuelEdit.setFuelDistance(distanceFuel);
         modelAndView.addObject("carId", carId);

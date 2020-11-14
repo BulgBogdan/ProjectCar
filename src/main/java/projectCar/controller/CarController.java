@@ -39,7 +39,7 @@ public class CarController {
         return carById;
     }
 
-    private ModelAndView errorIncorrectEnter(){
+    private ModelAndView errorIncorrectEnter() {
         modelAndView.addObject("Errors", "Incorrect enter");
         return modelAndView;
     }
@@ -55,7 +55,7 @@ public class CarController {
     public ModelAndView addCar(@ModelAttribute("newCar") Car car,
                                BindingResult result,
                                @AuthenticationPrincipal UserDetails userDetails) {
-        if (result.hasErrors()){
+        if (result.hasErrors()) {
             modelAndView.addObject("Errors", "Incorrect enter");
             return modelAndView;
         }
@@ -78,7 +78,7 @@ public class CarController {
     public ModelAndView addFirstCost(@PathVariable("id") int id,
                                      @ModelAttribute("registration") Registration registration,
                                      BindingResult result) {
-        if (result.hasErrors()){
+        if (result.hasErrors()) {
             errorIncorrectEnter();
             return modelAndView;
         }
@@ -97,7 +97,7 @@ public class CarController {
         modelAndView.addObject("parameter", car.getParameters());
         modelAndView.addObject("registration", car.getRegistration());
 
-        if ((car.getRegistration()!=null) && (car.getParameters() != null)) {
+        if ((car.getRegistration() != null) && (car.getParameters() != null)) {
             double costs = 0;
             List<Car> listCar = carService.getLists(id);
             for (Car cars : listCar) {
@@ -133,7 +133,7 @@ public class CarController {
     public ModelAndView editFirstCost(@ModelAttribute("registration") Registration registration,
                                       BindingResult result,
                                       @PathVariable("id") int id) {
-        if (result.hasErrors()){
+        if (result.hasErrors()) {
             errorIncorrectEnter();
             return modelAndView;
         }
@@ -157,7 +157,7 @@ public class CarController {
                                 BindingResult result,
                                 @AuthenticationPrincipal UserDetails userDetails,
                                 @PathVariable("id") int id) {
-        if (result.hasErrors()){
+        if (result.hasErrors()) {
             errorIncorrectEnter();
             return modelAndView;
         }

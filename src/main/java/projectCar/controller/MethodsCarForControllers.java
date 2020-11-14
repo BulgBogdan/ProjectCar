@@ -39,6 +39,7 @@ public class MethodsCarForControllers {
         int days = (int) TimeUnit.DAYS.convert(period, TimeUnit.MILLISECONDS);
         return days;
     }
+
     int amountOfMonths(Date startDate, Date endDate) {
         int monthBetween = (int)ChronoUnit.MONTHS.between(startDate.toLocalDate(),endDate.toLocalDate());
         return monthBetween;

@@ -38,6 +38,7 @@ public class ParameterController extends MethodsCarForControllers{
             errorIncorrectEnter();
             return modelAndView;
         }
+
         car = getCarById(id);
         modelAndView.setViewName("redirect:/car/view/{id}");
         parameter.setCar(car);
@@ -62,6 +63,7 @@ public class ParameterController extends MethodsCarForControllers{
             errorIncorrectEnter();
             return modelAndView;
         }
+
         parameter.setCar(getCarById(id));
         modelAndView.setViewName("redirect:/car/view/{id}");
         parameterService.update(parameter);

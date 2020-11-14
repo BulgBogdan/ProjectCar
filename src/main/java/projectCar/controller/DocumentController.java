@@ -32,10 +32,10 @@ public class DocumentController extends MethodsCarForControllers {
         car = getCarWithWires(id);
         List<Document> documentList = documentService.getDocuments(page, id);
         int documentsCount = documentService.docsCount(id);
-        int pagesCount = (documentsCount+9)/10;
+        int pagesCount = (documentsCount + 9) / 10;
         modelAndView.setViewName("car/documents");
         modelAndView.addObject("car", car);
-        modelAndView.addObject("page",page);
+        modelAndView.addObject("page", page);
         modelAndView.addObject("documentsCount", documentsCount);
         modelAndView.addObject("pagesCount", pagesCount);
         modelAndView.addObject("parameters", car.getParameters());
@@ -69,14 +69,17 @@ public class DocumentController extends MethodsCarForControllers {
 
         int numberOfMonths;
         car = getCarById(id);
+
         if (document.getEndDate() == null) {
             LocalDate endDate = document.getBeginDate().toLocalDate().plusMonths(document.getNumberOfMonth());
             document.setEndDate(Date.valueOf(endDate));
         }
+
         if (document.getNumberOfMonth() == 0) {
             numberOfMonths = amountOfMonths(document.getBeginDate(), document.getEndDate());
             document.setNumberOfMonth(numberOfMonths);
         }
+
         int numberOfDays = amountOfDays(document.getBeginDate(), document.getEndDate());
         document.setNumberOfDays(numberOfDays);
         document.setCar(car);
@@ -102,20 +105,24 @@ public class DocumentController extends MethodsCarForControllers {
             errorIncorrectEnter();
             return modelAndView;
         }
+
         Document document = documentService.read(id);
         int carId = document.getCar().getId();
         LocalDate endDate;
         boolean dateEditEqualDate = document.getEndDate().getTime() == documentEdit.getEndDate().getTime();
         boolean monthsEditEqualMonths = document.getNumberOfMonth() == documentEdit.getNumberOfMonth();
         int numberOfMonth;
+
         if (!dateEditEqualDate) {
             numberOfMonth = amountOfMonths(documentEdit.getBeginDate(), documentEdit.getEndDate());
             documentEdit.setNumberOfMonth(numberOfMonth);
         }
+
         if ((!monthsEditEqualMonths) && (dateEditEqualDate)) {
             endDate = documentEdit.getBeginDate().toLocalDate().plusMonths(documentEdit.getNumberOfMonth());
             documentEdit.setEndDate(Date.valueOf(endDate));
         }
+
         int numberOfDays = amountOfDays(documentEdit.getBeginDate(), documentEdit.getEndDate());
         documentEdit.setNumberOfDays(numberOfDays);
         documentEdit.setCar(getCarById(carId));

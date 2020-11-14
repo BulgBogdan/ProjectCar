@@ -69,6 +69,7 @@ public class RepairController extends MethodsCarForControllers {
             errorIncorrectEnter();
             return modelAndView;
         }
+
         car = getCarById(id);
         int endMileageRepair = endMileageRepairs(repair.getBeginMileage(),repair.getServiceLife());
         repair.setEndMileage(endMileageRepair);
@@ -96,6 +97,7 @@ public class RepairController extends MethodsCarForControllers {
             errorIncorrectEnter();
             return modelAndView;
         }
+
         Car carRepair = getCarById(car.getId());
         repair.setCar(carRepair);
         int endMileageRepair = endMileageRepairs(repair.getBeginMileage(),repair.getServiceLife());
