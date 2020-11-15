@@ -12,9 +12,11 @@
                 <form:form method="POST" modelAttribute="user">
                     <h3 class="text-center text-info">Редактирование пользователя</h3>
                     <input type="hidden" name="id" class="form-control" value="${user.id}">
+                    <input type="hidden" name="login" class="form-control" value="${user.login}">
                     <input type="hidden" name="email" class="form-control" value="${user.email}">
                     <input type="hidden" name="firstName" class="form-control" value="${user.firstName}">
                     <input type="hidden" name="secondName" class="form-control" value="${user.secondName}">
+                    <input type="hidden" name="birthday" class="form-control" value="${user.birthday}">
 
                     <div class="form-group">
                         <label for="password" class="text-info">Ваш старый пароль:</label><br>
