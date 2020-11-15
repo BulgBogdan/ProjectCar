@@ -5,15 +5,18 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import projectCar.entity.*;
 import projectCar.service.CarServiceImpl;
+import projectCar.service.RegistrationServiceImpl;
 import projectCar.service.UserServiceImpl;
 import projectCar.service.interfaces.ICarService;
 import projectCar.service.interfaces.IRegistrationService;
 import projectCar.service.interfaces.IUserService;
-import projectCar.service.RegistrationServiceImpl;
 
 import java.util.List;
 
@@ -134,6 +137,7 @@ public class CarController {
             errorIncorrectEnter();
             return modelAndView;
         }
+
         Car car = getCarById(id);
         registration.setCar(car);
         modelAndView.setViewName("redirect:/car/view/{id}");
@@ -158,6 +162,7 @@ public class CarController {
             errorIncorrectEnter();
             return modelAndView;
         }
+
         String userName = userDetails.getUsername();
         User user = userService.findByLogin(userName);
         car.setUser(user);

@@ -3,6 +3,7 @@ package projectCar;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -12,7 +13,7 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import javax.sql.DataSource;
 import java.util.Properties;
 
-@org.springframework.boot.autoconfigure.SpringBootApplication
+@org.springframework.boot.autoconfigure.SpringBootApplication(exclude = HibernateJpaAutoConfiguration.class)
 public class SpringBootApplication {
 
     @Autowired
@@ -44,6 +45,8 @@ public class SpringBootApplication {
                 environment.getProperty("spring.jpa.hibernate.ddl-auto"));
         properties.put("hibernate.dialect",
                 environment.getProperty("spring.jpa.properties.hibernate.dialect"));
+        properties.put("hibernate.current_session_context_class",
+                environment.getProperty("spring.jpa.properties.hibernate.current_session_context_class"));
         properties.put("hibernate.search.default.directory_provider",
                 environment.getProperty("spring.jpa.properties.hibernate.search.default.directory_provider"));
         properties.put("hibernate.search.default.indexBase",

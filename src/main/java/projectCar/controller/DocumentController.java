@@ -62,21 +62,24 @@ public class DocumentController extends MethodsCarForControllers {
     public ModelAndView addDocument(@PathVariable("id") int id,
                                     @ModelAttribute("doc") Document document,
                                     BindingResult result) {
-        if (result.hasErrors()) {
-            errorIncorrectEnter();
-            return modelAndView;
-        }
+//        if (result.hasErrors()) {
+//            errorIncorrectEnter();
+//            return modelAndView;
+//        }
 
         int numberOfMonths;
         car = getCarById(id);
+
         if (document.getEndDate() == null) {
             LocalDate endDate = document.getBeginDate().toLocalDate().plusMonths(document.getNumberOfMonth());
             document.setEndDate(Date.valueOf(endDate));
         }
+
         if (document.getNumberOfMonth() == 0) {
             numberOfMonths = amountOfMonths(document.getBeginDate(), document.getEndDate());
             document.setNumberOfMonth(numberOfMonths);
         }
+
         int numberOfDays = amountOfDays(document.getBeginDate(), document.getEndDate());
         document.setNumberOfDays(numberOfDays);
         document.setCar(car);

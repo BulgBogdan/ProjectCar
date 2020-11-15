@@ -1,6 +1,7 @@
 package projectCar.entity;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.validator.constraints.Email;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,7 +13,8 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "users", schema = "projectcar")
 public class User implements UserDetails {

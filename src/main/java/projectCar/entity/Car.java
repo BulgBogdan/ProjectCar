@@ -1,13 +1,15 @@
 package projectCar.entity;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.*;
 
 import javax.persistence.*;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Indexed
 @Table(name = "cars", schema = "projectcar")

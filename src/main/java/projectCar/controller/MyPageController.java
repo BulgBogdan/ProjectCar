@@ -89,12 +89,8 @@ public class MyPageController {
             modelAndView.addObject("repairs", car.getRepairs());
             modelAndView.addObject("costs", car.getOtherCosts());
         }
-//        List<Repair> repairs = repairService.searchList(searchText, idUser);
-//        List<OtherCosts> costs = costsService.searchList(searchText, idUser);
         modelAndView.setViewName("search");
         modelAndView.addObject("carsList", carsList);
-
-
         return modelAndView;
     }
 
