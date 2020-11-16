@@ -4,7 +4,6 @@ import org.apache.log4j.Logger;
 import org.apache.lucene.search.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.annotations.QueryHints;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
@@ -118,8 +117,8 @@ public class CarDAOImpl implements ICarDAO {
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<Car> searchList(String textSearch, int id) {
-        Session session = sessionFactory.getCurrentSession();
+    public List<Car> searchList(String textSearch, int id, int page) {
+        Session session = sessionFactory.openSession();
         FullTextSession fullTextSession  = Search.getFullTextSession(session);
         try {
             fullTextSession.createIndexer().startAndWait();
@@ -140,19 +139,14 @@ public class CarDAOImpl implements ICarDAO {
         // matching @field and request text
         BooleanJunction idJunction = queryBuilder.bool();
         for (Integer ids : idsForCar) {
-            idJunction.should(queryBuilder.keyword().onField("id").matching(ids).createQuery());
             // match id from field with id from request text
+            idJunction.should(queryBuilder.keyword().onField("id").matching(ids).createQuery());
         }
         Query idQuery = idJunction.createQuery();
-        Query combinedQuery = queryBuilder.bool().must(query)
-//                .must(queryBuilder.keyword().onField("nameCar").matching(textSearch).createQuery())
-//                .must(queryBuilder.keyword().onField("documents.nameDocument").matching(textSearch).createQuery())
-//                .must(queryBuilder.keyword().onField("otherCosts.nameOtherCost").matching(textSearch).createQuery())
-//                .must(queryBuilder.keyword().onField("repairs.nameRepair").matching(textSearch).createQuery())
-                .must(idQuery).createQuery();
         // method boolean AND (must().must()), which equals output
+        Query combinedQuery = queryBuilder.bool().must(query).must(idQuery).createQuery();
         org.hibernate.search.jpa.FullTextQuery hibQuery = fullTextSession.createFullTextQuery(combinedQuery, Car.class);
-        List<Car> cars = hibQuery.getResultList();
+        List<Car> cars = hibQuery.setFirstResult(10 * (page - 1)).setMaxResults(10).getResultList();
         for (Car car: cars){
             logger.info("Car list. Car: " + car);
         }

@@ -22,6 +22,6 @@ public interface ICarService {
 
     List<Car> getLists(int id);
 
-    List<Car> searchList(String textSearch,int id);
+    List<Car> searchList(String textSearch, int id, int page);
 
 }
