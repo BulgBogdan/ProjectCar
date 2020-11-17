@@ -18,7 +18,6 @@
     <style>
         body {
         background: url("<c:url value="/res/images/editMachine.jpg" />") no-repeat 100% 100%;
-            /*background-color: #f6fcff*/
         }
     </style>
 </head>
@@ -53,10 +52,6 @@
                 <a class="nav-link" href="#"></a>
             </li>
         </ul>
-
-        <%--<div class="mx-auto">--%>
-        <%--<a href="/" class="navbar-brand">На главную</a>--%>
-        <%--</div>--%>
 
         <form class="form-inline my-2 my-lg-0" action="search" method="get">
             <input class="form-control mr-sm-2" type="text" placeholder="Search" name="searchText">

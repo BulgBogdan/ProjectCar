@@ -2,6 +2,7 @@ package projectCar.dao;
 
 import org.apache.log4j.Logger;
 import org.apache.lucene.search.Query;
+import org.apache.lucene.search.Sort;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.annotations.QueryHints;
@@ -146,10 +147,18 @@ public class CarDAOImpl implements ICarDAO {
         // method boolean AND (must().must()), which equals output
         Query combinedQuery = queryBuilder.bool().must(query).must(idQuery).createQuery();
         org.hibernate.search.jpa.FullTextQuery hibQuery = fullTextSession.createFullTextQuery(combinedQuery, Car.class);
-        List<Car> cars = hibQuery.setFirstResult(10 * (page - 1)).setMaxResults(10).getResultList();
+        Sort sort = queryBuilder
+                .sort()
+                .byScore() // Descending order
+                // Default order (ascending)
+                .createSort();
+        hibQuery.setSort(sort);
+        List<Car> cars = hibQuery.getResultList();
         for (Car car: cars){
             logger.info("Car list. Car: " + car);
         }
         return cars;
     }
 }
+
+//.setFirstResult(10 * (page - 1)).setMaxResults(10)

@@ -24,7 +24,7 @@
         <c:if test="${countPageCars > 1}">
             <c:set value="disabled" var="disabled"/>
             <c:set value="" var="active"/>
-            <c:url value="/search" var="url">
+            <c:url value="/search/${searchText}" var="url">
                 <c:param name="page" value="1"/>
             </c:url>
 
@@ -54,7 +54,7 @@
             </c:if>
 
             <c:forEach begin="${begin}" end="${end}" step="1" varStatus="i">
-                <c:url value="/search" var="url">
+                <c:url value="/search/${searchText}" var="url">
                     <c:param name="page" value="${i.index}"/>
                 </c:url>
                 <c:set value="current-page" var="current"/>
@@ -63,7 +63,7 @@
                    href="${url}"> ${i.index} </a>
             </c:forEach>
 
-            <c:url value="/search" var="url">
+            <c:url value="/search/${searchText}" var="url">
                 <c:param name="page" value="${countPageCars}"/>
             </c:url>
             <a class="${page == countPageCars ? disabled : active}" href="${url}">
@@ -98,7 +98,7 @@
         <c:if test="${countPageDocs > 1}">
             <c:set value="disabled" var="disabled"/>
             <c:set value="" var="active"/>
-            <c:url value="/search" var="url">
+            <c:url value="/search/${searchText}" var="url">
                 <c:param name="page" value="1"/>
             </c:url>
 
@@ -128,7 +128,7 @@
             </c:if>
 
             <c:forEach begin="${begin}" end="${end}" step="1" varStatus="i">
-                <c:url value="/search" var="url">
+                <c:url value="/search/${searchText}" var="url">
                     <c:param name="page" value="${i.index}"/>
                 </c:url>
                 <c:set value="current-page" var="current"/>
@@ -137,7 +137,7 @@
                    href="${url}"> ${i.index} </a>
             </c:forEach>
 
-            <c:url value="/search" var="url">
+            <c:url value="/search/${searchText}" var="url">
                 <c:param name="page" value="${countPageDocs}"/>
             </c:url>
             <a class="${page == countPageDocs ? disabled : active}" href="${url}">
@@ -172,7 +172,7 @@
         <c:if test="${countPageOtherCosts > 1}">
             <c:set value="disabled" var="disabled"/>
             <c:set value="" var="active"/>
-            <c:url value="/search" var="url">
+            <c:url value="/search/${searchText}" var="url">
                 <c:param name="page" value="1"/>
             </c:url>
 
@@ -202,7 +202,7 @@
             </c:if>
 
             <c:forEach begin="${begin}" end="${end}" step="1" varStatus="i">
-                <c:url value="/search" var="url">
+                <c:url value="/search/${searchText}" var="url">
                     <c:param name="page" value="${i.index}"/>
                 </c:url>
                 <c:set value="current-page" var="current"/>
@@ -211,7 +211,7 @@
                    href="${url}"> ${i.index} </a>
             </c:forEach>
 
-            <c:url value="/search" var="url">
+            <c:url value="/search/${searchText}" var="url">
                 <c:param name="page" value="${countPageOtherCosts}"/>
             </c:url>
             <a class="${page == countPageOtherCosts ? disabled : active}" href="${url}">
@@ -246,7 +246,7 @@
         <c:if test="${countPageRepair > 1}">
             <c:set value="disabled" var="disabled"/>
             <c:set value="" var="active"/>
-            <c:url value="/search" var="url">
+            <c:url value="/search/${searchText}" var="url">
                 <c:param name="page" value="1"/>
             </c:url>
 
@@ -276,7 +276,7 @@
             </c:if>
 
             <c:forEach begin="${begin}" end="${end}" step="1" varStatus="i">
-                <c:url value="/search" var="url">
+                <c:url value="/search/${searchText}" var="url">
                     <c:param name="page" value="${i.index}"/>
                 </c:url>
                 <c:set value="current-page" var="current"/>
@@ -285,7 +285,7 @@
                    href="${url}"> ${i.index} </a>
             </c:forEach>
 
-            <c:url value="/search" var="url">
+            <c:url value="/search/${searchText}" var="url">
                 <c:param name="page" value="${countPageRepair}"/>
             </c:url>
             <a class="${page == countPageRepair ? disabled : active}" href="${url}">

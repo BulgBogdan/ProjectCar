@@ -6,10 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import projectCar.entity.*;
 import projectCar.service.*;
@@ -39,11 +36,16 @@ public class MyPageController {
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    private String searchText;
-
     private ModelAndView modelAndView = new ModelAndView();
 
     private int page;
+
+    @GetMapping("/search")
+    public ModelAndView search(@RequestParam("searchText") String searchText) {
+        modelAndView.addObject("searchText", searchText);
+        modelAndView.setViewName("redirect:/search/{searchText}");
+        return modelAndView;
+    }
 
     @GetMapping("/user")
     public ModelAndView allUsers() {
@@ -73,30 +75,27 @@ public class MyPageController {
         return modelAndView;
     }
 
-    @GetMapping("/search")
-    public ModelAndView searchPage(@RequestParam(name = "searchText", required = false) String searchedText,
+    @GetMapping("/search/{searchText}")
+    public ModelAndView searchPage(@PathVariable("searchText") String searchText,
                                    @AuthenticationPrincipal UserDetails userDetails,
                                    @RequestParam(defaultValue = "1") int page) {
         String loginUser = userDetails.getUsername();
         User userAuth = userService.findByLogin(loginUser);
         int idUser = userAuth.getId();
-        if (searchedText != null) {
-            this.searchText = searchedText;
-        }
         List<Car> carsList = carService.searchList(searchText, idUser, page);
         int countPageCars = (carsList.size() + 10) / 10;
         for (Car cars : carsList) {
             List<Document> docs = cars.getDocuments().stream()
                     .filter(document -> document.getNameDocument().equals(searchText)).collect(Collectors.toList());
-            int countPageDocs = (docs.size() + 9) / 10;
+            int countPageDocs = (docs.size() + 10) / 10;
 
             List<Repair> repairs = cars.getRepairs().stream()
                     .filter(repair -> repair.getNameRepair().equals(searchText)).collect(Collectors.toList());
-            int countPageRepair = (repairs.size() + 9) / 10;
+            int countPageRepair = (repairs.size() + 10) / 10;
 
             List<OtherCosts> costs = cars.getOtherCosts().stream()
                     .filter(othCosts -> othCosts.getNameOtherCost().equals(searchText)).collect(Collectors.toList());
-            int countPageOtherCosts = (repairs.size() + 9) / 10;
+            int countPageOtherCosts = (repairs.size() + 10) / 10;
 
             modelAndView.addObject("docs", docs);
             modelAndView.addObject("countPageDocs", countPageDocs);
@@ -107,6 +106,7 @@ public class MyPageController {
         }
         modelAndView.addObject("page", page);
         modelAndView.setViewName("search");
+        modelAndView.addObject("searchText", searchText);
         modelAndView.addObject("carsList", carsList);
         modelAndView.addObject("countPageCars", countPageCars);
         this.page = page;
