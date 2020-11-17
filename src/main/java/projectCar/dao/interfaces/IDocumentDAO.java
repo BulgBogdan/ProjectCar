@@ -20,6 +20,6 @@ public interface IDocumentDAO {
 
     List<Document> getAll();
 
-    List<Document> searchList(String searchText, int id);
+//    List<Document> searchList(String searchText, int id);
 
 }

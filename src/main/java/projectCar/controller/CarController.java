@@ -138,6 +138,7 @@ public class CarController {
             errorIncorrectEnter();
             return modelAndView;
         }
+
         Car car = getCarById(id);
         registration.setCar(car);
         modelAndView.setViewName("redirect:/car/view/{id}");
@@ -162,6 +163,7 @@ public class CarController {
             errorIncorrectEnter();
             return modelAndView;
         }
+
         String userName = userDetails.getUsername();
         User user = userService.findByLogin(userName);
         car.setUser(user);

@@ -84,9 +84,9 @@ public class RepairDAOImpl implements IRepairDAO {
         return listRepair;
     }
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public List<Repair> searchList(String searchText, int id) {
+//    @Override
+//    @SuppressWarnings("unchecked")
+//    public List<Repair> searchList(String searchText, int id) {
 //        Session session = sessionFactory.getCurrentSession();
 //        FullTextSession fullTextSession  = Search.getFullTextSession(session);
 //        try {
@@ -113,6 +113,6 @@ public class RepairDAOImpl implements IRepairDAO {
 //        for (Repair repair: repairs){
 //            logger.info("Repair list. Repair: " + repair);
 //        }
-        return null;
-    }
+//        return repairs;
+//    }
 }

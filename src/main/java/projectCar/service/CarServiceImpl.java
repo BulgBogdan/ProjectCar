@@ -66,7 +66,7 @@ public class CarServiceImpl implements ICarService {
 
     @Override
     @Transactional
-    public List<Car> searchList(String textSearch, int id) {
-        return carDAO.searchList(textSearch, id);
+    public List<Car> searchList(String textSearch, int id, int page) {
+        return carDAO.searchList(textSearch, id, page);
     }
 }

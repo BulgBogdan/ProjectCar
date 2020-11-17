@@ -1,11 +1,17 @@
 package projectCar.dao;
 
 import org.apache.log4j.Logger;
+import org.apache.lucene.search.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.search.FullTextSession;
+import org.hibernate.search.Search;
+import org.hibernate.search.query.dsl.BooleanJunction;
+import org.hibernate.search.query.dsl.QueryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import projectCar.dao.interfaces.IDocumentDAO;
+import projectCar.entity.Car;
 import projectCar.entity.Document;
 
 import java.util.List;
@@ -85,9 +91,9 @@ public class DocumentDAOImpl implements IDocumentDAO {
         return listDocument;
     }
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public List<Document> searchList(String searchText, int id) {
+//    @Override
+//    @SuppressWarnings("unchecked")
+//    public List<Document> searchList(String searchText, int id) {
 //        Session session = sessionFactory.getCurrentSession();
 //        FullTextSession fullTextSession  = Search.getFullTextSession(session);
 //        try {
@@ -114,6 +120,6 @@ public class DocumentDAOImpl implements IDocumentDAO {
 //        for (Document document: documents){
 //            logger.info("Document list. Document: " + document);
 //        }
-        return null;
-    }
+//        return documents;
+//    }
 }

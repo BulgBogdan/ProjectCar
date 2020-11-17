@@ -84,9 +84,9 @@ public class OtherCostsDAOImpl implements IOtherCostsDAO {
         return listOtherCosts;
     }
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public List<OtherCosts> searchList(String searchText, int id) {
+//    @Override
+//    @SuppressWarnings("unchecked")
+//    public List<OtherCosts> searchList(String searchText, int id) {
 //        Session session = sessionFactory.getCurrentSession();
 //        FullTextSession fullTextSession  = Search.getFullTextSession(session);
 //        try {
@@ -114,6 +114,6 @@ public class OtherCostsDAOImpl implements IOtherCostsDAO {
 //        for (OtherCosts otherCost: otherCosts){
 //            logger.info("OtherCosts list. OtherCosts: " + otherCost);
 //        }
-        return null;
-    }
+//        return otherCosts;
+//    }
 }

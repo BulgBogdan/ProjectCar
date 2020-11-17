@@ -62,10 +62,10 @@ public class DocumentController extends MethodsCarForControllers {
     public ModelAndView addDocument(@PathVariable("id") int id,
                                     @ModelAttribute("doc") Document document,
                                     BindingResult result) {
-        if (result.hasErrors()) {
-            errorIncorrectEnter();
-            return modelAndView;
-        }
+//        if (result.hasErrors()) {
+//            errorIncorrectEnter();
+//            return modelAndView;
+//        }
 
         int numberOfMonths;
         car = getCarById(id);

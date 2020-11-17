@@ -3,8 +3,8 @@ package projectCar.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import projectCar.dao.interfaces.IRepairDAO;
 import projectCar.dao.RepairDAOImpl;
+import projectCar.dao.interfaces.IRepairDAO;
 import projectCar.entity.Repair;
 import projectCar.service.interfaces.IRepairService;
 
@@ -58,9 +58,9 @@ public class RepairServiceImpl implements IRepairService {
         return repairDAO.getAll();
     }
 
-    @Override
-    @Transactional
-    public List<Repair> searchList(String searchText, int id) {
-        return repairDAO.searchList(searchText, id);
-    }
+//    @Override
+//    @Transactional
+//    public List<Repair> searchList(String searchText, int id) {
+//        return repairDAO.searchList(searchText, id);
+//    }
 }
