@@ -229,6 +229,8 @@
                             <b class="text-danger">${allFuelsCosts}</b>
                         </ul>
                     </div>
+                    <c:url value="/car/fuel/diagram/${car.id}" var="diagram"/>
+                    <a href="${diagram}" class="btn btn-primary btn-xs pull-right">Диаграмма цен на топливо</a>
                 </div>
             </c:if>
             <c:if test="${(parameters != null) && (fuel.size() == 0)}">

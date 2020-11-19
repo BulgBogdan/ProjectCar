@@ -57,4 +57,10 @@ public class FuelServiceImpl implements IFuelService {
     public List<Fuel> getAll() {
         return fuelDAO.getAll();
     }
+
+    @Override
+    @Transactional
+    public List<Fuel> getAllByCar(int idCar) {
+        return fuelDAO.getAllByCar(idCar);
+    }
 }

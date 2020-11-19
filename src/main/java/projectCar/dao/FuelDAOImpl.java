@@ -83,4 +83,15 @@ public class FuelDAOImpl implements IFuelDAO {
         }
         return listFuel;
     }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<Fuel> getAllByCar(int idCar) {
+        Session session = sessionFactory.getCurrentSession();
+        List<Fuel> listFuel = session.createQuery("from Fuel where car.id = '" + idCar + "'").list();
+        for (Fuel fuel : listFuel) {
+            logger.info("FuelsByCar list. Fuel: " + fuel);
+        }
+        return listFuel;
+    }
 }

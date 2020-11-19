@@ -19,4 +19,6 @@ public interface IFuelDAO {
     List<Fuel> getFuel (int page, int id);
 
     List<Fuel> getAll();
+
+    List<Fuel> getAllByCar(int idCar);
 }
