@@ -166,14 +166,9 @@ public class FuelController extends MethodsCarForControllers {
     @GetMapping("/car/fuel/diagram/{id}")
     public ModelAndView diagramCostsFuel(@PathVariable("id") int id) {
         List<Fuel> fuelList = fuelService.getAllByCar(id);
-        double maxValueLiterPrice = 0;
-        for (Fuel fuel : fuelList) {
-            if (fuel.getLiterCost() > maxValueLiterPrice) {
-                maxValueLiterPrice = fuel.getLiterValue();
-            }
-        }
+        Car car = carService.read(id);
         modelAndView.addObject("fuelList", fuelList);
-        modelAndView.addObject("maxPriceLiterFuel", maxValueLiterPrice);
+        modelAndView.addObject("car", car);
         modelAndView.setViewName("car/fuel/diagram");
         return modelAndView;
 
