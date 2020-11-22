@@ -14,7 +14,7 @@ public interface ICarDAO {
 
     void delete(Car car);
 
-    int carsCount(int id);
+    int carsCount(int idUser);
 
     List<Car> getAll();
 

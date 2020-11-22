@@ -11,7 +11,7 @@
                 <nav class="navbar navbar-expand navbar-light bg-light flex-md-column flex-row align-items-start py-0">
                     <div class="collapse navbar-collapse align-items-start">
                         <ul class="flex-md-column flex-row navbar-nav w-100 justify-content-between">
-                            <b>Ваши профиль:</b>
+                            <b>Ваш профиль:</b>
 
                             <li class="nav-item">
                                 <small>Логин:<b> ${user.login}</b></small>

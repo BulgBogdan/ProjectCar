@@ -42,8 +42,8 @@ public class CarServiceImpl implements ICarService {
 
     @Override
     @Transactional
-    public int carsCount(int id) {
-        return carDAO.carsCount(id);
+    public int carsCount(int idUser) {
+        return carDAO.carsCount(idUser);
     }
 
     @Override

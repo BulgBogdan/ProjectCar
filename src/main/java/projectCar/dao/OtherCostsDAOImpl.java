@@ -68,7 +68,7 @@ public class OtherCostsDAOImpl implements IOtherCostsDAO {
         List<OtherCosts> otherCostsList = session.createQuery("from OtherCosts where car.id = '" + id + "'")
                 .setFirstResult(10 * (page - 1)).setMaxResults(10).list();
         for (OtherCosts costs : otherCostsList) {
-            logger.info("OtherCosts list. OtherCosts: " + costs.toString());
+            logger.info("OtherCosts list. OtherCosts: " + costs);
         }
         return otherCostsList;
     }

@@ -68,7 +68,7 @@ public class RepairDAOImpl implements IRepairDAO {
         List<Repair> repairList = session.createQuery("from Repair where car.id = '" + id + "'")
                 .setFirstResult(10 * (page - 1)).setMaxResults(10).list();
         for (Repair repair : repairList) {
-            logger.info("Repair list. Repair: " + repair.toString());
+            logger.info("Repair list. Repair: " + repair);
         }
         return repairList;
     }

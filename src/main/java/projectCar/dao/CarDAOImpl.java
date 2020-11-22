@@ -33,14 +33,14 @@ public class CarDAOImpl implements ICarDAO {
     public void add(Car car) {
         Session session = sessionFactory.getCurrentSession();
         session.save(car);
-        logger.info("Car successfully added. Car: " + car.toString());
+        logger.info("Car successfully added. Car: " + car);
     }
 
     @Override
     public void update(Car car) {
         Session session = sessionFactory.getCurrentSession();
         session.update(car);
-        logger.info("Car successfully updated. Car: " + car.toString());
+        logger.info("Car successfully updated. Car: " + car);
 
     }
 
@@ -48,7 +48,7 @@ public class CarDAOImpl implements ICarDAO {
     public Car read(int id) {
         Session session = sessionFactory.getCurrentSession();
         Car car = session.get(Car.class, id);
-        logger.info("Car successfully read. Car: " + car.toString());
+        logger.info("Car successfully read. Car: " + car);
         return car;
     }
 
@@ -56,14 +56,14 @@ public class CarDAOImpl implements ICarDAO {
     public void delete(Car car) {
         Session session = sessionFactory.getCurrentSession();
         session.delete(car);
-        logger.info("Car successfully deleted. Car: " + car.toString());
+        logger.info("Car successfully deleted. Car: " + car);
 
     }
 
     @Override
-    public int carsCount(int id) {
+    public int carsCount(int idUser) {
         Session session = sessionFactory.getCurrentSession();
-        int count = session.createQuery("select count(*) from Car where user.id = '" + id + "'", Number.class)
+        int count = session.createQuery("select count(*) from Car where user.id = '" + idUser + "'", Number.class)
                 .getSingleResult().intValue();
         logger.info("Car returned count. Car: " + count);
         return count;
@@ -75,7 +75,7 @@ public class CarDAOImpl implements ICarDAO {
         Session session = sessionFactory.getCurrentSession();
         List<Car> listCar = session.createQuery("from Car").list();
         for (Car car : listCar) {
-            logger.info("Car list. Car: " + car.toString());
+            logger.info("Car list. Car: " + car);
         }
         return listCar;
     }

@@ -68,7 +68,7 @@ public class FuelDAOImpl implements IFuelDAO {
         List<Fuel> fuelList = session.createQuery("from Fuel where car.id = '" + id + "'")
                 .setFirstResult(10 * (page - 1)).setMaxResults(10).list();
         for (Fuel fuel : fuelList) {
-            logger.info("Fuel list. Fuel: " + fuel.toString());
+            logger.info("Fuel list. Fuel: " + fuel);
         }
         return fuelList;
     }

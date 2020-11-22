@@ -9,9 +9,9 @@ import projectCar.dao.interfaces.IUserDAO;
 import projectCar.entity.User;
 
 import java.sql.Date;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
@@ -29,7 +29,7 @@ class UserServiceImplTest {
     }
 
     @Test
-    void add() {
+    void addUserTest() {
         User userCreate = new User();
         userCreate.setLogin("login1234");
         userCreate.setPassword("password");
@@ -43,7 +43,7 @@ class UserServiceImplTest {
     }
 
     @Test
-    void update() {
+    void updateUserTest() {
         user = userDAO.findByLogin("user5");
         user.setLogin("user55");
         userDAO.update(user);
@@ -52,9 +52,23 @@ class UserServiceImplTest {
     }
 
     @Test
-    void read() {
+    void readUserTest() {
         user = userDAO.read(1);
         assertEquals(user.getId(), 1);
     }
 
+    @Test
+    void getAllUsers() {
+        List<User> userList = userDAO.getAll();
+        assertNotNull(userList);
+    }
+
+    @Test
+    void deleteUserTest() {
+        User userRead = userDAO.read(4);
+        userDAO.delete(userRead);
+        User userDelete = userDAO.read(4);
+        assertNotEquals(userRead, userDelete);
+        assertNull(userDelete);
+    }
 }
