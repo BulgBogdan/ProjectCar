@@ -1,22 +1,96 @@
 package projectCar.service;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Transactional;
+import projectCar.dao.CarDAOImpl;
+import projectCar.dao.interfaces.ICarDAO;
+import projectCar.dao.interfaces.IRepairDAO;
+import projectCar.entity.Car;
+import projectCar.entity.Repair;
+import projectCar.service.interfaces.IRepairService;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+@ExtendWith(SpringExtension.class)
+@SpringBootTest
+@Transactional
 class RepairServiceImplTest {
+
+    @Autowired
+    private IRepairService repairService;
+
+    @MockBean
+    private IRepairDAO repairDAO;
+
+    @Autowired
+    private ICarDAO carDAO = new CarDAOImpl();
+
+    private Repair repairTest;
+
+    private Repair useRepair() {
+        Repair repair = new Repair();
+        Car car = carDAO.read(1);
+        repair.setNameRepair("repair");
+        repair.setBeginMileage(100);
+        repair.setCostsRepair(1);
+        repair.setServiceLife(100);
+        repair.setCar(car);
+        return repair;
+    }
 
     @Test
     void add() {
+        repairTest = useRepair();
+        repairService.add(repairTest);
+        Mockito.verify(repairDAO, Mockito.times(1)).add(repairTest);
     }
 
     @Test
     void update() {
+        repairTest = useRepair();
+        repairTest.setNameRepair("repairTest");
+        repairService.update(repairTest);
+        Mockito.verify(repairDAO, Mockito.times(1)).update(repairTest);
     }
 
     @Test
     void read() {
+        repairTest = useRepair();
+        Mockito.when(repairDAO.read(1)).thenReturn(repairTest);
+        Repair foundRepair = repairService.read(1);
+        assertEquals("repair", foundRepair.getNameRepair());
+        assertEquals(100, foundRepair.getServiceLife());
     }
 
     @Test
     void repairCount() {
+        Car car = carDAO.read(1);
+        int repairCount = 0;
+        Mockito.when(repairService.repairCount(car.getId())).thenReturn(repairCount);
+        assertEquals(repairCount, repairDAO.repairCount(car.getId()));
+    }
+
+    @Test
+    void delete() {
+        repairTest = useRepair();
+        repairService.delete(repairTest);
+        Mockito.verify(repairDAO, Mockito.times(1)).delete(repairTest);
+    }
+
+    @Test
+    void getAll() {
+        List<Repair> repairList = new ArrayList<>();
+        Mockito.when(repairDAO.getAll()).thenReturn(repairList);
+        List<Repair> repairs = repairService.getAll();
+        assertEquals(repairs, repairList);
     }
 }
