@@ -2,7 +2,6 @@ package projectCar.service;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -27,20 +26,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class ParameterServiceImplTest {
 
     @Autowired
-    IParameterService parameterService;
+    private IParameterService parameterService;
 
     @MockBean
-    IParameterDAO parameterDAO;
+    private IParameterDAO parameterDAO;
 
     @Autowired
-    ICarDAO carDAO = new CarDAOImpl();
+    private ICarDAO carDAO = new CarDAOImpl();
 
-    @InjectMocks
-    Parameter parameter = new Parameter();
-
-    @Test
-    void add() {
-
+    private Parameter useParameter() {
+        Parameter parameter = new Parameter();
         Car car = carDAO.read(1);
         parameter.setAverageRate(1);
         parameter.setColor("black");
@@ -52,33 +47,39 @@ class ParameterServiceImplTest {
         parameter.setVin("1");
         parameter.setYear(2000);
         parameter.setCar(car);
+        return parameter;
+    }
+
+    @Test
+    void add() {
+        Parameter parameter = useParameter();
+        parameterService.add(parameter);
         Mockito.verify(parameterDAO, Mockito.times(1)).add(parameter);
-//        Mockito.when(parameterService.add(parameter)).thenAnswer()
     }
 
     @Test
     void update() {
+        Parameter parameter = useParameter();
+        parameter.setModel("modelParameter");
+        parameterService.update(parameter);
+        Mockito.verify(parameterDAO, Mockito.times(1)).update(parameter);
     }
 
     @Test
     void read() {
-
-    }
-
-    @Test
-    void add1() {
-    }
-
-    @Test
-    void update1() {
-    }
-
-    @Test
-    void read1() {
+        Parameter parameter = useParameter();
+        Mockito.when(parameterDAO.read(1)).thenReturn(parameter);
+        Parameter foundParameter = parameterService.read(1);
+        assertEquals("model", foundParameter.getModel());
+        assertEquals(2000, foundParameter.getYear());
+        assertEquals("black", foundParameter.getColor());
     }
 
     @Test
     void delete() {
+        Parameter parameter = useParameter();
+        parameterService.delete(parameter);
+        Mockito.verify(parameterDAO, Mockito.times(1)).delete(parameter);
     }
 
     @Test

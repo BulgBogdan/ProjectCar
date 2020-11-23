@@ -84,36 +84,4 @@ public class OtherCostsDAOImpl implements IOtherCostsDAO {
         return listOtherCosts;
     }
 
-//    @Override
-//    @SuppressWarnings("unchecked")
-//    public List<OtherCosts> searchList(String searchText, int id) {
-//        Session session = sessionFactory.getCurrentSession();
-//        FullTextSession fullTextSession  = Search.getFullTextSession(session);
-//        try {
-//            fullTextSession.createIndexer().startAndWait();
-//        } catch (InterruptedException e) {
-//            logger.error("FullTextSession OtherCosts exception", e);
-//            e.printStackTrace();
-//        }
-//        List<Integer> idsForOtherCosts = session
-//                .createQuery("select id from OtherCosts where car.user.id = '" + id + "'", Integer.class)
-//                .getResultList();
-//        QueryBuilder queryBuilder = fullTextSession.getSearchFactory()
-//                .buildQueryBuilder().forEntity(OtherCosts.class).get();
-//        Query query = queryBuilder.keyword().onField("nameOtherCost").matching(searchText).createQuery();
-//        BooleanJunction idJunction = queryBuilder.bool();
-//        for (Integer idforCosts : idsForOtherCosts) {
-//            idJunction.should(queryBuilder.keyword().onField("id").matching(idforCosts).createQuery());
-//        }
-//        Query idQuery = idJunction.createQuery();
-//        Query combinedQuery = queryBuilder.bool().must(query).must(idQuery).createQuery();
-//
-//        org.hibernate.search.jpa.FullTextQuery hibQuery = fullTextSession
-//                .createFullTextQuery(combinedQuery, OtherCosts.class);
-//        List<OtherCosts> otherCosts = hibQuery.getResultList();
-//        for (OtherCosts otherCost: otherCosts){
-//            logger.info("OtherCosts list. OtherCosts: " + otherCost);
-//        }
-//        return otherCosts;
-//    }
 }

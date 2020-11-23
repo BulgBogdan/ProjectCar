@@ -84,35 +84,4 @@ public class RepairDAOImpl implements IRepairDAO {
         return listRepair;
     }
 
-//    @Override
-//    @SuppressWarnings("unchecked")
-//    public List<Repair> searchList(String searchText, int id) {
-//        Session session = sessionFactory.getCurrentSession();
-//        FullTextSession fullTextSession  = Search.getFullTextSession(session);
-//        try {
-//            fullTextSession.createIndexer().startAndWait();
-//        } catch (InterruptedException e) {
-//            logger.error("FullTextSession Repair exception", e);
-//            e.printStackTrace();
-//        }
-//        List<Integer> idsForRepairs = session
-//                .createQuery("select id from Repair where car.user.id = '" + id + "'", Integer.class)
-//                .getResultList();
-//        QueryBuilder queryBuilder = fullTextSession.getSearchFactory()
-//                .buildQueryBuilder().forEntity(Repair.class).get();
-//        Query query = queryBuilder.keyword().onField("nameRepair").matching(searchText).createQuery();
-//        BooleanJunction idJunction = queryBuilder.bool();
-//        for (Integer idforRepairs : idsForRepairs) {
-//            idJunction.should(queryBuilder.keyword().onField("id").matching(idforRepairs).createQuery());
-//        }
-//        Query idQuery = idJunction.createQuery();
-//        Query combinedQuery = queryBuilder.bool().must(query).must(idQuery).createQuery();
-//        org.hibernate.search.jpa.FullTextQuery hibQuery = fullTextSession
-//                .createFullTextQuery(combinedQuery, Repair.class);
-//        List<Repair> repairs = hibQuery.getResultList();
-//        for (Repair repair: repairs){
-//            logger.info("Repair list. Repair: " + repair);
-//        }
-//        return repairs;
-//    }
 }
