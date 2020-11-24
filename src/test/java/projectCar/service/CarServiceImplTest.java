@@ -43,16 +43,18 @@ class CarServiceImplTest {
         return carCreate;
     }
 
+    private Car car;
+
     @Test
     void addCar() {
-        Car car = useCar();
+        car = useCar();
         carService.add(car);
         Mockito.verify(carDAO, Mockito.times(1)).add(car);
     }
 
     @Test
     void updateCar() {
-        Car car = useCar();
+        car = useCar();
         car.setNameCar("TestCar");
         carService.update(car);
         Mockito.verify(carDAO, Mockito.times(1)).update(car);
@@ -60,7 +62,7 @@ class CarServiceImplTest {
 
     @Test
     void readCar() {
-        Car car = useCar();
+        car = useCar();
         Mockito.when(carDAO.read(1)).thenReturn(car);
         Car foundCar = carService.read(1);
         assertEquals("CarTest", foundCar.getNameCar());
@@ -68,7 +70,7 @@ class CarServiceImplTest {
 
     @Test
     void deleteCar() {
-        Car car = useCar();
+        car = useCar();
         carService.delete(car);
         Mockito.verify(carDAO, Mockito.times(1)).delete(car);
     }

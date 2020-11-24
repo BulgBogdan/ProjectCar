@@ -50,25 +50,27 @@ class ParameterServiceImplTest {
         return parameter;
     }
 
+    private Parameter parameterTest;
+
     @Test
     void add() {
-        Parameter parameter = useParameter();
-        parameterService.add(parameter);
-        Mockito.verify(parameterDAO, Mockito.times(1)).add(parameter);
+        parameterTest = useParameter();
+        parameterService.add(parameterTest);
+        Mockito.verify(parameterDAO, Mockito.times(1)).add(parameterTest);
     }
 
     @Test
     void update() {
-        Parameter parameter = useParameter();
-        parameter.setModel("modelParameter");
-        parameterService.update(parameter);
-        Mockito.verify(parameterDAO, Mockito.times(1)).update(parameter);
+        parameterTest = useParameter();
+        parameterTest.setModel("modelParameter");
+        parameterService.update(parameterTest);
+        Mockito.verify(parameterDAO, Mockito.times(1)).update(parameterTest);
     }
 
     @Test
     void read() {
-        Parameter parameter = useParameter();
-        Mockito.when(parameterDAO.read(1)).thenReturn(parameter);
+        parameterTest = useParameter();
+        Mockito.when(parameterDAO.read(1)).thenReturn(parameterTest);
         Parameter foundParameter = parameterService.read(1);
         assertEquals("model", foundParameter.getModel());
         assertEquals(2000, foundParameter.getYear());
@@ -77,9 +79,9 @@ class ParameterServiceImplTest {
 
     @Test
     void delete() {
-        Parameter parameter = useParameter();
-        parameterService.delete(parameter);
-        Mockito.verify(parameterDAO, Mockito.times(1)).delete(parameter);
+        parameterTest = useParameter();
+        parameterService.delete(parameterTest);
+        Mockito.verify(parameterDAO, Mockito.times(1)).delete(parameterTest);
     }
 
     @Test
