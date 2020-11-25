@@ -51,6 +51,9 @@ public class User implements UserDetails {
     @OneToMany(fetch = FetchType.EAGER, cascade =  CascadeType.ALL, mappedBy = "user")
     private List<Car> cars;
 
+    public User() {
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return new HashSet<GrantedAuthority>();
