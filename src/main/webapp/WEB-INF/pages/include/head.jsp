@@ -23,7 +23,6 @@
 </head>
 <body>
 
-
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
@@ -38,6 +37,8 @@
             <sec:authorize access="isAuthenticated()">
                 <li class="nav-item active">
                     <b><sec:authentication property="principal.username"/></b>
+                    <input type="hidden" name="${_csrf.parameterName}"
+                           value="${_csrf.token}"/>
                     <a class="btn btn-sm btn-outline-danger" title="Выход из профиля"
                        href="<c:url value="/logout" />">Выход</a>
                 </li>

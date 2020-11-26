@@ -78,43 +78,6 @@
             </div>
         </div>
     </div>
-    <%--<h2>Регистрация</h2>--%>
-    <%--<div>--%>
-    <%--<form:input type="text" path="login" placeholder="Username"--%>
-    <%--autofocus="true"></form:input>--%>
-    <%--<form:errors path="login"></form:errors>--%>
-    <%--${loginError}--%>
-    <%--</div>--%>
-    <%--<div>--%>
-    <%--<form:input type="password" path="password" placeholder="Password"></form:input>--%>
-    <%--</div>--%>
-    <%--<div>--%>
-    <%--<form:input type="password" path="confirmPassword"--%>
-    <%--placeholder="Confirm your password"></form:input>--%>
-    <%--<form:errors path="password"></form:errors>--%>
-    <%--${passwordError}--%>
-    <%--</div>--%>
-    <%--<div>--%>
-    <%--<form:input type="text" path="email" placeholder="email"--%>
-    <%--autofocus="true"></form:input>--%>
-    <%--</div>--%>
-    <%--<div>--%>
-    <%--<form:input type="text" path="firstName" placeholder="firstName"--%>
-    <%--autofocus="true"></form:input>--%>
-    <%--</div>--%>
-    <%--<div>--%>
-    <%--<form:input type="text" path="secondName" placeholder="secondName"--%>
-    <%--autofocus="true"></form:input>--%>
-    <%--</div>--%>
-    <%--<div>--%>
-    <%--<form:input type="date"  path="birthday"></form:input>--%>
-    <%--</div>--%>
-    <%--<button type="submit">Зарегистрироваться</button>--%>
-
-    <%--<br>--%>
-
-    <%--<c:url value="/" var="cabinet"/>--%>
-    <%--<a href="${cabinet}">My cabinet</a>--%>
 </div>
 </body>
 </html>

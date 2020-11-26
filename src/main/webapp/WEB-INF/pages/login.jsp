@@ -23,6 +23,8 @@
                 <div id="login-box" class="col-md-12">
 
                     <form id="login-form" class="form" method="post" action="${loginUrl}">
+                        <input type="hidden" name="${_csrf.parameterName}"
+                               value="${_csrf.token}"/>
                         <h3 class="text-center text-info">Login</h3>
                         <div class="form-group">
                             <label for="username" class="text-info">Username:</label><br>
