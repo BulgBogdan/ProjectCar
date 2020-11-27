@@ -2,7 +2,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>error</title>
     <link href="<c:url value="/res/css/bootstrap.css"/>" rel="stylesheet" type="text/css"/>
     <script src="<c:url value="/res/js/bootstrap.js" />"></script>
     <style>body {
@@ -10,6 +9,6 @@
     }</style>
 </head>
 <body>
-<h2 align="center">Что-то пошло не так, попробуйте снова</h2>
+<h2 align="center">Ошибка аутентификации. Неверно введен логин или пароль.</h2>
 </body>
 </html>

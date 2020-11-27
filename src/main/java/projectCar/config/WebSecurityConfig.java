@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -31,12 +32,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .not().fullyAuthenticated().antMatchers("/", "/**").authenticated().and();
 
         http.formLogin().loginPage("/login")
-                .loginProcessingUrl("/login-check").failureUrl("/error")
+                .loginProcessingUrl("/login-check").failureUrl("/loginError")
                 .usernameParameter("check_username").passwordParameter("check_password")
                 .defaultSuccessUrl("/").permitAll();
 
-        http.logout().permitAll().logoutUrl("/logout").logoutSuccessUrl("/login?logout").invalidateHttpSession(true)
-                .and();
+        http.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/login?logout").invalidateHttpSession(true).and();
     }
 
     @Autowired
