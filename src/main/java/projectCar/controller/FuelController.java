@@ -10,6 +10,8 @@ import projectCar.entity.Fuel;
 import projectCar.service.FuelServiceImpl;
 import projectCar.service.interfaces.IFuelService;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -97,8 +99,9 @@ public class FuelController extends MethodsCarForControllers {
             modelAndView.setViewName("redirect:/car/fuel/create/{id}");
             return modelAndView;
         }
-
+        Date todayFuel = Date.valueOf(LocalDate.now());
         double distanceFuel = fuelDistance(fuel.getLiterValue(), car.getParameters().getAverageRate());
+        fuel.setDateFuel(todayFuel);
         fuel.setFuelDistance(distanceFuel);
         fuel.setCar(car);
         modelAndView.setViewName("redirect:/car/fuel/{id}");

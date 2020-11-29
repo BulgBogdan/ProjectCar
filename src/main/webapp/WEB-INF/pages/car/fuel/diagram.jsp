@@ -33,10 +33,11 @@
 
             <c:forEach items="${fuelList}" var="fuel">
             yVal = ${fuel.literCost};
-            dps.push({
-                x: xVal,
-                y: yVal
-            });
+            xVal = ${fuel.dateFuel}
+                dps.push({
+                    x: xVal,
+                    y: yVal
+                });
             xVal++;
             </c:forEach>
 
@@ -57,6 +58,6 @@
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 </body>
 <div id="register-link">
-    <a href="/car/fuel/${car.id}" class="text-info text-right">На страницу авто</a>
+    <a href="/car/fuel/${car.id}" class="text-info text-right">Вернуться обратно</a>
 </div>
 </html>

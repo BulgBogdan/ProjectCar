@@ -3,6 +3,7 @@ package projectCar.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.sql.Date;
 
 @Data
 @Entity
@@ -25,6 +26,9 @@ public class Fuel {
 
     @Column(name = "fuel_distance")
     private double fuelDistance;
+
+    @Column(name = "date_fuel")
+    private Date dateFuel;
 
     @ManyToOne
     @JoinColumn(name = "FK_cars")
