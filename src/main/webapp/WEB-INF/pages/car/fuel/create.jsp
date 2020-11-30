@@ -21,12 +21,12 @@
                         <div class="form-group">
                             <label for="literValue" class="text-info">Заправленный объем:</label><br>
                             <input type="number" name="literValue" id="literValue" class="form-control" step="0.01"
-                                   value="0 hidden">
+                                   value="0">
                         </div>
                         <div class="form-group">
                             <label for="summ" class="text-info">Сумма:</label><br>
                             <input type="number" name="summ" id="summ" class="form-control" step="0.01"
-                                   value="0 hidden">
+                                   value="0">
                         </div>
                     </div>
                     <div class="form-group">

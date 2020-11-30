@@ -2,7 +2,6 @@ package projectCar.dao;
 
 import org.apache.log4j.Logger;
 import org.apache.lucene.search.Query;
-import org.apache.lucene.search.Sort;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.annotations.QueryHints;
@@ -120,7 +119,7 @@ public class CarDAOImpl implements ICarDAO {
     @SuppressWarnings("unchecked")
     public List<Car> searchList(String textSearch, int id, int page) {
         Session session = sessionFactory.openSession();
-        FullTextSession fullTextSession  = Search.getFullTextSession(session);
+        FullTextSession fullTextSession = Search.getFullTextSession(session);
         try {
             fullTextSession.createIndexer().startAndWait();
         } catch (InterruptedException e) {
@@ -136,25 +135,23 @@ public class CarDAOImpl implements ICarDAO {
                 .andField("documents.nameDocument")
                 .andField("otherCosts.nameOtherCost")
                 .andField("repairs.nameRepair")
-                .matching(textSearch).createQuery();
-        // matching @field and request text
+                .matching(textSearch).createQuery();// matching @field and request text
         BooleanJunction idJunction = queryBuilder.bool();
         for (Integer ids : idsForCar) {
             // match id from field with id from request text
             idJunction.should(queryBuilder.keyword().onField("id").matching(ids).createQuery());
         }
-        Query idQuery = idJunction.createQuery();
-        // method boolean AND (must().must()), which equals output
+        Query idQuery = idJunction.createQuery();// method boolean AND (must().must()), which equals output
         Query combinedQuery = queryBuilder.bool().must(query).must(idQuery).createQuery();
-        org.hibernate.search.jpa.FullTextQuery hibQuery = fullTextSession.createFullTextQuery(combinedQuery, Car.class);
-        Sort sort = queryBuilder
-                .sort()
-                .byScore() // Descending order
-                // Default order (ascending)
-                .createSort();
-        hibQuery.setSort(sort);
+        org.hibernate.search.jpa.FullTextQuery hibQuery = fullTextSession.createFullTextQuery(combinedQuery, Car.class)
+                .setFirstResult(10 * (page - 1)).setMaxResults(10);
+//        Sort sort = queryBuilder
+//                .sort()
+//                .byField("nameCar")
+//                .createSort();
+//        hibQuery.setSort(sort);
         List<Car> cars = hibQuery.getResultList();
-        for (Car car: cars){
+        for (Car car : cars) {
             logger.info("Car list. Car: " + car);
         }
         return cars;

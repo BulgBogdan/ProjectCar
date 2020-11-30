@@ -174,7 +174,5 @@ public class FuelController extends MethodsCarForControllers {
         modelAndView.addObject("car", car);
         modelAndView.setViewName("car/fuel/diagram");
         return modelAndView;
-
-
     }
 }

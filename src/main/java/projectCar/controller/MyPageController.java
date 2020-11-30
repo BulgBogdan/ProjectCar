@@ -83,7 +83,12 @@ public class MyPageController {
         User userAuth = userService.findByLogin(loginUser);
         int idUser = userAuth.getId();
         List<Car> carsList = carService.searchList(searchText, idUser, page);
-        int countPageCars = (carsList.size() + 10) / 10;
+        int countPageCars;
+        if (page <= 1) {
+            countPageCars = (carsList.size() + 10) / 10;
+        } else {
+            countPageCars = (carsList.size() + (10 * page)) / 10;
+        }
         for (Car cars : carsList) {
             List<Document> docs = cars.getDocuments().stream()
                     .filter(document -> document.getNameDocument().equals(searchText)).collect(Collectors.toList());
