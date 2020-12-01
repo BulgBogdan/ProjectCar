@@ -18,15 +18,17 @@
                     </div>
                     <div>
                         <p class="text-center text-info"><b>Укажите объем заправленного топлива или сумму:</b></p>
+
                         <div class="form-group">
                             <label for="literValue" class="text-info">Заправленный объем:</label><br>
-                            <input type="number" name="literValue" id="literValue" class="form-control" step="0.01"
-                                   value="0">
+                            <input type="number" name="literValue" id="literValue" class="form-control"
+                                   step="0.01" value="0 hidden">
                         </div>
+
                         <div class="form-group">
                             <label for="summ" class="text-info">Сумма:</label><br>
                             <input type="number" name="summ" id="summ" class="form-control" step="0.01"
-                                   value="0">
+                                   value="0 hidden">
                         </div>
                     </div>
                     <div class="form-group">

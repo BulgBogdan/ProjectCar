@@ -20,6 +20,4 @@ public interface IDocumentService {
 
     List<Document> getAll();
 
-//    List<Document> searchList(String searchText, int id);
-
 }

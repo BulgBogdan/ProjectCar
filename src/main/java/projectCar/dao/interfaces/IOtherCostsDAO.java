@@ -20,6 +20,5 @@ public interface IOtherCostsDAO {
 
     List<OtherCosts> getAll();
 
-//    List<OtherCosts> searchList(String searchText, int id);
 
 }

@@ -157,5 +157,3 @@ public class CarDAOImpl implements ICarDAO {
         return cars;
     }
 }
-
-//.setFirstResult(10 * (page - 1)).setMaxResults(10)

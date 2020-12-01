@@ -20,5 +20,4 @@ public interface IRepairDAO {
 
     List<Repair> getAll();
 
-//    List<Repair> searchList(String searchText, int id);
 }
