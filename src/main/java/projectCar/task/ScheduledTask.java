@@ -41,7 +41,7 @@ public class ScheduledTask {
         return mileageEnd;
     }
 
-    @Scheduled(cron = "0 0 * ? * *")    // every hour
+    @Scheduled(cron = "0 * * ? * *")    // every hour
     private void correctAmountOFDays (){
         List<Document> listDocuments = documentService.getAll();
         for (Document document : listDocuments) {
@@ -55,7 +55,7 @@ public class ScheduledTask {
         }
     }
 
-    @Scheduled(cron = "0 0 * ? * *")    // every hour
+    @Scheduled(cron = "0 * * ? * *")    // every hour
     private void correctGarantMileageRepair(){
         List<Repair> listRepair = repairService.getAll();
         for (Repair repair : listRepair) {
@@ -71,3 +71,4 @@ public class ScheduledTask {
 }
 
 // for server 0 0 0 * * ? every midnight
+// for test 0 * * ? * * every minute

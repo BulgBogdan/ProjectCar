@@ -60,7 +60,8 @@ public class DocumentController extends MethodsCarForControllers {
 
     @PostMapping("/car/documents/create/{id}")
     public ModelAndView addDocument(@PathVariable("id") int id,
-                                    @ModelAttribute("doc") Document document) {
+                                    @ModelAttribute("doc") Document document,
+                                    BindingResult result) {
         int numberOfMonths;
         car = getCarById(id);
 

@@ -8,13 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.transaction.annotation.Transactional;
-import projectCar.dao.UserDAOImpl;
 import projectCar.dao.interfaces.ICarDAO;
-import projectCar.dao.interfaces.IUserDAO;
 import projectCar.entity.Car;
 import projectCar.entity.User;
 import projectCar.service.interfaces.ICarService;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,16 +30,24 @@ class CarServiceImplTest {
     @MockBean
     private ICarDAO carDAO;
 
-    @Autowired
-    private IUserDAO userDAO = new UserDAOImpl();
-
     private Car useCar() {
         Car carCreate = new Car();
-        User user = userDAO.read(1);
+        User user = useUser();
         carCreate.setNameCar("CarTest");
         carCreate.setMileage(1);
         carCreate.setUser(user);
         return carCreate;
+    }
+
+    private User useUser() {
+        User userCreate = new User();
+        userCreate.setLogin("login1234");
+        userCreate.setPassword("password");
+        userCreate.setEmail("user@gmail.com");
+        userCreate.setFirstName("ivan");
+        userCreate.setSecondName("ivanov");
+        userCreate.setBirthday(Date.valueOf("2000-02-02"));
+        return userCreate;
     }
 
     private Car car;
@@ -77,7 +84,7 @@ class CarServiceImplTest {
 
     @Test
     void carsCountCar() {
-        User user = userDAO.read(1);
+        User user = useUser();
         int carsCount = 0;
         Mockito.when(carService.carsCount(user.getId())).thenReturn(carsCount);
         assertEquals(carsCount, carDAO.carsCount(user.getId()));

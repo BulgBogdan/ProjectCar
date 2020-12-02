@@ -8,13 +8,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
-import projectCar.dao.CarDAOImpl;
-import projectCar.dao.interfaces.ICarDAO;
 import projectCar.dao.interfaces.IRegistrationDAO;
 import projectCar.entity.Car;
 import projectCar.entity.Registration;
+import projectCar.entity.User;
 import projectCar.service.interfaces.IRegistrationService;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,11 +31,28 @@ class RegistrationServiceImplTest {
     @MockBean
     private IRegistrationDAO registrationDAO;
 
-    @Autowired
-    private ICarDAO carDAO = new CarDAOImpl();
+    private User useUser() {
+        User userCreate = new User();
+        userCreate.setLogin("login1234");
+        userCreate.setPassword("password");
+        userCreate.setEmail("user@gmail.com");
+        userCreate.setFirstName("ivan");
+        userCreate.setSecondName("ivanov");
+        userCreate.setBirthday(Date.valueOf("2000-02-02"));
+        return userCreate;
+    }
+
+    private Car useCar() {
+        Car carCreate = new Car();
+        User user = useUser();
+        carCreate.setNameCar("CarTest");
+        carCreate.setMileage(1);
+        carCreate.setUser(user);
+        return carCreate;
+    }
 
     private Registration useRegistration() {
-        Car car = carDAO.read(1);
+        Car car = useCar();
         Registration registration = new Registration();
         registration.setPriceCar(1);
         registration.setPriceRegistration(1);

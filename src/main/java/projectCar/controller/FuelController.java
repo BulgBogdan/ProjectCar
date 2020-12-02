@@ -75,7 +75,8 @@ public class FuelController extends MethodsCarForControllers {
 
     @PostMapping("/car/fuel/create/{id}")
     public ModelAndView addFuel(@PathVariable("id") int id,
-                                @ModelAttribute("fuel") Fuel fuel) {
+                                @ModelAttribute("fuel") Fuel fuel,
+                                BindingResult result) {
 
         car = getCarById(id);
 

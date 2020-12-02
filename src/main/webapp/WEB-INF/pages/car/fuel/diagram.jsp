@@ -33,7 +33,7 @@
 
             <c:forEach items="${fuelList}" var="fuel">
             yVal = ${fuel.literCost};
-            xVal = ${fuel.dateFuel}
+            xVal = ${fuel.dateFuel.day};
                 dps.push({
                     x: xVal,
                     y: yVal

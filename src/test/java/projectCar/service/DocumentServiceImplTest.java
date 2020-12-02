@@ -8,11 +8,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
-import projectCar.dao.CarDAOImpl;
-import projectCar.dao.interfaces.ICarDAO;
 import projectCar.dao.interfaces.IDocumentDAO;
 import projectCar.entity.Car;
 import projectCar.entity.Document;
+import projectCar.entity.User;
 import projectCar.service.interfaces.IDocumentService;
 
 import java.sql.Date;
@@ -32,12 +31,29 @@ class DocumentServiceImplTest {
     @MockBean
     private IDocumentDAO documentDAO;
 
-    @Autowired
-    private ICarDAO carDAO = new CarDAOImpl();
+    private User useUser() {
+        User userCreate = new User();
+        userCreate.setLogin("login1234");
+        userCreate.setPassword("password");
+        userCreate.setEmail("user@gmail.com");
+        userCreate.setFirstName("ivan");
+        userCreate.setSecondName("ivanov");
+        userCreate.setBirthday(Date.valueOf("2000-02-02"));
+        return userCreate;
+    }
+
+    private Car useCar() {
+        Car carCreate = new Car();
+        User user = useUser();
+        carCreate.setNameCar("CarTest");
+        carCreate.setMileage(1);
+        carCreate.setUser(user);
+        return carCreate;
+    }
 
     private Document useDocument() {
         Document document = new Document();
-        Car car = carDAO.read(1);
+        Car car = useCar();
         document.setBeginDate(Date.valueOf("2020-11-01"));
         document.setEndDate(Date.valueOf("2021-11-01"));
         document.setNameDocument("document");
@@ -80,7 +96,7 @@ class DocumentServiceImplTest {
 
     @Test
     void docsCount() {
-        Car car = carDAO.read(1);
+        Car car = useCar();
         int docsCount = 0;
         Mockito.when(documentService.docsCount(car.getId())).thenReturn(docsCount);
         assertEquals(docsCount, documentDAO.docsCount(car.getId()));

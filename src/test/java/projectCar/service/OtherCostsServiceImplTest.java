@@ -8,11 +8,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
-import projectCar.dao.CarDAOImpl;
-import projectCar.dao.interfaces.ICarDAO;
 import projectCar.dao.interfaces.IOtherCostsDAO;
 import projectCar.entity.Car;
 import projectCar.entity.OtherCosts;
+import projectCar.entity.User;
 import projectCar.service.interfaces.IOtherCostsService;
 
 import java.sql.Date;
@@ -32,12 +31,29 @@ class OtherCostsServiceImplTest {
     @MockBean
     private IOtherCostsDAO costsDAO;
 
-    @Autowired
-    private ICarDAO carDAO = new CarDAOImpl();
+    private User useUser() {
+        User userCreate = new User();
+        userCreate.setLogin("login1234");
+        userCreate.setPassword("password");
+        userCreate.setEmail("user@gmail.com");
+        userCreate.setFirstName("ivan");
+        userCreate.setSecondName("ivanov");
+        userCreate.setBirthday(Date.valueOf("2000-02-02"));
+        return userCreate;
+    }
+
+    private Car useCar() {
+        Car carCreate = new Car();
+        User user = useUser();
+        carCreate.setNameCar("CarTest");
+        carCreate.setMileage(1);
+        carCreate.setUser(user);
+        return carCreate;
+    }
 
     private OtherCosts useOtherCosts() {
         OtherCosts otherCosts = new OtherCosts();
-        Car car = carDAO.read(1);
+        Car car = useCar();
         otherCosts.setNameOtherCost("cost");
         otherCosts.setCost(1);
         otherCosts.setDateCost(Date.valueOf("2000-01-01"));
@@ -79,7 +95,7 @@ class OtherCostsServiceImplTest {
 
     @Test
     void costsCount() {
-        Car car = carDAO.read(1);
+        Car car = useCar();
         int costsCount = 0;
         Mockito.when(otherCostsService.otherCostsCount(car.getId())).thenReturn(costsCount);
         assertEquals(costsCount, costsDAO.otherCostsCount(car.getId()));
