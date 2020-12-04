@@ -13,7 +13,7 @@ Possibilities of application:
 
   - Connect DB with script (path: java\projectCar\util\script_database.sql)
   - Run SpringBootApplication (path: java\projectCar\SpringBootApplication.java)
-  - In your browser will input: http://localhost:8080
+  - In your browser will input(default): http://localhost:8080
 
 ### Stack
 
