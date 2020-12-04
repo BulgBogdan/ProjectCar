@@ -10,6 +10,7 @@ import projectCar.entity.Repair;
 import projectCar.service.RepairServiceImpl;
 import projectCar.service.interfaces.IRepairService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -34,6 +35,35 @@ public class RepairController extends MethodsCarForControllers {
                                     @RequestParam(defaultValue = "1") int page) {
         car = getCarWithWires(id);
         List<Repair> repairList = repairService.getRepair(page, id);
+        double repairs = 0;
+        List<Repair> greenMileage = new ArrayList<>();
+        List<Repair> yellowMileage = new ArrayList<>();
+        List<Repair> redMileage = new ArrayList<>();
+        List<Repair> endService = new ArrayList<>();
+
+        for (Repair repair : repairList) {
+            int colorMileage = car.getMileage() - repair.getBeginMileage();
+
+            if (colorMileage < (repair.getServiceLife() / 2)) {
+                greenMileage.add(repair);
+            }
+            if ((colorMileage >= (repair.getServiceLife() / 2)) && (colorMileage < ((repair.getServiceLife() * 3) / 4))) {
+                yellowMileage.add(repair);
+            }
+            if ((colorMileage >= (repair.getServiceLife() * 3) / 4) && (colorMileage < repair.getServiceLife())) {
+                redMileage.add(repair);
+            } else if (colorMileage >= repair.getServiceLife()) {
+                endService.add(repair);
+            }
+            repairs = repair.getCostsRepair() + repairs;
+        }
+
+        modelAndView.addObject("greenMileage", greenMileage);
+        modelAndView.addObject("yellowMileage", yellowMileage);
+        modelAndView.addObject("redMileage", redMileage);
+        modelAndView.addObject("endService", endService);
+
+
         int repairCount = repairService.repairCount(id);
         int pagesCount = (repairCount + 9) / 10;
         modelAndView.setViewName("car/repairs");
@@ -44,10 +74,6 @@ public class RepairController extends MethodsCarForControllers {
         modelAndView.addObject("parameters", car.getParameters());
         modelAndView.addObject("repairs", repairList);
         this.page = page;
-        double repairs = 0;
-        for (Repair repair : car.getRepairs()) {
-            repairs = repair.getCostsRepair() + repairs;
-        }
         modelAndView.addObject("allRepairsCosts",repairs);
         return modelAndView;
     }

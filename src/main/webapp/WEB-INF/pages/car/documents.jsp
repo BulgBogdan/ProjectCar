@@ -172,12 +172,6 @@
                                 <a class="${page == 1 ? disabled : active}" href="${url}">
                                     &nbsp<span class="text-info">первая</span> &nbsp
                                 </a>
-                                <%--<c:url value="/car/documents/${car.id}" var="url">--%>
-                                <%--<c:param name="page" value="${page - 1}"/>--%>
-                                <%--</c:url>--%>
-                                <%--<a class="${page == 1 ? disabled : active}" href="${url}">--%>
-                                <%--&nbsp<span class="text-info">&larr;</span>&nbsp--%>
-                                <%--</a>--%>
 
                                 <c:if test="${pagesCount <= 5}">
                                     <c:set var="begin" value="1"/>
@@ -210,12 +204,6 @@
                                        href="${url}"> ${i.index} </a>
                                 </c:forEach>
 
-                                <%--<c:url value="/car/documents/${car.id}" var="url">--%>
-                                <%--<c:param name="page" value="${page + 1}"/>--%>
-                                <%--</c:url>--%>
-                                <%--<a class="${page == pagesCount ? disabled : active}" href="${url}">--%>
-                                <%--&nbsp<span class="text-info">&rarr;</span>&nbsp--%>
-                                <%--</a>--%>
                                 <c:url value="/car/documents/${car.id}" var="url">
                                     <c:param name="page" value="${pagesCount}"/>
                                 </c:url>
