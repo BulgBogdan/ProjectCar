@@ -27,21 +27,21 @@
                                value="${_csrf.token}"/>
                         <h3 class="text-center text-info">Login</h3>
                         <div class="form-group">
-                            <label for="username" class="text-info">Username:</label><br>
+                            <label for="username" class="text-info">Логин:</label><br>
                             <input type="text" name="check_username" id="username" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label for="password" class="text-info">Password:</label><br>
+                            <label for="password" class="text-info">Пароль:</label><br>
                             <input type="password" name="check_password" id="password" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label for="remember-me" class="text-info"><span>Remember me</span> 
+                            <label for="remember-me" class="text-info"><span>Запомнить</span> 
                                 <span><input id="remember-me" name="remember_me" type="checkbox"></span>
                             </label><br>
-                            <input type="submit" name="submit" class="btn btn-info btn-md" value="submit">
+                            <input type="submit" name="submit" class="btn btn-info btn-md" value="Войти">
                         </div>
                         <div id="register-link" class="text-right">
-                            <a href="/registration" class="text-info">Registration</a>
+                            <a href="/registration" class="text-info">Регистрация</a>
                         </div>
                     </form>
                 </div>

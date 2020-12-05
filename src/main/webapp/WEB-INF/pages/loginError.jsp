@@ -10,5 +10,11 @@
 </head>
 <body>
 <h2 align="center">Ошибка аутентификации. Неверно введен логин или пароль.</h2>
+<div>
+    &nbsp;
+</div>
+<div id="register-link" class="text-center">
+    <a href="/login" class="text-info">Попробовать снова</a>
+</div>
 </body>
 </html>

@@ -21,7 +21,7 @@
                     <div class="form-group">
                         <label for="password" class="text-info">Ваш старый пароль:</label><br>
                         <input type="password" name="password" id="password" class="form-control">
-                        ${passwordError}
+                        <p style="color: red">${passwordError}</p>
                     </div>
                     <div class="form-group">
                         <label for="newPassword" class="text-info">Новый пароль:</label><br>
@@ -30,12 +30,12 @@
                     <div class="form-group">
                         <label for="confirmPassword" class="text-info">Подтверждение нового пароля:</label><br>
                         <input type="password" name="confirmPassword" id="confirmPassword" class="form-control">
-                        ${passwordConfirmError}
+                        <p style="color: red">${passwordConfirmError}</p>
                     </div>
 
                     <div class="form-group">
                         <input type="submit" name="submit" class="btn btn-info btn-md" value="Изменить">
-                            ${error}
+                        <p style="color: red">${error}</p>
                     </div>
 
                 </form:form>

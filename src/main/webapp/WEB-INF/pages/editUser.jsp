@@ -40,7 +40,7 @@
 
                     <div class="form-group">
                         <input type="submit" name="submit" class="btn btn-info btn-md" value="Редактировать">
-                            ${error}
+                        <p style="color: red">${error}</p>
                     </div>
 
                 </form:form>

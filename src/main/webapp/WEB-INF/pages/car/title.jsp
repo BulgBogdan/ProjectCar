@@ -22,7 +22,7 @@
 
                     <div class="form-group">
                         <input type="submit" name="submit" class="btn btn-info btn-md" value="Создать">
-                        <b class="text-danger">${Errors}</b>
+                        <p style="color: red">${Errors}</p>
                         <div id="register-link" class="text-right">
                             <a href="/" class="text-info">Вернуться назад</a>
                         </div>
