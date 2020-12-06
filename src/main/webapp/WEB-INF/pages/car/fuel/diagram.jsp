@@ -9,7 +9,7 @@
 <script>
     window.onload = function () {
 
-        var dps = []; // dataPoints
+        var dps = [];
         var chart = new CanvasJS.Chart("chartContainer", {
             title: {
                 text: "График цен на топливо"
@@ -25,7 +25,7 @@
 
         var xVal = 0;
         var yVal = 0;
-        var dataLength = 20; // number of dataPoints visible at any point
+        var dataLength = 20;
 
         var updateChart = function (count) {
 

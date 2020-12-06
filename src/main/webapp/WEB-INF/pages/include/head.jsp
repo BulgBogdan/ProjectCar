@@ -17,7 +17,8 @@
             crossorigin="anonymous"></script>
     <style>
         body {
-        background: url("<c:url value="/res/images/editMachine.jpg" />") no-repeat 100% 100%;
+            background: url("<c:url value="/res/images/editMachine.jpg" />") no-repeat center center fixed;
+            background-size: cover;
         }
     </style>
 </head>
@@ -31,7 +32,6 @@
     </button>
 
 
-    <%--<a class="btn btn-sm btn-danger" href="<c:url value="/logout" />" role="button">Выйти</a>--%>
     <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
         <ul class="navbar-nav mr-auto mt-3 mt-lg-0">
             <sec:authorize access="isAuthenticated()">
