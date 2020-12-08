@@ -30,4 +30,4 @@ App include:
 * Bootstrap
 * Lombok
 * JUnit
-* Used Scheduled
+* Scheduled
