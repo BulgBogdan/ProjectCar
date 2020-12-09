@@ -51,6 +51,11 @@ public class User implements UserDetails {
     @OneToMany(fetch = FetchType.EAGER, cascade =  CascadeType.ALL, mappedBy = "user")
     private List<Car> cars;
 
+    @ManyToOne
+    @JoinColumn(name = "FK_currency")
+    private Currency currency;
+
+
     public User() {
     }
 
