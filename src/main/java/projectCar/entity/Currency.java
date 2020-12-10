@@ -20,10 +20,18 @@ public class Currency {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "value")
-    private double value;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "currency")
+    private List<Registration> registrations;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "currency")
-    private List<User> users;
+    private List<Fuel> fuels;
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "currency")
+    private List<OtherCosts> otherCosts;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "currency")
+    private List<Repair> repairs;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "currency")
+    private List<Document> documents;
 }

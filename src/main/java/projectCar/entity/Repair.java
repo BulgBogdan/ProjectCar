@@ -37,4 +37,8 @@ public class Repair {
     @JoinColumn(name = "FK_cars")
     private Car car;
 
+    @ManyToOne
+    @JoinColumn(name = "FK_currency")
+    private Currency currency;
+
 }
