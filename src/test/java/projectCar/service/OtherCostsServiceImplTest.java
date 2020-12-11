@@ -10,6 +10,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 import projectCar.dao.interfaces.IOtherCostsDAO;
 import projectCar.entity.Car;
+import projectCar.entity.Currency;
 import projectCar.entity.OtherCosts;
 import projectCar.entity.User;
 import projectCar.service.interfaces.IOtherCostsService;
@@ -51,6 +52,12 @@ class OtherCostsServiceImplTest {
         return carCreate;
     }
 
+    private Currency useCurrency() {
+        Currency currency = new Currency();
+        currency.setTitle("EUR");
+        return currency;
+    }
+
     private OtherCosts useOtherCosts() {
         OtherCosts otherCosts = new OtherCosts();
         Car car = useCar();
@@ -58,6 +65,7 @@ class OtherCostsServiceImplTest {
         otherCosts.setCost(1);
         otherCosts.setDateCost(Date.valueOf("2000-01-01"));
         otherCosts.setCar(car);
+        otherCosts.setCurrency(useCurrency());
         return otherCosts;
     }
 

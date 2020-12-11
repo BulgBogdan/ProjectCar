@@ -10,6 +10,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 import projectCar.dao.interfaces.IFuelDAO;
 import projectCar.entity.Car;
+import projectCar.entity.Currency;
 import projectCar.entity.Fuel;
 import projectCar.entity.User;
 import projectCar.service.interfaces.IFuelService;
@@ -51,6 +52,12 @@ class FuelServiceImplTest {
         return carCreate;
     }
 
+    private Currency useCurrency() {
+        Currency currency = new Currency();
+        currency.setTitle("EUR");
+        return currency;
+    }
+
     private Fuel useFuel() {
         Fuel fuel = new Fuel();
         Car car = useCar();
@@ -58,6 +65,7 @@ class FuelServiceImplTest {
         fuel.setLiterValue(1);
         fuel.setSumm(1);
         fuel.setCar(car);
+        fuel.setCurrency(useCurrency());
         return fuel;
     }
 

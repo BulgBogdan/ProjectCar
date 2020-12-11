@@ -10,6 +10,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 import projectCar.dao.interfaces.IRegistrationDAO;
 import projectCar.entity.Car;
+import projectCar.entity.Currency;
 import projectCar.entity.Registration;
 import projectCar.entity.User;
 import projectCar.service.interfaces.IRegistrationService;
@@ -51,12 +52,19 @@ class RegistrationServiceImplTest {
         return carCreate;
     }
 
+    private Currency useCurrency() {
+        Currency currency = new Currency();
+        currency.setTitle("EUR");
+        return currency;
+    }
+
     private Registration useRegistration() {
         Car car = useCar();
         Registration registration = new Registration();
         registration.setPriceCar(1);
         registration.setPriceRegistration(1);
         registration.setCar(car);
+        registration.setCurrency(useCurrency());
         return registration;
     }
 

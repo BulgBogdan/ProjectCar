@@ -10,6 +10,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 import projectCar.dao.interfaces.IRepairDAO;
 import projectCar.entity.Car;
+import projectCar.entity.Currency;
 import projectCar.entity.Repair;
 import projectCar.entity.User;
 import projectCar.service.interfaces.IRepairService;
@@ -51,7 +52,11 @@ class RepairServiceImplTest {
         return carCreate;
     }
 
-    private Repair repairTest;
+    private Currency useCurrency() {
+        Currency currency = new Currency();
+        currency.setTitle("EUR");
+        return currency;
+    }
 
     private Repair useRepair() {
         Repair repair = new Repair();
@@ -61,8 +66,11 @@ class RepairServiceImplTest {
         repair.setCostsRepair(1);
         repair.setServiceLife(100);
         repair.setCar(car);
+        repair.setCurrency(useCurrency());
         return repair;
     }
+
+    private Repair repairTest;
 
     @Test
     void add() {

@@ -10,6 +10,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 import projectCar.dao.interfaces.IDocumentDAO;
 import projectCar.entity.Car;
+import projectCar.entity.Currency;
 import projectCar.entity.Document;
 import projectCar.entity.User;
 import projectCar.service.interfaces.IDocumentService;
@@ -51,6 +52,12 @@ class DocumentServiceImplTest {
         return carCreate;
     }
 
+    private Currency useCurrency() {
+        Currency currency = new Currency();
+        currency.setTitle("EUR");
+        return currency;
+    }
+
     private Document useDocument() {
         Document document = new Document();
         Car car = useCar();
@@ -59,6 +66,7 @@ class DocumentServiceImplTest {
         document.setNameDocument("document");
         document.setDocumentCost(1);
         document.setCar(car);
+        document.setCurrency(useCurrency());
         return document;
     }
 
