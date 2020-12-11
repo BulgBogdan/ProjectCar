@@ -6,8 +6,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import projectCar.entity.Car;
+import projectCar.entity.Currency;
 import projectCar.entity.Repair;
+import projectCar.service.CurrencyServiceImpl;
 import projectCar.service.RepairServiceImpl;
+import projectCar.service.interfaces.ICurrencyService;
 import projectCar.service.interfaces.IRepairService;
 
 import java.util.ArrayList;
@@ -18,6 +21,9 @@ public class RepairController extends MethodsCarForControllers {
 
     @Autowired
     private IRepairService repairService = new RepairServiceImpl();
+
+    @Autowired
+    private ICurrencyService currencyService = new CurrencyServiceImpl();
 
     private ModelAndView modelAndView = new ModelAndView();
 
@@ -100,6 +106,8 @@ public class RepairController extends MethodsCarForControllers {
         int endMileageRepair = endMileageRepairs(repair.getBeginMileage(),repair.getServiceLife());
         repair.setEndMileage(endMileageRepair);
         repair.setCar(car);
+        Currency currency = currencyService.read(1);
+        repair.setCurrency(currency);
         modelAndView.setViewName("redirect:/car/repairs/{id}");
         repairService.add(repair);
         return modelAndView;
@@ -128,6 +136,8 @@ public class RepairController extends MethodsCarForControllers {
         repair.setCar(carRepair);
         int endMileageRepair = endMileageRepairs(repair.getBeginMileage(),repair.getServiceLife());
         repair.setEndMileage(endMileageRepair);
+        Currency currency = currencyService.read(1);
+        repair.setCurrency(currency);
         modelAndView.setViewName("redirect:/car/repairs/{id}");
         repairService.update(repair);
         return modelAndView;

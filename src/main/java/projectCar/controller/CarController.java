@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import projectCar.entity.*;
 import projectCar.service.CarServiceImpl;
+import projectCar.service.CurrencyServiceImpl;
 import projectCar.service.RegistrationServiceImpl;
 import projectCar.service.UserServiceImpl;
 import projectCar.service.interfaces.ICarService;
+import projectCar.service.interfaces.ICurrencyService;
 import projectCar.service.interfaces.IRegistrationService;
 import projectCar.service.interfaces.IUserService;
 
@@ -31,6 +33,9 @@ public class CarController {
 
     @Autowired
     private IRegistrationService registrationService = new RegistrationServiceImpl();
+
+    @Autowired
+    private ICurrencyService currencyService = new CurrencyServiceImpl();
 
     private ModelAndView modelAndView = new ModelAndView();
 
@@ -84,6 +89,8 @@ public class CarController {
         }
         Car car = getCarById(id);
         registration.setCar(car);
+        Currency currency = currencyService.read(1);
+        registration.setCurrency(currency);
         modelAndView.setViewName("redirect:/car/view/{id}");
         registrationService.add(registration);
         return modelAndView;
@@ -140,6 +147,8 @@ public class CarController {
 
         Car car = getCarById(id);
         registration.setCar(car);
+        Currency currency = currencyService.read(1);
+        registration.setCurrency(currency);
         modelAndView.setViewName("redirect:/car/view/{id}");
         registrationService.update(registration);
         return modelAndView;
