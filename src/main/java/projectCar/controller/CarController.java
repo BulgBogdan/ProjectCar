@@ -89,8 +89,6 @@ public class CarController {
         }
         Car car = getCarById(id);
         registration.setCar(car);
-        Currency currency = currencyService.read(1);
-        registration.setCurrency(currency);
         modelAndView.setViewName("redirect:/car/view/{id}");
         registrationService.add(registration);
         return modelAndView;
@@ -147,8 +145,6 @@ public class CarController {
 
         Car car = getCarById(id);
         registration.setCar(car);
-        Currency currency = currencyService.read(1);
-        registration.setCurrency(currency);
         modelAndView.setViewName("redirect:/car/view/{id}");
         registrationService.update(registration);
         return modelAndView;

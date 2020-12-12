@@ -24,8 +24,4 @@ public class Registration {
     @JoinColumn(name = "FK_cars")
     private Car car;
 
-    @ManyToOne
-    @JoinColumn(name = "FK_currency")
-    private Currency currency;
-
 }

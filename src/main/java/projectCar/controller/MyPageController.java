@@ -122,6 +122,8 @@ public class MyPageController {
     public ModelAndView editUserPage(@AuthenticationPrincipal UserDetails userDetails) {
         String login = userDetails.getUsername();
         User userAuth = userService.findByLogin(login);
+        Double course = 2.6;
+//        userAuth.getCars().stream().forEach(car -> car.getDocuments().forEach(document -> document.setCurrency(document.getCurrency()*course)));
         modelAndView.addObject("user", userAuth);
         modelAndView.setViewName("editUser");
         return modelAndView;
