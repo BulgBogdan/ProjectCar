@@ -6,11 +6,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import projectCar.entity.Car;
-import projectCar.entity.Currency;
 import projectCar.entity.Fuel;
-import projectCar.service.CurrencyServiceImpl;
 import projectCar.service.FuelServiceImpl;
-import projectCar.service.interfaces.ICurrencyService;
 import projectCar.service.interfaces.IFuelService;
 
 import java.sql.Date;
@@ -22,9 +19,6 @@ public class FuelController extends MethodsCarForControllers {
 
     @Autowired
     private IFuelService fuelService = new FuelServiceImpl();
-
-    @Autowired
-    private ICurrencyService currencyService = new CurrencyServiceImpl();
 
     private ModelAndView modelAndView = new ModelAndView();
 
@@ -106,8 +100,6 @@ public class FuelController extends MethodsCarForControllers {
         fuel.setDateFuel(todayFuel);
         fuel.setFuelDistance(distanceFuel);
         fuel.setCar(car);
-        Currency currency = currencyService.read(1);
-        fuel.setCurrency(currency);
         modelAndView.setViewName("redirect:/car/fuel/{id}");
         fuelService.add(fuel);
         return modelAndView;
@@ -155,8 +147,6 @@ public class FuelController extends MethodsCarForControllers {
 
         double distanceFuel = fuelDistance(fuelEdit.getLiterValue(), fuel.getCar().getParameters().getAverageRate());
         fuelEdit.setFuelDistance(distanceFuel);
-        Currency currency = currencyService.read(1);
-        fuelEdit.setCurrency(currency);
         modelAndView.addObject("carId", carId);
         modelAndView.setViewName("redirect:/car/fuel/{carId}");
         fuelService.update(fuelEdit);

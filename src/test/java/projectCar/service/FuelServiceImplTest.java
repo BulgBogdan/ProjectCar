@@ -32,6 +32,12 @@ class FuelServiceImplTest {
     @MockBean
     private IFuelDAO fuelDAO;
 
+    private Currency useCurrency() {
+        Currency currency = new Currency();
+        currency.setTitle("EUR");
+        return currency;
+    }
+
     private User useUser() {
         User userCreate = new User();
         userCreate.setLogin("login1234");
@@ -40,6 +46,7 @@ class FuelServiceImplTest {
         userCreate.setFirstName("ivan");
         userCreate.setSecondName("ivanov");
         userCreate.setBirthday(Date.valueOf("2000-02-02"));
+        userCreate.setCurrency(useCurrency());
         return userCreate;
     }
 
@@ -52,12 +59,6 @@ class FuelServiceImplTest {
         return carCreate;
     }
 
-    private Currency useCurrency() {
-        Currency currency = new Currency();
-        currency.setTitle("EUR");
-        return currency;
-    }
-
     private Fuel useFuel() {
         Fuel fuel = new Fuel();
         Car car = useCar();
@@ -65,7 +66,6 @@ class FuelServiceImplTest {
         fuel.setLiterValue(1);
         fuel.setSumm(1);
         fuel.setCar(car);
-        fuel.setCurrency(useCurrency());
         return fuel;
     }
 

@@ -6,11 +6,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import projectCar.entity.Car;
-import projectCar.entity.Currency;
 import projectCar.entity.OtherCosts;
-import projectCar.service.CurrencyServiceImpl;
 import projectCar.service.OtherCostsServiceImpl;
-import projectCar.service.interfaces.ICurrencyService;
 import projectCar.service.interfaces.IOtherCostsService;
 
 import java.util.List;
@@ -20,9 +17,6 @@ public class OtherCostsController extends MethodsCarForControllers {
 
     @Autowired
     private IOtherCostsService costsService = new OtherCostsServiceImpl();
-
-    @Autowired
-    private ICurrencyService currencyService = new CurrencyServiceImpl();
 
     private ModelAndView modelAndView = new ModelAndView();
 
@@ -72,8 +66,6 @@ public class OtherCostsController extends MethodsCarForControllers {
         }
 
         costs.setCar(getCarById(id));
-        Currency currency = currencyService.read(1);
-        costs.setCurrency(currency);
         modelAndView.setViewName("redirect:/car/other/costs/{id}");
         costsService.add(costs);
         return modelAndView;
@@ -98,8 +90,6 @@ public class OtherCostsController extends MethodsCarForControllers {
         }
 
         otherCosts.setCar(costsService.read(id).getCar());
-        Currency currency = currencyService.read(1);
-        otherCosts.setCurrency(currency);
         modelAndView.setViewName("redirect:/car/other/costs/{id}");
         costsService.update(otherCosts);
         return modelAndView;

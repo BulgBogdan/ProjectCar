@@ -6,11 +6,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import projectCar.entity.Car;
-import projectCar.entity.Currency;
 import projectCar.entity.Document;
-import projectCar.service.CurrencyServiceImpl;
 import projectCar.service.DocumentServiceImpl;
-import projectCar.service.interfaces.ICurrencyService;
 import projectCar.service.interfaces.IDocumentService;
 
 import java.sql.Date;
@@ -22,9 +19,6 @@ public class DocumentController extends MethodsCarForControllers {
 
     @Autowired
     private IDocumentService documentService = new DocumentServiceImpl();
-
-    @Autowired
-    private ICurrencyService currencyService = new CurrencyServiceImpl();
 
     private ModelAndView modelAndView = new ModelAndView();
 
@@ -83,8 +77,6 @@ public class DocumentController extends MethodsCarForControllers {
 
         int numberOfDays = amountOfDays(document.getBeginDate(), document.getEndDate());
         document.setNumberOfDays(numberOfDays);
-        Currency currency = currencyService.read(1);
-        document.setCurrency(currency);
         document.setCar(car);
         modelAndView.setViewName("redirect:/car/documents/{id}");
         documentService.add(document);
@@ -129,8 +121,6 @@ public class DocumentController extends MethodsCarForControllers {
         int numberOfDays = amountOfDays(documentEdit.getBeginDate(), documentEdit.getEndDate());
         documentEdit.setNumberOfDays(numberOfDays);
         documentEdit.setCar(getCarById(carId));
-        Currency currency = currencyService.read(1);
-        documentEdit.setCurrency(currency);
         modelAndView.addObject("carId", carId);
         modelAndView.setViewName("redirect:/car/documents/{carId}");
         documentService.update(documentEdit);

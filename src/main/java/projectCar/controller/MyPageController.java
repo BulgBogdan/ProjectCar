@@ -9,8 +9,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import projectCar.entity.*;
-import projectCar.service.*;
-import projectCar.service.interfaces.*;
+import projectCar.service.CarServiceImpl;
+import projectCar.service.CurrencyServiceImpl;
+import projectCar.service.UserServiceImpl;
+import projectCar.service.interfaces.ICarService;
+import projectCar.service.interfaces.ICurrencyService;
+import projectCar.service.interfaces.IUserService;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,13 +29,7 @@ public class MyPageController {
     private ICarService carService = new CarServiceImpl();
 
     @Autowired
-    private IDocumentService documentService = new DocumentServiceImpl();
-
-    @Autowired
-    private IOtherCostsService costsService = new OtherCostsServiceImpl();
-
-    @Autowired
-    private IRepairService repairService = new RepairServiceImpl();
+    private ICurrencyService currencyService = new CurrencyServiceImpl();
 
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -122,8 +120,6 @@ public class MyPageController {
     public ModelAndView editUserPage(@AuthenticationPrincipal UserDetails userDetails) {
         String login = userDetails.getUsername();
         User userAuth = userService.findByLogin(login);
-        Double course = 2.6;
-//        userAuth.getCars().stream().forEach(car -> car.getDocuments().forEach(document -> document.setCurrency(document.getCurrency()*course)));
         modelAndView.addObject("user", userAuth);
         modelAndView.setViewName("editUser");
         return modelAndView;
@@ -136,6 +132,8 @@ public class MyPageController {
             modelAndView.addObject("error", "Некорректный ввод данных");
             return modelAndView;
         }
+        Currency currency = currencyService.read(1);
+        user.setCurrency(currency);
         modelAndView.setViewName("redirect:/");
         userService.update(user);
         return modelAndView;

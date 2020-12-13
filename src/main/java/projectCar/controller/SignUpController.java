@@ -7,8 +7,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+import projectCar.entity.Currency;
 import projectCar.entity.User;
+import projectCar.service.CurrencyServiceImpl;
 import projectCar.service.UserServiceImpl;
+import projectCar.service.interfaces.ICurrencyService;
 import projectCar.service.interfaces.IUserService;
 
 import javax.validation.Valid;
@@ -17,12 +20,15 @@ import javax.validation.Valid;
 public class SignUpController {
 
     @Autowired
-    private IUserService userService=new UserServiceImpl();
+    private IUserService userService = new UserServiceImpl();
+
+    @Autowired
+    private ICurrencyService currencyService = new CurrencyServiceImpl();
 
     private ModelAndView modelAndView = new ModelAndView();
 
     @GetMapping("/registration")
-    public ModelAndView registration(){
+    public ModelAndView registration() {
         modelAndView.setViewName("signup");
         modelAndView.addObject("user", new User());
         return modelAndView;
@@ -30,21 +36,22 @@ public class SignUpController {
 
     @PostMapping("/registration")
     public ModelAndView addUser(@ModelAttribute("user") @Valid User user,
-                                BindingResult bindingResult){
-        if (bindingResult.hasErrors()){
+                                BindingResult bindingResult) {
+        Currency currency = currencyService.read(1);
+        user.setCurrency(currency);
+        if (bindingResult.hasErrors()) {
             modelAndView.addObject("Errors", "Некорректный ввод данных");
             return modelAndView;
         }
-        if (!user.getPassword().equals(user.getConfirmPassword())){
+        if (!user.getPassword().equals(user.getConfirmPassword())) {
             modelAndView.addObject("passwordError", "Пароли не совпадают");
             return modelAndView;
         }
-        if (!userService.add(user)){
+        if (!userService.add(user)) {
             modelAndView.addObject("loginError", "Пользователь с таким логином существует," +
                     " введите другой");
             return modelAndView;
         }
-
         modelAndView.setViewName("redirect:/");
         return modelAndView;
     }

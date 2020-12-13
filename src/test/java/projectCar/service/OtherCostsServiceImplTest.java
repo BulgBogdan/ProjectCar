@@ -32,6 +32,12 @@ class OtherCostsServiceImplTest {
     @MockBean
     private IOtherCostsDAO costsDAO;
 
+    private Currency useCurrency() {
+        Currency currency = new Currency();
+        currency.setTitle("EUR");
+        return currency;
+    }
+
     private User useUser() {
         User userCreate = new User();
         userCreate.setLogin("login1234");
@@ -40,6 +46,7 @@ class OtherCostsServiceImplTest {
         userCreate.setFirstName("ivan");
         userCreate.setSecondName("ivanov");
         userCreate.setBirthday(Date.valueOf("2000-02-02"));
+        userCreate.setCurrency(useCurrency());
         return userCreate;
     }
 
@@ -52,12 +59,6 @@ class OtherCostsServiceImplTest {
         return carCreate;
     }
 
-    private Currency useCurrency() {
-        Currency currency = new Currency();
-        currency.setTitle("EUR");
-        return currency;
-    }
-
     private OtherCosts useOtherCosts() {
         OtherCosts otherCosts = new OtherCosts();
         Car car = useCar();
@@ -65,7 +66,6 @@ class OtherCostsServiceImplTest {
         otherCosts.setCost(1);
         otherCosts.setDateCost(Date.valueOf("2000-01-01"));
         otherCosts.setCar(car);
-        otherCosts.setCurrency(useCurrency());
         return otherCosts;
     }
 

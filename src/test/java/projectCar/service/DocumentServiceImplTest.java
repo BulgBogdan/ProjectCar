@@ -32,6 +32,12 @@ class DocumentServiceImplTest {
     @MockBean
     private IDocumentDAO documentDAO;
 
+    private Currency useCurrency() {
+        Currency currency = new Currency();
+        currency.setTitle("EUR");
+        return currency;
+    }
+
     private User useUser() {
         User userCreate = new User();
         userCreate.setLogin("login1234");
@@ -40,6 +46,7 @@ class DocumentServiceImplTest {
         userCreate.setFirstName("ivan");
         userCreate.setSecondName("ivanov");
         userCreate.setBirthday(Date.valueOf("2000-02-02"));
+        userCreate.setCurrency(useCurrency());
         return userCreate;
     }
 
@@ -52,12 +59,6 @@ class DocumentServiceImplTest {
         return carCreate;
     }
 
-    private Currency useCurrency() {
-        Currency currency = new Currency();
-        currency.setTitle("EUR");
-        return currency;
-    }
-
     private Document useDocument() {
         Document document = new Document();
         Car car = useCar();
@@ -66,7 +67,6 @@ class DocumentServiceImplTest {
         document.setNameDocument("document");
         document.setDocumentCost(1);
         document.setCar(car);
-        document.setCurrency(useCurrency());
         return document;
     }
 

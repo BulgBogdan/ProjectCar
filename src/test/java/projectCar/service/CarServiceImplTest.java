@@ -10,6 +10,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.transaction.annotation.Transactional;
 import projectCar.dao.interfaces.ICarDAO;
 import projectCar.entity.Car;
+import projectCar.entity.Currency;
 import projectCar.entity.User;
 import projectCar.service.interfaces.ICarService;
 
@@ -30,6 +31,12 @@ class CarServiceImplTest {
     @MockBean
     private ICarDAO carDAO;
 
+    private Currency useCurrency() {
+        Currency currency = new Currency();
+        currency.setTitle("EUR");
+        return currency;
+    }
+
     private Car useCar() {
         Car carCreate = new Car();
         User user = useUser();
@@ -47,6 +54,7 @@ class CarServiceImplTest {
         userCreate.setFirstName("ivan");
         userCreate.setSecondName("ivanov");
         userCreate.setBirthday(Date.valueOf("2000-02-02"));
+        userCreate.setCurrency(useCurrency());
         return userCreate;
     }
 

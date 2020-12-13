@@ -32,6 +32,12 @@ class RegistrationServiceImplTest {
     @MockBean
     private IRegistrationDAO registrationDAO;
 
+    private Currency useCurrency() {
+        Currency currency = new Currency();
+        currency.setTitle("EUR");
+        return currency;
+    }
+
     private User useUser() {
         User userCreate = new User();
         userCreate.setLogin("login1234");
@@ -40,6 +46,7 @@ class RegistrationServiceImplTest {
         userCreate.setFirstName("ivan");
         userCreate.setSecondName("ivanov");
         userCreate.setBirthday(Date.valueOf("2000-02-02"));
+        userCreate.setCurrency(useCurrency());
         return userCreate;
     }
 
@@ -52,19 +59,12 @@ class RegistrationServiceImplTest {
         return carCreate;
     }
 
-    private Currency useCurrency() {
-        Currency currency = new Currency();
-        currency.setTitle("EUR");
-        return currency;
-    }
-
     private Registration useRegistration() {
         Car car = useCar();
         Registration registration = new Registration();
         registration.setPriceCar(1);
         registration.setPriceRegistration(1);
         registration.setCar(car);
-        registration.setCurrency(useCurrency());
         return registration;
     }
 

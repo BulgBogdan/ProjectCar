@@ -32,6 +32,12 @@ class RepairServiceImplTest {
     @MockBean
     private IRepairDAO repairDAO;
 
+    private Currency useCurrency() {
+        Currency currency = new Currency();
+        currency.setTitle("EUR");
+        return currency;
+    }
+
     private User useUser() {
         User userCreate = new User();
         userCreate.setLogin("login1234");
@@ -40,6 +46,7 @@ class RepairServiceImplTest {
         userCreate.setFirstName("ivan");
         userCreate.setSecondName("ivanov");
         userCreate.setBirthday(Date.valueOf("2000-02-02"));
+        userCreate.setCurrency(useCurrency());
         return userCreate;
     }
 
@@ -52,12 +59,6 @@ class RepairServiceImplTest {
         return carCreate;
     }
 
-    private Currency useCurrency() {
-        Currency currency = new Currency();
-        currency.setTitle("EUR");
-        return currency;
-    }
-
     private Repair useRepair() {
         Repair repair = new Repair();
         Car car = useCar();
@@ -66,7 +67,6 @@ class RepairServiceImplTest {
         repair.setCostsRepair(1);
         repair.setServiceLife(100);
         repair.setCar(car);
-        repair.setCurrency(useCurrency());
         return repair;
     }
 

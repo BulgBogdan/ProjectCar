@@ -12,11 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import projectCar.entity.*;
 import projectCar.service.CarServiceImpl;
-import projectCar.service.CurrencyServiceImpl;
 import projectCar.service.RegistrationServiceImpl;
 import projectCar.service.UserServiceImpl;
 import projectCar.service.interfaces.ICarService;
-import projectCar.service.interfaces.ICurrencyService;
 import projectCar.service.interfaces.IRegistrationService;
 import projectCar.service.interfaces.IUserService;
 
@@ -33,9 +31,6 @@ public class CarController {
 
     @Autowired
     private IRegistrationService registrationService = new RegistrationServiceImpl();
-
-    @Autowired
-    private ICurrencyService currencyService = new CurrencyServiceImpl();
 
     private ModelAndView modelAndView = new ModelAndView();
 
@@ -183,6 +178,5 @@ public class CarController {
         carService.delete(car);
         return modelAndView;
     }
-
 
 }
