@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 import projectCar.dao.interfaces.ICurrencyDAO;
 import projectCar.entity.Currency;
 
+import java.util.List;
+
 @Repository
 public class CurrencyDAOImpl implements ICurrencyDAO {
 
@@ -27,5 +29,16 @@ public class CurrencyDAOImpl implements ICurrencyDAO {
         Currency currency = session.get(Currency.class, id);
         logger.info("Currency successfully updated. Currency: " + currency);
         return currency;
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<Currency> getAll() {
+        Session session = sessionFactory.getCurrentSession();
+        List<Currency> currencies = session.createQuery("from Currency").list();
+        for (Currency currency : currencies) {
+            logger.info("Currency list: " + currency);
+        }
+        return currencies;
     }
 }

@@ -8,6 +8,7 @@ import projectCar.entity.Currency;
 import projectCar.service.interfaces.ICurrencyService;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 public class CurrencyServiceImpl implements ICurrencyService {
@@ -19,5 +20,11 @@ public class CurrencyServiceImpl implements ICurrencyService {
     @Transactional
     public Currency read(int id) {
         return currencyDAO.read(id);
+    }
+
+    @Override
+    @Transactional
+    public List<Currency> getAll() {
+        return currencyDAO.getAll();
     }
 }
