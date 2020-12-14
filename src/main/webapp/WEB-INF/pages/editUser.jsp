@@ -33,6 +33,14 @@
                         <label for="birthday" class="text-info">Дата рождения:</label><br>
                         <input type="date" name="birthday" id="birthday" class="form-control" value="${user.birthday}">
                     </div>
+                    <div class="form-group">
+                        <label for="birthday" class="text-info">Используемая валюта:</label><br>
+                        <select name="currency" class="form-control">
+                            <c:forEach items="${currencies}" var="currency">
+                                <option value="${currency}">${currency.title}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
 
                     <div id="register-link" class="text-right">
                         <a href="/editPassword" class="text-info">Хотите поменять пароль?</a>

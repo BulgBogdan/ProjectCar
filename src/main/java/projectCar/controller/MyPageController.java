@@ -59,7 +59,6 @@ public class MyPageController {
         String login = userDetails.getUsername();
         User userAuth = userService.findByLogin(login);
         int idUser = userAuth.getId();
-        List<Currency> currencyList = currencyService.getAll();
         List<Car> carList = carService.getCars(page, idUser);
         int carsCount = carService.carsCount(idUser);
         int pagesCount = (carsCount + 9) / 10;
@@ -69,7 +68,6 @@ public class MyPageController {
         modelAndView.addObject("user", userAuth);
         modelAndView.addObject("carList", carList);
         modelAndView.addObject("carsCount", carsCount);
-        modelAndView.addObject("currencies", currencyList);
         modelAndView.addObject("cars", new Car());
         this.page = page;
         return modelAndView;
@@ -122,7 +120,9 @@ public class MyPageController {
     public ModelAndView editUserPage(@AuthenticationPrincipal UserDetails userDetails) {
         String login = userDetails.getUsername();
         User userAuth = userService.findByLogin(login);
+        List<Currency> currencyList = currencyService.getAll();
         modelAndView.addObject("user", userAuth);
+        modelAndView.addObject("currencies", currencyList);
         modelAndView.setViewName("editUser");
         return modelAndView;
     }

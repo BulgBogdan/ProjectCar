@@ -38,11 +38,11 @@
                                         class="d-none d-md-inline">Редактировать профиль</span></a>
                             </li>
                             <br>
-                            <select name="currency" onchange="this.form.submit();">
-                                <c:forEach items="${currencies}" var="currency">
-                                    <option value="${currency.id}">${currency.title}</option>
-                                </c:forEach>
-                            </select>
+                                <%--<form:select path="currency" onchange="this.form.submit()">--%>
+                                <%--<c:forEach items="${currencies}" var="currency">--%>
+                                <%--<option value="${currency.id}">${currency.title}</option>--%>
+                                <%--</c:forEach>--%>
+                                <%--</form:select>--%>
                             <br>
                             <b>Описание приложения:</b>
                             <small><p>Приложение MyCar, позволяет контролировать затраты на ваш автомобиль, а также
