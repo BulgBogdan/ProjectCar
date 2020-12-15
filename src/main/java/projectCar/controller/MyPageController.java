@@ -121,20 +121,23 @@ public class MyPageController {
         String login = userDetails.getUsername();
         User userAuth = userService.findByLogin(login);
         List<Currency> currencyList = currencyService.getAll();
+        int currencyID = 1;
         modelAndView.addObject("user", userAuth);
         modelAndView.addObject("currencies", currencyList);
+        modelAndView.addObject("currencyID", currencyID);
         modelAndView.setViewName("editUser");
         return modelAndView;
     }
 
     @PostMapping("/editUser")
     public ModelAndView editUser(@ModelAttribute("user") User user,
+                                 @ModelAttribute("currencyID") int currencyID,
                                  BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             modelAndView.addObject("error", "Некорректный ввод данных");
             return modelAndView;
         }
-        Currency currency = currencyService.read(1);
+        Currency currency = currencyService.read(currencyID);
         user.setCurrency(currency);
         modelAndView.setViewName("redirect:/");
         userService.update(user);

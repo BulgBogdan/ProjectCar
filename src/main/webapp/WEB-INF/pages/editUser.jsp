@@ -34,10 +34,11 @@
                         <input type="date" name="birthday" id="birthday" class="form-control" value="${user.birthday}">
                     </div>
                     <div class="form-group">
-                        <label for="birthday" class="text-info">Используемая валюта:</label><br>
-                        <select name="currency" class="form-control">
+                        <label class="text-info">Используемая валюта:</label><br>
+                            <%--<input type="submit" name="currency" id="currency" class="form-control">--%>
+                        <select name="currencyID">
                             <c:forEach items="${currencies}" var="currency">
-                                <option value="${currency}">${currency.title}</option>
+                                <option value="${currency.id}">${currency.title}</option>
                             </c:forEach>
                         </select>
                     </div>

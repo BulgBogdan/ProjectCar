@@ -37,13 +37,9 @@
                                 <a class="nav-link pl-0" href="/editUser"><i class="fa fa-list fa-fw"></i> <span
                                         class="d-none d-md-inline">Редактировать профиль</span></a>
                             </li>
+
                             <br>
-                                <%--<form:select path="currency" onchange="this.form.submit()">--%>
-                                <%--<c:forEach items="${currencies}" var="currency">--%>
-                                <%--<option value="${currency.id}">${currency.title}</option>--%>
-                                <%--</c:forEach>--%>
-                                <%--</form:select>--%>
-                            <br>
+
                             <b>Описание приложения:</b>
                             <small><p>Приложение MyCar, позволяет контролировать затраты на ваш автомобиль, а также
                                 предположить, сколько необходимо на обслуживание в дальнейшем.</p></small>
