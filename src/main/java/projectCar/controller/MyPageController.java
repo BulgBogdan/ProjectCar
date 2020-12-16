@@ -144,6 +144,34 @@ public class MyPageController {
         return modelAndView;
     }
 
+    @GetMapping("/currency")
+    public ModelAndView editCurrency(@AuthenticationPrincipal UserDetails userDetails) {
+        String login = userDetails.getUsername();
+        User userAuth = userService.findByLogin(login);
+        List<Currency> currencyList = currencyService.getAll();
+        int currencyID = 1;
+        modelAndView.addObject("user", userAuth);
+        modelAndView.addObject("currencies", currencyList);
+        modelAndView.addObject("currencyID", currencyID);
+        modelAndView.setViewName("currency");
+        return modelAndView;
+    }
+
+    @PostMapping("/currency")
+    public ModelAndView editCurrency(@ModelAttribute("user") User user,
+                                     @ModelAttribute("currencyID") int currencyID,
+                                     BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            modelAndView.addObject("error", "Некорректный ввод данных");
+            return modelAndView;
+        }
+        Currency currency = currencyService.read(currencyID);
+        user.setCurrency(currency);
+        modelAndView.setViewName("redirect:/");
+        userService.update(user);
+        return modelAndView;
+    }
+
     //Problem with bCryptPasswordEncoder
     @GetMapping("/editPassword")
     public ModelAndView editPasswordPage(@AuthenticationPrincipal UserDetails userDetails) {
