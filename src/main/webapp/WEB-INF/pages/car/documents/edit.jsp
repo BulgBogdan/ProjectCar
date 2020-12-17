@@ -16,7 +16,7 @@
                         <input type="text" name="nameDocument" id="name" class="form-control" value="${docs.nameDocument}">
                     </div>
                     <div class="form-group">
-                        <label for="cost" class="text-info">Стоимость:</label><br>
+                        <label for="cost" class="text-info">Стоимость(${docs.car.user.currency.title}):</label><br>
                         <input type="number" name="documentCost" id="cost" class="form-control"
                                value="${docs.documentCost}" step="0.01">
                     </div>

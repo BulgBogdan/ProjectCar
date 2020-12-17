@@ -131,8 +131,7 @@
                             <c:forEach items="${documents}" var="docs">
                                 <tr>
                                     <td class="text-center">${docs.nameDocument}</td>
-                                    <td class="text-center">${docs.documentCost}</td>
-                                    <td class="text-center">${docs}</td>
+                                    <td class="text-center">${docs.documentCost} ${docs.car.user.currency.title}</td>
                                     <td class="text-center">${docs.beginDate}</td>
                                     <td class="text-center">${docs.endDate}</td>
                                     <td class="text-center">${docs.numberOfDays} дня(ей)</td>

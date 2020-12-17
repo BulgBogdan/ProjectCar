@@ -6,8 +6,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import projectCar.entity.Car;
+import projectCar.entity.Currency;
 import projectCar.entity.Document;
+import projectCar.service.CurrencyServiceImpl;
 import projectCar.service.DocumentServiceImpl;
+import projectCar.service.interfaces.ICurrencyService;
 import projectCar.service.interfaces.IDocumentService;
 
 import java.sql.Date;
@@ -16,6 +19,9 @@ import java.util.List;
 
 @Controller
 public class DocumentController extends MethodsCarForControllers {
+
+    @Autowired
+    private ICurrencyService currencyService = new CurrencyServiceImpl();
 
     @Autowired
     private IDocumentService documentService = new DocumentServiceImpl();
@@ -52,9 +58,12 @@ public class DocumentController extends MethodsCarForControllers {
     @GetMapping("/car/documents/create/{id}")
     public ModelAndView pageAddDocuments(@PathVariable("id") int id) {
         car = getCarById(id);
+        int currencyID = car.getUser().getCurrency().getId();
+        Currency currency = currencyService.read(currencyID);
         modelAndView.setViewName("car/documents/create");
         modelAndView.addObject("doc", new Document());
         modelAndView.addObject("car", car);
+        modelAndView.addObject("currency", currency);
         return modelAndView;
     }
 
