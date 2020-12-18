@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import projectCar.entity.*;
 import projectCar.service.CarServiceImpl;
+import projectCar.service.CurrencyServiceImpl;
 import projectCar.service.RegistrationServiceImpl;
 import projectCar.service.UserServiceImpl;
 import projectCar.service.interfaces.ICarService;
+import projectCar.service.interfaces.ICurrencyService;
 import projectCar.service.interfaces.IRegistrationService;
 import projectCar.service.interfaces.IUserService;
 
@@ -22,6 +24,9 @@ import java.util.List;
 
 @Controller
 public class CarController {
+
+    @Autowired
+    private ICurrencyService currencyService = new CurrencyServiceImpl();
 
     @Autowired
     private IUserService userService = new UserServiceImpl();
@@ -69,8 +74,11 @@ public class CarController {
 
     @GetMapping("car/costs/first/{id}")
     public ModelAndView createFirstCost(@PathVariable("id") int id) {
+        int currencyID = carService.read(id).getUser().getCurrency().getId();
+        Currency currency = currencyService.read(currencyID);
         modelAndView.setViewName("car/costs/first");
         modelAndView.addObject("registration", new Registration());
+        modelAndView.addObject("currency", currency);
         return modelAndView;
     }
 

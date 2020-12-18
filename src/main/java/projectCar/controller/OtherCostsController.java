@@ -6,14 +6,20 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import projectCar.entity.Car;
+import projectCar.entity.Currency;
 import projectCar.entity.OtherCosts;
+import projectCar.service.CurrencyServiceImpl;
 import projectCar.service.OtherCostsServiceImpl;
+import projectCar.service.interfaces.ICurrencyService;
 import projectCar.service.interfaces.IOtherCostsService;
 
 import java.util.List;
 
 @Controller
 public class OtherCostsController extends MethodsCarForControllers {
+
+    @Autowired
+    private ICurrencyService currencyService = new CurrencyServiceImpl();
 
     @Autowired
     private IOtherCostsService costsService = new OtherCostsServiceImpl();
@@ -50,9 +56,12 @@ public class OtherCostsController extends MethodsCarForControllers {
     @GetMapping("/car/other/costs/create/{id}")
     public ModelAndView pageAddRepair(@PathVariable("id") int id) {
         car = getCarById(id);
+        int currencyID = car.getUser().getCurrency().getId();
+        Currency currency = currencyService.read(currencyID);
         modelAndView.setViewName("car/other/costs/create");
         modelAndView.addObject("otherCosts", new OtherCosts());
         modelAndView.addObject("car", car);
+        modelAndView.addObject("currency", currency);
         return modelAndView;
     }
 

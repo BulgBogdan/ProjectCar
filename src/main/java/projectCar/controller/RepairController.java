@@ -6,8 +6,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import projectCar.entity.Car;
+import projectCar.entity.Currency;
 import projectCar.entity.Repair;
+import projectCar.service.CurrencyServiceImpl;
 import projectCar.service.RepairServiceImpl;
+import projectCar.service.interfaces.ICurrencyService;
 import projectCar.service.interfaces.IRepairService;
 
 import java.util.ArrayList;
@@ -15,6 +18,9 @@ import java.util.List;
 
 @Controller
 public class RepairController extends MethodsCarForControllers {
+
+    @Autowired
+    private ICurrencyService currencyService = new CurrencyServiceImpl();
 
     @Autowired
     private IRepairService repairService = new RepairServiceImpl();
@@ -81,9 +87,12 @@ public class RepairController extends MethodsCarForControllers {
     @GetMapping("/car/repairs/create/{id}")
     public ModelAndView pageAddRepair(@PathVariable("id") int id) {
         car = getCarById(id);
+        int currencyID = car.getUser().getCurrency().getId();
+        Currency currency = currencyService.read(currencyID);
         modelAndView.setViewName("car/repairs/create");
         modelAndView.addObject("repair", new Repair());
         modelAndView.addObject("car", car);
+        modelAndView.addObject("currency", currency);
         return modelAndView;
     }
 

@@ -15,12 +15,15 @@
                         <input type="hidden" name="${registration.id}" id="id" class="form-control">
                     </div>
                     <div class="form-group">
-                        <label for="price" class="text-info">Цена авто:</label><br>
+                        <label for="price" class="text-info">Цена авто(${currency.title}):</label><br>
                         <input type="number" name="priceCar" id="price" class="form-control" step="0.01">
                     </div>
                     <div class="form-group">
-                        <label for="registration" class="text-info">Сумма за оформление авто:</label><br>
-                        <input type="number" name="priceRegistration" id="registration" class="form-control" step="0.01">
+                        <label for="registration" class="text-info">
+                            Сумма за оформление авто(${currency.title}):
+                        </label><br>
+                        <input type="number" name="priceRegistration" id="registration" class="form-control"
+                               step="0.01">
                     </div>
 
                     <div class="form-group">

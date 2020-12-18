@@ -128,7 +128,7 @@
                             <tr>
                                 <td>${costs.nameOtherCost}</td>
                                 <td>${costs.dateCost}</td>
-                                <td>${costs.cost}</td>
+                                <td>${costs.cost} ${costs.car.user.currency.title}</td>
                                 <c:url value="/car/other/costs/edit/${costs.id}" var="editCost"/>
                                 <td class="text-center"><a class='btn btn-info btn-xs' href="${editCost}">
                                     <svg width="1em" height="1em"

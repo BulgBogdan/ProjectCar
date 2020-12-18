@@ -22,7 +22,10 @@
                         <input type="number" name="beginMileage" id="beginMileage" class="form-control">
                     </div>
                     <div class="form-group">
-                        <label for="costsRepair" class="text-info">Цена ремонта и(или) запчастей:</label><br>
+                        <label for="costsRepair" class="text-info">
+                            Цена ремонта и(или) запчастей(${currency.title}):
+                        </label>
+                        <br>
                         <input type="number" name="costsRepair" id="costsRepair" class="form-control" step="0.01">
                     </div>
                     <div class="form-group">

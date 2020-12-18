@@ -141,7 +141,7 @@
                                 <tr>
                                     <td>${repair.nameRepair}</td>
                                     <td>${repair.beginMileage}</td>
-                                    <td>${repair.costsRepair}</td>
+                                    <td>${repair.costsRepair} ${repair.car.user.currency.title}</td>
                                     <td>${repair.serviceLife} км</td>
                                     <td class="bg-success">${repair.endMileage} км</td>
                                     <c:url value="/car/repairs/edit/${repair.id}" var="editRepair"/>
