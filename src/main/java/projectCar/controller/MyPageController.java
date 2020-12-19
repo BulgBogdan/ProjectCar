@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
-public class MyPageController {
+public class MyPageController<T> {
 
     @Autowired
     private IUserService userService = new UserServiceImpl();
@@ -36,6 +36,16 @@ public class MyPageController {
 
     private ModelAndView modelAndView = new ModelAndView();
 
+    private User findUserByLogin(String login) {
+        User foundedUser = userService.findByLogin(login);
+        return foundedUser;
+    }
+
+    private Currency findCurrencyById(int id) {
+        Currency foundedCurrency = currencyService.read(id);
+        return foundedCurrency;
+    }
+
     private int page;
 
     @GetMapping("/search")
@@ -45,19 +55,11 @@ public class MyPageController {
         return modelAndView;
     }
 
-    @GetMapping("/user")
-    public ModelAndView allUsers() {
-        List<User> users = userService.getAll();
-        modelAndView.setViewName("editUser");
-        modelAndView.addObject("userList", users);
-        return modelAndView;
-    }
-
     @GetMapping("/")
     public ModelAndView myPage(@AuthenticationPrincipal UserDetails userDetails,
                                @RequestParam(defaultValue = "1") int page) {
         String login = userDetails.getUsername();
-        User userAuth = userService.findByLogin(login);
+        User userAuth = findUserByLogin(login);
         int idUser = userAuth.getId();
         List<Car> carList = carService.getCars(page, idUser);
         int carsCount = carService.carsCount(idUser);
@@ -78,7 +80,7 @@ public class MyPageController {
                                    @AuthenticationPrincipal UserDetails userDetails,
                                    @RequestParam(defaultValue = "1") int page) {
         String loginUser = userDetails.getUsername();
-        User userAuth = userService.findByLogin(loginUser);
+        User userAuth = findUserByLogin(loginUser);
         int idUser = userAuth.getId();
         List<Car> carsList = carService.searchList(searchText, idUser, page);
         int countPageCars;
@@ -119,37 +121,34 @@ public class MyPageController {
     @GetMapping("/editUser")
     public ModelAndView editUserPage(@AuthenticationPrincipal UserDetails userDetails) {
         String login = userDetails.getUsername();
-        User userAuth = userService.findByLogin(login);
-        List<Currency> currencyList = currencyService.getAll();
-        int currencyID = 1;
+        User userAuth = findUserByLogin(login);
+        Currency currency = userAuth.getCurrency();
         modelAndView.addObject("user", userAuth);
-        modelAndView.addObject("currencies", currencyList);
-        modelAndView.addObject("currencyID", currencyID);
+        modelAndView.addObject("currency", currency);
         modelAndView.setViewName("editUser");
         return modelAndView;
     }
 
     @PostMapping("/editUser")
     public ModelAndView editUser(@ModelAttribute("user") User user,
-                                 @ModelAttribute("currencyID") int currencyID,
+                                 @ModelAttribute("currency") Currency currency,
                                  BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             modelAndView.addObject("error", "Некорректный ввод данных");
             return modelAndView;
         }
-        Currency currency = currencyService.read(currencyID);
         user.setCurrency(currency);
-        modelAndView.setViewName("redirect:/");
         userService.update(user);
+        modelAndView.setViewName("redirect:/");
         return modelAndView;
     }
 
     @GetMapping("/currency")
     public ModelAndView editCurrency(@AuthenticationPrincipal UserDetails userDetails) {
         String login = userDetails.getUsername();
-        User userAuth = userService.findByLogin(login);
+        User userAuth = findUserByLogin(login);
         List<Currency> currencyList = currencyService.getAll();
-        int currencyID = 1;
+        int currencyID = userAuth.getCurrency().getId();
         modelAndView.addObject("user", userAuth);
         modelAndView.addObject("currencies", currencyList);
         modelAndView.addObject("currencyID", currencyID);
@@ -165,20 +164,21 @@ public class MyPageController {
             modelAndView.addObject("error", "Некорректный ввод данных");
             return modelAndView;
         }
-        Currency currency = currencyService.read(currencyID);
+        Currency currency = findCurrencyById(currencyID);
         user.setCurrency(currency);
         modelAndView.setViewName("redirect:/");
         userService.update(user);
         return modelAndView;
     }
 
-    //Problem with bCryptPasswordEncoder
     @GetMapping("/editPassword")
     public ModelAndView editPasswordPage(@AuthenticationPrincipal UserDetails userDetails) {
         String login = userDetails.getUsername();
-        User userAuth = userService.findByLogin(login);
+        User userAuth = findUserByLogin(login);
+        Currency currency = userAuth.getCurrency();
         String newPassword = "";
         modelAndView.addObject("user", userAuth);
+        modelAndView.addObject("currency", currency);
         modelAndView.addObject("newPassword", newPassword);
         modelAndView.setViewName("editPassword");
         return modelAndView;
@@ -187,9 +187,9 @@ public class MyPageController {
     @PostMapping("/editPassword")
     public ModelAndView editPasswordUser(@ModelAttribute("user") User user,
                                          BindingResult bindingResult,
+                                         @ModelAttribute("currency") Currency currency,
                                          @ModelAttribute("newPassword") String newPassword) {
         User userAuth = userService.read(user.getId());
-//        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         if (bindingResult.hasErrors()) {
             modelAndView.addObject("error", "Некорректный ввод данных");
             return modelAndView;
@@ -204,6 +204,7 @@ public class MyPageController {
                     "Подтвержденный пароль не совпадает с новым");
             return modelAndView;
         }
+        user.setCurrency(currency);
         user.setPassword(bCryptPasswordEncoder.encode(newPassword));
         modelAndView.setViewName("redirect:/editUser");
         userService.update(user);

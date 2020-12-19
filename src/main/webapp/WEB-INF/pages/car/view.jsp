@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ include file="../include/head.jsp"%>
+<%@ include file="../include/head.jsp" %>
 
 <div class="container-fluid h-100">
     <div class="row h-100">
@@ -34,11 +34,15 @@
                             <br>
                             <c:if test="${registration!=null}">
                                 <li class="nav-item">
-                                    <small>Цена Авто:<b> ${registration.priceCar} $</b></small>
+                                    <small>Цена Авто:
+                                        <b>${registration.priceCar} ${registration.car.user.currency.title}</b>
+                                    </small>
                                     <br>
                                 </li>
                                 <li class="nav-item">
-                                    <small>Оформление:<b> ${registration.priceRegistration} $</b></small>
+                                    <small>Оформление:
+                                        <b>${registration.priceRegistration} ${registration.car.user.currency.title}</b>
+                                    </small>
                                     <br>
                                 </li>
                                 <c:url value="/car/costs/edit/${car.id}" var="editFirst"/>
@@ -203,7 +207,7 @@
                             <b>Остальные расходы</b>
                         </div>
                         <div class="card-body" style="background-color: #d9eeff">
-                            <p class="card-text" >В разделе отображены остальные расходы.</p>
+                            <p class="card-text">В разделе отображены остальные расходы.</p>
                             <a href="${costs}" class="btn btn-info btn-md">Перейти</a>
                         </div>
                     </div>
@@ -212,15 +216,16 @@
             </div>
             <br>
             <c:if test="${car.registration != null}">
-            <div class="dropdown text-right">
-                <a href="#" data-toggle="dropdown" class="dropdown-toggle" title="Нажмите, чтобы развернуть и посмотреть">
-                    Общая сумма затрат на <b class="text-dark">${car.nameCar}</b>
-                    <b class="caret"></b>
-                </a>
-                <ul class="dropdown-menu text-center">
-                    <b class="text-danger">${cos}</b>
-                </ul>
-            </div>
+                <div class="dropdown text-right">
+                    <a href="#" data-toggle="dropdown" class="dropdown-toggle"
+                       title="Нажмите, чтобы развернуть и посмотреть">
+                        Общая сумма затрат на <b class="text-dark">${car.nameCar}</b>
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu text-center">
+                        <b class="text-danger">${cos}</b>
+                    </ul>
+                </div>
             </c:if>
             <br>
             <div id="register-link" class="text-left">

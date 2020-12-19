@@ -17,6 +17,7 @@
                     <input type="hidden" name="firstName" class="form-control" value="${user.firstName}">
                     <input type="hidden" name="secondName" class="form-control" value="${user.secondName}">
                     <input type="hidden" name="birthday" class="form-control" value="${user.birthday}">
+                    <input type="hidden" name="FK-currency" class="form-control" value="${user.currency}">
 
                     <div class="form-group">
                         <label for="password" class="text-info">Ваш старый пароль:</label><br>
