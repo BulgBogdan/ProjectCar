@@ -131,7 +131,12 @@
                             <c:forEach items="${documents}" var="docs">
                                 <tr>
                                     <td class="text-center">${docs.nameDocument}</td>
-                                    <td class="text-center">${docs.documentCost} ${docs.car.user.currency.title}</td>
+                                    <c:if test="${car.user.currency.id == 1}">
+                                        <td class="text-center">${docs.documentCost} BYN</td>
+                                    </c:if>
+                                    <c:if test="${car.user.currency.id == 2}">
+                                        <td class="text-center">${docs.documentCost / 2.6} USD</td>
+                                    </c:if>
                                     <td class="text-center">${docs.beginDate}</td>
                                     <td class="text-center">${docs.endDate}</td>
                                     <td class="text-center">${docs.numberOfDays} дня(ей)</td>
@@ -220,7 +225,7 @@
                             <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu text-center">
-                            <b class="text-danger">${allDocumentsCosts}</b>
+                            <b class="text-danger">${allDocumentsCosts} ${car.user.currency.title}</b>
                         </ul>
                     </div>
                 </div>

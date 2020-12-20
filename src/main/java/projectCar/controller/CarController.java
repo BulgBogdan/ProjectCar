@@ -109,9 +109,10 @@ public class CarController {
             double priceRegistrationByBYN = registration.getPriceRegistration() * 2.6;
             registration.setPriceRegistration(priceRegistrationByBYN);
             registrationService.add(registration);
+        } else {
+            registrationService.add(registration);
         }
         modelAndView.setViewName("redirect:/car/view/{id}");
-        registrationService.add(registration);
         return modelAndView;
     }
 
@@ -121,8 +122,16 @@ public class CarController {
         modelAndView.setViewName("car/view");
         modelAndView.addObject("car", car);
         modelAndView.addObject("parameter", car.getParameters());
-        modelAndView.addObject("registration", car.getRegistration());
-
+        Currency currency = car.getUser().getCurrency();
+        if (currency.getTitle().equals("BYN")) {
+            modelAndView.addObject("registration", car.getRegistration());
+        } else {
+            int priceCar = (int) (car.getRegistration().getPriceCar() / 2.6);
+            double priceRegistration = car.getRegistration().getPriceRegistration() / 2.6;
+            car.getRegistration().setPriceRegistration(priceRegistration);
+            car.getRegistration().setPriceCar(priceCar);
+            modelAndView.addObject("registration", car.getRegistration());
+        }
         if ((car.getRegistration() != null) && (car.getParameters() != null)) {
             double costs = 0;
             List<Car> listCar = carService.getLists(id);
@@ -142,9 +151,13 @@ public class CarController {
             }
             double firstCosts = car.getRegistration().getPriceCar() + car.getRegistration().getPriceRegistration();
             costs = costs + firstCosts;
-            modelAndView.addObject("costsByBYN", costs);
-//            double costsByUSD = costs / 2.6;
-//            modelAndView.addObject("costsByUSD", costsByUSD);
+            if (currency.getTitle().equals("BYN")) {
+                modelAndView.addObject("allCosts", costs);
+            } else {
+                double valueByUSD = costs / 2.6;
+                String costsByUSD = String.format("%.2f", valueByUSD);
+                modelAndView.addObject("allCosts", costsByUSD);
+            }
         }
         return modelAndView;
     }
@@ -168,16 +181,17 @@ public class CarController {
 
         Car car = getCarById(id);
         Currency currency = car.getUser().getCurrency();
+        registration.setCar(car);
         if (currency.getTitle().equals("USD")) {
             double priceCarByBYN = registration.getPriceCar() * 2.6;
             registration.setPriceCar((int) priceCarByBYN);
             double priceRegistrationByBYN = registration.getPriceRegistration() * 2.6;
             registration.setPriceRegistration(priceRegistrationByBYN);
-            registrationService.add(registration);
+            registrationService.update(registration);
+        } else {
+            registrationService.update(registration);
         }
-        registration.setCar(car);
         modelAndView.setViewName("redirect:/car/view/{id}");
-        registrationService.update(registration);
         return modelAndView;
     }
 

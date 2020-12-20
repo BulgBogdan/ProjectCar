@@ -51,7 +51,17 @@ public class DocumentController extends MethodsCarForControllers {
         for (Document document : car.getDocuments()) {
             documentsCosts = documentsCosts + document.getDocumentCost();
         }
-        modelAndView.addObject("allDocumentsCosts", documentsCosts);
+        //currency = BYN
+        if (car.getUser().getCurrency().getTitle().equals("BYN")) {
+            modelAndView.addObject("allDocumentsCosts", documentsCosts);
+        }
+        //currency = USD
+        else {
+            double docValueByUSD = documentsCosts / 2.6;
+            String docCostsByUSD = String.format("%.2f", docValueByUSD);
+            modelAndView.addObject("allDocumentsCosts", docCostsByUSD);
+        }
+
         return modelAndView;
     }
 

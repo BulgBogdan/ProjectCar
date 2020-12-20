@@ -223,8 +223,7 @@
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu text-center">
-                        <b class="text-danger">${costsByBYN} BYN</b>
-                            <%--<b class="text-danger">${costsByUSD} USD</b>--%>
+                        <b class="text-danger">${allCosts} ${car.user.currency.title}</b>
                     </ul>
                 </div>
             </c:if>
