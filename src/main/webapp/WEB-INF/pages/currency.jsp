@@ -10,7 +10,7 @@
             <div id="singUp-box" class="col-md-12">
 
                 <form:form method="POST" modelAttribute="user">
-                    <h3 class="text-center text-info">Используемая валюта</h3>
+                    <h3 class="text-center text-info">Используемая валюта(${user.currency.title})</h3>
                     <input type="hidden" name="id" class="form-control" value="${user.id}">
                     <input type="hidden" name="login" class="form-control" value="${user.login}">
                     <input type="hidden" name="password" class="form-control" value="${user.password}">

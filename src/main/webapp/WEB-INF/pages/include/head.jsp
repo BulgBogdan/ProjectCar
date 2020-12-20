@@ -58,14 +58,10 @@
             <li class="nav-item">
                 <a class="nav-link" href="#"></a>
             </li>
-            <li class="nav-item">
-                <a class="btn btn-sm btn-outline-info" title="Нажмите, чтобы изменить валюту"
-                   href="/currency">${user.currency.title}</a>
-            </li>
         </ul>
 
         <form class="form-inline my-2 my-lg-0" action="/search">
-            <input class="form-control mr-sm-2" type="text" placeholder="Search" name="searchText">
+            <input class="form-control mr-sm-2" type="text" placeholder="Поиск" name="searchText">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
     </div>
