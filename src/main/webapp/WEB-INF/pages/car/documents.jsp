@@ -135,7 +135,7 @@
                                         <td class="text-center">${docs.documentCost} BYN</td>
                                     </c:if>
                                     <c:if test="${car.user.currency.id == 2}">
-                                        <td class="text-center">${docs.documentCost / 2.6} USD</td>
+                                        <td class="text-center">${Math.round(docs.documentCost / 2.6)} USD</td>
                                     </c:if>
                                     <td class="text-center">${docs.beginDate}</td>
                                     <td class="text-center">${docs.endDate}</td>

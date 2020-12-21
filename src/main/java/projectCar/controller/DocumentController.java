@@ -83,7 +83,8 @@ public class DocumentController extends MethodsCarForControllers {
                                     BindingResult result) {
         int numberOfMonths;
         car = getCarById(id);
-
+        int currencyID = car.getUser().getCurrency().getId();
+        Currency currency = currencyService.read(currencyID);
         if (document.getEndDate() == null) {
             LocalDate endDate = document.getBeginDate().toLocalDate().plusMonths(document.getNumberOfMonth());
             document.setEndDate(Date.valueOf(endDate));
@@ -92,6 +93,14 @@ public class DocumentController extends MethodsCarForControllers {
         if (document.getNumberOfMonth() == 0) {
             numberOfMonths = amountOfMonths(document.getBeginDate(), document.getEndDate());
             document.setNumberOfMonth(numberOfMonths);
+        }
+
+        if (currency.getTitle().equals("USD")) {
+            double priceDocByBYN = document.getDocumentCost() * 2.6;
+            document.setDocumentCost(priceDocByBYN);
+            documentService.add(document);
+        } else {
+            documentService.add(document);
         }
 
         int numberOfDays = amountOfDays(document.getBeginDate(), document.getEndDate());
@@ -122,6 +131,7 @@ public class DocumentController extends MethodsCarForControllers {
 
         Document document = documentService.read(id);
         int carId = document.getCar().getId();
+        Currency currency = document.getCar().getUser().getCurrency();
         LocalDate endDate;
         boolean dateEditEqualDate = document.getEndDate().getTime() == documentEdit.getEndDate().getTime();
         boolean monthsEditEqualMonths = document.getNumberOfMonth() == documentEdit.getNumberOfMonth();
@@ -135,6 +145,14 @@ public class DocumentController extends MethodsCarForControllers {
         if ((!monthsEditEqualMonths) && (dateEditEqualDate)) {
             endDate = documentEdit.getBeginDate().toLocalDate().plusMonths(documentEdit.getNumberOfMonth());
             documentEdit.setEndDate(Date.valueOf(endDate));
+        }
+
+        if (currency.getTitle().equals("BYN")) {
+            documentService.add(document);
+        } else {
+            double priceDocByBYN = document.getDocumentCost() * 2.6;
+            document.setDocumentCost(priceDocByBYN);
+            documentService.add(document);
         }
 
         int numberOfDays = amountOfDays(documentEdit.getBeginDate(), documentEdit.getEndDate());

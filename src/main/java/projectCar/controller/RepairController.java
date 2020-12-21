@@ -31,6 +31,11 @@ public class RepairController extends MethodsCarForControllers {
 
     private int page;
 
+    private Currency getCurrencyByID(int id) {
+        Currency currencyByID = currencyService.read(id);
+        return currencyByID;
+    }
+
     private static int endMileageRepairs(int startMileage, int serviceMileage) {
         int mileage = startMileage + serviceMileage;
         return mileage;
@@ -69,7 +74,6 @@ public class RepairController extends MethodsCarForControllers {
         modelAndView.addObject("redMileage", redMileage);
         modelAndView.addObject("endService", endService);
 
-
         int repairCount = repairService.repairCount(id);
         int pagesCount = (repairCount + 9) / 10;
         modelAndView.setViewName("car/repairs");
@@ -80,7 +84,17 @@ public class RepairController extends MethodsCarForControllers {
         modelAndView.addObject("parameters", car.getParameters());
         modelAndView.addObject("repairs", repairList);
         this.page = page;
-        modelAndView.addObject("allRepairsCosts",repairs);
+
+        //currency = BYN
+        if (car.getUser().getCurrency().getTitle().equals("BYN")) {
+            modelAndView.addObject("allRepairsCosts", repairs);
+        }
+        //currency = USD
+        else {
+            double repairValueByUSD = repairs / 2.6;
+            String repairCostsByUSD = String.format("%.2f", repairValueByUSD);
+            modelAndView.addObject("allRepairsCosts", repairCostsByUSD);
+        }
         return modelAndView;
     }
 
@@ -88,7 +102,7 @@ public class RepairController extends MethodsCarForControllers {
     public ModelAndView pageAddRepair(@PathVariable("id") int id) {
         car = getCarById(id);
         int currencyID = car.getUser().getCurrency().getId();
-        Currency currency = currencyService.read(currencyID);
+        Currency currency = getCurrencyByID(currencyID);
         modelAndView.setViewName("car/repairs/create");
         modelAndView.addObject("repair", new Repair());
         modelAndView.addObject("car", car);
