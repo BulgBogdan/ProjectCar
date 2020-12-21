@@ -95,6 +95,11 @@ public class DocumentController extends MethodsCarForControllers {
             document.setNumberOfMonth(numberOfMonths);
         }
 
+        int numberOfDays = amountOfDays(document.getBeginDate(), document.getEndDate());
+        document.setNumberOfDays(numberOfDays);
+        document.setCar(car);
+        modelAndView.setViewName("redirect:/car/documents/{id}");
+
         if (currency.getTitle().equals("USD")) {
             double priceDocByBYN = document.getDocumentCost() * 2.6;
             document.setDocumentCost(priceDocByBYN);
@@ -103,11 +108,6 @@ public class DocumentController extends MethodsCarForControllers {
             documentService.add(document);
         }
 
-        int numberOfDays = amountOfDays(document.getBeginDate(), document.getEndDate());
-        document.setNumberOfDays(numberOfDays);
-        document.setCar(car);
-        modelAndView.setViewName("redirect:/car/documents/{id}");
-        documentService.add(document);
         return modelAndView;
     }
 
@@ -133,8 +133,10 @@ public class DocumentController extends MethodsCarForControllers {
         int carId = document.getCar().getId();
         Currency currency = document.getCar().getUser().getCurrency();
         LocalDate endDate;
+
         boolean dateEditEqualDate = document.getEndDate().getTime() == documentEdit.getEndDate().getTime();
         boolean monthsEditEqualMonths = document.getNumberOfMonth() == documentEdit.getNumberOfMonth();
+
         int numberOfMonth;
 
         if (!dateEditEqualDate) {
@@ -147,20 +149,20 @@ public class DocumentController extends MethodsCarForControllers {
             documentEdit.setEndDate(Date.valueOf(endDate));
         }
 
-        if (currency.getTitle().equals("BYN")) {
-            documentService.add(document);
-        } else {
-            double priceDocByBYN = document.getDocumentCost() * 2.6;
-            document.setDocumentCost(priceDocByBYN);
-            documentService.add(document);
-        }
-
         int numberOfDays = amountOfDays(documentEdit.getBeginDate(), documentEdit.getEndDate());
         documentEdit.setNumberOfDays(numberOfDays);
         documentEdit.setCar(getCarById(carId));
         modelAndView.addObject("carId", carId);
         modelAndView.setViewName("redirect:/car/documents/{carId}");
-        documentService.update(documentEdit);
+
+        if (currency.getTitle().equals("BYN")) {
+            documentService.add(documentEdit);
+        } else {
+            double priceDocByBYN = documentEdit.getDocumentCost() * 2.6;
+            documentEdit.setDocumentCost(priceDocByBYN);
+            documentService.add(documentEdit);
+        }
+
         return modelAndView;
     }
 
