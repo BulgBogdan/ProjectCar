@@ -178,7 +178,12 @@
                                     <tr>
                                         <td>${repair.nameRepair}</td>
                                         <td>${repair.beginMileage}</td>
-                                        <td>${repair.costsRepair}</td>
+                                        <c:if test="${car.user.currency.id == 1}">
+                                            <td class="text-center">${repair.costsRepair} BYN</td>
+                                        </c:if>
+                                        <c:if test="${car.user.currency.id == 2}">
+                                            <td class="text-center">${Math.round(repair.costsRepair / 2.6)} USD</td>
+                                        </c:if>
                                         <td>${repair.serviceLife} км</td>
                                         <td class="bg-warning">${repair.endMileage} км</td>
                                         <c:url value="/car/repairs/edit/${repair.id}" var="editRepair"/>
@@ -210,7 +215,12 @@
                                     <tr>
                                         <td>${repair.nameRepair}</td>
                                         <td>${repair.beginMileage}</td>
-                                        <td>${repair.costsRepair}</td>
+                                        <c:if test="${car.user.currency.id == 1}">
+                                            <td class="text-center">${repair.costsRepair} BYN</td>
+                                        </c:if>
+                                        <c:if test="${car.user.currency.id == 2}">
+                                            <td class="text-center">${Math.round(repair.costsRepair / 2.6)} USD</td>
+                                        </c:if>
                                         <td>${repair.serviceLife} км</td>
                                         <td class="bg-danger">${repair.endMileage} км</td>
                                         <c:url value="/car/repairs/edit/${repair.id}" var="editRepair"/>
@@ -242,7 +252,12 @@
                                     <tr>
                                         <td>${repair.nameRepair}</td>
                                         <td>${repair.beginMileage}</td>
-                                        <td>${repair.costsRepair}</td>
+                                        <c:if test="${car.user.currency.id == 1}">
+                                            <td class="text-center">${repair.costsRepair} BYN</td>
+                                        </c:if>
+                                        <c:if test="${car.user.currency.id == 2}">
+                                            <td class="text-center">${Math.round(repair.costsRepair / 2.6)} USD</td>
+                                        </c:if>
                                         <td>${repair.serviceLife} км</td>
                                         <td>Срок истек</td>
                                         <c:url value="/car/repairs/edit/${repair.id}" var="editRepair"/>
@@ -331,7 +346,7 @@
                             <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu text-center">
-                            <b class="text-danger">${allRepairsCosts}</b>
+                            <b class="text-danger">${allRepairsCosts} ${car.user.currency.title}</b>
                         </ul>
                     </div>
                 </div>

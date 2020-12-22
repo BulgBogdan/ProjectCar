@@ -166,7 +166,13 @@ public class CarController {
     public ModelAndView editPageFirstCost(@PathVariable("id") int id) {
         Car car = getCarById(id);
         modelAndView.setViewName("car/costs/edit");
-        modelAndView.addObject("registration", car.getRegistration());
+        if (car.getUser().getCurrency().getTitle().equals("USD")) {
+            car.getRegistration().setPriceCar((int) (car.getRegistration().getPriceCar() / 2.6));
+            car.getRegistration().setPriceRegistration(car.getRegistration().getPriceRegistration() / 2.6);
+            modelAndView.addObject("registration", car.getRegistration());
+        } else {
+            modelAndView.addObject("registration", car.getRegistration());
+        }
         return modelAndView;
     }
 

@@ -23,7 +23,7 @@
                     </div>
                     <div class="form-group">
                         <label for="costsRepair" class="text-info">
-                            Цена ремонта и(или) запчастей(${docs.car.user.currency.title}):
+                            Цена ремонта и(или) запчастей(${repair.car.user.currency.title}):
                         </label><br>
                         <input type="number" name="costsRepair" id="costsRepair" class="form-control" step="0.01"
                                value="${repair.costsRepair}">

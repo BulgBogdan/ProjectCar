@@ -115,7 +115,12 @@ public class DocumentController extends MethodsCarForControllers {
     public ModelAndView editDocument(@PathVariable("id") int id) {
         Document document = documentService.read(id);
         modelAndView.setViewName("car/documents/edit");
-        modelAndView.addObject("docs", document);
+        if (document.getCar().getUser().getCurrency().getTitle().equals("USD")) {
+            document.setDocumentCost(document.getDocumentCost() / 2.6);
+            modelAndView.addObject("docs", document);
+        } else {
+            modelAndView.addObject("docs", document);
+        }
         modelAndView.addObject("car", document.getCar());
         return modelAndView;
     }
@@ -156,11 +161,11 @@ public class DocumentController extends MethodsCarForControllers {
         modelAndView.setViewName("redirect:/car/documents/{carId}");
 
         if (currency.getTitle().equals("BYN")) {
-            documentService.add(documentEdit);
+            documentService.update(documentEdit);
         } else {
             double priceDocByBYN = documentEdit.getDocumentCost() * 2.6;
             documentEdit.setDocumentCost(priceDocByBYN);
-            documentService.add(documentEdit);
+            documentService.update(documentEdit);
         }
 
         return modelAndView;

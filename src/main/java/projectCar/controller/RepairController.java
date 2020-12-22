@@ -142,7 +142,12 @@ public class RepairController extends MethodsCarForControllers {
     public ModelAndView pageEdit(@PathVariable("id")int id){
         Repair repair = repairService.read(id);
         modelAndView.setViewName("car/repairs/edit");
-        modelAndView.addObject("repair", repair);
+        if (repair.getCar().getUser().getCurrency().getTitle().equals("USD")) {
+            repair.setCostsRepair(repair.getCostsRepair() / 2.6);
+            modelAndView.addObject("repair", repair);
+        } else {
+            modelAndView.addObject("repair", repair);
+        }
         modelAndView.addObject("car", repair.getCar());
         return modelAndView;
     }
@@ -161,18 +166,17 @@ public class RepairController extends MethodsCarForControllers {
         repair.setCar(carRepair);
         int endMileageRepair = endMileageRepairs(repair.getBeginMileage(),repair.getServiceLife());
         repair.setEndMileage(endMileageRepair);
-        modelAndView.setViewName("redirect:/car/repairs/{id}");
 
-        int currencyID = car.getUser().getCurrency().getId();
+        int currencyID = carRepair.getUser().getCurrency().getId();
         Currency currency = getCurrencyByID(currencyID);
         if (currency.getTitle().equals("BYN")) {
-            repairService.add(repair);
+            repairService.update(repair);
         } else {
             double costRepairByBYN = repair.getCostsRepair() * 2.6;
             repair.setCostsRepair(costRepairByBYN);
-            repairService.add(repair);
+            repairService.update(repair);
         }
-
+        modelAndView.setViewName("redirect:/car/repairs/{id}");
         return modelAndView;
     }
 
