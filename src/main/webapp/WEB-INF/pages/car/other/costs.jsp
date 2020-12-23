@@ -128,7 +128,12 @@
                             <tr>
                                 <td>${costs.nameOtherCost}</td>
                                 <td>${costs.dateCost}</td>
-                                <td>${costs.cost} ${costs.car.user.currency.title}</td>
+                                <c:if test="${car.user.currency.id == 1}">
+                                    <td class="text-center">${costs.cost} BYN</td>
+                                </c:if>
+                                <c:if test="${car.user.currency.id == 2}">
+                                    <td class="text-center">${Math.round(costs.cost / 2.6)} USD</td>
+                                </c:if>
                                 <c:url value="/car/other/costs/edit/${costs.id}" var="editCost"/>
                                 <td class="text-center"><a class='btn btn-info btn-xs' href="${editCost}">
                                     <svg width="1em" height="1em"
@@ -214,7 +219,7 @@
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu text-center">
-                        <b class="text-danger">${sumAllCosts}</b>
+                        <b class="text-danger">${sumAllCosts} ${car.user.currency.title}</b>
                     </ul>
                 </div>
             </div>

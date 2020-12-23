@@ -21,7 +21,7 @@
                         <input type="date" name="dateCost" id="dateCost" class="form-control">
                     </div>
                     <div class="form-group">
-                        <label for="cost" class="text-info">Стоимость(${otherCosts.car.user.currency.title}):</label>
+                        <label for="cost" class="text-info">Стоимость(${currency.title}):</label>
                         <br>
                         <input type="number" name="cost" id="cost" class="form-control" step="0.01">
                     </div>

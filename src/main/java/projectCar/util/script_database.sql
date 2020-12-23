@@ -180,7 +180,6 @@ CREATE TABLE IF NOT EXISTS `ProjectCar`.`other_costs`
   `name_other_cost` VARCHAR(100) NOT NULL,
   `cost_date`       DATE         NOT NULL,
   `cost`            DOUBLE       NOT NULL,
-  `other_costscol`  VARCHAR(45)  NOT NULL,
   `FK_cars`         INT          NOT NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `other_car`

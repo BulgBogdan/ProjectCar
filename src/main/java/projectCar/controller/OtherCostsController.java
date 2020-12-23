@@ -31,8 +31,8 @@ public class OtherCostsController extends MethodsCarForControllers {
     private int page;
 
     @GetMapping("/car/other/costs/{id}")
-    public ModelAndView pageRepairs(@PathVariable("id") int id,
-                                    @RequestParam(defaultValue = "1") int page) {
+    public ModelAndView pageCosts(@PathVariable("id") int id,
+                                  @RequestParam(defaultValue = "1") int page) {
         car = getCarWithWires(id);
         List<OtherCosts> costsList = costsService.getOtherCosts(page, id);
         int costsCount = costsService.otherCostsCount(id);
@@ -49,12 +49,21 @@ public class OtherCostsController extends MethodsCarForControllers {
         for (OtherCosts listCosts : car.getOtherCosts()) {
             costs = costs + listCosts.getCost();
         }
-        modelAndView.addObject("sumAllCosts", costs);
+        //currency = BYN
+        if (car.getUser().getCurrency().getTitle().equals("BYN")) {
+            modelAndView.addObject("sumAllCosts", costs);
+        }
+        //currency = USD
+        else {
+            double costValueByUSD = costs / 2.6;
+            String docCostsByUSD = String.format("%.2f", costValueByUSD);
+            modelAndView.addObject("sumAllCosts", costs);
+        }
         return modelAndView;
     }
 
     @GetMapping("/car/other/costs/create/{id}")
-    public ModelAndView pageAddRepair(@PathVariable("id") int id) {
+    public ModelAndView pageAddCost(@PathVariable("id") int id) {
         car = getCarById(id);
         int currencyID = car.getUser().getCurrency().getId();
         Currency currency = currencyService.read(currencyID);
@@ -66,41 +75,64 @@ public class OtherCostsController extends MethodsCarForControllers {
     }
 
     @PostMapping("/car/other/costs/create/{id}")
-    public ModelAndView addRepair(@PathVariable("id") int id,
-                                  @ModelAttribute("otherCosts") OtherCosts costs,
-                                  BindingResult result) {
+    public ModelAndView addCost(@PathVariable("id") int id,
+                                @ModelAttribute("otherCosts") OtherCosts costs,
+                                BindingResult result) {
         if (result.hasErrors()){
             errorIncorrectEnter();
             return modelAndView;
         }
 
-        costs.setCar(getCarById(id));
+        Car car = getCarById(id);
+        costs.setCar(car);
         modelAndView.setViewName("redirect:/car/other/costs/{id}");
-        costsService.add(costs);
+        int currencyID = car.getUser().getCurrency().getId();
+        Currency currency = currencyService.read(currencyID);
+        if (currency.getTitle().equals("USD")) {
+            double priceOtherCost = costs.getCost() * 2.6;
+            costs.setCost(priceOtherCost);
+            costsService.add(costs);
+        } else {
+            costsService.add(costs);
+        }
         return modelAndView;
     }
 
     @GetMapping("/car/other/costs/edit/{id}")
-    public ModelAndView pageEdit(@PathVariable("id")int id){
+    public ModelAndView pageEditCost(@PathVariable("id") int id) {
         OtherCosts otherCosts = costsService.read(id);
         modelAndView.setViewName("car/other/costs/edit");
-        modelAndView.addObject("costs", otherCosts);
+        if (otherCosts.getCar().getUser().getCurrency().getTitle().equals("USD")) {
+            otherCosts.setCost(otherCosts.getCost() / 2.6);
+            modelAndView.addObject("costs", otherCosts);
+        } else {
+            modelAndView.addObject("costs", otherCosts);
+        }
         modelAndView.addObject("car", otherCosts.getCar());
         return modelAndView;
     }
 
     @PostMapping("/car/other/costs/edit/{id}")
-    public ModelAndView addEdit(@PathVariable("id")int id,
-                                @ModelAttribute("costs") OtherCosts otherCosts,
-                                BindingResult result){
+    public ModelAndView addEditCost(@PathVariable("id") int id,
+                                    @ModelAttribute("costs") OtherCosts otherCosts,
+                                    BindingResult result){
         if (result.hasErrors()){
             errorIncorrectEnter();
             return modelAndView;
         }
 
+        OtherCosts cost = costsService.read(id);
+        int currencyID = cost.getCar().getUser().getCurrency().getId();
         otherCosts.setCar(costsService.read(id).getCar());
         modelAndView.setViewName("redirect:/car/other/costs/{id}");
-        costsService.update(otherCosts);
+        Currency currency = currencyService.read(currencyID);
+        if (currency.getTitle().equals("BYN")) {
+            costsService.update(otherCosts);
+        } else {
+            double priceOtherCost = otherCosts.getCost() * 2.6;
+            otherCosts.setCost(priceOtherCost);
+            costsService.update(otherCosts);
+        }
         return modelAndView;
     }
 
