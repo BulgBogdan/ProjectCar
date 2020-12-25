@@ -13,7 +13,8 @@
                     <h3 class="text-center text-info">Редактировать документ</h3>
                     <div class="form-group">
                         <label for="name" class="text-info">Название документа:</label><br>
-                        <input type="text" name="nameDocument" id="name" class="form-control" value="${docs.nameDocument}">
+                        <input type="text" name="nameDocument" id="name" class="form-control"
+                               value="${docs.nameDocument}">
                     </div>
                     <div class="form-group">
                         <label for="cost" class="text-info">Стоимость(${docs.car.user.currency.title}):</label><br>
@@ -31,7 +32,8 @@
                     </div>
                     <div class="form-group">
                         <label for="month" class="text-info">Кол-во месяцев:</label><br>
-                        <input type="number" name="numberOfMonth" id="month" class="form-control" value="${docs.numberOfMonth}">
+                        <input type="number" name="numberOfMonth" id="month" class="form-control"
+                               value="${docs.numberOfMonth}">
                     </div>
 
                     <div class="form-group">

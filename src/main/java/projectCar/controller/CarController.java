@@ -188,13 +188,13 @@ public class CarController {
         Car car = getCarById(id);
         Currency currency = car.getUser().getCurrency();
         registration.setCar(car);
-        if (currency.getTitle().equals("USD")) {
+        if (currency.getTitle().equals("BYN")) {
+            registrationService.update(registration);
+        } else {
             double priceCarByBYN = registration.getPriceCar() * 2.6;
             registration.setPriceCar((int) priceCarByBYN);
             double priceRegistrationByBYN = registration.getPriceRegistration() * 2.6;
             registration.setPriceRegistration(priceRegistrationByBYN);
-            registrationService.update(registration);
-        } else {
             registrationService.update(registration);
         }
         modelAndView.setViewName("redirect:/car/view/{id}");

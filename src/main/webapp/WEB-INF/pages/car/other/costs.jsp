@@ -1,6 +1,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="../../include/head.jsp" %>
 
@@ -129,10 +130,14 @@
                                 <td>${costs.nameOtherCost}</td>
                                 <td>${costs.dateCost}</td>
                                 <c:if test="${car.user.currency.id == 1}">
-                                    <td class="text-center">${costs.cost} BYN</td>
+                                    <td class="text-center">
+                                        <fmt:formatNumber value="${costs.cost}" maxFractionDigits="2"/> BYN
+                                    </td>
                                 </c:if>
                                 <c:if test="${car.user.currency.id == 2}">
-                                    <td class="text-center">${Math.round(costs.cost / 2.6)} USD</td>
+                                    <td class="text-center">
+                                        <fmt:formatNumber value="${costs.cost / 2.6}" maxFractionDigits="2"/> USD
+                                    </td>
                                 </c:if>
                                 <c:url value="/car/other/costs/edit/${costs.id}" var="editCost"/>
                                 <td class="text-center"><a class='btn btn-info btn-xs' href="${editCost}">

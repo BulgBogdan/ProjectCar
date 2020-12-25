@@ -1,6 +1,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="../include/head.jsp" %>
 
@@ -132,10 +133,15 @@
                                 <tr>
                                     <td class="text-center">${docs.nameDocument}</td>
                                     <c:if test="${car.user.currency.id == 1}">
-                                        <td class="text-center">${docs.documentCost} BYN</td>
+                                        <td class="text-center">
+                                            <fmt:formatNumber value="${docs.documentCost}" maxFractionDigits="2"/> BYN
+                                        </td>
                                     </c:if>
                                     <c:if test="${car.user.currency.id == 2}">
-                                        <td class="text-center">${Math.round(docs.documentCost / 2.6)} USD</td>
+                                        <td class="text-center">
+                                            <fmt:formatNumber value="${docs.documentCost / 2.6}" maxFractionDigits="2"/>
+                                            USD
+                                        </td>
                                     </c:if>
                                     <td class="text-center">${docs.beginDate}</td>
                                     <td class="text-center">${docs.endDate}</td>
