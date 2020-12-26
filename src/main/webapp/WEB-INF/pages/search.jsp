@@ -3,7 +3,7 @@
 
 <%@include file="include/head.jsp" %>
 
-<c:if test="${carsList.size() != 0}">
+<c:if test="${(carsList.size() != 0) && (docs.size() == 0) && (costs.size() == 0) && (repairs.size() == 0)}">
 <table class="table table-striped">
     <thead>
     <tr>
@@ -293,10 +293,6 @@
             </a>
         </c:if>
     </div>
-</c:if>
-
-<c:if test="${(carsList.size() == 0) && (docs.size() == 0) && (costs.size() == 0) && (repairs.size() == 0)}">
-    <h5 class="text-center">К сожалению ничего не найдено, попробуйте изменить параметры поиска</h5>
 </c:if>
 
     <div id="register-link" class="text-left">

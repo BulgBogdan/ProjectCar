@@ -110,9 +110,13 @@ public class MyPageController<T> {
             modelAndView.addObject("countPageOtherCosts", countPageOtherCosts);
         }
         modelAndView.addObject("page", page);
-        modelAndView.setViewName("search");
         modelAndView.addObject("searchText", searchText);
         modelAndView.addObject("carsList", carsList);
+        if (carsList.isEmpty()) {
+            modelAndView.setViewName("searchNull");
+        } else {
+            modelAndView.setViewName("search");
+        }
         modelAndView.addObject("countPageCars", countPageCars);
         this.page = page;
         return modelAndView;
