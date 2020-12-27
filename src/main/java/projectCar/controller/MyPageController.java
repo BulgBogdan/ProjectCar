@@ -16,6 +16,7 @@ import projectCar.service.interfaces.ICarService;
 import projectCar.service.interfaces.ICurrencyService;
 import projectCar.service.interfaces.IUserService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -83,6 +84,9 @@ public class MyPageController<T> {
         User userAuth = findUserByLogin(loginUser);
         int idUser = userAuth.getId();
         List<Car> carsList = carService.searchList(searchText, idUser, page);
+        List<Document> docs = new ArrayList<>();
+        List<Repair> repairs = new ArrayList<>();
+        List<OtherCosts> costs = new ArrayList<>();
         int countPageCars;
         if (page <= 1) {
             countPageCars = (carsList.size() + 10) / 10;
@@ -90,25 +94,27 @@ public class MyPageController<T> {
             countPageCars = (carsList.size() + (10 * page)) / 10;
         }
         for (Car cars : carsList) {
-            List<Document> docs = cars.getDocuments().stream()
+            docs = cars.getDocuments().stream()
                     .filter(document -> document.getNameDocument().equals(searchText)).collect(Collectors.toList());
-            int countPageDocs = (docs.size() + 10) / 10;
 
-            List<Repair> repairs = cars.getRepairs().stream()
+            repairs = cars.getRepairs().stream()
                     .filter(repair -> repair.getNameRepair().equals(searchText)).collect(Collectors.toList());
-            int countPageRepair = (repairs.size() + 10) / 10;
 
-            List<OtherCosts> costs = cars.getOtherCosts().stream()
+            costs = cars.getOtherCosts().stream()
                     .filter(othCosts -> othCosts.getNameOtherCost().equals(searchText)).collect(Collectors.toList());
-            int countPageOtherCosts = (repairs.size() + 10) / 10;
-
-            modelAndView.addObject("docs", docs);
-            modelAndView.addObject("countPageDocs", countPageDocs);
-            modelAndView.addObject("repairs", repairs);
-            modelAndView.addObject("countPageRepair", countPageRepair);
-            modelAndView.addObject("costs", costs);
-            modelAndView.addObject("countPageOtherCosts", countPageOtherCosts);
         }
+
+        int countPageDocs = (docs.size() + 10) / 10;
+        int countPageRepair = (repairs.size() + 10) / 10;
+        int countPageOtherCosts = (repairs.size() + 10) / 10;
+
+        modelAndView.addObject("docs", docs);
+        modelAndView.addObject("countPageDocs", countPageDocs);
+        modelAndView.addObject("repairs", repairs);
+        modelAndView.addObject("countPageRepair", countPageRepair);
+        modelAndView.addObject("costs", costs);
+        modelAndView.addObject("countPageOtherCosts", countPageOtherCosts);
+
         modelAndView.addObject("page", page);
         modelAndView.addObject("searchText", searchText);
         modelAndView.addObject("carsList", carsList);

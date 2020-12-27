@@ -14,7 +14,8 @@
     <c:forEach var="car" items="${carsList}">
     <tbody>
     <tr>
-        <th scope="row" class="text-center text-info">${car.nameCar}</th>
+        <th scope="row" class="text-center text-info"><a href="/car/view/${car.id}">${car.nameCar}</a></th>
+
         <th scope="row" class="text-center text-info">${car.mileage}</th>
     </tr>
     </tbody>
@@ -86,7 +87,9 @@
         <c:forEach var="doc" items="${docs}">
             <tbody>
             <tr>
-                <th scope="row" class="text-center text-info">${doc.car.nameCar}</th>
+                <th scope="row" class="text-center text-info">
+                    <a href="/car/view/${doc.car.id}">${doc.car.nameCar}</a>
+                </th>
                 <th scope="row" class="text-center text-info">${doc.nameDocument}</th>
                 <th scope="row" class="text-center text-info">${doc.beginDate}</th>
                 <th scope="row" class="text-center text-info">${doc.endDate}</th>
@@ -160,7 +163,9 @@
         <c:forEach var="cost" items="${costs}">
             <tbody>
             <tr>
-                <th scope="row" class="text-center text-info">${cost.car.nameCar}</th>
+                <th scope="row" class="text-center text-info">
+                    <a href="/car/view/${cost.car.id}">${cost.car.nameCar}</a>
+                </th>
                 <th scope="row" class="text-center text-info">${cost.nameOtherCost}</th>
                 <th scope="row" class="text-center text-info">${cost.dateCost}</th>
                 <th scope="row" class="text-center text-info">${cost.cost}</th>
@@ -234,7 +239,9 @@
         <c:forEach var="repair" items="${repairs}">
             <tbody>
             <tr>
-                <th scope="row" class="text-center text-info">${repair.car.nameCar}</th>
+                <th scope="row" class="text-center text-info">
+                    <a href="/car/view/${repair.car.id}">${repair.car.nameCar}</a>
+                </th>
                 <th scope="row" class="text-center text-info">${repair.nameRepair}</th>
                 <th scope="row" class="text-center text-info">${repair.beginMileage}</th>
                 <th scope="row" class="text-center text-info">${repair.serviceLife}</th>

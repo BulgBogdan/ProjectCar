@@ -123,13 +123,16 @@ public class CarController {
         modelAndView.addObject("car", car);
         modelAndView.addObject("parameter", car.getParameters());
         Currency currency = car.getUser().getCurrency();
-        if (currency.getTitle().equals("BYN")) {
-            modelAndView.addObject("registration", car.getRegistration());
-        } else {
+        if (currency.getTitle().equals("USD")
+                && car.getRegistration() != null
+                && (car.getRegistration().getPriceRegistration() != 0)
+                && (car.getRegistration().getPriceCar() != 0)) {
             int priceCar = (int) (car.getRegistration().getPriceCar() / 2.6);
             double priceRegistration = car.getRegistration().getPriceRegistration() / 2.6;
             car.getRegistration().setPriceRegistration(priceRegistration);
             car.getRegistration().setPriceCar(priceCar);
+            modelAndView.addObject("registration", car.getRegistration());
+        } else {
             modelAndView.addObject("registration", car.getRegistration());
         }
         if ((car.getRegistration() != null) && (car.getParameters() != null)) {
@@ -151,12 +154,12 @@ public class CarController {
             }
             double firstCosts = car.getRegistration().getPriceCar() + car.getRegistration().getPriceRegistration();
             costs = costs + firstCosts;
-            if (currency.getTitle().equals("BYN")) {
-                modelAndView.addObject("allCosts", costs);
-            } else {
+            if (currency.getTitle().equals("USD") && costs != 0) {
                 double valueByUSD = costs / 2.6;
                 String costsByUSD = String.format("%.2f", valueByUSD);
                 modelAndView.addObject("allCosts", costsByUSD);
+            } else {
+                modelAndView.addObject("allCosts", costs);
             }
         }
         return modelAndView;
