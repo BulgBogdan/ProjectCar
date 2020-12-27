@@ -23,8 +23,8 @@
                     </div>
                     <div class="form-group">
                         <label for="cost" class="text-info">Стоимость(${costs.car.user.currency.title}):</label><br>
-                        <input type="number" name="cost" id="cost" class="form-control" value="${costs.cost}"
-                               step="0.01">
+                        <input type="number" name="cost" id="cost" class="form-control"
+                               value="${Math.round(costs.cost * 100) / 100}" step="0.01">
                     </div>
 
                     <div class="form-group">

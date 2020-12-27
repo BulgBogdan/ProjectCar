@@ -25,8 +25,8 @@
                         <label for="costsRepair" class="text-info">
                             Цена ремонта и(или) запчастей(${repair.car.user.currency.title}):
                         </label><br>
-                        <input type="number" name="costsRepair" id="costsRepair" class="form-control" step="0.01"
-                               value="${repair.costsRepair}">
+                        <input type="number" name="costsRepair" id="costsRepair" class="form-control"
+                               value="${Math.round(repair.costsRepair * 100) / 100}" step="0.01">
                     </div>
                     <div class="form-group">
                         <label for="serviceLife" class="text-info">Срок износа запчасти по регламенту(км.):</label><br>
