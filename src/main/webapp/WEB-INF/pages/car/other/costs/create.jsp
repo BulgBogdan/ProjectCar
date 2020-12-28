@@ -12,6 +12,11 @@
 
                 <form:form method="POST" modelAttribute="otherCosts">
                     <h3 class="text-center text-info">Создать отчет о затратах</h3>
+                    <h5 class="text-left text-secondary">Используемая валюта
+                        <a class="btn btn-sm btn-outline-secondary"
+                           title="Нажмите, чтобы изменить валюту"
+                           href="/currency">${otherCosts.car.user.currency.title}</a>
+                    </h5>
                     <div class="form-group">
                         <label for="nameOtherCost" class="text-info">Название:</label><br>
                         <input type="text" name="nameOtherCost" id="nameOtherCost" class="form-control">

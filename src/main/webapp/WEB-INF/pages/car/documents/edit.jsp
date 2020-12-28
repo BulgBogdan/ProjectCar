@@ -11,6 +11,11 @@
 
                 <form:form method="POST" modelAttribute="docs">
                     <h3 class="text-center text-info">Редактировать документ</h3>
+                    <h5 class="text-left text-secondary">Используемая валюта
+                        <a class="btn btn-sm btn-outline-secondary"
+                           title="Нажмите, чтобы изменить валюту"
+                           href="/currency">${docs.car.user.currency.title}</a>
+                    </h5>
                     <div class="form-group">
                         <label for="name" class="text-info">Название документа:</label><br>
                         <input type="text" name="nameDocument" id="name" class="form-control"
