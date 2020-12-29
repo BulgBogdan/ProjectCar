@@ -16,6 +16,7 @@ import projectCar.service.interfaces.ICarService;
 import projectCar.service.interfaces.ICurrencyService;
 import projectCar.service.interfaces.IUserService;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -48,6 +49,13 @@ public class MyPageController<T> {
     }
 
     private int page;
+
+    private String getPrevPage(String prevPage) {
+        String backPage = prevPage.substring(21, prevPage.length());
+        return backPage;
+    }
+
+    private String prevPage = "";
 
     @GetMapping("/search")
     public ModelAndView search(@RequestParam("searchText") String searchText) {
@@ -154,9 +162,12 @@ public class MyPageController<T> {
     }
 
     @GetMapping("/currency")
-    public ModelAndView editCurrency(@AuthenticationPrincipal UserDetails userDetails) {
+    public ModelAndView editCurrency(@AuthenticationPrincipal UserDetails userDetails,
+                                     HttpServletRequest request) {
         String login = userDetails.getUsername();
         User userAuth = findUserByLogin(login);
+        String backPage = request.getHeader("referer");
+        prevPage = getPrevPage(backPage);
         List<Currency> currencyList = currencyService.getAll();
         int currencyID = userAuth.getCurrency().getId();
         modelAndView.addObject("user", userAuth);
@@ -176,7 +187,8 @@ public class MyPageController<T> {
         }
         Currency currency = findCurrencyById(currencyID);
         user.setCurrency(currency);
-        modelAndView.setViewName("redirect:/");
+
+        modelAndView.setViewName("redirect:" + prevPage);
         userService.update(user);
         return modelAndView;
     }

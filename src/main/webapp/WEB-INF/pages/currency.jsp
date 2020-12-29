@@ -39,9 +39,11 @@
         </div>
     </div>
 </div>
+
 <br>
-<div id="register-link" class="text-left">
-    <a href="/" class="text-info">Личный кабинет</a>
+
+<div id="register-link" class="text-center">
+    <a href="#" onclick="history.back();">Вернуться назад</a>
 </div>
 
 <%@ include file="include/under.jsp" %>
