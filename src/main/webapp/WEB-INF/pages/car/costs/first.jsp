@@ -14,7 +14,7 @@
                     <h5 class="text-left text-secondary">Используемая валюта
                         <a class="btn btn-sm btn-outline-secondary"
                            title="Нажмите, чтобы изменить валюту"
-                           href="/currency">${registration.car.user.currency.title}</a>
+                           href="/currency">${car.user.currency.title}</a>
                     </h5>
                     <div class="form-group">
                         <input type="hidden" name="${registration.id}" id="id" class="form-control">
@@ -35,7 +35,7 @@
                         <input type="submit" name="submit" class="btn btn-info btn-md" value="Создать">
                         <b class="text-danger">${Errors}</b>
                         <div id="register-link" class="text-right">
-                            <a href="/car/view/${registration.car.id}" class="text-info">На страницу авто</a>
+                            <a href="/car/view/${car.id}" class="text-info">На страницу авто</a>
                         </div>
                     </div>
                 </form:form>

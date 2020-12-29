@@ -84,10 +84,12 @@ public class CarController {
 
     @GetMapping("car/costs/first/{id}")
     public ModelAndView createFirstCost(@PathVariable("id") int id) {
-        int currencyId = getCarById(id).getUser().getCurrency().getId();
+        Car car = getCarById(id);
+        int currencyId = car.getUser().getCurrency().getId();
         Currency currency = getCurrencyById(currencyId);
         modelAndView.setViewName("car/costs/first");
         modelAndView.addObject("registration", new Registration());
+        modelAndView.addObject("car", car);
         modelAndView.addObject("currency", currency);
         return modelAndView;
     }
