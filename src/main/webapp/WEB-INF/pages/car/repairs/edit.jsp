@@ -11,11 +11,6 @@
 
                 <form:form method="POST" modelAttribute="repair">
                     <h3 class="text-center text-info">Редактировать отчет о ремонте</h3>
-                    <h5 class="text-left text-secondary">Используемая валюта
-                        <a class="btn btn-sm btn-outline-secondary"
-                           title="Нажмите, чтобы изменить валюту"
-                           href="/currency">${repair.car.user.currency.title}</a>
-                    </h5>
                     <div class="form-group">
                         <label for="nameRepair" class="text-info">Название ремонта и(или) запчасти:</label><br>
                         <input type="text" name="nameRepair" id="nameRepair" class="form-control"
@@ -28,7 +23,7 @@
                     </div>
                     <div class="form-group">
                         <label for="costsRepair" class="text-info">
-                            Цена ремонта и(или) запчастей(${repair.car.user.currency.title}):
+                            Цена ремонта и(или) запчастей(Используемая валюта:${repair.car.user.currency.title}):
                         </label><br>
                         <input type="number" name="costsRepair" id="costsRepair" class="form-control"
                                value="${Math.round(repair.costsRepair * 100) / 100}" step="0.01">
@@ -38,7 +33,6 @@
                         <input type="number" name="serviceLife" id="serviceLife" class="form-control"
                                value="${repair.serviceLife}">
                     </div>
-
                     <div class="form-group">
                         <input type="submit" name="submit" class="btn btn-info btn-md" value="Изменить">
                         <p style="color: red">${Errors}</p>

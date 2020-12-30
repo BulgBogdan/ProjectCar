@@ -12,11 +12,6 @@
 
                 <form:form method="POST" modelAttribute="otherCosts">
                     <h3 class="text-center text-info">Создать отчет о затратах</h3>
-                    <h5 class="text-left text-secondary">Используемая валюта
-                        <a class="btn btn-sm btn-outline-secondary"
-                           title="Нажмите, чтобы изменить валюту"
-                           href="/currency">${car.user.currency.title}</a>
-                    </h5>
                     <div class="form-group">
                         <label for="nameOtherCost" class="text-info">Название:</label><br>
                         <input type="text" name="nameOtherCost" id="nameOtherCost" class="form-control">
@@ -26,7 +21,7 @@
                         <input type="date" name="dateCost" id="dateCost" class="form-control">
                     </div>
                     <div class="form-group">
-                        <label for="cost" class="text-info">Стоимость(${currency.title}):</label>
+                        <label for="cost" class="text-info">Стоимость(Используемая валюта:${currency.title}):</label>
                         <br>
                         <input type="number" name="cost" id="cost" class="form-control" step="0.01">
                     </div>

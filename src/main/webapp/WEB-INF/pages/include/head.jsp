@@ -55,6 +55,16 @@
             <li class="nav-item">
                 <a class="nav-link" href="#"></a>
             </li>
+            <li class="nav-item text-center">
+                <c:if test="${car.user.currency.title == null}">
+                    <a class="btn btn-sm btn-outline-secondary" title="Нажмите, чтобы изменить валюту"
+                       href="/currency">${user.currency.title}</a>
+                </c:if>
+                <c:if test="${car.user.currency.title != null}">
+                    <a class="btn btn-sm btn-outline-secondary" title="Нажмите, чтобы изменить валюту"
+                       href="/currency">${car.user.currency.title}</a>
+                </c:if>
+            </li>
             <li class="nav-item">
                 <a class="nav-link" href="#"></a>
             </li>

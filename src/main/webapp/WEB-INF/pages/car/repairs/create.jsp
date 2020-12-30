@@ -13,11 +13,6 @@
 
                 <form:form method="POST" modelAttribute="repair">
                     <h3 class="text-center text-info">Создать отчет о ремонте</h3>
-                    <h5 class="text-left text-secondary">Используемая валюта
-                        <a class="btn btn-sm btn-outline-secondary"
-                           title="Нажмите, чтобы изменить валюту"
-                           href="/currency">${car.user.currency.title}</a>
-                    </h5>
                     <div class="form-group">
                         <label for="nameRepair" class="text-info">Название ремонта и(или) запчасти:</label><br>
                         <input type="text" name="nameRepair" id="nameRepair" class="form-control">
@@ -28,7 +23,7 @@
                     </div>
                     <div class="form-group">
                         <label for="costsRepair" class="text-info">
-                            Цена ремонта и(или) запчастей(${currency.title}):
+                            Цена ремонта и(или) запчастей(Используемая валюта:${currency.title}):
                         </label>
                         <br>
                         <input type="number" name="costsRepair" id="costsRepair" class="form-control" step="0.01">

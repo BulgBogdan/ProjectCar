@@ -11,11 +11,7 @@
 
                 <form:form method="POST" modelAttribute="registration">
                     <h3 class="text-center text-info">Редактировать</h3>
-                    <h5 class="text-left text-secondary">Используемая валюта
-                        <a class="btn btn-sm btn-outline-secondary"
-                           title="Нажмите, чтобы изменить валюту"
-                           href="/currency">${registration.car.user.currency.title}</a>
-                    </h5>
+
                     <div class="form-group">
                         <input type="hidden" name="${registration.id}" id="id" class="form-control">
                     </div>
@@ -28,7 +24,7 @@
                     </div>
                     <div class="form-group">
                         <label for="registration" class="text-info">
-                            Сумма за оформление авто(${registration.car.user.currency.title}):
+                            Сумма за оформление авто(Используемая валюта:${registration.car.user.currency.title}):
                         </label><br>
                         <input type="number" name="priceRegistration" id="registration" class="form-control"
                                value="${registration.priceRegistration}" step="0.01">

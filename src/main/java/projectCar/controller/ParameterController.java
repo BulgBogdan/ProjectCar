@@ -25,8 +25,10 @@ public class ParameterController extends MethodsCarForControllers{
 
     @GetMapping("car/parameters/{id}")
     public ModelAndView parameterCar(@PathVariable("id") int id) {
+        car = getCarById(id);
         modelAndView.setViewName("car/parameters");
         modelAndView.addObject("parameter", new Parameter());
+        modelAndView.addObject("car", car);
         return modelAndView;
     }
 
@@ -52,6 +54,7 @@ public class ParameterController extends MethodsCarForControllers{
         Parameter parameter = car.getParameters();
         modelAndView.setViewName("car/parameters/edit");
         modelAndView.addObject("parameter", parameter);
+        modelAndView.addObject("car", car);
         return modelAndView;
     }
 

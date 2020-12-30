@@ -12,17 +12,13 @@
 
                 <form:form method="POST" modelAttribute="doc">
                     <h3 class="text-center text-info">Создать документ</h3>
-                    <h5 class="text-left text-secondary">Используемая валюта
-                        <a class="btn btn-sm btn-outline-secondary"
-                           title="Нажмите, чтобы изменить валюту"
-                           href="/currency">${car.user.currency.title}</a>
-                    </h5>
                     <div class="form-group">
                         <label for="name" class="text-info">Название документа:</label><br>
                         <input type="text" name="nameDocument" id="name" class="form-control">
                     </div>
                     <div class="form-group">
-                        <label for="cost" class="text-info">Стоимость(${car.user.currency.title}):</label><br>
+                        <label for="cost" class="text-info">Стоимость(Используемая
+                            валюта:${car.user.currency.title}):</label><br>
                         <input type="number" name="documentCost" id="cost" class="form-control" step="0.01">
                     </div>
                     <div class="form-group">

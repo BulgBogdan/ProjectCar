@@ -38,12 +38,6 @@
                                         class="d-none d-md-inline">Редактировать профиль</span></a>
                             </li>
 
-                            <b>Используемая валюта</b>
-                            <li class="nav-item text-center">
-                                <a class="btn btn-sm btn-outline-secondary" title="Нажмите, чтобы изменить валюту"
-                                   href="/currency">${user.currency.title}</a>
-                            </li>
-
                             <br>
 
                             <b>Описание приложения:</b>

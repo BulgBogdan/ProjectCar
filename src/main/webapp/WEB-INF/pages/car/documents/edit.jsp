@@ -11,18 +11,14 @@
 
                 <form:form method="POST" modelAttribute="docs">
                     <h3 class="text-center text-info">Редактировать документ</h3>
-                    <h5 class="text-left text-secondary">Используемая валюта
-                        <a class="btn btn-sm btn-outline-secondary"
-                           title="Нажмите, чтобы изменить валюту"
-                           href="/currency">${docs.car.user.currency.title}</a>
-                    </h5>
                     <div class="form-group">
                         <label for="name" class="text-info">Название документа:</label><br>
                         <input type="text" name="nameDocument" id="name" class="form-control"
                                value="${docs.nameDocument}">
                     </div>
                     <div class="form-group">
-                        <label for="cost" class="text-info">Стоимость(${docs.car.user.currency.title}):</label><br>
+                        <label for="cost" class="text-info">Стоимость(Используемая
+                            валюта:${docs.car.user.currency.title}):</label><br>
                         <input type="number" name="documentCost" id="cost" class="form-control"
                                value="${Math.round(docs.documentCost * 100)/100}" step="0.01">
                     </div>
