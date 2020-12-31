@@ -58,4 +58,9 @@ public class RepairServiceImpl implements IRepairService {
         return repairDAO.getAll();
     }
 
+    @Override
+    @Transactional
+    public List<Repair> searchList(String textSearch, int id, int page) {
+        return repairDAO.searchList(textSearch, id, page);
+    }
 }

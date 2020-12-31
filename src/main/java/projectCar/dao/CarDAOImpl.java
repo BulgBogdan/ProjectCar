@@ -126,24 +126,24 @@ public class CarDAOImpl implements ICarDAO {
             logger.error("FullTextSession exception", e);
             e.printStackTrace();
         }
-        List<Integer> idsForCar = session
+        List<Integer> idCars = session
                 .createQuery("select id from Car where user.id = '" + id + "'", Integer.class).getResultList();
 
-        QueryBuilder queryBuilder = fullTextSession.getSearchFactory().buildQueryBuilder().forEntity(Car.class).get();
+        QueryBuilder queryBuilder = fullTextSession.getSearchFactory().buildQueryBuilder()
+                .forEntity(Car.class).get();
         Query query = queryBuilder.keyword()
                 .onField("nameCar")
-                .andField("documents.nameDocument")
-                .andField("otherCosts.nameOtherCost")
-                .andField("repairs.nameRepair")
                 .matching(textSearch).createQuery();// matching @field and request text
-        BooleanJunction idJunction = queryBuilder.bool();
-        for (Integer ids : idsForCar) {
+        BooleanJunction boolJunction = queryBuilder.bool();
+        for (Integer ids : idCars) {
             // match id from field with id from request text
-            idJunction.should(queryBuilder.keyword().onField("id").matching(ids).createQuery());
+            boolJunction.should(queryBuilder.keyword().onField("id").matching(ids).createQuery());
         }
-        Query idQuery = idJunction.createQuery();// method boolean AND (must().must()), which equals output
+        Query idQuery = boolJunction.createQuery();// method boolean AND (must().must()), which equals output
         Query combinedQuery = queryBuilder.bool().must(query).must(idQuery).createQuery();
-        org.hibernate.search.jpa.FullTextQuery hibQuery = fullTextSession.createFullTextQuery(combinedQuery, Car.class)
+
+        org.hibernate.search.jpa.FullTextQuery hibQuery = fullTextSession
+                .createFullTextQuery(combinedQuery, Car.class)
                 .setFirstResult(10 * (page - 1)).setMaxResults(10);
 //        Sort sort = queryBuilder
 //                .sort()

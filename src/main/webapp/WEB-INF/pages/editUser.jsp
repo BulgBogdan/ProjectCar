@@ -50,7 +50,7 @@
 </div>
 <br>
 <div id="register-link" class="text-right">
-    <a href="/" class="text-info">My cabinet</a>
+    <a href="/" class="text-info">Личный кабинет</a>
 </div>
 
 <%@ include file="include/under.jsp" %>

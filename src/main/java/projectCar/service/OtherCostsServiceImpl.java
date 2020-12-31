@@ -58,4 +58,9 @@ public class OtherCostsServiceImpl implements IOtherCostsService {
         return otherCostsDAO.getAll();
     }
 
+    @Override
+    @Transactional
+    public List<OtherCosts> searchList(String textSearch, int id, int page) {
+        return otherCostsDAO.searchList(textSearch, id, page);
+    }
 }

@@ -20,4 +20,5 @@ public interface IRepairService {
 
     List<Repair> getAll();
 
+    List<Repair> searchList(String textSearch, int id, int page);
 }

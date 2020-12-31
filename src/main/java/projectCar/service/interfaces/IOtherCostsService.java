@@ -20,4 +20,5 @@ public interface IOtherCostsService {
 
     List<OtherCosts> getAll();
 
+    List<OtherCosts> searchList(String textSearch, int id, int page);
 }

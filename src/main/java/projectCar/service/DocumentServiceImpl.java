@@ -58,4 +58,9 @@ public class DocumentServiceImpl implements IDocumentService {
         return documentDAO.getAll();
     }
 
+    @Override
+    @Transactional
+    public List<Document> searchList(String textSearch, int id, int page) {
+        return documentDAO.searchList(textSearch, id, page);
+    }
 }

@@ -20,4 +20,5 @@ public interface IDocumentService {
 
     List<Document> getAll();
 
+    List<Document> searchList(String textSearch, int id, int page);
 }

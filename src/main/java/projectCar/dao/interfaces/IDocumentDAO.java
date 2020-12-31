@@ -14,11 +14,11 @@ public interface IDocumentDAO {
 
     void delete(Document document);
 
-    int docsCount (int id);
+    int docsCount(int id);
 
     List<Document> getDocuments(int page, int id);
 
     List<Document> getAll();
 
-
+    List<Document> searchList(String textSearch, int id, int page);
 }
