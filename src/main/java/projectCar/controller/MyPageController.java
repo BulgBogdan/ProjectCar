@@ -94,38 +94,21 @@ public class MyPageController<T> {
         String loginUser = userDetails.getUsername();
         User userAuth = findUserByLogin(loginUser);
         int idUser = userAuth.getId();
-//        List<Car> carsList = carService.searchList(searchText, idUser, page);
 
         List<Document> docs = documentService.searchList(searchText, idUser, page);
         List<Repair> repairs = repairService.searchList(searchText, idUser, page);
-//        List<OtherCosts> costs = costsService.searchList(searchText,idUser,page);
-//        int countPageCars;
-//        if (page <= 1) {
-//            countPageCars = (carsList.size() + 10) / 10;
-//        } else {
-//            countPageCars = (carsList.size() + (10 * page)) / 10;
-//        }
-//        for (Car cars : carsList) {
-//            docs = cars.getDocuments().stream()
-//                    .filter(document -> document.getNameDocument().equals(searchText)).collect(Collectors.toList());
-//
-//            repairs = cars.getRepairs().stream()
-//                    .filter(repair -> repair.getNameRepair().equals(searchText)).collect(Collectors.toList());
-//
-//            costs = cars.getOtherCosts().stream()
-//                    .filter(othCosts -> othCosts.getNameOtherCost().equals(searchText)).collect(Collectors.toList());
-//        }
-//
+        List<OtherCosts> costs = costsService.searchList(searchText, idUser, page);
+
         int countPageDocs = (docs.size() + 10) / 10;
         int countPageRepair = (repairs.size() + 10) / 10;
-//        int countPageOtherCosts = (repairs.size() + 10) / 10;
+        int countPageOtherCosts = (repairs.size() + 10) / 10;
 
         modelAndView.addObject("docs", docs);
         modelAndView.addObject("countPageDocs", countPageDocs);
         modelAndView.addObject("repairs", repairs);
         modelAndView.addObject("countPageRepair", countPageRepair);
-//        modelAndView.addObject("costs", costs);
-//        modelAndView.addObject("countPageOtherCosts", countPageOtherCosts);
+        modelAndView.addObject("costs", costs);
+        modelAndView.addObject("countPageOtherCosts", countPageOtherCosts);
 
         modelAndView.addObject("page", page);
         modelAndView.addObject("searchText", searchText);
@@ -134,7 +117,6 @@ public class MyPageController<T> {
         } else {
             modelAndView.setViewName("search");
         }
-//        modelAndView.addObject("countPageCars", countPageCars);
         this.page = page;
         return modelAndView;
     }
