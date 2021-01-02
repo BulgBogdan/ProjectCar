@@ -112,6 +112,7 @@ public class MyPageController<T> {
 
         modelAndView.addObject("page", page);
         modelAndView.addObject("searchText", searchText);
+        modelAndView.addObject("user", userAuth);
         if (docs.isEmpty() && repairs.isEmpty()) {
             modelAndView.setViewName("searchNull");
         } else {

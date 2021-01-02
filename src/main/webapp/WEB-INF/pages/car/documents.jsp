@@ -146,7 +146,7 @@
                                     <td class="text-center">${docs.beginDate}</td>
                                     <td class="text-center">${docs.endDate}</td>
                                     <td class="text-center">${docs.numberOfDays} дня(ей)</td>
-                                    <td class="text-center">${docs.numberOfMonth} месяцев</td>
+                                    <td class="text-center">${docs.numberOfMonth} месяц(ев)</td>
                                     <c:url value="/car/documents/edit/${docs.id}" var="editDoc"/>
                                     <td class="text-center"><a class='btn btn-info btn-xs' href="${editDoc}">
                                         <svg width="1em" height="1em"

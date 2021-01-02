@@ -119,16 +119,16 @@
 
                         <thead style="background-color: #77a4ff">
                         <tr>
-                            <th>Название</th>
-                            <th>Дата</th>
-                            <th>Стоимость</th>
+                            <th class="text-center">Название</th>
+                            <th class="text-center">Дата</th>
+                            <th class="text-center">Стоимость</th>
                             <th class="text-center"></th>
                         </tr>
                         </thead>
                         <c:forEach items="${otherCosts}" var="costs">
                             <tr>
-                                <td>${costs.nameOtherCost}</td>
-                                <td>${costs.dateCost}</td>
+                                <td class="text-center">${costs.nameOtherCost}</td>
+                                <td class="text-center">${costs.dateCost}</td>
                                 <c:if test="${car.user.currency.id == 1}">
                                     <td class="text-center">
                                         <fmt:formatNumber value="${costs.cost}" maxFractionDigits="2"/> BYN

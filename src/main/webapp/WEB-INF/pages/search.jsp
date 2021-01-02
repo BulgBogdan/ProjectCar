@@ -233,7 +233,7 @@
 
     <div id="register-link" class="text-left">
     <br>
-    <a href="/" class="text-info">В личный кабинет</a>
+        <a href="#" onclick="history.back();">Вернуться назад</a>
     </div>
 
 <%@ include file="include/under.jsp" %>

@@ -119,20 +119,20 @@
 
                             <thead style="background-color: #77a4ff">
                             <tr>
-                                <th>Название<br>(
+                                <th class="text-center">Название<br>(
                                     <small><b>ремонта и(или) запчастей</b></small>
                                     )
                                 </th>
-                                <th>Пробег при поломке</th>
-                                <th>Стоимость<br>(
+                                <th class="text-center">Пробег при поломке</th>
+                                <th class="text-center">Стоимость<br>(
                                     <small><b>ремонта и(или) запчастей</b></small>
                                     )
                                 </th>
-                                <th>Срок износа<br>(
+                                <th class="text-center">Срок износа<br>(
                                     <small><b>по регламенту(км)</b></small>
                                     )
                                 </th>
-                                <th>Срок истекает</th>
+                                <th class="text-center">Срок истекает</th>
                                 <th class="text-center"></th>
                             </tr>
                             </thead>
@@ -140,8 +140,8 @@
                             <c:if test="${greenMileage != null}">
                                 <c:forEach items="${greenMileage}" var="repair">
                                     <tr>
-                                        <td>${repair.nameRepair}</td>
-                                        <td>${repair.beginMileage}</td>
+                                        <td class="text-center">${repair.nameRepair}</td>
+                                        <td class="text-center">${repair.beginMileage}</td>
                                         <c:if test="${car.user.currency.id == 1}">
                                             <td class="text-center">
                                                 <fmt:formatNumber value="${repair.costsRepair / 2.6}"
@@ -154,7 +154,7 @@
                                                                   maxFractionDigits="2"/> USD
                                             </td>
                                         </c:if>
-                                        <td>${repair.serviceLife} км</td>
+                                        <td class="text-center">${repair.serviceLife} км</td>
                                         <td class="bg-success">${repair.endMileage} км</td>
                                         <c:url value="/car/repairs/edit/${repair.id}" var="editRepair"/>
                                         <td class="text-center"><a class='btn btn-info btn-xs' href="${editRepair}">

@@ -57,7 +57,7 @@ public class OtherCostsController extends MethodsCarForControllers {
         else {
             double costValueByUSD = costs / 2.6;
             String docCostsByUSD = String.format("%.2f", costValueByUSD);
-            modelAndView.addObject("sumAllCosts", costs);
+            modelAndView.addObject("sumAllCosts", docCostsByUSD);
         }
         return modelAndView;
     }

@@ -118,19 +118,19 @@
 
                             <thead style="background-color: #77a4ff">
                             <tr>
-                                <th>Цена за литр</th>
-                                <th>Заправленно литров</th>
-                                <th>На какую сумму заправленно</th>
-                                <th>Средний запас хода</th>
+                                <th class="text-center">Цена за литр</th>
+                                <th class="text-center">Заправленно литров</th>
+                                <th class="text-center">На какую сумму заправленно</th>
+                                <th class="text-center">Средний запас хода</th>
                                 <th class="text-center"></th>
                             </tr>
                             </thead>
                             <c:forEach items="${fuel}" var="fuels">
                                 <tr>
-                                    <td>${fuels.literCost} р/л</td>
-                                    <td>${fuels.literValue} л.</td>
-                                    <td>${fuels.summ} р.</td>
-                                    <td>${fuels.fuelDistance} км</td>
+                                    <td class="text-center">${fuels.literCost} р/л</td>
+                                    <td class="text-center">${fuels.literValue} л.</td>
+                                    <td class="text-center">${fuels.summ} р.</td>
+                                    <td class="text-center">${fuels.fuelDistance} км</td>
                                     <c:url value="/car/fuel/edit/${fuels.id}" var="editFuel"/>
                                     <td class="text-center"><a class='btn btn-info btn-xs' href="${editFuel}">
                                         <svg width="1em" height="1em"
@@ -217,8 +217,8 @@
                             <b class="text-danger">${allFuelsCosts}</b>
                         </ul>
                     </div>
-                    <c:url value="/car/fuel/diagram/${car.id}" var="diagram"/>
-                    <a href="${diagram}" class="btn btn-primary btn-xs pull-right">Диаграмма цен на топливо</a>
+                        <%--<c:url value="/car/fuel/diagram/${car.id}" var="diagram"/>--%>
+                        <%--<a href="${diagram}" class="btn btn-primary btn-xs pull-right">Диаграмма цен на топливо</a>--%>
                 </div>
             </c:if>
             <c:if test="${(parameters != null) && (fuel.size() == 0)}">
