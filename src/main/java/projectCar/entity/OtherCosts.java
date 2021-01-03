@@ -1,8 +1,8 @@
 package projectCar.entity;
 
 import lombok.Data;
-import org.hibernate.search.annotations.Index;
-import org.hibernate.search.annotations.*;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -19,7 +19,7 @@ public class OtherCosts {
     private int id;
 
     @Column(name = "name_other_cost", nullable = false, length = 100)
-    @Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
+    @Field
     private String nameOtherCost;
 
     @Column(name = "cost_date", nullable = false)
