@@ -103,9 +103,9 @@ public class MyPageController<T> {
         modelAndView.addObject("repairs", repairs);
         modelAndView.addObject("costs", costs);
 
-        int countPageDocs = (docs.size() + 10) / 10;
-        int countPageRepair = (repairs.size() + 10) / 10;
-        int countPageOtherCosts = (repairs.size() + 10) / 10;
+        int countPageDocs = (docs.size() + 10 * page) / 10;
+        int countPageRepair = (repairs.size() + 10 * page) / 10;
+        int countPageOtherCosts = (repairs.size() + 10 * page) / 10;
 
         modelAndView.addObject("countPageDocs", countPageDocs);
         modelAndView.addObject("countPageRepair", countPageRepair);
@@ -115,7 +115,7 @@ public class MyPageController<T> {
         modelAndView.addObject("searchText", searchText);
         modelAndView.addObject("user", userAuth);
 
-        if (docs.isEmpty() && repairs.isEmpty()) {
+        if (docs.isEmpty() && repairs.isEmpty() && costs.isEmpty()) {
             modelAndView.setViewName("searchNull");
         } else {
             modelAndView.setViewName("search");

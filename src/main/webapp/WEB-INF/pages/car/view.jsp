@@ -1,6 +1,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="../include/head.jsp" %>
 
@@ -35,13 +36,17 @@
                             <c:if test="${registration!=null}">
                                 <li class="nav-item">
                                     <small>Цена Авто:
-                                        <b>${registration.priceCar} ${registration.car.user.currency.title}</b>
+                                        <b><fmt:formatNumber value="${registration.priceCar}"
+                                                             maxFractionDigits="2"/>
+                                                ${registration.car.user.currency.title}</b>
                                     </small>
                                     <br>
                                 </li>
                                 <li class="nav-item">
                                     <small>Оформление:
-                                        <b>${registration.priceRegistration} ${registration.car.user.currency.title}</b>
+                                        <b><fmt:formatNumber value="${registration.priceRegistration}"
+                                                             maxFractionDigits="2"/>
+                                                ${registration.car.user.currency.title}</b>
                                     </small>
                                     <br>
                                 </li>
@@ -223,7 +228,10 @@
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu text-center">
-                        <b class="text-danger">${allCosts} ${car.user.currency.title}</b>
+                        <b class="text-danger">
+                            <fmt:formatNumber value="${allCosts}" maxFractionDigits="2"/>
+                                ${car.user.currency.title}
+                        </b>
                     </ul>
                 </div>
             </c:if>

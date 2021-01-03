@@ -231,7 +231,10 @@
                             <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu text-center">
-                            <b class="text-danger">${allDocumentsCosts} ${car.user.currency.title}</b>
+                            <b class="text-danger">
+                                <fmt:formatNumber value="${allDocumentsCosts}" maxFractionDigits="2"/>
+                                    ${car.user.currency.title}
+                            </b>
                         </ul>
                     </div>
                 </div>

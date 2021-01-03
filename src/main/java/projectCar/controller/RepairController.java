@@ -92,8 +92,7 @@ public class RepairController extends MethodsCarForControllers {
         //currency = USD
         else {
             double repairValueByUSD = repairs / 2.6;
-            String repairCostsByUSD = String.format("%.2f", repairValueByUSD);
-            modelAndView.addObject("allRepairsCosts", repairCostsByUSD);
+            modelAndView.addObject("allRepairsCosts", repairValueByUSD);
         }
         return modelAndView;
     }

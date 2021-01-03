@@ -20,6 +20,7 @@ import projectCar.service.interfaces.ICurrencyService;
 import projectCar.service.interfaces.IRegistrationService;
 import projectCar.service.interfaces.IUserService;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -53,6 +54,13 @@ public class CarController {
         Car carById = carService.read(id);
         return carById;
     }
+
+    private String getPrevPage(String prevPage) {
+        String backPage = prevPage.substring(21, prevPage.length());
+        return backPage;
+    }
+
+    private String prevPage = "";
 
     private ModelAndView errorIncorrectEnter() {
         modelAndView.addObject("Errors", "Incorrect enter");
@@ -125,6 +133,7 @@ public class CarController {
         modelAndView.addObject("car", car);
         modelAndView.addObject("parameter", car.getParameters());
         Currency currency = car.getUser().getCurrency();
+
         if (currency.getTitle().equals("USD")
                 && car.getRegistration() != null
                 && (car.getRegistration().getPriceRegistration() != 0)
@@ -137,6 +146,7 @@ public class CarController {
         } else {
             modelAndView.addObject("registration", car.getRegistration());
         }
+
         if ((car.getRegistration() != null) && (car.getParameters() != null)) {
             double costs = 0;
             List<Car> listCar = carService.getLists(id);
@@ -154,13 +164,15 @@ public class CarController {
                     costs = costs + document.getDocumentCost();
                 }
             }
+
             double firstCosts = car.getRegistration().getPriceCar() + car.getRegistration().getPriceRegistration();
-            costs = costs + firstCosts;
+
             if (currency.getTitle().equals("USD") && costs != 0) {
-                double valueByUSD = costs / 2.6;
-                String costsByUSD = String.format("%.2f", valueByUSD);
-                modelAndView.addObject("allCosts", costsByUSD);
+                costs = costs / 2.6;
+                double valueByUSD = costs + firstCosts;
+                modelAndView.addObject("allCosts", valueByUSD);
             } else {
+                costs = costs + firstCosts;
                 modelAndView.addObject("allCosts", costs);
             }
         }
@@ -207,8 +219,11 @@ public class CarController {
     }
 
     @GetMapping("car/edit/{id}")
-    public ModelAndView editPage(@PathVariable("id") int id) {
+    public ModelAndView editPage(@PathVariable("id") int id,
+                                 HttpServletRequest request) {
         Car car = getCarById(id);
+        String backPage = request.getHeader("referer");
+        prevPage = getPrevPage(backPage);
         modelAndView.setViewName("car/edit");
         modelAndView.addObject("car", car);
         return modelAndView;
@@ -227,7 +242,7 @@ public class CarController {
         String userName = userDetails.getUsername();
         User user = userService.findByLogin(userName);
         car.setUser(user);
-        modelAndView.setViewName("redirect:/car/view/{id}");
+        modelAndView.setViewName("redirect:" + prevPage);
         carService.update(car);
         return modelAndView;
     }

@@ -6,6 +6,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import projectCar.entity.Car;
+import projectCar.entity.Currency;
 import projectCar.entity.Fuel;
 import projectCar.service.FuelServiceImpl;
 import projectCar.service.interfaces.IFuelService;
@@ -45,6 +46,7 @@ public class FuelController extends MethodsCarForControllers {
     public ModelAndView pageFuel(@PathVariable("id") int id,
                                  @RequestParam(defaultValue = "1") int page) {
         car = getCarWithWires(id);
+        Currency currency = car.getUser().getCurrency();
         List<Fuel> fuelList = fuelService.getFuel(page, id);
         int fuelCount = fuelService.fuelCount(id);
         int pagesCount = (fuelCount + 9) / 10;
@@ -60,7 +62,12 @@ public class FuelController extends MethodsCarForControllers {
         for (Fuel fuel : car.getFuels()) {
             fuels = fuel.getSumm() + fuels;
         }
-        modelAndView.addObject("allFuelsCosts", fuels);
+        if (currency.getTitle().equals("USD")) {
+            fuels = fuels / 2.6;
+            modelAndView.addObject("allFuelsCosts", fuels);
+        } else {
+            modelAndView.addObject("allFuelsCosts", fuels);
+        }
         return modelAndView;
     }
 

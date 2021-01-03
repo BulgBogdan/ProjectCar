@@ -113,7 +113,7 @@ public class OtherCostsDAOImpl implements IOtherCostsDAO {
         QueryBuilder queryBuilder = fullTextSession.getSearchFactory().buildQueryBuilder()
                 .forEntity(OtherCosts.class).get();
         Query query = queryBuilder.keyword()
-                .onField("nameOtherCost")
+                .onFields("nameOtherCost")
                 .matching(textSearch).createQuery();// matching @field and request text
         BooleanJunction boolJunction = queryBuilder.bool();
         for (Integer ids : idCosts) {

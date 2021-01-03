@@ -113,7 +113,7 @@ public class RepairDAOImpl implements IRepairDAO {
         QueryBuilder queryBuilder = fullTextSession.getSearchFactory().buildQueryBuilder()
                 .forEntity(Repair.class).get();
         Query query = queryBuilder.keyword()
-                .onField("nameRepair")
+                .onFields("nameRepair")
                 .matching(textSearch).createQuery();// matching @field and request text
         BooleanJunction boolJunction = queryBuilder.bool();
         for (Integer ids : idRepairs) {

@@ -114,7 +114,7 @@ public class DocumentDAOImpl implements IDocumentDAO {
         QueryBuilder queryBuilder = fullTextSession.getSearchFactory().buildQueryBuilder()
                 .forEntity(Document.class).get();
         Query query = queryBuilder.keyword()
-                .onField("nameDocument")
+                .onFields("nameDocument")
                 .matching(textSearch).createQuery();// matching @field and request text
         BooleanJunction boolJunction = queryBuilder.bool();
         for (Integer ids : idDocs) {

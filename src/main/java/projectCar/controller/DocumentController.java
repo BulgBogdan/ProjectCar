@@ -58,8 +58,7 @@ public class DocumentController extends MethodsCarForControllers {
         //currency = USD
         else {
             double docValueByUSD = documentsCosts / 2.6;
-            String docCostsByUSD = String.format("%.2f", docValueByUSD);
-            modelAndView.addObject("allDocumentsCosts", docCostsByUSD);
+            modelAndView.addObject("allDocumentsCosts", docValueByUSD);
         }
 
         return modelAndView;
