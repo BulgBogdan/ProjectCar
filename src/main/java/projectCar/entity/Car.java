@@ -2,8 +2,7 @@ package projectCar.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.search.annotations.Index;
-import org.hibernate.search.annotations.*;
+import org.hibernate.search.annotations.IndexedEmbedded;
 
 import javax.persistence.*;
 import java.util.List;
@@ -12,7 +11,6 @@ import java.util.Objects;
 @Getter
 @Setter
 @Entity
-@Indexed
 @Table(name = "cars", schema = "projectcar")
 public class Car {
 
@@ -22,7 +20,6 @@ public class Car {
     private int id;
 
     @Column(name = "name_car", nullable = false, length = 100)
-    @Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
     private String nameCar;
 
     @Column(name = "mileage")

@@ -5,33 +5,22 @@ import org.apache.lucene.search.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.search.FullTextSession;
-import org.hibernate.search.Search;
 import org.hibernate.search.query.dsl.BooleanJunction;
 import org.hibernate.search.query.dsl.QueryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import projectCar.dao.interfaces.IFullTextManager;
 import projectCar.dao.interfaces.IOtherCostsDAO;
 import projectCar.entity.OtherCosts;
 
 import java.util.List;
 
 @Repository
-public class OtherCostsDAOImpl implements IOtherCostsDAO {
+public class OtherCostsDAOImpl implements IOtherCostsDAO, IFullTextManager {
 
     private static final Logger logger = Logger.getLogger(DocumentDAOImpl.class);
 
     private SessionFactory sessionFactory;
-
-    private FullTextSession getFullTextSession(Session session) {
-        FullTextSession fullTextSession = Search.getFullTextSession(session);
-        try {
-            fullTextSession.createIndexer().startAndWait();
-        } catch (InterruptedException e) {
-            logger.error("FullTextSession exception", e);
-            e.printStackTrace();
-        }
-        return fullTextSession;
-    }
 
     @Autowired
     public void setSessionFactory(org.hibernate.SessionFactory sessionFactory) {
@@ -105,7 +94,7 @@ public class OtherCostsDAOImpl implements IOtherCostsDAO {
     public List<OtherCosts> searchList(String textSearch, int id, int page) {
 
         Session session = sessionFactory.openSession();
-        FullTextSession fullTextSession = getFullTextSession(session);
+        FullTextSession fullTextSession = IFullTextManager.getFullTextSession(session);
         List<Integer> idCosts = session
                 .createQuery("select id from OtherCosts where car.user.id = '" + id + "'", Integer.class)
                 .getResultList();

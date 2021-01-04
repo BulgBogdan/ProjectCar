@@ -3,6 +3,7 @@ package projectCar.entity;
 import lombok.Data;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.TermVector;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -19,7 +20,7 @@ public class Document {
     private int id;
 
     @Column(name = "name_document", nullable = false, length = 100)
-    @Field
+    @Field(termVector = TermVector.YES)
     private String nameDocument;
 
     @Column(name = "cost_document")

@@ -3,6 +3,7 @@ package projectCar.entity;
 import lombok.Data;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.TermVector;
 
 import javax.persistence.*;
 
@@ -18,7 +19,7 @@ public class Repair {
     private int id;
 
     @Column(name = "name_repair", nullable = false, length = 100)
-    @Field
+    @Field(termVector = TermVector.YES)
     private String nameRepair;
 
     @Column(name = "start_mileage")

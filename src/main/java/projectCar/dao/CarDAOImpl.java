@@ -1,14 +1,9 @@
 package projectCar.dao;
 
 import org.apache.log4j.Logger;
-import org.apache.lucene.search.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.annotations.QueryHints;
-import org.hibernate.search.FullTextSession;
-import org.hibernate.search.Search;
-import org.hibernate.search.query.dsl.BooleanJunction;
-import org.hibernate.search.query.dsl.QueryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import projectCar.dao.interfaces.ICarDAO;
@@ -115,45 +110,4 @@ public class CarDAOImpl implements ICarDAO {
         return cars;
     }
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public List<Car> searchList(String textSearch, int id, int page) {
-        Session session = sessionFactory.openSession();
-        FullTextSession fullTextSession = Search.getFullTextSession(session);
-        try {
-            fullTextSession.createIndexer().startAndWait();
-        } catch (InterruptedException e) {
-            logger.error("FullTextSession exception", e);
-            e.printStackTrace();
-        }
-        List<Integer> idCars = session
-                .createQuery("select id from Car where user.id = '" + id + "'", Integer.class).getResultList();
-
-        QueryBuilder queryBuilder = fullTextSession.getSearchFactory().buildQueryBuilder()
-                .forEntity(Car.class).get();
-        Query query = queryBuilder.keyword()
-                .onField("nameCar")
-                .matching(textSearch).createQuery();// matching @field and request text
-        BooleanJunction boolJunction = queryBuilder.bool();
-        for (Integer ids : idCars) {
-            // match id from field with id from request text
-            boolJunction.should(queryBuilder.keyword().onField("id").matching(ids).createQuery());
-        }
-        Query idQuery = boolJunction.createQuery();// method boolean AND (must().must()), which equals output
-        Query combinedQuery = queryBuilder.bool().must(query).must(idQuery).createQuery();
-
-        org.hibernate.search.jpa.FullTextQuery hibQuery = fullTextSession
-                .createFullTextQuery(combinedQuery, Car.class)
-                .setFirstResult(10 * (page - 1)).setMaxResults(10);
-//        Sort sort = queryBuilder
-//                .sort()
-//                .byField("nameCar")
-//                .createSort();
-//        hibQuery.setSort(sort);
-        List<Car> cars = hibQuery.getResultList();
-        for (Car car : cars) {
-            logger.info("Car list. Car: " + car);
-        }
-        return cars;
-    }
 }

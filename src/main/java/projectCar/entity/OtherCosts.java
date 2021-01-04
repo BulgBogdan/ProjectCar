@@ -3,6 +3,7 @@ package projectCar.entity;
 import lombok.Data;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.TermVector;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -19,7 +20,7 @@ public class OtherCosts {
     private int id;
 
     @Column(name = "name_other_cost", nullable = false, length = 100)
-    @Field
+    @Field(termVector = TermVector.YES)
     private String nameOtherCost;
 
     @Column(name = "cost_date", nullable = false)

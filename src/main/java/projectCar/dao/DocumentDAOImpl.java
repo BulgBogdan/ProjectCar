@@ -5,33 +5,22 @@ import org.apache.lucene.search.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.search.FullTextSession;
-import org.hibernate.search.Search;
 import org.hibernate.search.query.dsl.BooleanJunction;
 import org.hibernate.search.query.dsl.QueryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import projectCar.dao.interfaces.IDocumentDAO;
+import projectCar.dao.interfaces.IFullTextManager;
 import projectCar.entity.Document;
 
 import java.util.List;
 
 @Repository
-public class DocumentDAOImpl implements IDocumentDAO {
+public class DocumentDAOImpl implements IDocumentDAO, IFullTextManager {
 
     private static final Logger logger = Logger.getLogger(DocumentDAOImpl.class);
 
     private SessionFactory sessionFactory;
-
-    private FullTextSession getFullTextSession(Session session) {
-        FullTextSession fullTextSession = Search.getFullTextSession(session);
-        try {
-            fullTextSession.createIndexer().startAndWait();
-        } catch (InterruptedException e) {
-            logger.error("FullTextSession exception", e);
-            e.printStackTrace();
-        }
-        return fullTextSession;
-    }
 
     @Autowired
     public void setSessionFactory(SessionFactory sessionFactory) {
@@ -106,7 +95,7 @@ public class DocumentDAOImpl implements IDocumentDAO {
     public List<Document> searchList(String textSearch, int id, int page) {
 
         Session session = sessionFactory.openSession();
-        FullTextSession fullTextSession = getFullTextSession(session);
+        FullTextSession fullTextSession = IFullTextManager.getFullTextSession(session);
         List<Integer> idDocs = session
                 .createQuery("select id from Document where car.user.id = '" + id + "'", Integer.class)
                 .getResultList();
