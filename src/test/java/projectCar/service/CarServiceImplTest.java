@@ -102,8 +102,8 @@ class CarServiceImplTest {
     void getListsCar() {
         List<Car> carList = new ArrayList<>();
         int idCar = useCar().getId();
-        Mockito.when(carDAO.getLists(idCar)).thenReturn(carList);
-        List<Car> cars = carService.getLists(idCar);
+        Mockito.when(carDAO.getListsForCostsByID(idCar)).thenReturn(carList);
+        List<Car> cars = carService.getListsForCostsByID(idCar);
         assertEquals(cars, carList);
     }
 

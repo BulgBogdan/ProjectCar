@@ -60,8 +60,8 @@ public class CarServiceImpl implements ICarService {
 
     @Override
     @Transactional
-    public List<Car> getLists(int id) {
-        return carDAO.getLists(id);
+    public List<Car> getListsForCostsByID(int id) {
+        return carDAO.getListsForCostsByID(id);
     }
 
 }

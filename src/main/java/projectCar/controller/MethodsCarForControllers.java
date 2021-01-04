@@ -24,7 +24,7 @@ public class MethodsCarForControllers {
     }
 
     Car getCarWithWires(int id){
-        List<Car> listCars = carService.getLists(id);
+        List<Car> listCars = carService.getListsForCostsByID(id);
         Car car = null;
         for (Car cars : listCars) {
             if (cars.getId() == id){

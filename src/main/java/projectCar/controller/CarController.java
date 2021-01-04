@@ -149,7 +149,7 @@ public class CarController {
 
         if ((car.getRegistration() != null) && (car.getParameters() != null)) {
             double costs = 0;
-            List<Car> listCar = carService.getLists(id);
+            List<Car> listCar = carService.getListsForCostsByID(id);
             for (Car cars : listCar) {
                 for (Fuel fuel : cars.getFuels()) {
                     costs = costs + fuel.getSumm();

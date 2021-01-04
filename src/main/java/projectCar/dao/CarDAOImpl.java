@@ -88,7 +88,7 @@ public class CarDAOImpl implements ICarDAO {
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<Car> getLists(int id) {
+    public List<Car> getListsForCostsByID(int id) {
         Session session = sessionFactory.getCurrentSession();
         List<Car> cars = null;
 
