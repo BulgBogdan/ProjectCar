@@ -21,12 +21,16 @@
                     <input type="hidden" name="birthday" id="birthday" class="form-control" value="${user.birthday}">
                     <div class="form-group">
                         <label class="text-center text-info">Выбрать:</label><br>
-                            <%--<input type="submit" name="currency" id="currency" class="form-control">--%>
                         <select name="currencyID" class="form-control text-center text-info">
                             <c:forEach items="${currencies}" var="currency">
                                 <option value="${currency.id}">${currency.title}</option>
                             </c:forEach>
                         </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="text-center text-info">Курс валюты:</label><br>
+                        <input type="number" name="currencyValue" class="form-control" value="${currencyValue}"
+                               step="0.001">
                     </div>
 
                     <div class="text-center form-group">

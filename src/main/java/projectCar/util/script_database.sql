@@ -14,16 +14,17 @@ USE `ProjectCar`;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `ProjectCar`.`currency`
 (
-  `id`    INT         NOT NULL AUTO_INCREMENT,
-  `title` VARCHAR(45) NOT NULL,
+  `id`             INT         NOT NULL AUTO_INCREMENT,
+  `title`          VARCHAR(45) NOT NULL,
+  `currency_value` DOUBLE      NOT NULL,
   PRIMARY KEY (`id`)
 )
   ENGINE = InnoDB;
 
-insert into projectcar.currency (title)
-values ('BYN');
-insert into projectcar.currency (title)
-values ('USD');
+insert into projectcar.currency (title, currency_value)
+values ('BYN', '1');
+insert into projectcar.currency (title, currency_value)
+values ('USD', '2.6');
 -- -----------------------------------------------------
 -- Table `ProjectCar`.`users`
 -- -----------------------------------------------------

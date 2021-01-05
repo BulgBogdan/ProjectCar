@@ -24,6 +24,12 @@ public class CurrencyServiceImpl implements ICurrencyService {
 
     @Override
     @Transactional
+    public void update(Currency currency) {
+        currencyDAO.update(currency);
+    }
+
+    @Override
+    @Transactional
     public List<Currency> getAll() {
         return currencyDAO.getAll();
     }

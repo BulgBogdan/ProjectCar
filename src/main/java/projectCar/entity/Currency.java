@@ -21,6 +21,9 @@ public class Currency {
     @Column(name = "title")
     private String title;
 
+    @Column(name = "currency_value")
+    private double currencyValue;
+
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "currency")
     private List<User> users;
 
@@ -30,11 +33,12 @@ public class Currency {
         if (o == null || getClass() != o.getClass()) return false;
         Currency currency = (Currency) o;
         return id == currency.id &&
+                Double.compare(currency.currencyValue, currencyValue) == 0 &&
                 Objects.equals(title, currency.title);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title);
+        return Objects.hash(id, title, currencyValue);
     }
 }

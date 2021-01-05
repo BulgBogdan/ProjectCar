@@ -32,6 +32,13 @@ public class CurrencyDAOImpl implements ICurrencyDAO {
     }
 
     @Override
+    public void update(Currency currency) {
+        Session session = sessionFactory.getCurrentSession();
+        session.update(currency);
+        logger.info("Currency successfully updated. Currency: " + currency);
+    }
+
+    @Override
     @SuppressWarnings("unchecked")
     public List<Currency> getAll() {
         Session session = sessionFactory.getCurrentSession();
