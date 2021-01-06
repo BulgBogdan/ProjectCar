@@ -159,9 +159,9 @@ public class MyPageController<T> {
         prevPage = getPrevPage(backPage);
         List<Currency> currencyList = currencyService.getAll();
         int currencyID = userAuth.getCurrency().getId();
-        double currencyValue = currencyService.read(2).getCurrencyValue();
+        double currencyValueUSD = currencyService.read(2).getCurrencyValue();
         modelAndView.addObject("user", userAuth);
-        modelAndView.addObject("currencyValue", currencyValue);
+        modelAndView.addObject("currencyValueUSD", currencyValueUSD);
         modelAndView.addObject("currencies", currencyList);
         modelAndView.addObject("currencyID", currencyID);
         modelAndView.setViewName("currency");
@@ -170,7 +170,7 @@ public class MyPageController<T> {
 
     @PostMapping("/currency")
     public ModelAndView editCurrency(@ModelAttribute("user") User user,
-                                     @ModelAttribute("currencyValue") double currencyValue,
+                                     @ModelAttribute("currencyValueUSD") double currencyValue,
                                      @ModelAttribute("currencyID") int currencyID,
                                      BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {

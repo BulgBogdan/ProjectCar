@@ -29,7 +29,7 @@
                     </div>
                     <div class="form-group">
                         <label class="text-center text-info">Курс валюты:</label><br>
-                        <input type="number" name="currencyValue" class="form-control" value="${currencyValue}"
+                        <input type="number" name="currencyValue" class="form-control" value="${currencyValueUSD}"
                                step="0.001">
                     </div>
 

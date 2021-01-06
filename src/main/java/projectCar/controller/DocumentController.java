@@ -30,6 +30,11 @@ public class DocumentController extends MethodsCarForControllers {
 
     private Car car = new Car();
 
+    private double getCurrencyValueUSD() {
+        double currencyValueUSD = currencyService.read(2).getCurrencyValue();
+        return currencyValueUSD;
+    }
+
     private int page;
 
     @GetMapping("/car/documents/{id}")
@@ -57,7 +62,8 @@ public class DocumentController extends MethodsCarForControllers {
         }
         //currency = USD
         else {
-            double docValueByUSD = documentsCosts / 2.6;
+            double valueUSD = getCurrencyValueUSD();
+            double docValueByUSD = documentsCosts / valueUSD;
             modelAndView.addObject("allDocumentsCosts", docValueByUSD);
         }
 
@@ -100,7 +106,8 @@ public class DocumentController extends MethodsCarForControllers {
         modelAndView.setViewName("redirect:/car/documents/{id}");
 
         if (currency.getTitle().equals("USD")) {
-            double priceDocByBYN = document.getDocumentCost() * 2.6;
+            double valueUSD = getCurrencyValueUSD();
+            double priceDocByBYN = document.getDocumentCost() * valueUSD;
             document.setDocumentCost(priceDocByBYN);
             documentService.add(document);
         } else {
@@ -114,8 +121,9 @@ public class DocumentController extends MethodsCarForControllers {
     public ModelAndView editDocument(@PathVariable("id") int id) {
         Document document = documentService.read(id);
         modelAndView.setViewName("car/documents/edit");
+        double valueUSD = getCurrencyValueUSD();
         if (document.getCar().getUser().getCurrency().getTitle().equals("USD")) {
-            document.setDocumentCost(document.getDocumentCost() / 2.6);
+            document.setDocumentCost(document.getDocumentCost() / valueUSD);
             modelAndView.addObject("docs", document);
         } else {
             modelAndView.addObject("docs", document);
@@ -162,7 +170,8 @@ public class DocumentController extends MethodsCarForControllers {
         if (currency.getTitle().equals("BYN")) {
             documentService.update(documentEdit);
         } else {
-            double priceDocByBYN = documentEdit.getDocumentCost() * 2.6;
+            double valueUSD = getCurrencyValueUSD();
+            double priceDocByBYN = documentEdit.getDocumentCost() * valueUSD;
             documentEdit.setDocumentCost(priceDocByBYN);
             documentService.update(documentEdit);
         }

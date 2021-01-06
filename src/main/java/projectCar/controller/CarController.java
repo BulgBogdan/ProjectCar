@@ -40,6 +40,11 @@ public class CarController {
 
     private ModelAndView modelAndView = new ModelAndView();
 
+    private double getCurrencyValueUSD() {
+        double currencyValueUSD = currencyService.read(2).getCurrencyValue();
+        return currencyValueUSD;
+    }
+
     private Currency getCurrencyById(int id) {
         Currency currencyById = currencyService.read(id);
         return currencyById;
@@ -114,9 +119,10 @@ public class CarController {
         Currency currency = car.getUser().getCurrency();
         registration.setCar(car);
         if (currency.getTitle().equals("USD")) {
-            double priceCarByBYN = registration.getPriceCar() * 2.6;
+            double valueUSD = getCurrencyValueUSD();
+            double priceCarByBYN = registration.getPriceCar() * valueUSD;
             registration.setPriceCar((int) priceCarByBYN);
-            double priceRegistrationByBYN = registration.getPriceRegistration() * 2.6;
+            double priceRegistrationByBYN = registration.getPriceRegistration() * valueUSD;
             registration.setPriceRegistration(priceRegistrationByBYN);
             registrationService.add(registration);
         } else {
@@ -133,13 +139,14 @@ public class CarController {
         modelAndView.addObject("car", car);
         modelAndView.addObject("parameter", car.getParameters());
         Currency currency = car.getUser().getCurrency();
+        double valueUSD = getCurrencyValueUSD();
 
         if (currency.getTitle().equals("USD")
                 && car.getRegistration() != null
                 && (car.getRegistration().getPriceRegistration() != 0)
                 && (car.getRegistration().getPriceCar() != 0)) {
-            int priceCar = (int) (car.getRegistration().getPriceCar() / 2.6);
-            double priceRegistration = car.getRegistration().getPriceRegistration() / 2.6;
+            int priceCar = (int) (car.getRegistration().getPriceCar() / valueUSD);
+            double priceRegistration = car.getRegistration().getPriceRegistration() / valueUSD;
             car.getRegistration().setPriceRegistration(priceRegistration);
             car.getRegistration().setPriceCar(priceCar);
             modelAndView.addObject("registration", car.getRegistration());
@@ -168,7 +175,7 @@ public class CarController {
             double firstCosts = car.getRegistration().getPriceCar() + car.getRegistration().getPriceRegistration();
 
             if (currency.getTitle().equals("USD") && costs != 0) {
-                costs = costs / 2.6;
+                costs = costs / valueUSD;
                 double valueByUSD = costs + firstCosts;
                 modelAndView.addObject("allCosts", valueByUSD);
             } else {
@@ -183,9 +190,10 @@ public class CarController {
     public ModelAndView editPageFirstCost(@PathVariable("id") int id) {
         Car car = getCarById(id);
         modelAndView.setViewName("car/costs/edit");
+        double valueUSD = getCurrencyValueUSD();
         if (car.getUser().getCurrency().getTitle().equals("USD")) {
-            car.getRegistration().setPriceCar((int) (car.getRegistration().getPriceCar() / 2.6));
-            car.getRegistration().setPriceRegistration(car.getRegistration().getPriceRegistration() / 2.6);
+            car.getRegistration().setPriceCar((int) (car.getRegistration().getPriceCar() / valueUSD));
+            car.getRegistration().setPriceRegistration(car.getRegistration().getPriceRegistration() / valueUSD);
             modelAndView.addObject("registration", car.getRegistration());
         } else {
             modelAndView.addObject("registration", car.getRegistration());
@@ -208,9 +216,12 @@ public class CarController {
         if (currency.getTitle().equals("BYN")) {
             registrationService.update(registration);
         } else {
-            double priceCarByBYN = registration.getPriceCar() * 2.6;
+            double valueUSD = getCurrencyValueUSD();
+            double priceCar = registration.getPriceCar();
+            double priceCarByBYN = priceCar * valueUSD;
             registration.setPriceCar((int) priceCarByBYN);
-            double priceRegistrationByBYN = registration.getPriceRegistration() * 2.6;
+            double priceRegistration = registration.getPriceRegistration();
+            double priceRegistrationByBYN = priceRegistration * valueUSD;
             registration.setPriceRegistration(priceRegistrationByBYN);
             registrationService.update(registration);
         }

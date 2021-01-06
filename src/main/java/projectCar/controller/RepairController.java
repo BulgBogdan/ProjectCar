@@ -31,6 +31,11 @@ public class RepairController extends MethodsCarForControllers {
 
     private int page;
 
+    private double getCurrencyValueUSD() {
+        double currencyValueUSD = currencyService.read(2).getCurrencyValue();
+        return currencyValueUSD;
+    }
+
     private Currency getCurrencyByID(int id) {
         Currency currencyByID = currencyService.read(id);
         return currencyByID;
@@ -91,7 +96,8 @@ public class RepairController extends MethodsCarForControllers {
         }
         //currency = USD
         else {
-            double repairValueByUSD = repairs / 2.6;
+            double valueUSD = getCurrencyValueUSD();
+            double repairValueByUSD = repairs / valueUSD;
             modelAndView.addObject("allRepairsCosts", repairValueByUSD);
         }
         return modelAndView;
@@ -127,7 +133,8 @@ public class RepairController extends MethodsCarForControllers {
         modelAndView.setViewName("redirect:/car/repairs/{id}");
 
         if (currency.getTitle().equals("USD")) {
-            double costRepairByBYN = repair.getCostsRepair() * 2.6;
+            double valueUSD = getCurrencyValueUSD();
+            double costRepairByBYN = repair.getCostsRepair() * valueUSD;
             repair.setCostsRepair(costRepairByBYN);
             repairService.add(repair);
         } else {
@@ -141,8 +148,9 @@ public class RepairController extends MethodsCarForControllers {
     public ModelAndView pageEdit(@PathVariable("id")int id){
         Repair repair = repairService.read(id);
         modelAndView.setViewName("car/repairs/edit");
+        double valueUSD = getCurrencyValueUSD();
         if (repair.getCar().getUser().getCurrency().getTitle().equals("USD")) {
-            repair.setCostsRepair(repair.getCostsRepair() / 2.6);
+            repair.setCostsRepair(repair.getCostsRepair() / valueUSD);
             modelAndView.addObject("repair", repair);
         } else {
             modelAndView.addObject("repair", repair);
@@ -171,7 +179,8 @@ public class RepairController extends MethodsCarForControllers {
         if (currency.getTitle().equals("BYN")) {
             repairService.update(repair);
         } else {
-            double costRepairByBYN = repair.getCostsRepair() * 2.6;
+            double valueUSD = getCurrencyValueUSD();
+            double costRepairByBYN = repair.getCostsRepair() * valueUSD;
             repair.setCostsRepair(costRepairByBYN);
             repairService.update(repair);
         }

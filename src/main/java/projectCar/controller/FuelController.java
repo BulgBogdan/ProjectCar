@@ -8,7 +8,9 @@ import org.springframework.web.servlet.ModelAndView;
 import projectCar.entity.Car;
 import projectCar.entity.Currency;
 import projectCar.entity.Fuel;
+import projectCar.service.CurrencyServiceImpl;
 import projectCar.service.FuelServiceImpl;
+import projectCar.service.interfaces.ICurrencyService;
 import projectCar.service.interfaces.IFuelService;
 
 import java.sql.Date;
@@ -20,6 +22,9 @@ public class FuelController extends MethodsCarForControllers {
 
     @Autowired
     private IFuelService fuelService = new FuelServiceImpl();
+
+    @Autowired
+    private ICurrencyService currencyService = new CurrencyServiceImpl();
 
     private ModelAndView modelAndView = new ModelAndView();
 
@@ -63,7 +68,8 @@ public class FuelController extends MethodsCarForControllers {
             fuels = fuel.getSumm() + fuels;
         }
         if (currency.getTitle().equals("USD")) {
-            fuels = fuels / 2.6;
+            double valueUSD = currencyService.read(2).getCurrencyValue();
+            fuels = fuels / valueUSD;
             modelAndView.addObject("allFuelsCosts", fuels);
         } else {
             modelAndView.addObject("allFuelsCosts", fuels);

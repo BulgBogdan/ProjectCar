@@ -28,6 +28,11 @@ public class OtherCostsController extends MethodsCarForControllers {
 
     private Car car = new Car();
 
+    private double getCurrencyValueUSD() {
+        double currencyValueUSD = currencyService.read(2).getCurrencyValue();
+        return currencyValueUSD;
+    }
+
     private int page;
 
     @GetMapping("/car/other/costs/{id}")
@@ -55,7 +60,8 @@ public class OtherCostsController extends MethodsCarForControllers {
         }
         //currency = USD
         else {
-            double costValueByUSD = costs / 2.6;
+            double valueUSD = getCurrencyValueUSD();
+            double costValueByUSD = costs / valueUSD;
             modelAndView.addObject("sumAllCosts", costValueByUSD);
         }
         return modelAndView;
@@ -88,7 +94,8 @@ public class OtherCostsController extends MethodsCarForControllers {
         int currencyID = car.getUser().getCurrency().getId();
         Currency currency = currencyService.read(currencyID);
         if (currency.getTitle().equals("USD")) {
-            double priceOtherCost = costs.getCost() * 2.6;
+            double valueUSD = getCurrencyValueUSD();
+            double priceOtherCost = costs.getCost() * valueUSD;
             costs.setCost(priceOtherCost);
             costsService.add(costs);
         } else {
@@ -101,8 +108,9 @@ public class OtherCostsController extends MethodsCarForControllers {
     public ModelAndView pageEditCost(@PathVariable("id") int id) {
         OtherCosts otherCosts = costsService.read(id);
         modelAndView.setViewName("car/other/costs/edit");
+        double valueUSD = getCurrencyValueUSD();
         if (otherCosts.getCar().getUser().getCurrency().getTitle().equals("USD")) {
-            otherCosts.setCost(otherCosts.getCost() / 2.6);
+            otherCosts.setCost(otherCosts.getCost() / valueUSD);
             modelAndView.addObject("costs", otherCosts);
         } else {
             modelAndView.addObject("costs", otherCosts);
@@ -128,7 +136,8 @@ public class OtherCostsController extends MethodsCarForControllers {
         if (currency.getTitle().equals("BYN")) {
             costsService.update(otherCosts);
         } else {
-            double priceOtherCost = otherCosts.getCost() * 2.6;
+            double valueUSD = getCurrencyValueUSD();
+            double priceOtherCost = otherCosts.getCost() * valueUSD;
             otherCosts.setCost(priceOtherCost);
             costsService.update(otherCosts);
         }
