@@ -42,6 +42,7 @@ public class OtherCostsController extends MethodsCarForControllers {
         List<OtherCosts> costsList = costsService.getOtherCosts(page, id);
         int costsCount = costsService.otherCostsCount(id);
         int pagesCount = (costsCount + 9) / 10;
+        double valueUSD = getCurrencyValueUSD();
         modelAndView.setViewName("car/other/costs");
         modelAndView.addObject("car", car);
         modelAndView.addObject("parameters", car.getParameters());
@@ -49,6 +50,7 @@ public class OtherCostsController extends MethodsCarForControllers {
         modelAndView.addObject("page",page);
         modelAndView.addObject("costsCount", costsCount);
         modelAndView.addObject("pagesCount", pagesCount);
+        modelAndView.addObject("valueUSD", valueUSD);
         this.page = page;
         double costs = 0;
         for (OtherCosts listCosts : car.getOtherCosts()) {
@@ -60,7 +62,6 @@ public class OtherCostsController extends MethodsCarForControllers {
         }
         //currency = USD
         else {
-            double valueUSD = getCurrencyValueUSD();
             double costValueByUSD = costs / valueUSD;
             modelAndView.addObject("sumAllCosts", costValueByUSD);
         }

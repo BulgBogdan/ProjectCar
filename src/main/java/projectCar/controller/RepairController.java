@@ -81,6 +81,7 @@ public class RepairController extends MethodsCarForControllers {
 
         int repairCount = repairService.repairCount(id);
         int pagesCount = (repairCount + 9) / 10;
+        double valueUSD = getCurrencyValueUSD();
         modelAndView.setViewName("car/repairs");
         modelAndView.addObject("page",page);
         modelAndView.addObject("repairCount", repairCount);
@@ -88,6 +89,7 @@ public class RepairController extends MethodsCarForControllers {
         modelAndView.addObject("car", car);
         modelAndView.addObject("parameters", car.getParameters());
         modelAndView.addObject("repairs", repairList);
+        modelAndView.addObject("valueUSD", valueUSD);
         this.page = page;
 
         //currency = BYN
@@ -96,7 +98,6 @@ public class RepairController extends MethodsCarForControllers {
         }
         //currency = USD
         else {
-            double valueUSD = getCurrencyValueUSD();
             double repairValueByUSD = repairs / valueUSD;
             modelAndView.addObject("allRepairsCosts", repairValueByUSD);
         }

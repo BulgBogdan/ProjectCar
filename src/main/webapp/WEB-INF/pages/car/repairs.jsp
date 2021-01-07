@@ -151,7 +151,7 @@
                                         </c:if>
                                         <c:if test="${car.user.currency.id == 2}">
                                             <td class="text-center">
-                                                <fmt:formatNumber value="${repair.costsRepair / 2.6}"
+                                                <fmt:formatNumber value="${repair.costsRepair / valueUSD}"
                                                                   maxFractionDigits="2"/>
                                                     ${car.user.currency.title}
                                             </td>
@@ -240,7 +240,7 @@
                                         </c:if>
                                         <c:if test="${car.user.currency.id == 2}">
                                             <td class="text-center">
-                                                <fmt:formatNumber value="${repair.costsRepair / 2.6}"
+                                                <fmt:formatNumber value="${repair.costsRepair / valueUSD}"
                                                                   maxFractionDigits="2"/>
                                                     ${car.user.currency.title}</td>
                                         </c:if>
@@ -284,7 +284,7 @@
                                         </c:if>
                                         <c:if test="${car.user.currency.id == 2}">
                                             <td class="text-center">
-                                                <fmt:formatNumber value="${repair.costsRepair / 2.6}"
+                                                <fmt:formatNumber value="${repair.costsRepair / valueUSD}"
                                                                   maxFractionDigits="2"/>
                                                     ${car.user.currency.title}
                                             </td>

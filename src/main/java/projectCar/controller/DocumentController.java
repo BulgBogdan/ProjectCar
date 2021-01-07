@@ -44,6 +44,7 @@ public class DocumentController extends MethodsCarForControllers {
         List<Document> documentList = documentService.getDocuments(page, id);
         int documentsCount = documentService.docsCount(id);
         int pagesCount = (documentsCount + 9) / 10;
+        double valueUSD = getCurrencyValueUSD();
         modelAndView.setViewName("car/documents");
         modelAndView.addObject("car", car);
         modelAndView.addObject("page", page);
@@ -51,6 +52,7 @@ public class DocumentController extends MethodsCarForControllers {
         modelAndView.addObject("pagesCount", pagesCount);
         modelAndView.addObject("parameters", car.getParameters());
         modelAndView.addObject("documents", documentList);
+        modelAndView.addObject("valueUSD", valueUSD);
         this.page = page;
         double documentsCosts = 0;
         for (Document document : car.getDocuments()) {
@@ -62,7 +64,6 @@ public class DocumentController extends MethodsCarForControllers {
         }
         //currency = USD
         else {
-            double valueUSD = getCurrencyValueUSD();
             double docValueByUSD = documentsCosts / valueUSD;
             modelAndView.addObject("allDocumentsCosts", docValueByUSD);
         }

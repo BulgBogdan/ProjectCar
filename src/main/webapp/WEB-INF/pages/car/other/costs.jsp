@@ -136,7 +136,7 @@
                                 </c:if>
                                 <c:if test="${car.user.currency.id == 2}">
                                     <td class="text-center">
-                                        <fmt:formatNumber value="${costs.cost / 2.6}" maxFractionDigits="2"/> USD
+                                        <fmt:formatNumber value="${costs.cost / valueUSD}" maxFractionDigits="2"/> USD
                                     </td>
                                 </c:if>
                                 <c:url value="/car/other/costs/edit/${costs.id}" var="editCost"/>

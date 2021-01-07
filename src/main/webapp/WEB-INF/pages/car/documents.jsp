@@ -139,7 +139,8 @@
                                     </c:if>
                                     <c:if test="${car.user.currency.id == 2}">
                                         <td class="text-center">
-                                            <fmt:formatNumber value="${docs.documentCost / 2.6}" maxFractionDigits="2"/>
+                                            <fmt:formatNumber value="${docs.documentCost / valueUSD}"
+                                                              maxFractionDigits="2"/>
                                             USD
                                         </td>
                                     </c:if>
