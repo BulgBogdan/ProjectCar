@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
-public class MyPageController<T> {
+public class MyPageController {
 
     @Autowired
     private IUserService userService = new UserServiceImpl();

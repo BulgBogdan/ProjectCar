@@ -230,9 +230,15 @@
                     <ul class="dropdown-menu text-center">
                         <b class="text-danger">
                             <fmt:formatNumber value="${allCosts}" maxFractionDigits="2"/>
-                                ${car.user.currency.title}
+                            BYN
+                        </b>
+                        &nbsp;
+                        <b class="text-danger">
+                            <fmt:formatNumber value="${allCostsUSD}" maxFractionDigits="2"/>
+                            USD
                         </b>
                     </ul>
+
                 </div>
             </c:if>
             <br>

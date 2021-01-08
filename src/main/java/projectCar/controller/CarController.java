@@ -174,14 +174,10 @@ public class CarController {
 
             double firstCosts = car.getRegistration().getPriceCar() + car.getRegistration().getPriceRegistration();
 
-            if (currency.getTitle().equals("USD") && costs != 0) {
-                costs = costs / valueUSD;
-                double valueByUSD = costs + firstCosts;
-                modelAndView.addObject("allCosts", valueByUSD);
-            } else {
-                costs = costs + firstCosts;
-                modelAndView.addObject("allCosts", costs);
-            }
+            costs = costs + firstCosts;
+            modelAndView.addObject("allCosts", costs);
+            double valueByUSD = costs / valueUSD;
+            modelAndView.addObject("allCostsUSD", valueByUSD);
         }
         return modelAndView;
     }
