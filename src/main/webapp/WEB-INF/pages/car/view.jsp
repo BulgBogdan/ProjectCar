@@ -228,15 +228,17 @@
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu text-center">
-                        <b class="text-danger">
-                            <fmt:formatNumber value="${allCosts}" maxFractionDigits="2"/>
-                            BYN
-                        </b>
-                        &nbsp;
-                        <b class="text-danger">
-                            <fmt:formatNumber value="${allCostsUSD}" maxFractionDigits="2"/>
-                            USD
-                        </b>
+                        <li>
+                            <b class="text-danger">
+                                BYN = <fmt:formatNumber value="${allCosts}" maxFractionDigits="2"/>
+                            </b>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <b class="text-danger">
+                                USD = <fmt:formatNumber value="${allCostsUSD}" maxFractionDigits="2"/>
+                            </b>
+                        </li>
                     </ul>
 
                 </div>
