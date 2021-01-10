@@ -15,6 +15,7 @@ import projectCar.service.interfaces.IDocumentService;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -43,6 +44,37 @@ public class DocumentController extends MethodsCarForControllers {
         car = getCarWithWires(id);
         List<Document> documentList = documentService.getDocuments(page, id);
         int documentsCount = documentService.docsCount(id);
+
+        List<Document> greenDate = new ArrayList<>();
+        List<Document> yellowDate = new ArrayList<>();
+        List<Document> redDate = new ArrayList<>();
+        List<Document> endDate = new ArrayList<>();
+
+        for (Document doc : documentList) {
+            int validityPeriodOfDays = amountOfDays(doc.getBeginDate(), doc.getEndDate());
+
+            if (doc.getNumberOfDays() > (validityPeriodOfDays / 2)) {
+                greenDate.add(doc);
+            }
+            if ((doc.getNumberOfDays() <= (validityPeriodOfDays / 2))
+                    &&
+                    (doc.getNumberOfDays() > ((validityPeriodOfDays * 3) / 4))) {
+                yellowDate.add(doc);
+            }
+            if ((doc.getNumberOfDays() <= (validityPeriodOfDays * 3) / 4)
+                    &&
+                    (doc.getNumberOfDays() > validityPeriodOfDays)) {
+                redDate.add(doc);
+            } else if (doc.getNumberOfDays() <= validityPeriodOfDays) {
+                endDate.add(doc);
+            }
+        }
+
+        modelAndView.addObject("greenDate", greenDate);
+        modelAndView.addObject("yellowDate", yellowDate);
+        modelAndView.addObject("redDate", redDate);
+        modelAndView.addObject("endDate", endDate);
+
         int pagesCount = (documentsCount + 9) / 10;
         double valueUSD = getCurrencyValueUSD();
         modelAndView.setViewName("car/documents");
