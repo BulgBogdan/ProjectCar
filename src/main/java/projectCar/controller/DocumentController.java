@@ -57,15 +57,14 @@ public class DocumentController extends MethodsCarForControllers {
                 greenDate.add(doc);
             }
             if ((doc.getNumberOfDays() <= (validityPeriodOfDays / 2))
-                    &&
-                    (doc.getNumberOfDays() > ((validityPeriodOfDays * 3) / 4))) {
+                    && (doc.getNumberOfDays() > (validityPeriodOfDays / 4))) {
                 yellowDate.add(doc);
             }
-            if ((doc.getNumberOfDays() <= (validityPeriodOfDays * 3) / 4)
+            if ((doc.getNumberOfDays() <= (validityPeriodOfDays / 4))
                     &&
-                    (doc.getNumberOfDays() > validityPeriodOfDays)) {
+                    (doc.getNumberOfDays() > 0)) {
                 redDate.add(doc);
-            } else if (doc.getNumberOfDays() <= validityPeriodOfDays) {
+            } else if (doc.getNumberOfDays() <= 0) {
                 endDate.add(doc);
             }
         }
