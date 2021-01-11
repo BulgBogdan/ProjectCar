@@ -139,6 +139,7 @@
 
                             <c:if test="${greenMileage != null}">
                                 <c:forEach items="${greenMileage}" var="repair">
+                                    <thead style="background: rgba(133,255,99,0.5)">
                                     <tr>
                                         <td class="text-center">${repair.nameRepair}</td>
                                         <td class="text-center">${repair.beginMileage}</td>
@@ -157,7 +158,7 @@
                                             </td>
                                         </c:if>
                                         <td class="text-center">${repair.serviceLife} км</td>
-                                        <td class="bg-success">${repair.endMileage} км</td>
+                                        <td class="text-center">${repair.endMileage} км</td>
                                         <c:url value="/car/repairs/edit/${repair.id}" var="editRepair"/>
                                         <td class="text-center"><a class='btn btn-info btn-xs' href="${editRepair}">
                                             <svg width="1em" height="1em"
@@ -179,11 +180,13 @@
                                                 </svg>
                                             </a></td>
                                     </tr>
+                                    </thead>
                                 </c:forEach>
                             </c:if>
 
                             <c:if test="${yellowMileage != null}">
                                 <c:forEach items="${yellowMileage}" var="repair">
+                                    <thead style="background: rgba(244,255,109,0.51)">
                                     <tr>
                                         <td class="text-center">${repair.nameRepair}</td>
                                         <td class="text-center">${repair.beginMileage}</td>
@@ -202,7 +205,7 @@
                                             </td>
                                         </c:if>
                                         <td class="text-center">${repair.serviceLife} км</td>
-                                        <td class="bg-warning">${repair.endMileage} км</td>
+                                        <td class="text-center">${repair.endMileage} км</td>
                                         <c:url value="/car/repairs/edit/${repair.id}" var="editRepair"/>
                                         <td class="text-center"><a class='btn btn-info btn-xs' href="${editRepair}">
                                             <svg width="1em" height="1em"
@@ -224,11 +227,13 @@
                                                 </svg>
                                             </a></td>
                                     </tr>
+                                    </thead>
                                 </c:forEach>
                             </c:if>
 
                             <c:if test="${redMileage != null}">
                                 <c:forEach items="${redMileage}" var="repair">
+                                    <thead style="background: rgba(255,131,103,0.51)">
                                     <tr>
                                         <td class="text-center">${repair.nameRepair}</td>
                                         <td class="text-center">${repair.beginMileage}</td>
@@ -245,7 +250,7 @@
                                                     ${car.user.currency.title}</td>
                                         </c:if>
                                         <td class="text-center">${repair.serviceLife} км</td>
-                                        <td class="bg-danger">${repair.endMileage} км</td>
+                                        <td class="text-center">${repair.endMileage} км</td>
                                         <c:url value="/car/repairs/edit/${repair.id}" var="editRepair"/>
                                         <td class="text-center"><a class='btn btn-info btn-xs' href="${editRepair}">
                                             <svg width="1em" height="1em"
@@ -267,6 +272,7 @@
                                                 </svg>
                                             </a></td>
                                     </tr>
+                                    </thead>
                                 </c:forEach>
                             </c:if>
 

@@ -63,10 +63,11 @@ public class RepairController extends MethodsCarForControllers {
             if (colorMileage < (repair.getServiceLife() / 2)) {
                 greenMileage.add(repair);
             }
-            if ((colorMileage >= (repair.getServiceLife() / 2)) && (colorMileage < ((repair.getServiceLife()) / 4))) {
+            if ((colorMileage >= (repair.getServiceLife() / 2))
+                    && (colorMileage < ((repair.getServiceLife()) * 3 / 4))) {
                 yellowMileage.add(repair);
             }
-            if ((colorMileage >= (repair.getServiceLife()) / 4) && (colorMileage < repair.getServiceLife())) {
+            if ((colorMileage >= ((repair.getServiceLife() * 3) / 4)) && (colorMileage < repair.getServiceLife())) {
                 redMileage.add(repair);
             } else if (colorMileage >= repair.getServiceLife()) {
                 endService.add(repair);
