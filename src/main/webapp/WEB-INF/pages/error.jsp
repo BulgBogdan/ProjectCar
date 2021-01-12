@@ -11,5 +11,11 @@
 </head>
 <body>
 <h2 align="center">Что-то пошло не так, попробуйте снова</h2>
+<div>
+    &nbsp;
+</div>
+<div id="register-link" class="text-center">
+    <a href="#" class="text-info" onclick="history.back();">Назад</a>
+</div>
 </body>
 </html>
