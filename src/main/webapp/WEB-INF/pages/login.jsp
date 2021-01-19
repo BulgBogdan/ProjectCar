@@ -17,6 +17,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"
             integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s"
             crossorigin="anonymous"></script>
+    <script src="C:/Projects/examples/ProjectCar/src/main/webapp/res/js/hidden_eye.js"></script>
     <style>body{background-color: #f6fcff}</style>
 </head>
 
@@ -38,9 +39,10 @@
                             <label for="username" class="text-info">Логин:</label><br>
                             <input type="text" name="check_username" id="username" class="form-control">
                         </div>
-                        <div class="form-group">
+                        <div class="password">
                             <label for="password" class="text-info">Пароль:</label><br>
                             <input type="password" name="check_password" id="password" class="form-control">
+                            <a href="#" class="password-control" onclick="return show_hide_password(this);"></a>
                         </div>
                         <div class="form-group">
                             <label for="remember-me" class="text-info"><span>Запомнить</span> 
