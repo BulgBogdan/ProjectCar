@@ -28,9 +28,8 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label class="text-center text-info">Курс валюты:</label><br>
-                        <input type="number" name="currencyValueUSD" class="form-control" value="${currencyValueUSD}"
-                               step="0.001">
+                        <label class="text-center text-info">Курс USD по курсу НБРБ:</label><br>
+                        <label class="text-center text-justify">${currencyValueUSD}</label>
                     </div>
 
                     <div class="text-center form-group">

@@ -157,20 +157,23 @@ public class MyPageController {
         User userAuth = findUserByLogin(login);
         String backPage = request.getHeader("referer");
         prevPage = getPrevPage(backPage);
+
         List<Currency> currencyList = currencyService.getAll();
         int currencyID = userAuth.getCurrency().getId();
-        double currencyValueUSD = currencyService.read(2).getCurrencyValue();
+
+        double currencyTodayUSD = currencyService.read(2).getCurrencyValue();
+
         modelAndView.addObject("user", userAuth);
-        modelAndView.addObject("currencyValueUSD", currencyValueUSD);
+        modelAndView.addObject("currencyValueUSD", currencyTodayUSD);
         modelAndView.addObject("currencies", currencyList);
         modelAndView.addObject("currencyID", currencyID);
+
         modelAndView.setViewName("currency");
         return modelAndView;
     }
 
     @PostMapping("/currency")
     public ModelAndView editCurrency(@ModelAttribute("user") User user,
-                                     @ModelAttribute("currencyValueUSD") double currencyValue,
                                      @ModelAttribute("currencyID") int currencyID,
                                      BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -178,9 +181,6 @@ public class MyPageController {
             return modelAndView;
         }
         Currency currency = findCurrencyById(currencyID);
-        Currency currencyCorrectValue = currencyService.read(2);
-        currencyCorrectValue.setCurrencyValue(currencyValue);
-        currencyService.update(currencyCorrectValue);
         user.setCurrency(currency);
         modelAndView.setViewName("redirect:" + prevPage);
         userService.update(user);
@@ -226,6 +226,5 @@ public class MyPageController {
         userService.update(user);
         return modelAndView;
     }
-
 
 }
