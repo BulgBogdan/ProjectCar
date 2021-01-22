@@ -41,33 +41,7 @@ public class CarController {
 
     private ModelAndView modelAndView = new ModelAndView();
 
-    private double getCurrencyValueUSD() {
-        return currencyService.read(2).getCurrencyValue();
-    }
-
-    private Currency getCurrencyFromCarById(int id) {
-        Car car = carService.read(id);
-        Currency currency = car.getUser().getCurrency();
-        return currency;
-    }
-
-    private User getUserByLogin(String login) {
-        return userService.findByLogin(login);
-    }
-
-    private Car getCarById(int id) {
-        return carService.read(id);
-    }
-
-    private String getPrevPage(String prevPage) {
-        return prevPage.substring(21, prevPage.length());
-    }
-
     private String prevPage = "";
-
-    private void errorIncorrectEnter() {
-        modelAndView.addObject("Errors", "Некорректный ввод");
-    }
 
     @GetMapping("car/title")
     public ModelAndView createCar() {
@@ -112,10 +86,9 @@ public class CarController {
         registration.setCar(getCarById(id));
 
         if (currency.getTitle().equals("USD")) {
-            double valueUSD = getCurrencyValueUSD();
-            double priceCarByBYN = registration.getPriceCar() * valueUSD;
+            double priceCarByBYN = getValueByUSD(registration.getPriceCar());
             registration.setPriceCar((int) priceCarByBYN);
-            double priceRegistrationByBYN = registration.getPriceRegistration() * valueUSD;
+            double priceRegistrationByBYN = getValueByUSD(registration.getPriceRegistration());
             registration.setPriceRegistration(priceRegistrationByBYN);
             registrationService.add(registration);
         } else {
@@ -152,24 +125,7 @@ public class CarController {
         if ((car.getRegistration() != null) && (car.getParameters() != null)) {
             double costs = 0;
             List<Car> listCar = carService.getListsForCostsByID(id);
-            for (Car cars : listCar) {
-                for (Fuel fuel : cars.getFuels()) {
-                    costs = costs + fuel.getSumm();
-                }
-                for (OtherCosts otherCost : cars.getOtherCosts()) {
-                    costs = costs + otherCost.getCost();
-                }
-                for (Repair repair : cars.getRepairs()) {
-                    costs = costs + repair.getCostsRepair();
-                }
-                for (Document document : cars.getDocuments()) {
-                    costs = costs + document.getDocumentCost();
-                }
-            }
-
-            double firstCosts = car.getRegistration().getPriceCar() + car.getRegistration().getPriceRegistration();
-
-            costs = costs + firstCosts;
+            costs = getCostsByCarId(listCar, car, costs);
             modelAndView.addObject("allCosts", costs);
             double valueByUSD = costs / valueUSD;
             modelAndView.addObject("allCostsUSD", valueByUSD);
@@ -207,12 +163,9 @@ public class CarController {
         if (currency.getTitle().equals("BYN")) {
             registrationService.update(registration);
         } else {
-            double valueUSD = getCurrencyValueUSD();
-            double priceCar = registration.getPriceCar();
-            double priceCarByBYN = priceCar * valueUSD;
+            double priceCarByBYN = getValueByUSD(registration.getPriceCar());
             registration.setPriceCar((int) priceCarByBYN);
-            double priceRegistration = registration.getPriceRegistration();
-            double priceRegistrationByBYN = priceRegistration * valueUSD;
+            double priceRegistrationByBYN = getValueByUSD(registration.getPriceRegistration());
             registration.setPriceRegistration(priceRegistrationByBYN);
             registrationService.update(registration);
         }
@@ -254,6 +207,55 @@ public class CarController {
         modelAndView.setViewName("redirect:/");
         carService.delete(car);
         return modelAndView;
+    }
+
+    private double getCostsByCarId(List<Car> listCar, Car car, double costs) {
+        for (Car cars : listCar) {
+            for (Fuel fuel : cars.getFuels()) {
+                costs = costs + fuel.getSumm();
+            }
+            for (OtherCosts otherCost : cars.getOtherCosts()) {
+                costs = costs + otherCost.getCost();
+            }
+            for (Repair repair : cars.getRepairs()) {
+                costs = costs + repair.getCostsRepair();
+            }
+            for (Document document : cars.getDocuments()) {
+                costs = costs + document.getDocumentCost();
+            }
+        }
+        double registrationCosts = car.getRegistration().getPriceCar() + car.getRegistration().getPriceRegistration();
+        costs = costs + registrationCosts;
+        return costs;
+    }
+
+    private double getCurrencyValueUSD() {
+        return currencyService.read(2).getCurrencyValue();
+    }
+
+    private Currency getCurrencyFromCarById(int id) {
+        Car car = carService.read(id);
+        return car.getUser().getCurrency();
+    }
+
+    private double getValueByUSD(double valueByBYN) {
+        return getCurrencyValueUSD() * valueByBYN;
+    }
+
+    private User getUserByLogin(String login) {
+        return userService.findByLogin(login);
+    }
+
+    private Car getCarById(int id) {
+        return carService.read(id);
+    }
+
+    private String getPrevPage(String prevPage) {
+        return prevPage.substring(21, prevPage.length());
+    }
+
+    private void errorIncorrectEnter() {
+        modelAndView.addObject("Errors", "Некорректный ввод");
     }
 
 }

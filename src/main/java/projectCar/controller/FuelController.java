@@ -32,26 +32,16 @@ public class FuelController extends MethodsCarForControllers {
 
     private int page;
 
-    private static double fuelSumm(double liter, double value) {
-        double summ = liter * value;
-        return summ;
-    }
-
-    private static double fuelValue(double sum, double liter) {
-        double value = sum / liter;
-        return value;
-    }
-
-    private static int fuelDistance(double literValue, double averageRate) {
-        double distance = (literValue / averageRate) * 100;
-        return (int) Math.round(distance);
+    private Currency getCurrencyFromCarById(int id) {
+        Car car = carService.read(id);
+        return car.getUser().getCurrency();
     }
 
     @GetMapping("/car/fuel/{id}")
     public ModelAndView pageFuel(@PathVariable("id") int id,
                                  @RequestParam(defaultValue = "1") int page) {
         car = getCarWithWires(id);
-        Currency currency = car.getUser().getCurrency();
+        Currency currency = getCurrencyFromCarById(id);
         List<Fuel> fuelList = fuelService.getFuel(page, id);
         int fuelCount = fuelService.fuelCount(id);
         int pagesCount = (fuelCount + 9) / 10;
@@ -184,4 +174,20 @@ public class FuelController extends MethodsCarForControllers {
         modelAndView.setViewName("car/fuel/diagram");
         return modelAndView;
     }
+
+    private static double fuelSumm(double liter, double value) {
+        double summ = liter * value;
+        return summ;
+    }
+
+    private static double fuelValue(double sum, double liter) {
+        double value = sum / liter;
+        return value;
+    }
+
+    private static int fuelDistance(double literValue, double averageRate) {
+        double distance = (literValue / averageRate) * 100;
+        return (int) Math.round(distance);
+    }
+
 }

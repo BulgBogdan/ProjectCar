@@ -19,8 +19,7 @@ public class MethodsCarForControllers {
     ICarService carService = new CarServiceImpl();
 
     Car getCarById(int id){
-        Car carById = carService.read(id);
-        return carById;
+        return carService.read(id);
     }
 
     Car getCarWithWires(int id){
@@ -36,13 +35,11 @@ public class MethodsCarForControllers {
 
     int amountOfDays(Date startDate, Date endDate) {
         long period = Math.abs(endDate.getTime() - startDate.getTime());
-        int days = (int) TimeUnit.DAYS.convert(period, TimeUnit.MILLISECONDS);
-        return days;
+        return (int) TimeUnit.DAYS.convert(period, TimeUnit.MILLISECONDS);
     }
 
     int amountOfMonths(Date startDate, Date endDate) {
-        int monthBetween = (int)ChronoUnit.MONTHS.between(startDate.toLocalDate(),endDate.toLocalDate());
-        return monthBetween;
+        return (int) ChronoUnit.MONTHS.between(startDate.toLocalDate(), endDate.toLocalDate());
     }
 
     ModelAndView errorIncorrectEnter(){
