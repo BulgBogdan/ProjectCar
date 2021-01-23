@@ -32,11 +32,6 @@ public class FuelController extends MethodsCarForControllers {
 
     private int page;
 
-    private Currency getCurrencyFromCarById(int id) {
-        Car car = carService.read(id);
-        return car.getUser().getCurrency();
-    }
-
     @GetMapping("/car/fuel/{id}")
     public ModelAndView pageFuel(@PathVariable("id") int id,
                                  @RequestParam(defaultValue = "1") int page) {
@@ -58,7 +53,7 @@ public class FuelController extends MethodsCarForControllers {
             fuels = fuel.getSumm() + fuels;
         }
         if (currency.getTitle().equals("USD")) {
-            double valueUSD = currencyService.read(2).getCurrencyValue();
+            double valueUSD = valueCurrencyUSD();
             fuels = fuels / valueUSD;
             modelAndView.addObject("allFuelsCosts", fuels);
         } else {
@@ -81,7 +76,10 @@ public class FuelController extends MethodsCarForControllers {
                                 @ModelAttribute("fuel") Fuel fuel,
                                 BindingResult result) {
 
-        car = getCarById(id);
+        if (result.hasErrors()) {
+            errorIncorrectEnter();
+            return modelAndView;
+        }
 
         if (fuel.getSumm() == 0) {
             double sumFuel = fuelSumm(fuel.getLiterCost(), fuel.getLiterValue());
@@ -102,7 +100,7 @@ public class FuelController extends MethodsCarForControllers {
         double distanceFuel = fuelDistance(fuel.getLiterValue(), car.getParameters().getAverageRate());
         fuel.setDateFuel(todayFuel);
         fuel.setFuelDistance(distanceFuel);
-        fuel.setCar(car);
+        fuel.setCar(getCarById(id));
         modelAndView.setViewName("redirect:/car/fuel/{id}");
         fuelService.add(fuel);
         return modelAndView;
@@ -176,13 +174,11 @@ public class FuelController extends MethodsCarForControllers {
     }
 
     private static double fuelSumm(double liter, double value) {
-        double summ = liter * value;
-        return summ;
+        return liter * value;
     }
 
     private static double fuelValue(double sum, double liter) {
-        double value = sum / liter;
-        return value;
+        return sum / liter;
     }
 
     private static int fuelDistance(double literValue, double averageRate) {
@@ -190,4 +186,12 @@ public class FuelController extends MethodsCarForControllers {
         return (int) Math.round(distance);
     }
 
+    private Currency getCurrencyFromCarById(int id) {
+        Car car = carService.read(id);
+        return car.getUser().getCurrency();
+    }
+
+    private double valueCurrencyUSD() {
+        return currencyService.read(2).getCurrencyValue();
+    }
 }

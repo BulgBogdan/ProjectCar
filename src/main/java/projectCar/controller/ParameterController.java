@@ -21,7 +21,7 @@ public class ParameterController extends MethodsCarForControllers{
 
     private ModelAndView modelAndView = new ModelAndView();
 
-    private Car car = null;
+    private Car car = new Car();
 
     @GetMapping("car/parameters/{id}")
     public ModelAndView parameterCar(@PathVariable("id") int id) {

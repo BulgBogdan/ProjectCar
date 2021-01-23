@@ -41,22 +41,7 @@ public class MyPageController {
 
     private ModelAndView modelAndView = new ModelAndView();
 
-    private User findUserByLogin(String login) {
-        User foundedUser = userService.findByLogin(login);
-        return foundedUser;
-    }
-
-    private Currency findCurrencyById(int id) {
-        Currency foundedCurrency = currencyService.read(id);
-        return foundedCurrency;
-    }
-
     private int page;
-
-    private String getPrevPage(String prevPage) {
-        String backPage = prevPage.substring(21, prevPage.length());
-        return backPage;
-    }
 
     private String prevPage = "";
 
@@ -68,10 +53,9 @@ public class MyPageController {
     }
 
     @GetMapping("/")
-    public ModelAndView myPage(@AuthenticationPrincipal UserDetails userDetails,
+    public ModelAndView myPage(@AuthenticationPrincipal UserDetails authUser,
                                @RequestParam(defaultValue = "1") int page) {
-        String login = userDetails.getUsername();
-        User userAuth = findUserByLogin(login);
+        User userAuth = findUserByLogin(authUser.getUsername());
         int idUser = userAuth.getId();
         List<Car> carList = carService.getCars(page, idUser);
         int carsCount = carService.carsCount(idUser);
@@ -89,10 +73,9 @@ public class MyPageController {
 
     @GetMapping("/search/{searchText}")
     public ModelAndView searchPage(@PathVariable("searchText") String searchText,
-                                   @AuthenticationPrincipal UserDetails userDetails,
+                                   @AuthenticationPrincipal UserDetails authUser,
                                    @RequestParam(defaultValue = "1") int page) {
-        String loginUser = userDetails.getUsername();
-        User userAuth = findUserByLogin(loginUser);
+        User userAuth = findUserByLogin(authUser.getUsername());
         int idUser = userAuth.getId();
 
         List<Document> docs = documentService.searchList(searchText, idUser, page);
@@ -126,9 +109,8 @@ public class MyPageController {
     }
 
     @GetMapping("/editUser")
-    public ModelAndView editUserPage(@AuthenticationPrincipal UserDetails userDetails) {
-        String login = userDetails.getUsername();
-        User userAuth = findUserByLogin(login);
+    public ModelAndView editUserPage(@AuthenticationPrincipal UserDetails authUser) {
+        User userAuth = findUserByLogin(authUser.getUsername());
         Currency currency = userAuth.getCurrency();
         modelAndView.addObject("user", userAuth);
         modelAndView.addObject("currency", currency);
@@ -151,10 +133,9 @@ public class MyPageController {
     }
 
     @GetMapping("/currency")
-    public ModelAndView editCurrency(@AuthenticationPrincipal UserDetails userDetails,
+    public ModelAndView editCurrency(@AuthenticationPrincipal UserDetails authUser,
                                      HttpServletRequest request) {
-        String login = userDetails.getUsername();
-        User userAuth = findUserByLogin(login);
+        User userAuth = findUserByLogin(authUser.getUsername());
         String backPage = request.getHeader("referer");
         prevPage = getPrevPage(backPage);
 
@@ -188,9 +169,8 @@ public class MyPageController {
     }
 
     @GetMapping("/editPassword")
-    public ModelAndView editPasswordPage(@AuthenticationPrincipal UserDetails userDetails) {
-        String login = userDetails.getUsername();
-        User userAuth = findUserByLogin(login);
+    public ModelAndView editPasswordPage(@AuthenticationPrincipal UserDetails authUser) {
+        User userAuth = findUserByLogin(authUser.getUsername());
         Currency currency = userAuth.getCurrency();
         String newPassword = "";
         modelAndView.addObject("user", userAuth);
@@ -225,6 +205,18 @@ public class MyPageController {
         modelAndView.setViewName("redirect:/editUser");
         userService.update(user);
         return modelAndView;
+    }
+
+    private User findUserByLogin(String login) {
+        return userService.findByLogin(login);
+    }
+
+    private Currency findCurrencyById(int id) {
+        return currencyService.read(id);
+    }
+
+    private String getPrevPage(String prevPage) {
+        return prevPage.substring(21, prevPage.length());
     }
 
 }

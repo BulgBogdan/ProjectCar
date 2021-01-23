@@ -31,19 +31,6 @@ public class DocumentController extends MethodsCarForControllers {
 
     private Car car = new Car();
 
-    private double getCurrencyValueUSD() {
-        return currencyService.read(2).getCurrencyValue();
-    }
-
-    private double getValueByUSD(double valueByBYN) {
-        return getCurrencyValueUSD() * valueByBYN;
-    }
-
-    private Currency getCurrencyFromCarById(int id) {
-        Car car = carService.read(id);
-        return car.getUser().getCurrency();
-    }
-
     private int page;
 
     @GetMapping("/car/documents/{id}")
@@ -179,7 +166,7 @@ public class DocumentController extends MethodsCarForControllers {
 
         Document document = documentService.read(id);
         int carId = document.getCar().getId();
-        Currency currency = document.getCar().getUser().getCurrency();
+        Currency currency = getCurrencyFromCarById(carId);
         LocalDate endDate;
 
         boolean dateEditEqualDate = document.getEndDate().getTime() == documentEdit.getEndDate().getTime();
@@ -223,4 +210,16 @@ public class DocumentController extends MethodsCarForControllers {
         return modelAndView;
     }
 
+    private double getCurrencyValueUSD() {
+        return currencyService.read(2).getCurrencyValue();
+    }
+
+    private double getValueByUSD(double valueByBYN) {
+        return getCurrencyValueUSD() * valueByBYN;
+    }
+
+    private Currency getCurrencyFromCarById(int id) {
+        Car car = carService.read(id);
+        return car.getUser().getCurrency();
+    }
 }

@@ -55,5 +55,4 @@ public class SignUpController {
         modelAndView.setViewName("redirect:/");
         return modelAndView;
     }
-
 }

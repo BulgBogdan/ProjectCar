@@ -28,11 +28,6 @@ public class OtherCostsController extends MethodsCarForControllers {
 
     private Car car = new Car();
 
-    private double getCurrencyValueUSD() {
-        double currencyValueUSD = currencyService.read(2).getCurrencyValue();
-        return currencyValueUSD;
-    }
-
     private int page;
 
     @GetMapping("/car/other/costs/{id}")
@@ -52,10 +47,7 @@ public class OtherCostsController extends MethodsCarForControllers {
         modelAndView.addObject("pagesCount", pagesCount);
         modelAndView.addObject("valueUSD", valueUSD);
         this.page = page;
-        double costs = 0;
-        for (OtherCosts listCosts : car.getOtherCosts()) {
-            costs = costs + listCosts.getCost();
-        }
+        double costs = getCostsByOtherCost(car.getOtherCosts());
         //currency = BYN
         if (car.getUser().getCurrency().getTitle().equals("BYN")) {
             modelAndView.addObject("sumAllCosts", costs);
@@ -71,8 +63,7 @@ public class OtherCostsController extends MethodsCarForControllers {
     @GetMapping("/car/other/costs/create/{id}")
     public ModelAndView pageAddCost(@PathVariable("id") int id) {
         car = getCarById(id);
-        int currencyID = car.getUser().getCurrency().getId();
-        Currency currency = currencyService.read(currencyID);
+        Currency currency = getCurrencyFromCarById(id);
         modelAndView.setViewName("car/other/costs/create");
         modelAndView.addObject("otherCosts", new OtherCosts());
         modelAndView.addObject("car", car);
@@ -92,11 +83,10 @@ public class OtherCostsController extends MethodsCarForControllers {
         Car car = getCarById(id);
         costs.setCar(car);
         modelAndView.setViewName("redirect:/car/other/costs/{id}");
-        int currencyID = car.getUser().getCurrency().getId();
-        Currency currency = currencyService.read(currencyID);
+
+        Currency currency = getCurrencyFromCarById(id);
         if (currency.getTitle().equals("USD")) {
-            double valueUSD = getCurrencyValueUSD();
-            double priceOtherCost = costs.getCost() * valueUSD;
+            double priceOtherCost = getValueByUSD(costs.getCost());
             costs.setCost(priceOtherCost);
             costsService.add(costs);
         } else {
@@ -137,8 +127,7 @@ public class OtherCostsController extends MethodsCarForControllers {
         if (currency.getTitle().equals("BYN")) {
             costsService.update(otherCosts);
         } else {
-            double valueUSD = getCurrencyValueUSD();
-            double priceOtherCost = otherCosts.getCost() * valueUSD;
+            double priceOtherCost = getValueByUSD(otherCosts.getCost());
             otherCosts.setCost(priceOtherCost);
             costsService.update(otherCosts);
         }
@@ -153,4 +142,26 @@ public class OtherCostsController extends MethodsCarForControllers {
         costsService.delete(cost);
         return modelAndView;
     }
+
+    private double getCurrencyValueUSD() {
+        return currencyService.read(2).getCurrencyValue();
+    }
+
+    private double getCostsByOtherCost(List<OtherCosts> otherCostsList) {
+        double costs = 0;
+        for (OtherCosts listCosts : otherCostsList) {
+            costs = costs + listCosts.getCost();
+        }
+        return costs;
+    }
+
+    private Currency getCurrencyFromCarById(int id) {
+        Car car = carService.read(id);
+        return car.getUser().getCurrency();
+    }
+
+    private double getValueByUSD(double valueByBYN) {
+        return getCurrencyValueUSD() * valueByBYN;
+    }
+
 }

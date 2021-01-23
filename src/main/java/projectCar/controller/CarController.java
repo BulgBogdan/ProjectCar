@@ -123,9 +123,8 @@ public class CarController {
         }
 
         if ((car.getRegistration() != null) && (car.getParameters() != null)) {
-            double costs = 0;
             List<Car> listCar = carService.getListsForCostsByID(id);
-            costs = getCostsByCarId(listCar, car, costs);
+            double costs = getCostsByCarId(listCar, car);
             modelAndView.addObject("allCosts", costs);
             double valueByUSD = costs / valueUSD;
             modelAndView.addObject("allCostsUSD", valueByUSD);
@@ -209,7 +208,8 @@ public class CarController {
         return modelAndView;
     }
 
-    private double getCostsByCarId(List<Car> listCar, Car car, double costs) {
+    private double getCostsByCarId(List<Car> listCar, Car car) {
+        double costs = 0;
         for (Car cars : listCar) {
             for (Fuel fuel : cars.getFuels()) {
                 costs = costs + fuel.getSumm();
