@@ -122,7 +122,7 @@ public class CarController {
             modelAndView.addObject("registration", car.getRegistration());
         }
 
-        if ((car.getRegistration() != null) && (car.getParameters() != null)) {
+        if ((Objects.nonNull(car.getRegistration())) && (Objects.nonNull(car.getParameters()))) {
             List<Car> listCar = carService.getListsForCostsByID(id);
             double costs = getCostsByCarId(listCar, car);
             modelAndView.addObject("allCosts", costs);

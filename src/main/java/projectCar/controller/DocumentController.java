@@ -17,6 +17,7 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 public class DocumentController extends MethodsCarForControllers {
@@ -114,7 +115,7 @@ public class DocumentController extends MethodsCarForControllers {
                                     BindingResult result) {
         car = getCarById(id);
         Currency currency = getCurrencyFromCarById(id);
-        if (document.getEndDate() == null) {
+        if (Objects.isNull(document.getEndDate())) {
             LocalDate endDate = document.getBeginDate().toLocalDate().plusMonths(document.getNumberOfMonth());
             document.setEndDate(Date.valueOf(endDate));
         }

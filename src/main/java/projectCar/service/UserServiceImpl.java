@@ -13,6 +13,7 @@ import projectCar.entity.User;
 import projectCar.service.interfaces.IUserService;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class UserServiceImpl implements UserDetailsService, IUserService {
@@ -27,8 +28,8 @@ public class UserServiceImpl implements UserDetailsService, IUserService {
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
         User user = userDAO.findByLogin(login);
-        org.springframework.security.core.userdetails.User.UserBuilder builder=null;
-        if (user!=null){
+        org.springframework.security.core.userdetails.User.UserBuilder builder = null;
+        if (Objects.nonNull(user)) {
             builder=org.springframework.security.core.userdetails.User.withUsername(login);
             builder.disabled(!user.isEnabled());
             builder.password(user.getPassword());
@@ -43,7 +44,7 @@ public class UserServiceImpl implements UserDetailsService, IUserService {
     @Transactional
     public boolean add(User user) {
         User userFromDB = userDAO.findByLogin(user.getLogin());
-        if (userFromDB != null) {
+        if (Objects.nonNull(userFromDB)) {
             return false;
         }
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
