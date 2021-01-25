@@ -10,7 +10,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
-import projectCar.entity.*;
+import projectCar.classes.MethodsForControllers;
+import projectCar.entity.Car;
+import projectCar.entity.Currency;
+import projectCar.entity.Registration;
+import projectCar.entity.User;
 import projectCar.service.CarServiceImpl;
 import projectCar.service.CurrencyServiceImpl;
 import projectCar.service.RegistrationServiceImpl;
@@ -55,7 +59,7 @@ public class CarController {
                                BindingResult result,
                                @AuthenticationPrincipal UserDetails authUser) {
         if (result.hasErrors()) {
-            errorIncorrectEnter();
+            MethodsForControllers.incorrectEnter();
             return modelAndView;
         }
         User user = getUserByLogin(authUser.getUsername());
@@ -79,7 +83,7 @@ public class CarController {
                                      @ModelAttribute("registration") Registration registration,
                                      BindingResult result) {
         if (result.hasErrors()) {
-            errorIncorrectEnter();
+            MethodsForControllers.incorrectEnter();
             return modelAndView;
         }
         Currency currency = getCurrencyFromCarById(id);
@@ -124,7 +128,7 @@ public class CarController {
 
         if ((Objects.nonNull(car.getRegistration())) && (Objects.nonNull(car.getParameters()))) {
             List<Car> listCar = carService.getListsForCostsByID(id);
-            double costs = getCostsByCarId(listCar, car);
+            double costs = MethodsForControllers.getAllCostsByCarId(listCar, car);
             modelAndView.addObject("allCosts", costs);
             double valueByUSD = costs / valueUSD;
             modelAndView.addObject("allCostsUSD", valueByUSD);
@@ -152,7 +156,7 @@ public class CarController {
                                       BindingResult result,
                                       @PathVariable("id") int id) {
         if (result.hasErrors()) {
-            errorIncorrectEnter();
+            MethodsForControllers.incorrectEnter();
             return modelAndView;
         }
 
@@ -189,7 +193,7 @@ public class CarController {
                                 @AuthenticationPrincipal UserDetails authUser,
                                 @PathVariable("id") int id) {
         if (result.hasErrors()) {
-            errorIncorrectEnter();
+            MethodsForControllers.incorrectEnter();
             return modelAndView;
         }
 
@@ -206,27 +210,6 @@ public class CarController {
         modelAndView.setViewName("redirect:/");
         carService.delete(car);
         return modelAndView;
-    }
-
-    private double getCostsByCarId(List<Car> listCar, Car car) {
-        double costs = 0;
-        for (Car cars : listCar) {
-            for (Fuel fuel : cars.getFuels()) {
-                costs = costs + fuel.getSumm();
-            }
-            for (OtherCosts otherCost : cars.getOtherCosts()) {
-                costs = costs + otherCost.getCost();
-            }
-            for (Repair repair : cars.getRepairs()) {
-                costs = costs + repair.getCostsRepair();
-            }
-            for (Document document : cars.getDocuments()) {
-                costs = costs + document.getDocumentCost();
-            }
-        }
-        double registrationCosts = car.getRegistration().getPriceCar() + car.getRegistration().getPriceRegistration();
-        costs = costs + registrationCosts;
-        return costs;
     }
 
     private double getCurrencyValueUSD() {
@@ -252,10 +235,6 @@ public class CarController {
 
     private String getPrevPage(String prevPage) {
         return prevPage.substring(21, prevPage.length());
-    }
-
-    private void errorIncorrectEnter() {
-        modelAndView.addObject("Errors", "Некорректный ввод");
     }
 
 }

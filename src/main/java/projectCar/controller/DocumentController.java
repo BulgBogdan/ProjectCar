@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import projectCar.classes.MethodsForControllers;
 import projectCar.entity.Car;
 import projectCar.entity.Currency;
 import projectCar.entity.Document;
@@ -47,7 +48,7 @@ public class DocumentController extends MethodsCarForControllers {
         List<Document> endDate = new ArrayList<>();
 
         for (Document doc : documentList) {
-            int validityPeriodOfDays = amountOfDays(doc.getBeginDate(), doc.getEndDate());
+            int validityPeriodOfDays = MethodsForControllers.amountOfDays(doc.getBeginDate(), doc.getEndDate());
 
             if (doc.getNumberOfDays() > (validityPeriodOfDays / 2)) {
                 greenDate.add(doc);
@@ -110,9 +111,9 @@ public class DocumentController extends MethodsCarForControllers {
     }
 
     @PostMapping("/car/documents/create/{id}")
-    public ModelAndView addDocument(@PathVariable("id") int id,
-                                    @ModelAttribute("doc") Document document,
-                                    BindingResult result) {
+    public ModelAndView addDocument(@ModelAttribute("doc") Document document,
+                                    BindingResult result,
+                                    @PathVariable("id") int id) {
         car = getCarById(id);
         Currency currency = getCurrencyFromCarById(id);
         if (Objects.isNull(document.getEndDate())) {
@@ -121,11 +122,11 @@ public class DocumentController extends MethodsCarForControllers {
         }
 
         if (document.getNumberOfMonth() == 0) {
-            int numberOfMonths = amountOfMonths(document.getBeginDate(), document.getEndDate());
+            int numberOfMonths = MethodsForControllers.amountOfMonths(document.getBeginDate(), document.getEndDate());
             document.setNumberOfMonth(numberOfMonths);
         }
 
-        int numberOfDays = amountOfDays(document.getBeginDate(), document.getEndDate());
+        int numberOfDays = MethodsForControllers.amountOfDays(document.getBeginDate(), document.getEndDate());
         document.setNumberOfDays(numberOfDays);
         document.setCar(car);
         modelAndView.setViewName("redirect:/car/documents/{id}");
@@ -161,7 +162,7 @@ public class DocumentController extends MethodsCarForControllers {
                                      BindingResult result,
                                      @PathVariable("id") int id) {
         if (result.hasErrors()) {
-            errorIncorrectEnter();
+            MethodsForControllers.incorrectEnter();
             return modelAndView;
         }
 
@@ -176,7 +177,7 @@ public class DocumentController extends MethodsCarForControllers {
         int numberOfMonth;
 
         if (!dateEditEqualDate) {
-            numberOfMonth = amountOfMonths(documentEdit.getBeginDate(), documentEdit.getEndDate());
+            numberOfMonth = MethodsForControllers.amountOfMonths(documentEdit.getBeginDate(), documentEdit.getEndDate());
             documentEdit.setNumberOfMonth(numberOfMonth);
         }
 
@@ -185,7 +186,7 @@ public class DocumentController extends MethodsCarForControllers {
             documentEdit.setEndDate(Date.valueOf(endDate));
         }
 
-        int numberOfDays = amountOfDays(documentEdit.getBeginDate(), documentEdit.getEndDate());
+        int numberOfDays = MethodsForControllers.amountOfDays(documentEdit.getBeginDate(), documentEdit.getEndDate());
         documentEdit.setNumberOfDays(numberOfDays);
         documentEdit.setCar(getCarById(carId));
         modelAndView.addObject("carId", carId);

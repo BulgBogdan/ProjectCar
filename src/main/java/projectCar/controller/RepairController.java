@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import projectCar.classes.MethodsForControllers;
 import projectCar.entity.Car;
 import projectCar.entity.Currency;
 import projectCar.entity.Repair;
@@ -106,13 +107,14 @@ public class RepairController extends MethodsCarForControllers {
                                   @ModelAttribute("repair") Repair repair,
                                   BindingResult result) {
         if (result.hasErrors()){
-            errorIncorrectEnter();
+            MethodsForControllers.incorrectEnter();
             return modelAndView;
         }
 
         car = getCarById(id);
         Currency currency = getCurrencyFromCarById(id);
-        int endMileageRepair = endMileageRepairs(repair.getBeginMileage(),repair.getServiceLife());
+        int endMileageRepair = MethodsForControllers
+                .endMileageRepairs(repair.getBeginMileage(), repair.getServiceLife());
         repair.setEndMileage(endMileageRepair);
         repair.setCar(car);
         modelAndView.setViewName("redirect:/car/repairs/{id}");
@@ -145,29 +147,29 @@ public class RepairController extends MethodsCarForControllers {
 
     @PostMapping("/car/repairs/edit/{id}")
     public ModelAndView addEdit(@PathVariable("id")int id,
-                                @ModelAttribute("repair") Repair repair,
-                                BindingResult result,
-                                @ModelAttribute("car") Car car){
+                                @ModelAttribute("repair") Repair repairEdit,
+                                BindingResult result) {
         if (result.hasErrors()){
-            errorIncorrectEnter();
+            MethodsForControllers.incorrectEnter();
             return modelAndView;
         }
+        Repair repairById = repairService.read(id);
+        repairEdit.setCar(repairById.getCar());
+        int endMileageRepair = MethodsForControllers
+                .endMileageRepairs(repairEdit.getBeginMileage(), repairEdit.getServiceLife());
+        repairEdit.setEndMileage(endMileageRepair);
 
-        Car carRepair = getCarById(car.getId());
-        repair.setCar(carRepair);
-        int endMileageRepair = endMileageRepairs(repair.getBeginMileage(),repair.getServiceLife());
-        repair.setEndMileage(endMileageRepair);
-
-        int currencyID = carRepair.getUser().getCurrency().getId();
-        Currency currency = getCurrencyByID(currencyID);
+        int currencyID = repairById.getCar().getUser().getCurrency().getId();
+        Currency currency = getCurrencyFromCarById(currencyID);
         if (currency.getTitle().equals("BYN")) {
-            repairService.update(repair);
+            repairService.update(repairEdit);
         } else {
-            double costRepairByBYN = getValueByUSD(repair.getCostsRepair());
-            repair.setCostsRepair(costRepairByBYN);
-            repairService.update(repair);
+            double costRepairByBYN = getValueByUSD(repairEdit.getCostsRepair());
+            repairEdit.setCostsRepair(costRepairByBYN);
+            repairService.update(repairEdit);
         }
-        modelAndView.setViewName("redirect:/car/repairs/{id}");
+        modelAndView.addObject("carId", car.getId());
+        modelAndView.setViewName("redirect:/car/repairs/{carId}");
         return modelAndView;
     }
 
@@ -189,10 +191,6 @@ public class RepairController extends MethodsCarForControllers {
         return currencyService.read(id);
     }
 
-    private static int endMileageRepairs(int startMileage, int serviceMileage) {
-        return startMileage + serviceMileage;
-    }
-
     private Currency getCurrencyFromCarById(int id) {
         Car car = carService.read(id);
         return car.getUser().getCurrency();
@@ -201,5 +199,4 @@ public class RepairController extends MethodsCarForControllers {
     private double getValueByUSD(double valueByBYN) {
         return getCurrencyValueUSD() * valueByBYN;
     }
-
 }

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import projectCar.classes.MethodsForControllers;
 import projectCar.entity.Car;
 import projectCar.entity.Currency;
 import projectCar.entity.OtherCosts;
@@ -47,7 +48,7 @@ public class OtherCostsController extends MethodsCarForControllers {
         modelAndView.addObject("pagesCount", pagesCount);
         modelAndView.addObject("valueUSD", valueUSD);
         this.page = page;
-        double costs = getCostsByOtherCost(car.getOtherCosts());
+        double costs = MethodsForControllers.getCostsByOtherCost(car.getOtherCosts());
         //currency = BYN
         if (car.getUser().getCurrency().getTitle().equals("BYN")) {
             modelAndView.addObject("sumAllCosts", costs);
@@ -76,7 +77,7 @@ public class OtherCostsController extends MethodsCarForControllers {
                                 @ModelAttribute("otherCosts") OtherCosts costs,
                                 BindingResult result) {
         if (result.hasErrors()){
-            errorIncorrectEnter();
+            MethodsForControllers.incorrectEnter();
             return modelAndView;
         }
 
@@ -115,14 +116,16 @@ public class OtherCostsController extends MethodsCarForControllers {
                                     @ModelAttribute("costs") OtherCosts otherCosts,
                                     BindingResult result){
         if (result.hasErrors()){
-            errorIncorrectEnter();
+            MethodsForControllers.incorrectEnter();
             return modelAndView;
         }
 
         OtherCosts cost = costsService.read(id);
         int currencyID = cost.getCar().getUser().getCurrency().getId();
+        int carId = cost.getCar().getId();
         otherCosts.setCar(costsService.read(id).getCar());
-        modelAndView.setViewName("redirect:/car/other/costs/{id}");
+        modelAndView.addObject("carId", carId);
+        modelAndView.setViewName("redirect:/car/other/costs/{carId}");
         Currency currency = currencyService.read(currencyID);
         if (currency.getTitle().equals("BYN")) {
             costsService.update(otherCosts);
@@ -145,14 +148,6 @@ public class OtherCostsController extends MethodsCarForControllers {
 
     private double getCurrencyValueUSD() {
         return currencyService.read(2).getCurrencyValue();
-    }
-
-    private double getCostsByOtherCost(List<OtherCosts> otherCostsList) {
-        double costs = 0;
-        for (OtherCosts listCosts : otherCostsList) {
-            costs = costs + listCosts.getCost();
-        }
-        return costs;
     }
 
     private Currency getCurrencyFromCarById(int id) {

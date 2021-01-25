@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import projectCar.classes.MethodsForControllers;
 import projectCar.entity.*;
 import projectCar.service.*;
 import projectCar.service.interfaces.*;
@@ -123,7 +124,7 @@ public class MyPageController {
                                  @ModelAttribute("currency") Currency currency,
                                  BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            modelAndView.addObject("error", "Некорректный ввод данных");
+            MethodsForControllers.incorrectEnter();
             return modelAndView;
         }
         user.setCurrency(currency);
@@ -158,7 +159,7 @@ public class MyPageController {
                                      @ModelAttribute("currencyID") int currencyID,
                                      BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            modelAndView.addObject("error", "Некорректный ввод данных");
+            MethodsForControllers.incorrectEnter();
             return modelAndView;
         }
         Currency currency = findCurrencyById(currencyID);
@@ -187,7 +188,7 @@ public class MyPageController {
                                          @ModelAttribute("newPassword") String newPassword) {
         User userAuth = userService.read(user.getId());
         if (bindingResult.hasErrors()) {
-            modelAndView.addObject("error", "Некорректный ввод данных");
+            MethodsForControllers.incorrectEnter();
             return modelAndView;
         }
         if (!bCryptPasswordEncoder.matches(user.getPassword(), userAuth.getPassword())) {

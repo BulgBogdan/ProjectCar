@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+import projectCar.classes.MethodsForControllers;
 import projectCar.entity.Car;
 import projectCar.entity.Parameter;
 import projectCar.service.ParameterServiceImpl;
@@ -37,7 +38,7 @@ public class ParameterController extends MethodsCarForControllers{
                                      BindingResult result,
                                      @PathVariable("id") int id) {
         if (result.hasErrors()){
-            errorIncorrectEnter();
+            MethodsForControllers.incorrectEnter();
             return modelAndView;
         }
 
@@ -63,7 +64,7 @@ public class ParameterController extends MethodsCarForControllers{
                                       BindingResult result,
                                       @PathVariable("id") int id) {
         if (result.hasErrors()){
-            errorIncorrectEnter();
+            MethodsForControllers.incorrectEnter();
             return modelAndView;
         }
 
