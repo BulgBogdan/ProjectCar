@@ -5,23 +5,22 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import projectCar.classes.MethodsForControllers;
 import projectCar.entity.Car;
 import projectCar.entity.Currency;
 import projectCar.entity.Repair;
-import projectCar.service.CurrencyServiceImpl;
+import projectCar.methods.Calculations;
+import projectCar.methods.ServiceSolution;
 import projectCar.service.RepairServiceImpl;
-import projectCar.service.interfaces.ICurrencyService;
 import projectCar.service.interfaces.IRepairService;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-public class RepairController extends MethodsCarForControllers {
+public class RepairController {
 
     @Autowired
-    private ICurrencyService currencyService = new CurrencyServiceImpl();
+    private ServiceSolution solutions;
 
     @Autowired
     private IRepairService repairService = new RepairServiceImpl();
@@ -35,7 +34,7 @@ public class RepairController extends MethodsCarForControllers {
     @GetMapping("/car/repairs/{id}")
     public ModelAndView pageRepairs(@PathVariable("id") int id,
                                     @RequestParam(defaultValue = "1") int page) {
-        car = getCarWithWires(id);
+        car = solutions.getCarWithWires(id);
         List<Repair> repairList = repairService.getRepair(page, id);
         double repairs = 0;
         List<Repair> greenMileage = new ArrayList<>();
@@ -68,7 +67,7 @@ public class RepairController extends MethodsCarForControllers {
 
         int repairCount = repairService.repairCount(id);
         int pagesCount = (repairCount + 9) / 10;
-        double valueUSD = getCurrencyValueUSD();
+        double valueUSD = solutions.getCurrencyValueUSD();
         modelAndView.setViewName("car/repairs");
         modelAndView.addObject("page",page);
         modelAndView.addObject("repairCount", repairCount);
@@ -93,8 +92,8 @@ public class RepairController extends MethodsCarForControllers {
 
     @GetMapping("/car/repairs/create/{id}")
     public ModelAndView pageAddRepair(@PathVariable("id") int id) {
-        car = getCarById(id);
-        Currency currency = getCurrencyFromCarById(id);
+        car = solutions.getCarById(id);
+        Currency currency = solutions.getCurrencyFromCarById(id);
         modelAndView.setViewName("car/repairs/create");
         modelAndView.addObject("repair", new Repair());
         modelAndView.addObject("car", car);
@@ -107,20 +106,20 @@ public class RepairController extends MethodsCarForControllers {
                                   @ModelAttribute("repair") Repair repair,
                                   BindingResult result) {
         if (result.hasErrors()){
-            MethodsForControllers.incorrectEnter();
+            modelAndView.addObject("Errors", "Некоректный ввод данных");
             return modelAndView;
         }
 
-        car = getCarById(id);
-        Currency currency = getCurrencyFromCarById(id);
-        int endMileageRepair = MethodsForControllers
+        car = solutions.getCarById(id);
+        Currency currency = solutions.getCurrencyFromCarById(id);
+        int endMileageRepair = Calculations
                 .endMileageRepairs(repair.getBeginMileage(), repair.getServiceLife());
         repair.setEndMileage(endMileageRepair);
         repair.setCar(car);
         modelAndView.setViewName("redirect:/car/repairs/{id}");
 
         if (currency.getTitle().equals("USD")) {
-            double costRepairByBYN = getValueByUSD(repair.getCostsRepair());
+            double costRepairByBYN = solutions.getValueByUSD(repair.getCostsRepair());
             repair.setCostsRepair(costRepairByBYN);
             repairService.add(repair);
         } else {
@@ -134,7 +133,7 @@ public class RepairController extends MethodsCarForControllers {
     public ModelAndView pageEdit(@PathVariable("id")int id){
         Repair repair = repairService.read(id);
         modelAndView.setViewName("car/repairs/edit");
-        double valueUSD = getCurrencyValueUSD();
+        double valueUSD = solutions.getCurrencyValueUSD();
         if (repair.getCar().getUser().getCurrency().getTitle().equals("USD")) {
             repair.setCostsRepair(repair.getCostsRepair() / valueUSD);
             modelAndView.addObject("repair", repair);
@@ -150,21 +149,21 @@ public class RepairController extends MethodsCarForControllers {
                                 @ModelAttribute("repair") Repair repairEdit,
                                 BindingResult result) {
         if (result.hasErrors()){
-            MethodsForControllers.incorrectEnter();
+            modelAndView.addObject("Errors", "Некоректный ввод данных");
             return modelAndView;
         }
         Repair repairById = repairService.read(id);
         repairEdit.setCar(repairById.getCar());
-        int endMileageRepair = MethodsForControllers
+        int endMileageRepair = Calculations
                 .endMileageRepairs(repairEdit.getBeginMileage(), repairEdit.getServiceLife());
         repairEdit.setEndMileage(endMileageRepair);
 
         int currencyID = repairById.getCar().getUser().getCurrency().getId();
-        Currency currency = getCurrencyFromCarById(currencyID);
+        Currency currency = solutions.getCurrencyFromCarById(currencyID);
         if (currency.getTitle().equals("BYN")) {
             repairService.update(repairEdit);
         } else {
-            double costRepairByBYN = getValueByUSD(repairEdit.getCostsRepair());
+            double costRepairByBYN = solutions.getValueByUSD(repairEdit.getCostsRepair());
             repairEdit.setCostsRepair(costRepairByBYN);
             repairService.update(repairEdit);
         }
@@ -180,23 +179,5 @@ public class RepairController extends MethodsCarForControllers {
         modelAndView.setViewName("redirect:/car/repairs/{carId}");
         repairService.delete(repair);
         return modelAndView;
-    }
-
-
-    private double getCurrencyValueUSD() {
-        return currencyService.read(2).getCurrencyValue();
-    }
-
-    private Currency getCurrencyByID(int id) {
-        return currencyService.read(id);
-    }
-
-    private Currency getCurrencyFromCarById(int id) {
-        Car car = carService.read(id);
-        return car.getUser().getCurrency();
-    }
-
-    private double getValueByUSD(double valueByBYN) {
-        return getCurrencyValueUSD() * valueByBYN;
     }
 }

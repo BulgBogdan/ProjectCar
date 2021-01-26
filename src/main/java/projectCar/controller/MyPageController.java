@@ -8,10 +8,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import projectCar.classes.MethodsForControllers;
 import projectCar.entity.*;
-import projectCar.service.*;
-import projectCar.service.interfaces.*;
+import projectCar.methods.Calculations;
+import projectCar.methods.ServiceSolution;
+import projectCar.service.DocumentServiceImpl;
+import projectCar.service.OtherCostsServiceImpl;
+import projectCar.service.RepairServiceImpl;
+import projectCar.service.UserServiceImpl;
+import projectCar.service.interfaces.IDocumentService;
+import projectCar.service.interfaces.IOtherCostsService;
+import projectCar.service.interfaces.IRepairService;
+import projectCar.service.interfaces.IUserService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -23,9 +30,6 @@ public class MyPageController {
     private IUserService userService = new UserServiceImpl();
 
     @Autowired
-    private ICarService carService = new CarServiceImpl();
-
-    @Autowired
     private IDocumentService documentService = new DocumentServiceImpl();
 
     @Autowired
@@ -35,7 +39,7 @@ public class MyPageController {
     private IRepairService repairService = new RepairServiceImpl();
 
     @Autowired
-    private ICurrencyService currencyService = new CurrencyServiceImpl();
+    private ServiceSolution solutions;
 
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -58,8 +62,8 @@ public class MyPageController {
                                @RequestParam(defaultValue = "1") int page) {
         User userAuth = findUserByLogin(authUser.getUsername());
         int idUser = userAuth.getId();
-        List<Car> carList = carService.getCars(page, idUser);
-        int carsCount = carService.carsCount(idUser);
+        List<Car> carList = solutions.getUserCars(page, idUser);
+        int carsCount = solutions.getCountCarsByUser(idUser);
         int pagesCount = (carsCount + 9) / 10;
         modelAndView.setViewName("home");
         modelAndView.addObject("page", page);
@@ -87,13 +91,9 @@ public class MyPageController {
         modelAndView.addObject("repairs", repairs);
         modelAndView.addObject("costs", costs);
 
-        int countPageDocs = (docs.size() + 10 * page) / 10;
-        int countPageRepair = (repairs.size() + 10 * page) / 10;
-        int countPageOtherCosts = (repairs.size() + 10 * page) / 10;
-
-        modelAndView.addObject("countPageDocs", countPageDocs);
-        modelAndView.addObject("countPageRepair", countPageRepair);
-        modelAndView.addObject("countPageOtherCosts", countPageOtherCosts);
+        modelAndView.addObject("countPageDocs", Calculations.getCountPage(page, docs.size()));
+        modelAndView.addObject("countPageRepair", Calculations.getCountPage(page, repairs.size()));
+        modelAndView.addObject("countPageOtherCosts", Calculations.getCountPage(page, costs.size()));
 
         modelAndView.addObject("page", page);
         modelAndView.addObject("searchText", searchText);
@@ -124,7 +124,7 @@ public class MyPageController {
                                  @ModelAttribute("currency") Currency currency,
                                  BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            MethodsForControllers.incorrectEnter();
+            modelAndView.addObject("Errors", "Некоректный ввод данных");
             return modelAndView;
         }
         user.setCurrency(currency);
@@ -140,10 +140,10 @@ public class MyPageController {
         String backPage = request.getHeader("referer");
         prevPage = getPrevPage(backPage);
 
-        List<Currency> currencyList = currencyService.getAll();
+        List<Currency> currencyList = solutions.getAllCurrency();
         int currencyID = userAuth.getCurrency().getId();
 
-        double currencyTodayUSD = currencyService.read(2).getCurrencyValue();
+        double currencyTodayUSD = solutions.getCurrencyValueUSD();
 
         modelAndView.addObject("user", userAuth);
         modelAndView.addObject("currencyValueUSD", currencyTodayUSD);
@@ -156,13 +156,13 @@ public class MyPageController {
 
     @PostMapping("/currency")
     public ModelAndView editCurrency(@ModelAttribute("user") User user,
-                                     @ModelAttribute("currencyID") int currencyID,
+                                     @ModelAttribute("currencyID") int currencyId,
                                      BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            MethodsForControllers.incorrectEnter();
+            modelAndView.addObject("Errors", "Некоректный ввод данных");
             return modelAndView;
         }
-        Currency currency = findCurrencyById(currencyID);
+        Currency currency = solutions.getCurrencyById(currencyId);
         user.setCurrency(currency);
         modelAndView.setViewName("redirect:" + prevPage);
         userService.update(user);
@@ -188,7 +188,7 @@ public class MyPageController {
                                          @ModelAttribute("newPassword") String newPassword) {
         User userAuth = userService.read(user.getId());
         if (bindingResult.hasErrors()) {
-            MethodsForControllers.incorrectEnter();
+            modelAndView.addObject("Errors", "Некоректный ввод данных");
             return modelAndView;
         }
         if (!bCryptPasswordEncoder.matches(user.getPassword(), userAuth.getPassword())) {
@@ -212,12 +212,7 @@ public class MyPageController {
         return userService.findByLogin(login);
     }
 
-    private Currency findCurrencyById(int id) {
-        return currencyService.read(id);
-    }
-
     private String getPrevPage(String prevPage) {
         return prevPage.substring(21, prevPage.length());
     }
-
 }

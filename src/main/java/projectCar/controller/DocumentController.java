@@ -5,13 +5,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import projectCar.classes.MethodsForControllers;
 import projectCar.entity.Car;
 import projectCar.entity.Currency;
 import projectCar.entity.Document;
-import projectCar.service.CurrencyServiceImpl;
+import projectCar.methods.Calculations;
+import projectCar.methods.ServiceSolution;
 import projectCar.service.DocumentServiceImpl;
-import projectCar.service.interfaces.ICurrencyService;
 import projectCar.service.interfaces.IDocumentService;
 
 import java.sql.Date;
@@ -21,10 +20,10 @@ import java.util.List;
 import java.util.Objects;
 
 @Controller
-public class DocumentController extends MethodsCarForControllers {
+public class DocumentController {
 
     @Autowired
-    private ICurrencyService currencyService = new CurrencyServiceImpl();
+    private ServiceSolution solutions;
 
     @Autowired
     private IDocumentService documentService = new DocumentServiceImpl();
@@ -38,7 +37,7 @@ public class DocumentController extends MethodsCarForControllers {
     @GetMapping("/car/documents/{id}")
     public ModelAndView pageDocuments(@PathVariable("id") int id,
                                       @RequestParam(defaultValue = "1") int page) {
-        car = getCarWithWires(id);
+        car = solutions.getCarWithWires(id);
         List<Document> documentList = documentService.getDocuments(page, id);
         int documentsCount = documentService.docsCount(id);
 
@@ -48,7 +47,7 @@ public class DocumentController extends MethodsCarForControllers {
         List<Document> endDate = new ArrayList<>();
 
         for (Document doc : documentList) {
-            int validityPeriodOfDays = MethodsForControllers.amountOfDays(doc.getBeginDate(), doc.getEndDate());
+            int validityPeriodOfDays = Calculations.amountOfDays(doc.getBeginDate(), doc.getEndDate());
 
             if (doc.getNumberOfDays() > (validityPeriodOfDays / 2)) {
                 greenDate.add(doc);
@@ -72,7 +71,7 @@ public class DocumentController extends MethodsCarForControllers {
         modelAndView.addObject("endDate", endDate);
 
         int pagesCount = (documentsCount + 9) / 10;
-        double valueUSD = getCurrencyValueUSD();
+        double valueUSD = solutions.getCurrencyValueUSD();
         modelAndView.setViewName("car/documents");
         modelAndView.addObject("car", car);
         modelAndView.addObject("page", page);
@@ -101,8 +100,8 @@ public class DocumentController extends MethodsCarForControllers {
 
     @GetMapping("/car/documents/create/{id}")
     public ModelAndView pageAddDocuments(@PathVariable("id") int id) {
-        car = getCarById(id);
-        Currency currency = getCurrencyFromCarById(id);
+        car = solutions.getCarById(id);
+        Currency currency = solutions.getCurrencyFromCarById(id);
         modelAndView.setViewName("car/documents/create");
         modelAndView.addObject("doc", new Document());
         modelAndView.addObject("car", car);
@@ -114,25 +113,25 @@ public class DocumentController extends MethodsCarForControllers {
     public ModelAndView addDocument(@ModelAttribute("doc") Document document,
                                     BindingResult result,
                                     @PathVariable("id") int id) {
-        car = getCarById(id);
-        Currency currency = getCurrencyFromCarById(id);
+        car = solutions.getCarById(id);
+        Currency currency = solutions.getCurrencyFromCarById(id);
         if (Objects.isNull(document.getEndDate())) {
             LocalDate endDate = document.getBeginDate().toLocalDate().plusMonths(document.getNumberOfMonth());
             document.setEndDate(Date.valueOf(endDate));
         }
 
         if (document.getNumberOfMonth() == 0) {
-            int numberOfMonths = MethodsForControllers.amountOfMonths(document.getBeginDate(), document.getEndDate());
+            int numberOfMonths = Calculations.amountOfMonths(document.getBeginDate(), document.getEndDate());
             document.setNumberOfMonth(numberOfMonths);
         }
 
-        int numberOfDays = MethodsForControllers.amountOfDays(document.getBeginDate(), document.getEndDate());
+        int numberOfDays = Calculations.amountOfDays(document.getBeginDate(), document.getEndDate());
         document.setNumberOfDays(numberOfDays);
         document.setCar(car);
         modelAndView.setViewName("redirect:/car/documents/{id}");
 
         if (currency.getTitle().equals("USD")) {
-            double priceDocByBYN = getValueByUSD(document.getDocumentCost());
+            double priceDocByBYN = solutions.getValueByUSD(document.getDocumentCost());
             document.setDocumentCost(priceDocByBYN);
             documentService.add(document);
         } else {
@@ -146,7 +145,7 @@ public class DocumentController extends MethodsCarForControllers {
     public ModelAndView editDocument(@PathVariable("id") int id) {
         Document document = documentService.read(id);
         modelAndView.setViewName("car/documents/edit");
-        double valueUSD = getCurrencyValueUSD();
+        double valueUSD = solutions.getCurrencyValueUSD();
         if (document.getCar().getUser().getCurrency().getTitle().equals("USD")) {
             document.setDocumentCost(document.getDocumentCost() / valueUSD);
             modelAndView.addObject("docs", document);
@@ -162,40 +161,39 @@ public class DocumentController extends MethodsCarForControllers {
                                      BindingResult result,
                                      @PathVariable("id") int id) {
         if (result.hasErrors()) {
-            MethodsForControllers.incorrectEnter();
+            modelAndView.addObject("Errors", "Некоректный ввод данных");
             return modelAndView;
         }
 
         Document document = documentService.read(id);
         int carId = document.getCar().getId();
-        Currency currency = getCurrencyFromCarById(carId);
-        LocalDate endDate;
+        Currency currency = solutions.getCurrencyFromCarById(carId);
 
-        boolean dateEditEqualDate = document.getEndDate().getTime() == documentEdit.getEndDate().getTime();
-        boolean monthsEditEqualMonths = document.getNumberOfMonth() == documentEdit.getNumberOfMonth();
+        boolean dateEditEqualDate = (document.getEndDate().getTime() == documentEdit.getEndDate().getTime());
+        boolean monthsEditEqualMonths = (document.getNumberOfMonth() == documentEdit.getNumberOfMonth());
 
         int numberOfMonth;
-
         if (!dateEditEqualDate) {
-            numberOfMonth = MethodsForControllers.amountOfMonths(documentEdit.getBeginDate(), documentEdit.getEndDate());
+            numberOfMonth = Calculations.amountOfMonths(documentEdit.getBeginDate(), documentEdit.getEndDate());
             documentEdit.setNumberOfMonth(numberOfMonth);
         }
 
+        LocalDate endDate;
         if ((!monthsEditEqualMonths) && (dateEditEqualDate)) {
             endDate = documentEdit.getBeginDate().toLocalDate().plusMonths(documentEdit.getNumberOfMonth());
             documentEdit.setEndDate(Date.valueOf(endDate));
         }
 
-        int numberOfDays = MethodsForControllers.amountOfDays(documentEdit.getBeginDate(), documentEdit.getEndDate());
+        int numberOfDays = Calculations.amountOfDays(documentEdit.getBeginDate(), documentEdit.getEndDate());
         documentEdit.setNumberOfDays(numberOfDays);
-        documentEdit.setCar(getCarById(carId));
+        documentEdit.setCar(solutions.getCarById(carId));
         modelAndView.addObject("carId", carId);
         modelAndView.setViewName("redirect:/car/documents/{carId}");
 
         if (currency.getTitle().equals("BYN")) {
             documentService.update(documentEdit);
         } else {
-            double priceDocByBYN = getValueByUSD(documentEdit.getDocumentCost());
+            double priceDocByBYN = solutions.getValueByUSD(documentEdit.getDocumentCost());
             documentEdit.setDocumentCost(priceDocByBYN);
             documentService.update(documentEdit);
         }
@@ -210,18 +208,5 @@ public class DocumentController extends MethodsCarForControllers {
         modelAndView.setViewName("redirect:/car/documents/{carId}");
         documentService.delete(document);
         return modelAndView;
-    }
-
-    private double getCurrencyValueUSD() {
-        return currencyService.read(2).getCurrencyValue();
-    }
-
-    private double getValueByUSD(double valueByBYN) {
-        return getCurrencyValueUSD() * valueByBYN;
-    }
-
-    private Currency getCurrencyFromCarById(int id) {
-        Car car = carService.read(id);
-        return car.getUser().getCurrency();
     }
 }

@@ -8,14 +8,17 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
-import projectCar.classes.MethodsForControllers;
 import projectCar.entity.Car;
 import projectCar.entity.Parameter;
+import projectCar.methods.ServiceSolution;
 import projectCar.service.ParameterServiceImpl;
 import projectCar.service.interfaces.IParameterService;
 
 @Controller
-public class ParameterController extends MethodsCarForControllers{
+public class ParameterController {
+
+    @Autowired
+    private ServiceSolution carService;
 
     @Autowired
     private IParameterService parameterService = new ParameterServiceImpl();
@@ -26,7 +29,7 @@ public class ParameterController extends MethodsCarForControllers{
 
     @GetMapping("car/parameters/{id}")
     public ModelAndView parameterCar(@PathVariable("id") int id) {
-        car = getCarById(id);
+        car = carService.getCarById(id);
         modelAndView.setViewName("car/parameters");
         modelAndView.addObject("parameter", new Parameter());
         modelAndView.addObject("car", car);
@@ -38,11 +41,11 @@ public class ParameterController extends MethodsCarForControllers{
                                      BindingResult result,
                                      @PathVariable("id") int id) {
         if (result.hasErrors()){
-            MethodsForControllers.incorrectEnter();
+            modelAndView.addObject("Errors", "Некоректный ввод данных");
             return modelAndView;
         }
 
-        car = getCarById(id);
+        car = carService.getCarById(id);
         modelAndView.setViewName("redirect:/car/view/{id}");
         parameter.setCar(car);
         parameterService.add(parameter);
@@ -51,7 +54,7 @@ public class ParameterController extends MethodsCarForControllers{
 
     @GetMapping("car/parameters/edit/{id}")
     public ModelAndView editParameter(@PathVariable("id") int id) {
-        car = getCarById(id);
+        car = carService.getCarById(id);
         Parameter parameter = car.getParameters();
         modelAndView.setViewName("car/parameters/edit");
         modelAndView.addObject("parameter", parameter);
@@ -64,11 +67,11 @@ public class ParameterController extends MethodsCarForControllers{
                                       BindingResult result,
                                       @PathVariable("id") int id) {
         if (result.hasErrors()){
-            MethodsForControllers.incorrectEnter();
+            modelAndView.addObject("Errors", "Некоректный ввод данных");
             return modelAndView;
         }
 
-        parameter.setCar(getCarById(id));
+        parameter.setCar(carService.getCarById(id));
         modelAndView.setViewName("redirect:/car/view/{id}");
         parameterService.update(parameter);
         return modelAndView;
