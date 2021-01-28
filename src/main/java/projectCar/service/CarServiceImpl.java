@@ -3,7 +3,6 @@ package projectCar.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import projectCar.dao.CarDAOImpl;
 import projectCar.dao.interfaces.ICarDAO;
 import projectCar.entity.Car;
 import projectCar.service.interfaces.ICarService;
@@ -13,8 +12,12 @@ import java.util.List;
 @Service
 public class CarServiceImpl implements ICarService {
 
+    private ICarDAO carDAO;
+
     @Autowired
-    private ICarDAO carDAO = new CarDAOImpl();
+    public CarServiceImpl(ICarDAO carDAO) {
+        this.carDAO = carDAO;
+    }
 
     @Override
     @Transactional

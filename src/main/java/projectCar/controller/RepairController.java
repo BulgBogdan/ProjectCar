@@ -10,7 +10,6 @@ import projectCar.entity.Currency;
 import projectCar.entity.Repair;
 import projectCar.methods.Calculations;
 import projectCar.methods.ServiceSolution;
-import projectCar.service.RepairServiceImpl;
 import projectCar.service.interfaces.IRepairService;
 
 import java.util.ArrayList;
@@ -19,17 +18,21 @@ import java.util.List;
 @Controller
 public class RepairController {
 
-    @Autowired
     private ServiceSolution solutions;
 
-    @Autowired
-    private IRepairService repairService = new RepairServiceImpl();
+    private IRepairService repairService;
 
     private ModelAndView modelAndView = new ModelAndView();
 
     private Car car = new Car();
 
     private int page;
+
+    @Autowired
+    public RepairController(ServiceSolution solutions, IRepairService repairService) {
+        this.solutions = solutions;
+        this.repairService = repairService;
+    }
 
     @GetMapping("/car/repairs/{id}")
     public ModelAndView pageRepairs(@PathVariable("id") int id,

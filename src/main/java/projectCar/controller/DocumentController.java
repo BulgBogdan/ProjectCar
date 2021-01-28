@@ -10,7 +10,6 @@ import projectCar.entity.Currency;
 import projectCar.entity.Document;
 import projectCar.methods.Calculations;
 import projectCar.methods.ServiceSolution;
-import projectCar.service.DocumentServiceImpl;
 import projectCar.service.interfaces.IDocumentService;
 
 import java.sql.Date;
@@ -22,17 +21,21 @@ import java.util.Objects;
 @Controller
 public class DocumentController {
 
-    @Autowired
     private ServiceSolution solutions;
 
-    @Autowired
-    private IDocumentService documentService = new DocumentServiceImpl();
+    private IDocumentService documentService;
 
     private ModelAndView modelAndView = new ModelAndView();
 
     private Car car = new Car();
 
     private int page;
+
+    @Autowired
+    public DocumentController(ServiceSolution solutions, IDocumentService documentService) {
+        this.solutions = solutions;
+        this.documentService = documentService;
+    }
 
     @GetMapping("/car/documents/{id}")
     public ModelAndView pageDocuments(@PathVariable("id") int id,

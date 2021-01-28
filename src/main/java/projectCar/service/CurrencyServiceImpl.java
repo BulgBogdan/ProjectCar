@@ -2,7 +2,6 @@ package projectCar.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import projectCar.dao.CurrencyDAOImpl;
 import projectCar.dao.interfaces.ICurrencyDAO;
 import projectCar.entity.Currency;
 import projectCar.service.interfaces.ICurrencyService;
@@ -13,8 +12,12 @@ import java.util.List;
 @Service
 public class CurrencyServiceImpl implements ICurrencyService {
 
+    private ICurrencyDAO currencyDAO;
+
     @Autowired
-    private ICurrencyDAO currencyDAO = new CurrencyDAOImpl();
+    public CurrencyServiceImpl(ICurrencyDAO currencyDAO) {
+        this.currencyDAO = currencyDAO;
+    }
 
     @Override
     @Transactional

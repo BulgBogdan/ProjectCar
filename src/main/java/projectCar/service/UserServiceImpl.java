@@ -7,7 +7,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import projectCar.dao.UserDAOImpl;
 import projectCar.dao.interfaces.IUserDAO;
 import projectCar.entity.User;
 import projectCar.service.interfaces.IUserService;
@@ -18,11 +17,15 @@ import java.util.Objects;
 @Service
 public class UserServiceImpl implements UserDetailsService, IUserService {
 
-    @Autowired
-    private IUserDAO userDAO = new UserDAOImpl();
+    private IUserDAO userDAO;
+
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    BCryptPasswordEncoder bCryptPasswordEncoder;
+    public UserServiceImpl(IUserDAO userDAO, BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.userDAO = userDAO;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    }
 
     @Override
     @Transactional(readOnly = true)

@@ -10,7 +10,6 @@ import projectCar.entity.Currency;
 import projectCar.entity.Fuel;
 import projectCar.methods.Calculations;
 import projectCar.methods.ServiceSolution;
-import projectCar.service.FuelServiceImpl;
 import projectCar.service.interfaces.IFuelService;
 
 import java.sql.Date;
@@ -20,17 +19,21 @@ import java.util.List;
 @Controller
 public class FuelController {
 
-    @Autowired
     private ServiceSolution solutions;
 
-    @Autowired
-    private IFuelService fuelService = new FuelServiceImpl();
+    private IFuelService fuelService;
 
     private ModelAndView modelAndView = new ModelAndView();
 
     private Car car = new Car();
 
     private int page;
+
+    @Autowired
+    public FuelController(ServiceSolution solutions, IFuelService fuelService) {
+        this.solutions = solutions;
+        this.fuelService = fuelService;
+    }
 
     @GetMapping("/car/fuel/{id}")
     public ModelAndView pageFuel(@PathVariable("id") int id,

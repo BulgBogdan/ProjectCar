@@ -11,10 +11,6 @@ import org.springframework.web.servlet.ModelAndView;
 import projectCar.entity.*;
 import projectCar.methods.Calculations;
 import projectCar.methods.ServiceSolution;
-import projectCar.service.DocumentServiceImpl;
-import projectCar.service.OtherCostsServiceImpl;
-import projectCar.service.RepairServiceImpl;
-import projectCar.service.UserServiceImpl;
 import projectCar.service.interfaces.IDocumentService;
 import projectCar.service.interfaces.IOtherCostsService;
 import projectCar.service.interfaces.IRepairService;
@@ -26,29 +22,35 @@ import java.util.List;
 @Controller
 public class MyPageController {
 
-    @Autowired
-    private IUserService userService = new UserServiceImpl();
+    private IUserService userService;
 
-    @Autowired
-    private IDocumentService documentService = new DocumentServiceImpl();
+    private IDocumentService documentService;
 
-    @Autowired
-    private IOtherCostsService costsService = new OtherCostsServiceImpl();
+    private IOtherCostsService costsService;
 
-    @Autowired
-    private IRepairService repairService = new RepairServiceImpl();
+    private IRepairService repairService;
 
-    @Autowired
     private ServiceSolution solutions;
 
-    @Autowired
-    BCryptPasswordEncoder bCryptPasswordEncoder;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     private ModelAndView modelAndView = new ModelAndView();
 
     private int page;
 
     private String prevPage = "";
+
+    @Autowired
+    public MyPageController(IUserService userService, IDocumentService documentService,
+                            IOtherCostsService costsService, IRepairService repairService,
+                            ServiceSolution solutions, BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.userService = userService;
+        this.documentService = documentService;
+        this.costsService = costsService;
+        this.repairService = repairService;
+        this.solutions = solutions;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    }
 
     @GetMapping("/search")
     public ModelAndView search(@RequestParam("searchText") String searchText) {

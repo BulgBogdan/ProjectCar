@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import projectCar.dao.interfaces.IParameterDAO;
-import projectCar.dao.ParameterDAOImpl;
 import projectCar.entity.Parameter;
 import projectCar.service.interfaces.IParameterService;
 
@@ -13,8 +12,12 @@ import java.util.List;
 @Service
 public class ParameterServiceImpl implements IParameterService {
 
+    private IParameterDAO parameterDAO;
+
     @Autowired
-    private IParameterDAO parameterDAO = new ParameterDAOImpl();
+    public ParameterServiceImpl(IParameterDAO parameterDAO) {
+        this.parameterDAO = parameterDAO;
+    }
 
     @Override
     @Transactional

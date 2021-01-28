@@ -10,7 +10,6 @@ import projectCar.entity.Currency;
 import projectCar.entity.OtherCosts;
 import projectCar.methods.Calculations;
 import projectCar.methods.ServiceSolution;
-import projectCar.service.OtherCostsServiceImpl;
 import projectCar.service.interfaces.IOtherCostsService;
 
 import java.util.List;
@@ -18,17 +17,21 @@ import java.util.List;
 @Controller
 public class OtherCostsController {
 
-    @Autowired
     private ServiceSolution solutions;
 
-    @Autowired
-    private IOtherCostsService costsService = new OtherCostsServiceImpl();
+    private IOtherCostsService costsService;
 
     private ModelAndView modelAndView = new ModelAndView();
 
     private Car car = new Car();
 
     private int page;
+
+    @Autowired
+    public OtherCostsController(ServiceSolution solutions, IOtherCostsService costsService) {
+        this.solutions = solutions;
+        this.costsService = costsService;
+    }
 
     @GetMapping("/car/other/costs/{id}")
     public ModelAndView pageCosts(@PathVariable("id") int id,

@@ -16,8 +16,6 @@ import projectCar.entity.Registration;
 import projectCar.entity.User;
 import projectCar.methods.Calculations;
 import projectCar.methods.ServiceSolution;
-import projectCar.service.RegistrationServiceImpl;
-import projectCar.service.UserServiceImpl;
 import projectCar.service.interfaces.IRegistrationService;
 import projectCar.service.interfaces.IUserService;
 
@@ -28,18 +26,22 @@ import java.util.Objects;
 @Controller
 public class CarController {
 
-    @Autowired
     private ServiceSolution solutions;
 
-    @Autowired
-    private IUserService userService = new UserServiceImpl();
+    private IUserService userService;
 
-    @Autowired
-    private IRegistrationService registrationService = new RegistrationServiceImpl();
+    private IRegistrationService registrationService;
 
     private ModelAndView modelAndView = new ModelAndView();
 
     private String prevPage = "";
+
+    @Autowired
+    public CarController(ServiceSolution solutions, IUserService userService, IRegistrationService registrationService) {
+        this.solutions = solutions;
+        this.userService = userService;
+        this.registrationService = registrationService;
+    }
 
     @GetMapping("car/title")
     public ModelAndView createCar() {

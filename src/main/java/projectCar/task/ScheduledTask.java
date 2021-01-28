@@ -8,9 +8,6 @@ import org.springframework.stereotype.Component;
 import projectCar.entity.Currency;
 import projectCar.entity.Document;
 import projectCar.entity.Repair;
-import projectCar.service.CurrencyServiceImpl;
-import projectCar.service.DocumentServiceImpl;
-import projectCar.service.RepairServiceImpl;
 import projectCar.service.interfaces.ICurrencyService;
 import projectCar.service.interfaces.IDocumentService;
 import projectCar.service.interfaces.IRepairService;
@@ -31,14 +28,18 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class ScheduledTask {
 
-    @Autowired
-    private IDocumentService documentService = new DocumentServiceImpl();
+    private IDocumentService documentService;
+
+    private IRepairService repairService;
+
+    private ICurrencyService currencyService;
 
     @Autowired
-    private IRepairService repairService = new RepairServiceImpl();
-
-    @Autowired
-    private ICurrencyService currencyService = new CurrencyServiceImpl();
+    public ScheduledTask(IDocumentService documentService, IRepairService repairService, ICurrencyService currencyService) {
+        this.documentService = documentService;
+        this.repairService = repairService;
+        this.currencyService = currencyService;
+    }
 
     private int countDays (Date start, Date end){
         long daysBetween = Math.abs(end.getTime() - start.getTime());

@@ -11,21 +11,24 @@ import org.springframework.web.servlet.ModelAndView;
 import projectCar.entity.Car;
 import projectCar.entity.Parameter;
 import projectCar.methods.ServiceSolution;
-import projectCar.service.ParameterServiceImpl;
 import projectCar.service.interfaces.IParameterService;
 
 @Controller
 public class ParameterController {
 
-    @Autowired
     private ServiceSolution carService;
 
-    @Autowired
-    private IParameterService parameterService = new ParameterServiceImpl();
+    private IParameterService parameterService;
 
     private ModelAndView modelAndView = new ModelAndView();
 
     private Car car = new Car();
+
+    @Autowired
+    public ParameterController(ServiceSolution carService, IParameterService parameterService) {
+        this.carService = carService;
+        this.parameterService = parameterService;
+    }
 
     @GetMapping("car/parameters/{id}")
     public ModelAndView parameterCar(@PathVariable("id") int id) {

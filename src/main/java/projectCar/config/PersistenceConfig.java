@@ -15,8 +15,12 @@ import java.util.Properties;
 @Configuration
 public class PersistenceConfig {
 
+    private final Environment environment;
+
     @Autowired
-    private Environment environment;
+    public PersistenceConfig(Environment environment) {
+        this.environment = environment;
+    }
 
     @Bean(name = "dataSource")
     public DataSource getDataSource() {
@@ -29,7 +33,6 @@ public class PersistenceConfig {
         return dataSource;
     }
 
-    @Autowired
     @Bean(name = "entityManagerFactory")
     public SessionFactory getSessionFactory(DataSource dataSource) throws Exception {
         Properties properties = new Properties();
@@ -59,10 +62,8 @@ public class PersistenceConfig {
         return sf;
     }
 
-    @Autowired
     @Bean(name = "transactionManager")
     public HibernateTransactionManager getTransactionManager(SessionFactory sessionFactory) {
-        HibernateTransactionManager transactionManager = new HibernateTransactionManager(sessionFactory);
-        return transactionManager;
+        return new HibernateTransactionManager(sessionFactory);
     }
 }

@@ -4,8 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import projectCar.entity.Car;
 import projectCar.entity.Currency;
-import projectCar.service.CarServiceImpl;
-import projectCar.service.CurrencyServiceImpl;
 import projectCar.service.interfaces.ICarService;
 import projectCar.service.interfaces.ICurrencyService;
 
@@ -14,11 +12,15 @@ import java.util.List;
 @Component
 public final class ServiceSolution {
 
-    @Autowired
-    ICarService carService = new CarServiceImpl();
+    private ICarService carService;
+
+    private ICurrencyService currencyService;
 
     @Autowired
-    private ICurrencyService currencyService = new CurrencyServiceImpl();
+    public ServiceSolution(ICarService carService, ICurrencyService currencyService) {
+        this.carService = carService;
+        this.currencyService = currencyService;
+    }
 
     public double getCurrencyValueUSD() {
         return currencyService.read(2).getCurrencyValue();

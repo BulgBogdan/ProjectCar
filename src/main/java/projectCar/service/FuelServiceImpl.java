@@ -3,7 +3,6 @@ package projectCar.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import projectCar.dao.FuelDAOImpl;
 import projectCar.dao.interfaces.IFuelDAO;
 import projectCar.entity.Fuel;
 import projectCar.service.interfaces.IFuelService;
@@ -13,8 +12,12 @@ import java.util.List;
 @Service
 public class FuelServiceImpl implements IFuelService {
 
+    private IFuelDAO fuelDAO;
+
     @Autowired
-    private IFuelDAO fuelDAO = new FuelDAOImpl();
+    public FuelServiceImpl(IFuelDAO fuelDAO) {
+        this.fuelDAO = fuelDAO;
+    }
 
     @Override
     @Transactional

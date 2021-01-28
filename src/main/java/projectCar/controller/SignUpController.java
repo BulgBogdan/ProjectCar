@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import projectCar.entity.Currency;
 import projectCar.entity.User;
-import projectCar.service.CurrencyServiceImpl;
-import projectCar.service.UserServiceImpl;
 import projectCar.service.interfaces.ICurrencyService;
 import projectCar.service.interfaces.IUserService;
 
@@ -19,13 +17,17 @@ import javax.validation.Valid;
 @Controller
 public class SignUpController {
 
-    @Autowired
-    private IUserService userService = new UserServiceImpl();
+    private IUserService userService;
 
-    @Autowired
-    private ICurrencyService currencyService = new CurrencyServiceImpl();
+    private ICurrencyService currencyService;
 
     private ModelAndView modelAndView = new ModelAndView();
+
+    @Autowired
+    public SignUpController(IUserService userService, ICurrencyService currencyService) {
+        this.userService = userService;
+        this.currencyService = currencyService;
+    }
 
     @GetMapping("/registration")
     public ModelAndView registration() {
